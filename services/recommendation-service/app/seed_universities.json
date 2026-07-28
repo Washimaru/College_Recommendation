@@ -1,0 +1,174 @@
+[
+  {
+    "id": "u01",
+    "name": "Stanhope University",
+    "avg_gpa": 3.95,
+    "avg_sat": 1500,
+    "acceptance_rate": 0.06,
+    "tuition": 58000,
+    "size": "large",
+    "location": "CA",
+    "majors": [
+      "Computer Science",
+      "Math",
+      "Physics"
+    ]
+  },
+  {
+    "id": "u02",
+    "name": "Bayview College",
+    "avg_gpa": 3.6,
+    "avg_sat": 1320,
+    "acceptance_rate": 0.42,
+    "tuition": 41000,
+    "size": "small",
+    "location": "NY",
+    "majors": [
+      "Biology",
+      "Chemistry"
+    ]
+  },
+  {
+    "id": "u03",
+    "name": "Northtech Institute",
+    "avg_gpa": 3.85,
+    "avg_sat": 1460,
+    "acceptance_rate": 0.18,
+    "tuition": 52000,
+    "size": "large",
+    "location": "MA",
+    "majors": [
+      "Computer Science",
+      "Engineering"
+    ]
+  },
+  {
+    "id": "u04",
+    "name": "Riverside State",
+    "avg_gpa": 3.3,
+    "avg_sat": 1200,
+    "acceptance_rate": 0.68,
+    "tuition": 22000,
+    "size": "large",
+    "location": "TX",
+    "majors": [
+      "Economics",
+      "Business"
+    ]
+  },
+  {
+    "id": "u05",
+    "name": "Lakeside College",
+    "avg_gpa": 3.7,
+    "avg_sat": 1380,
+    "acceptance_rate": 0.35,
+    "tuition": 47000,
+    "size": "medium",
+    "location": "IL",
+    "majors": [
+      "Computer Science",
+      "Data Science",
+      "Math"
+    ]
+  },
+  {
+    "id": "u06",
+    "name": "Summit Polytechnic",
+    "avg_gpa": 3.9,
+    "avg_sat": 1470,
+    "acceptance_rate": 0.14,
+    "tuition": 55000,
+    "size": "medium",
+    "location": "WA",
+    "majors": [
+      "Computer Science",
+      "Engineering"
+    ]
+  },
+  {
+    "id": "u07",
+    "name": "Fairmont University",
+    "avg_gpa": 3.5,
+    "avg_sat": 1290,
+    "acceptance_rate": 0.55,
+    "tuition": 38000,
+    "size": "small",
+    "location": "PA",
+    "majors": [
+      "English",
+      "History"
+    ]
+  },
+  {
+    "id": "u08",
+    "name": "Cedar Hill College",
+    "avg_gpa": 3.75,
+    "avg_sat": 1400,
+    "acceptance_rate": 0.28,
+    "tuition": 49000,
+    "size": "medium",
+    "location": "GA",
+    "majors": [
+      "Computer Science",
+      "Data Science",
+      "Math"
+    ]
+  },
+  {
+    "id": "u09",
+    "name": "Portside Tech",
+    "avg_gpa": 3.82,
+    "avg_sat": 1440,
+    "acceptance_rate": 0.2,
+    "tuition": 50000,
+    "size": "large",
+    "location": "CA",
+    "majors": [
+      "Computer Science",
+      "Engineering"
+    ]
+  },
+  {
+    "id": "u10",
+    "name": "Greenfield University",
+    "avg_gpa": 3.4,
+    "avg_sat": 1250,
+    "acceptance_rate": 0.6,
+    "tuition": 30000,
+    "size": "large",
+    "location": "NY",
+    "majors": [
+      "Economics",
+      "Business"
+    ]
+  },
+  {
+    "id": "u11",
+    "name": "Ashford College",
+    "avg_gpa": 3.68,
+    "avg_sat": 1360,
+    "acceptance_rate": 0.38,
+    "tuition": 44000,
+    "size": "small",
+    "location": "MA",
+    "majors": [
+      "English",
+      "History"
+    ]
+  },
+  {
+    "id": "u12",
+    "name": "Vantage Institute",
+    "avg_gpa": 3.88,
+    "avg_sat": 1480,
+    "acceptance_rate": 0.12,
+    "tuition": 56000,
+    "size": "medium",
+    "location": "IL",
+    "majors": [
+      "Computer Science",
+      "Data Science",
+      "Math"
+    ]
+  }
+]

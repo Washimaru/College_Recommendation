@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: unimatch
+      POSTGRES_PASSWORD: unimatch
+      POSTGRES_DB: unimatch
+    ports:
+      - "5432:5432"
+    volumes:
+      # schema.sql applies ONLY on first init of an empty volume.
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U unimatch"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  scoring-service:
+    build: ./services/scoring-service
+    ports:
+      - "8001:8001"
+
+  recommendation-service:
+    build: ./services/recommendation-service
+    environment:
+      DATABASE_URL: postgresql://unimatch:unimatch@db:5432/unimatch
+      SCORING_SERVICE_URL: http://scoring-service:8001
+    depends_on:
+      db:
+        condition: service_healthy
+      scoring-service:
+        condition: service_started
+    ports:
+      - "8002:8002"
+
+  gateway:
+    build: ./services/gateway
+    environment:
+      RECS_SERVICE_URL: http://recommendation-service:8002
+    depends_on:
+      recommendation-service:
+        condition: service_started
+    ports:
+      - "8000:8000"
+
+volumes:
+  db_data:

@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unimatch.dev/contracts/profile.schema.json",
+  "title": "StudentProfile",
+  "version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["gpa", "mbti", "intended_major"],
+  "properties": {
+    "gpa": { "type": "number", "minimum": 0, "maximum": 4.0 },
+    "sat": { "type": ["integer", "null"], "minimum": 400, "maximum": 1600 },
+    "mbti": { "type": "string", "pattern": "^[EI][NS][TF][JP]$" },
+    "intended_major": { "type": "string", "minLength": 1 },
+    "preferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_tuition": { "type": ["number", "null"], "minimum": 0 },
+        "preferred_size": { "type": ["string", "null"], "enum": ["small", "medium", "large", null] },
+        "locations": { "type": "array", "items": { "type": "string" }, "default": [] }
+      },
+      "default": {}
+    },
+    "weights": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional per-request overrides of the default scoring weights.",
+      "properties": {
+        "academic": { "type": "number", "minimum": 0 },
+        "cost": { "type": "number", "minimum": 0 },
+        "fit": { "type": "number", "minimum": 0 },
+        "personality": { "type": "number", "minimum": 0 }
+      }
+    }
+  }
+}

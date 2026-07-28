@@ -1,0 +1,10 @@
+// Build-only config. The base tsconfig includes `test` for typechecking, which
+// makes tsc infer rootDir "." and emit dist/src/index.js. Production needs
+// dist/index.js and no test files, so build from src alone.
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src"
+  },
+  "include": ["src"]
+}

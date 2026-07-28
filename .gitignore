@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+dist/
+coverage/
+
+# Python build artifacts (created by `pip install .`)
+build/
+*.egg-info/
+
+# Coverage data (incl. macOS " 2" conflict copies)
+.coverage*
+
+# vitest transient bundles
+*.timestamp-*.mjs
+
+# Local, per-machine Claude settings
+.claude/settings.local*.json
+
+# Env / editor
+.env
+.DS_Store

@@ -1,0 +1,29 @@
+[project]
+name = "data-pipeline"
+version = "1.0.0"
+description = "UniMatch synthetic data generator + loader"
+requires-python = ">=3.11"
+dependencies = ["psycopg[binary]>=3.1"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.4"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+# Flat layout with two scripts, not a package: name them explicitly or
+# setuptools auto-discovery refuses to build.
+[tool.setuptools]
+py-modules = ["generate", "load"]
