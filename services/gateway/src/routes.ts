@@ -10,6 +10,15 @@ import { RecommendationRequestSchema } from "./types.js";
 export function registerRoutes(app: FastifyInstance, recs: RecsClient): void {
   app.get("/healthz", async () => ({ status: "ok" }));
 
+  app.get("/v1/universities", async (request, reply) => {
+    try {
+      return reply.status(200).send(await recs.universities());
+    } catch (err) {
+      request.log.error(err);
+      return reply.status(502).send({ error: "upstream_error" });
+    }
+  });
+
   app.post("/v1/recommendations", async (request, reply) => {
     const parsed = RecommendationRequestSchema.safeParse(request.body);
     if (!parsed.success) {

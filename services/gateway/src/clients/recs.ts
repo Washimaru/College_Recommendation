@@ -2,7 +2,11 @@
  * Client for recommendation-service. The gateway is stateless and never touches
  * the DB — it only speaks HTTP to the Python side.
  */
-import type { RecommendationRequest, RecommendationResponse } from "../types.js";
+import type {
+  CatalogResponse,
+  RecommendationRequest,
+  RecommendationResponse,
+} from "../types.js";
 
 export interface SseFrame {
   event: string;
@@ -12,6 +16,7 @@ export interface SseFrame {
 export interface RecsClient {
   recommend(req: RecommendationRequest): Promise<RecommendationResponse>;
   stream(req: RecommendationRequest): AsyncGenerator<SseFrame>;
+  universities(): Promise<CatalogResponse>;
 }
 
 /**
@@ -68,6 +73,14 @@ export function createRecsClient(baseUrl: string): RecsClient {
         throw new Error(`recommendation-service returned ${res.status}`);
       }
       return (await res.json()) as RecommendationResponse;
+    },
+
+    async universities(): Promise<CatalogResponse> {
+      const res = await fetch(`${baseUrl}/universities`);
+      if (!res.ok) {
+        throw new Error(`recommendation-service returned ${res.status}`);
+      }
+      return (await res.json()) as CatalogResponse;
     },
 
     async *stream(req: RecommendationRequest): AsyncGenerator<SseFrame> {

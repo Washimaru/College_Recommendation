@@ -142,6 +142,34 @@ export const RecommendationResponseSchema = z
   })
   .strict();
 
+/** Full catalog record, as returned by GET /v1/universities for the browse view. */
+export const UniversitySchema = z
+  .object({
+    id: z.string(),
+    unitid: z.string().nullable().optional(),
+    name: z.string(),
+    country: z.string(),
+    location: z.string(),
+    avg_gpa: z.number().min(0).max(4.0),
+    avg_sat: z.number().int().nullable().optional(),
+    acceptance_rate: z.number().min(0).max(1).nullable().optional(),
+    net_price: z.number().min(0).nullable().optional(),
+    sticker_tuition: z.number().min(0).nullable().optional(),
+    enrollment: z.number().int().nullable().optional(),
+    size: z.enum(["small", "medium", "large"]),
+    majors: z.array(z.string()).default([]),
+    culture: CultureSchema,
+    provenance: z.record(ProvenanceSchema).default({}),
+  })
+  .strict();
+
+export const CatalogResponseSchema = z
+  .object({ universities: z.array(UniversitySchema) })
+  .strict();
+
+export type University = z.infer<typeof UniversitySchema>;
+export type CatalogResponse = z.infer<typeof CatalogResponseSchema>;
+
 export type Profile = z.infer<typeof ProfileSchema>;
 export type RecommendationRequest = z.infer<typeof RecommendationRequestSchema>;
 export type RecommendationResponse = z.infer<typeof RecommendationResponseSchema>;

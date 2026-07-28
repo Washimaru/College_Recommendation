@@ -12,6 +12,9 @@ function fakeRecs(): RecsClient {
     async recommend() {
       return FINAL as never;
     },
+    async universities() {
+      return { universities: [] };
+    },
     async *stream(): AsyncGenerator<SseFrame> {
       yield { event: "iteration", data: '{"iteration":0}' };
       yield { event: "final", data: JSON.stringify(FINAL) };

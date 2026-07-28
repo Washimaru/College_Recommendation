@@ -1,0 +1,169 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+
+import type { University } from "@/lib/contract";
+import { formatStat } from "@/lib/format";
+import { countriesOf, searchUniversities } from "@/lib/search";
+
+const PAGE = 24;
+
+/**
+ * Browse every school in the catalog, independent of whether it happened to
+ * surface in a match. The catalog arrives once and is filtered in memory, so
+ * results update as you type.
+ */
+export function BrowseSection({ onOpen }: { onOpen: (uni: University) => void }) {
+  const [catalog, setCatalog] = useState<University[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+  const [country, setCountry] = useState("");
+  const [size, setSize] = useState("");
+  const [shown, setShown] = useState(PAGE);
+
+  // Changing a filter resets paging. Done here rather than in an effect, which
+  // would trigger a cascading render.
+  const applyQuery = (value: string) => {
+    setQuery(value);
+    setShown(PAGE);
+  };
+  const applyCountry = (value: string) => {
+    setCountry(value);
+    setShown(PAGE);
+  };
+  const applySize = (value: string) => {
+    setSize(value);
+    setShown(PAGE);
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/universities")
+      .then(async (res) => {
+        if (!res.ok) throw new Error(String(res.status));
+        return res.json();
+      })
+      .then((body) => {
+        if (!cancelled) setCatalog(body.universities as University[]);
+      })
+      .catch(() => {
+        if (!cancelled) setError("Couldn't load the catalog. Is the stack running?");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const countries = useMemo(() => (catalog ? countriesOf(catalog) : []), [catalog]);
+  const matches = useMemo(
+    () => (catalog ? searchUniversities(catalog, query, { country, size }) : []),
+    [catalog, query, country, size],
+  );
+
+  return (
+    <section className="section" id="browse">
+      <h2>Browse &amp; search all schools</h2>
+      <p className="lead">
+        Look up any of the {catalog?.length ?? 364} schools by name, city, country or
+        subject — then open it for the full profile.
+      </p>
+
+      <div className="grid3" style={{ marginBottom: 18 }}>
+        <div style={{ gridColumn: "span 1" }}>
+          <label className="fld" htmlFor="browse-q">
+            Search
+          </label>
+          <input
+            id="browse-q"
+            type="text"
+            value={query}
+            onChange={(e) => applyQuery(e.target.value)}
+            placeholder="e.g. Berkeley, Boston, music, nursing"
+            autoComplete="off"
+          />
+        </div>
+        <div>
+          <label className="fld" htmlFor="browse-country">
+            Country
+          </label>
+          <select id="browse-country" value={country} onChange={(e) => applyCountry(e.target.value)}>
+            <option value="">All countries</option>
+            {countries.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="fld" htmlFor="browse-size">
+            Campus size
+          </label>
+          <select id="browse-size" value={size} onChange={(e) => applySize(e.target.value)}>
+            <option value="">Any size</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+      </div>
+
+      {error && <p className="notice error">{error}</p>}
+      {!catalog && !error && <p className="muted">Loading the catalog…</p>}
+
+      {catalog && (
+        <>
+          <p className="muted" style={{ fontSize: 13, marginBottom: 12 }}>
+            {matches.length} school{matches.length === 1 ? "" : "s"}
+            {query && <> matching &ldquo;{query}&rdquo;</>}
+          </p>
+
+          {matches.length === 0 ? (
+            <p className="notice empty">
+              Nothing matched. Try a shorter search, or clear the country and size filters.
+            </p>
+          ) : (
+            <div className="cards">
+              {matches.slice(0, shown).map((uni) => {
+                const price = formatStat(uni.net_price, uni.provenance.net_price, "money");
+                const rate = formatStat(
+                  uni.acceptance_rate,
+                  uni.provenance.acceptance_rate,
+                  "percent",
+                );
+                return (
+                  <button
+                    key={uni.id}
+                    type="button"
+                    className="card"
+                    onClick={() => onOpen(uni)}
+                  >
+                    <div className="card-head">
+                      <div>
+                        <h3>{uni.name}</h3>
+                        <div className="loc">
+                          {uni.location} · {uni.country} · {uni.size}
+                        </div>
+                      </div>
+                      <span className="muted" style={{ fontSize: 13, whiteSpace: "nowrap" }}>
+                        {price.text} · {rate.text} admit
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {matches.length > shown && (
+            <div style={{ textAlign: "center", marginTop: 18 }}>
+              <button className="btn ghost" onClick={() => setShown(shown + PAGE)}>
+                Show more schools
+              </button>
+            </div>
+          )}
+        </>
+      )}
+    </section>
+  );
+}

@@ -42,6 +42,9 @@ function fakeRecs(): RecsClient {
     async recommend() {
       return FIXTURE;
     },
+    async universities() {
+      return { universities: [] };
+    },
     async *stream(): AsyncGenerator<SseFrame> {
       yield { event: "iteration", data: JSON.stringify(FIXTURE.trace[0]) };
       yield { event: "final", data: JSON.stringify(FIXTURE) };
@@ -103,6 +106,9 @@ describe("gateway routes", () => {
   it("returns 502 when the upstream fails", async () => {
     const failing: RecsClient = {
       async recommend() {
+        throw new Error("boom");
+      },
+      async universities() {
         throw new Error("boom");
       },
       // eslint-disable-next-line require-yield

@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 
 import { CultureSliders } from "@/components/CultureSliders";
 import { ResultCard } from "@/components/ResultCard";
+import { BrowseSection } from "@/components/BrowseSection";
 import { UniversityModal } from "@/components/UniversityModal";
 import {
   CENTRED_PREFS,
   type CulturePrefs,
   type RecommendationResponse,
-  type Result,
+  type University,
+  type UniversitySummary,
 } from "@/lib/contract";
 import { MAJORS } from "@/lib/majors";
 
@@ -31,7 +33,13 @@ export default function Home() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [sort, setSort] = useState<Sort>("match");
   const [tiers, setTiers] = useState<string[]>([]);
-  const [open, setOpen] = useState<Result | null>(null);
+  // One modal serves both matches and browse; matches add a rationale and tier.
+  const [open, setOpen] = useState<{
+    name: string;
+    university: UniversitySummary;
+    rationale?: string;
+    admitTier?: "reach" | "target" | "safety" | null;
+  } | null>(null);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -102,7 +110,10 @@ export default function Home() {
             <span className="dot" />
             Uni<b>Match</b>
           </a>
-          <div style={{ marginLeft: "auto" }} />
+          <div className="nav-links" style={{ marginLeft: "auto" }}>
+            <a href="#wizard">Match</a>
+            <a href="#browse">Browse</a>
+          </div>
           <button
             className="icon-btn"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -286,7 +297,14 @@ export default function Home() {
                   key={result.university_id}
                   result={result}
                   rank={index + 1}
-                  onOpen={setOpen}
+                  onOpen={(r) =>
+                    setOpen({
+                      name: r.name,
+                      university: r.university,
+                      rationale: r.rationale,
+                      admitTier: r.admit_tier,
+                    })
+                  }
                 />
               ))}
             </div>
@@ -294,7 +312,21 @@ export default function Home() {
         )}
       </main>
 
-      {open && <UniversityModal result={open} onClose={() => setOpen(null)} />}
+      <div className="wrap">
+        <BrowseSection
+          onOpen={(uni: University) => setOpen({ name: uni.name, university: uni })}
+        />
+      </div>
+
+      {open && (
+        <UniversityModal
+          name={open.name}
+          university={open.university}
+          rationale={open.rationale}
+          admitTier={open.admitTier}
+          onClose={() => setOpen(null)}
+        />
+      )}
 
       <footer>
         UniMatch · figures are approximate and for exploration only — always verify on

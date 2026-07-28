@@ -11,7 +11,7 @@ from .candidates import by_id, load_universities
 from .clients import make_rank_fn
 from .llm import MockLLM
 from .loop import iter_loop, run_loop
-from .schemas import RecommendationRequest, RecommendationResponse
+from .schemas import RecommendationRequest, RecommendationResponse, University
 
 app = FastAPI(title="recommendation-service", version="1.0.0")
 
@@ -19,6 +19,18 @@ app = FastAPI(title="recommendation-service", version="1.0.0")
 @app.get("/healthz")
 def healthz() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/universities")
+def universities() -> dict[str, list[University]]:
+    """The whole catalog, for the browse view.
+
+    Returned in one response so the client can search instantly rather than
+    issuing a request per keystroke; at 364 records that is cheaper than
+    paginating. Read-only - no scoring, no loop, no writes.
+    """
+    catalog = sorted(load_universities(), key=lambda u: u.id)
+    return {"universities": catalog}
 
 
 @app.post("/recommend", response_model=RecommendationResponse)

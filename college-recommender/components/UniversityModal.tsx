@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { AXIS_LABELS, CULTURE_AXES, type Result } from "@/lib/contract";
+import { AXIS_LABELS, CULTURE_AXES, type AdmitTier, type UniversitySummary } from "@/lib/contract";
 import { formatStat, tierLabel, type StatKind } from "@/lib/format";
 
 function Stat({
@@ -34,10 +34,17 @@ function Stat({
  * there is no filler.
  */
 export function UniversityModal({
-  result,
+  name,
+  university,
+  rationale,
+  admitTier,
   onClose,
 }: {
-  result: Result;
+  name: string;
+  university: UniversitySummary;
+  /** Present when opened from a match; absent when opened from browse. */
+  rationale?: string;
+  admitTier?: AdmitTier | null;
   onClose: () => void;
 }) {
   useEffect(() => {
@@ -48,34 +55,34 @@ export function UniversityModal({
     return () => document.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const uni = result.university;
-  const tier = tierLabel(result.admit_tier);
+  const uni = university;
+  const tier = tierLabel(admitTier);
 
   return (
     <div
       className="modal-back"
       role="dialog"
       aria-modal="true"
-      aria-label={result.name}
+      aria-label={name}
       onClick={onClose}
     >
       <div className="modal" onClick={(event) => event.stopPropagation()}>
         <div className="card-head">
           <div>
-            <h2 style={{ marginBottom: 2 }}>{result.name}</h2>
+            <h2 style={{ marginBottom: 2 }}>{name}</h2>
             <p className="loc muted">
               {uni.location} · {uni.country} · {uni.size} campus
             </p>
           </div>
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            {tier && <span className={`tier ${result.admit_tier}`}>{tier}</span>}
+            {tier && <span className={`tier ${admitTier}`}>{tier}</span>}
             <button className="icon-btn" onClick={onClose} aria-label="Close">
               ✕
             </button>
           </div>
         </div>
 
-        <p style={{ marginTop: 14 }}>{result.rationale}</p>
+        {rationale && <p style={{ marginTop: 14 }}>{rationale}</p>}
 
         <h3 style={{ marginTop: 22, fontSize: 14, letterSpacing: 0.3 }}>Admissions & cost</h3>
         <dl className="stats">

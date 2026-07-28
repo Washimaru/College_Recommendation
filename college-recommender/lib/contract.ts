@@ -84,3 +84,11 @@ export interface RecommendationResponse {
   stop_reason: string;
   trace: { iteration: number; confidence: number; stop_reason: string | null }[];
 }
+
+/** Full catalog record from GET /v1/universities, used by browse. */
+export interface University extends UniversitySummary {
+  id: string;
+  unitid?: string | null;
+  name: string;
+  sticker_tuition?: number | null;
+}
