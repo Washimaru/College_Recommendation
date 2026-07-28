@@ -15,6 +15,11 @@ target-version = "py311"
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 
+[tool.ruff.lint.per-file-ignores]
+# The JS fixtures reproduce the source dataset's real line format, which is
+# wider than 100 chars. Reflowing them would make them less faithful inputs.
+"tests/test_convert_unimatch.py" = ["E501"]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
