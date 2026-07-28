@@ -1,12 +1,6 @@
 import { formatStat, tierLabel, type StatKind } from "@/lib/format";
 import type { Provenance, Result } from "@/lib/contract";
 
-const TIER_STYLES: Record<string, string> = {
-  Reach: "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-200",
-  Target: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200",
-  Safety: "bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-200",
-};
-
 function Stat({
   label,
   value,
@@ -18,50 +12,50 @@ function Stat({
   provenance: Provenance | undefined;
   kind: StatKind;
 }) {
-  const rendered = formatStat(value, provenance, kind);
+  const { text, note } = formatStat(value, provenance, kind);
   return (
     <div>
-      <dt className="text-xs text-neutral-500 dark:text-neutral-400">{label}</dt>
-      <dd className="text-sm font-medium" title={rendered.note ?? undefined}>
-        {rendered.text}
-        {rendered.note && (
-          <span className="ml-1 text-xs font-normal text-neutral-500">
-            {rendered.note}
-          </span>
-        )}
+      <dt>{label}</dt>
+      <dd title={note ?? undefined}>
+        {text}
+        {note && <span className="note">{note}</span>}
       </dd>
     </div>
   );
 }
 
-export function ResultCard({ result, rank }: { result: Result; rank: number }) {
+/** A whole card is the click target, so opening a profile needs no hunting
+ *  for a small "details" link. */
+export function ResultCard({
+  result,
+  rank,
+  onOpen,
+}: {
+  result: Result;
+  rank: number;
+  onOpen: (result: Result) => void;
+}) {
   const uni = result.university;
   const tier = tierLabel(result.admit_tier);
 
   return (
-    <li className="rounded-lg border border-neutral-200 p-4 dark:border-neutral-800">
-      <div className="flex items-start justify-between gap-3">
+    <button type="button" className="card" onClick={() => onOpen(result)}>
+      <div className="card-head">
         <div>
-          <h3 className="font-semibold">
-            <span className="mr-2 text-neutral-400">{rank}.</span>
+          <h3>
+            <span className="rank">{rank}</span>
             {result.name}
           </h3>
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+          <div className="loc">
             {uni.location} · {uni.country} · {uni.size}
-          </p>
+          </div>
         </div>
-        {tier && (
-          <span
-            className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${TIER_STYLES[tier]}`}
-          >
-            {tier}
-          </span>
-        )}
+        {tier && <span className={`tier ${result.admit_tier}`}>{tier}</span>}
       </div>
 
-      <p className="mt-2 text-sm">{result.rationale}</p>
+      <p style={{ margin: "10px 0 0", fontSize: 14 }}>{result.rationale}</p>
 
-      <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <dl className="stats">
         <Stat label="Avg GPA" value={uni.avg_gpa} provenance={uni.provenance.avg_gpa} kind="decimal" />
         <Stat label="Avg SAT" value={uni.avg_sat} provenance={uni.provenance.avg_sat} kind="score" />
         <Stat
@@ -77,6 +71,10 @@ export function ResultCard({ result, rank }: { result: Result; rank: number }) {
           kind="money"
         />
       </dl>
-    </li>
+
+      <div style={{ marginTop: 12, fontSize: 12.5, color: "var(--accent)", fontWeight: 650 }}>
+        View full profile →
+      </div>
+    </button>
   );
 }

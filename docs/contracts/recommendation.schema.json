@@ -50,7 +50,7 @@
       "type": "object",
       "additionalProperties": false,
       "description": "Enough of the university for a client to show why it is listed and how trustworthy each figure is.",
-      "required": ["country", "location", "avg_gpa", "size"],
+      "required": ["country", "location", "avg_gpa", "size", "culture"],
       "properties": {
         "country": { "type": "string" },
         "location": { "type": "string" },
@@ -60,6 +60,21 @@
         "net_price": { "type": ["number", "null"], "minimum": 0 },
         "enrollment": { "type": ["integer", "null"], "minimum": 0 },
         "size": { "type": "string", "enum": ["small", "medium", "large"] },
+        "majors": { "type": "array", "items": { "type": "string" } },
+        "culture": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Six bipolar axes, aligned with Profile.culture_prefs.",
+          "required": ["collab", "quirky", "idealist", "research", "spirit", "seminar"],
+          "properties": {
+            "collab": { "type": "number", "minimum": 0, "maximum": 1 },
+            "quirky": { "type": "number", "minimum": 0, "maximum": 1 },
+            "idealist": { "type": "number", "minimum": 0, "maximum": 1 },
+            "research": { "type": "number", "minimum": 0, "maximum": 1 },
+            "spirit": { "type": "number", "minimum": 0, "maximum": 1 },
+            "seminar": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
         "provenance": {
           "type": "object",
           "description": "Per-field origin. A null with provenance not_applicable must not render the same as absent.",

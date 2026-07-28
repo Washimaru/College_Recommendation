@@ -69,3 +69,13 @@ def test_summary_preserves_nulls_and_provenance(profile):
     assert beta.university.acceptance_rate is None
     assert beta.university.provenance["avg_sat"] == "not_applicable"
     assert beta.university.provenance["acceptance_rate"] == "absent"
+
+
+def test_summary_carries_majors_and_culture_for_the_detail_view(profile):
+    """The detail modal shows what a school offers and how it feels; both come
+    from tier 1 and are present for every school in the catalog."""
+    response = _run(profile, _universities())
+    alpha = next(r for r in response.results if r.university_id == "u1")
+
+    assert alpha.university.majors == ["Computer Science"]
+    assert alpha.university.culture.research == 0.5

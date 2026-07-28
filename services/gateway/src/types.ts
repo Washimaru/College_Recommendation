@@ -64,6 +64,17 @@ export const RecommendationRequestSchema = z
   })
   .strict();
 
+export const CultureSchema = z
+  .object({
+    collab: z.number().min(0).max(1),
+    quirky: z.number().min(0).max(1),
+    idealist: z.number().min(0).max(1),
+    research: z.number().min(0).max(1),
+    spirit: z.number().min(0).max(1),
+    seminar: z.number().min(0).max(1),
+  })
+  .strict();
+
 export const ProvenanceSchema = z.enum([
   "observed",
   "web_verified",
@@ -87,6 +98,8 @@ export const UniversitySummarySchema = z
     net_price: z.number().min(0).nullable().optional(),
     enrollment: z.number().int().min(0).nullable().optional(),
     size: z.enum(["small", "medium", "large"]),
+    majors: z.array(z.string()).default([]),
+    culture: CultureSchema,
     provenance: z.record(ProvenanceSchema).default({}),
   })
   .strict();

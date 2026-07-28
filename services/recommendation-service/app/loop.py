@@ -112,6 +112,8 @@ def _summarize(uni: University) -> UniversitySummary:
         net_price=uni.net_price,
         enrollment=uni.enrollment,
         size=uni.size,
+        majors=uni.majors,
+        culture=uni.culture,
         provenance=uni.provenance,
     )
 

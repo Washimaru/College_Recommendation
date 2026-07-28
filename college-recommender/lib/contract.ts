@@ -62,6 +62,8 @@ export interface UniversitySummary {
   net_price?: number | null;
   enrollment?: number | null;
   size: "small" | "medium" | "large";
+  majors: string[];
+  culture: Record<CultureAxis, number>;
   provenance: Partial<Record<string, Provenance>>;
 }
 

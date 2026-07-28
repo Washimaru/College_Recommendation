@@ -111,6 +111,8 @@ class UniversitySummary(BaseModel):
     net_price: float | None = None
     enrollment: int | None = None
     size: Size
+    majors: list[str] = Field(default_factory=list)
+    culture: Culture
     provenance: dict[str, Provenance] = Field(default_factory=dict)
 
 

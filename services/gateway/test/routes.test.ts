@@ -23,6 +23,11 @@ const FIXTURE: RecommendationResponse = {
         net_price: 24000,
         enrollment: 8000,
         size: "medium",
+        majors: ["Computer Science"],
+        culture: {
+          collab: 0.5, quirky: 0.5, idealist: 0.5,
+          research: 0.8, spirit: 0.3, seminar: 0.6,
+        },
         provenance: { avg_sat: "observed", acceptance_rate: "observed" },
       },
     },
