@@ -1,12 +1,14 @@
-"""Load generated universities into Postgres. Reads DATABASE_URL from the env."""
+"""Load the built university catalog into Postgres. Reads DATABASE_URL from the env.
+
+The catalog comes from build_catalog.py; the synthetic generator is no longer
+on this path now that the catalog holds real institutions."""
 from __future__ import annotations
 
 import argparse
 import json
 import os
 import sys
-
-from generate import generate_universities
+from pathlib import Path
 
 
 def load_universities(rows: list[dict], url: str) -> int:
@@ -19,22 +21,32 @@ def load_universities(rows: list[dict], url: str) -> int:
                 cur.execute(
                     """
                     INSERT INTO universities (
-                        id, name, avg_gpa, avg_sat, acceptance_rate,
-                        tuition, size, location, majors
+                        id, unitid, name, country, location, avg_gpa, avg_sat,
+                        acceptance_rate, net_price, sticker_tuition, enrollment,
+                        size, majors, culture, provenance
                     )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (id) DO UPDATE SET
+                        unitid = EXCLUDED.unitid,
                         name = EXCLUDED.name,
+                        country = EXCLUDED.country,
+                        location = EXCLUDED.location,
                         avg_gpa = EXCLUDED.avg_gpa,
                         avg_sat = EXCLUDED.avg_sat,
                         acceptance_rate = EXCLUDED.acceptance_rate,
-                        tuition = EXCLUDED.tuition,
+                        net_price = EXCLUDED.net_price,
+                        sticker_tuition = EXCLUDED.sticker_tuition,
+                        enrollment = EXCLUDED.enrollment,
                         size = EXCLUDED.size,
-                        location = EXCLUDED.location,
-                        majors = EXCLUDED.majors
+                        majors = EXCLUDED.majors,
+                        culture = EXCLUDED.culture,
+                        provenance = EXCLUDED.provenance
                     """,
-                    (r["id"], r["name"], r["avg_gpa"], r["avg_sat"], r["acceptance_rate"],
-                     r["tuition"], r["size"], r["location"], Json(r["majors"])),
+                    (r["id"], r.get("unitid"), r["name"], r["country"], r["location"],
+                     r["avg_gpa"], r.get("avg_sat"), r.get("acceptance_rate"),
+                     r.get("net_price"), r.get("sticker_tuition"), r.get("enrollment"),
+                     r["size"], Json(r["majors"]), Json(r["culture"]),
+                     Json(r.get("provenance", {}))),
                 )
         conn.commit()
     return len(rows)
@@ -42,9 +54,11 @@ def load_universities(rows: list[dict], url: str) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Load universities into Postgres.")
-    parser.add_argument("--count", type=int, default=100)
-    parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--file", type=str, default=None, help="load rows from a JSON file")
+    parser.add_argument(
+        "--file",
+        default="out/universities.json",
+        help="catalog JSON produced by build_catalog.py",
+    )
     args = parser.parse_args(argv)
 
     url = os.environ.get("DATABASE_URL")
@@ -52,11 +66,11 @@ def main(argv: list[str] | None = None) -> int:
         sys.stderr.write("DATABASE_URL is not set\n")
         return 2
 
-    if args.file:
-        with open(args.file) as fh:
-            rows = json.load(fh)
-    else:
-        rows = generate_universities(args.count, args.seed)
+    path = Path(args.file)
+    if not path.exists():
+        sys.stderr.write(f"{path} not found; run build_catalog.py first\n")
+        return 2
+    rows = json.loads(path.read_text(encoding="utf-8"))
 
     n = load_universities(rows, url)
     sys.stderr.write(f"loaded {n} universities\n")

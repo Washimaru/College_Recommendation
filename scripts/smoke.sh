@@ -25,14 +25,15 @@ for _ in $(seq 1 30); do
   sleep 2
 done
 
-echo "== seed universities =="
-"$PYBIN" data-pipeline/generate.py --count 100 --seed 42 --out /tmp/unimatch_unis.json
-"$PYBIN" data-pipeline/load.py --file /tmp/unimatch_unis.json
+echo "== build and seed the real catalog =="
+# Offline: build_catalog reads the committed tier files, no network needed.
+( cd "$ROOT/data-pipeline" && "$PYBIN" build_catalog.py )
+( cd "$ROOT/data-pipeline" && "$PYBIN" load.py )
 
 echo "== request a recommendation =="
 RESP="$(curl -fsS -X POST "$GATEWAY_URL/v1/recommendations" \
   -H 'content-type: application/json' \
-  -d '{"profile":{"gpa":3.8,"sat":1400,"mbti":"ENFP","intended_major":"Computer Science"},"top_k":5}')"
+  -d '{"profile":{"gpa":3.8,"sat":1400,"intended_major":"Computer Science","culture_prefs":{"research":0.9,"collab":0.8}},"top_k":5}')"
 echo "$RESP"
 
 echo "$RESP" | python3 -c 'import sys,json; d=json.load(sys.stdin); assert d["results"], "no results"; assert d["stop_reason"].startswith("R"); print("SMOKE OK:", d["stop_reason"], len(d["results"]), "results")'

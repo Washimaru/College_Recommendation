@@ -3,20 +3,30 @@
 -- docker-entrypoint-initdb.d. To re-apply after an edit:
 --   docker compose down -v && docker compose up -d db
 
+-- Contract v2.0.0. Admissions figures are NULLable by design: a value is either
+-- observed from a citable source or absent. Nothing is derived from another
+-- field and stored as if independent. `provenance` records the origin of each.
 CREATE TABLE IF NOT EXISTS universities (
     id              TEXT PRIMARY KEY,
+    unitid          TEXT,                    -- federal IPEDS id where matched; US only
     name            TEXT        NOT NULL,
-    avg_gpa         NUMERIC(3,2) NOT NULL CHECK (avg_gpa >= 0 AND avg_gpa <= 4.0),
-    avg_sat         INTEGER     NOT NULL CHECK (avg_sat BETWEEN 400 AND 1600),
-    acceptance_rate NUMERIC(4,3) NOT NULL CHECK (acceptance_rate >= 0 AND acceptance_rate <= 1),
-    tuition         NUMERIC(9,2) NOT NULL CHECK (tuition >= 0),
-    size            TEXT        NOT NULL CHECK (size IN ('small','medium','large')),
+    country         TEXT        NOT NULL,
     location        TEXT        NOT NULL,
-    majors          JSONB       NOT NULL DEFAULT '[]'::jsonb
+    avg_gpa         NUMERIC(3,2) NOT NULL CHECK (avg_gpa >= 0 AND avg_gpa <= 4.0),
+    avg_sat         INTEGER     CHECK (avg_sat BETWEEN 400 AND 1600),
+    acceptance_rate NUMERIC(4,3) CHECK (acceptance_rate >= 0 AND acceptance_rate <= 1),
+    net_price       NUMERIC(9,2) CHECK (net_price >= 0),   -- cost after aid
+    sticker_tuition NUMERIC(9,2) CHECK (sticker_tuition >= 0),
+    enrollment      INTEGER     CHECK (enrollment >= 0),   -- undergraduate only
+    size            TEXT        NOT NULL CHECK (size IN ('small','medium','large')),
+    majors          JSONB       NOT NULL DEFAULT '[]'::jsonb,
+    culture         JSONB       NOT NULL,    -- required: drives 20% of the score
+    provenance      JSONB       NOT NULL DEFAULT '{}'::jsonb
 );
 
 CREATE INDEX IF NOT EXISTS idx_universities_size ON universities (size);
 CREATE INDEX IF NOT EXISTS idx_universities_location ON universities (location);
+CREATE INDEX IF NOT EXISTS idx_universities_country ON universities (country);
 
 CREATE TABLE IF NOT EXISTS recommendations (
     id          BIGSERIAL PRIMARY KEY,
