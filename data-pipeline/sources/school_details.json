@@ -3753,5 +3753,230 @@
   "src": [
    "https://www.berklee.edu/scholarships"
   ]
+ },
+ "california-institute-of-the-arts": {
+  "scholarships": {
+   "policy": "All admitted students are considered for merit scholarships on the strength of their portfolio or audition. CalArts states plainly that its scholarships do not cover full tuition.",
+   "named": [
+    "Merit assessed from the admissions portfolio or audition",
+    "qey's (Dream) Scholarship: full tuition for a student from an Indigenous community",
+    "FAFSA priority deadline 1 April for both federal funds and CalArts grants"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://calarts.edu/financial-aid/aid-undergraduate-students/scholarships-and-grants-undergraduate-students"
+  ]
+ },
+ "fisk-university": {
+  "scholarships": {
+   "policy": "Merit scholarships are awarded as resources permit, weighing leadership and community service alongside academics. Need-based aid is decided case by case.",
+   "named": [
+    "Awards range from $5,000-$15,000 toward tuition up to full tuition, room, meals and books",
+    "No separate application; priority consideration in Early Action",
+    "Scholarships are not guaranteed"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.fisk.edu/admissions/scholarships/"
+  ]
+ },
+ "texas-christian-university": {
+  "scholarships": {
+   "policy": "Automatic merit consideration for first-years, topped by a highly competitive full-tuition award.",
+   "named": [
+    "Chancellor's Scholarship: full tuition for eight semesters, about 40 first-years a year",
+    "Requires a separate application to the John V. Roach Honors College plus a February interview weekend",
+    "Nearly 80% of students receive some aid"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://admissions.tcu.edu/chancellors-scholars.php"
+  ]
+ },
+ "worcester-polytechnic-institute": {
+  "scholarships": {
+   "policy": "Every admitted applicant is automatically considered for renewable merit aid, with a targeted programme meeting full need for first-generation Pell-eligible students.",
+   "named": [
+    "Great Minds Scholars: full demonstrated need up to tuition and fees for first-gen Pell-eligible students",
+    "IB diploma score of 40+ guarantees a Presidential Scholarship of at least $25,000",
+    "Transfer Partner Student Scholarship: minimum $20,000 a year"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.wpi.edu/admissions/tuition-aid/types-of-aid/scholarships-grants/wpi-merit"
+  ]
+ },
+ "rose-hulman-institute-of-technology": {
+  "scholarships": {
+   "policy": "Admission alone makes a student eligible for the Rose-Hulman Merit Scholarship, renewable four years with no minimum GPA.",
+   "named": [
+    "FIRST Robotics Scholarship: two awards of $10,000 a year, up to $40,000 over four years",
+    "Provost Scholarship: $10,000-$20,000 for biology, chemistry or biochemistry",
+    "Visual and Performing Arts Scholarships $1,000-$2,500 a year"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.rose-hulman.edu/admissions-and-aid/financial-aid/scholarships-and-grants/rose-hulman-scholarships/index.html"
+  ]
+ },
+ "syracuse-university": {
+  "scholarships": {
+   "policy": "Merit is awarded automatically at admission regardless of need, and need-based eligibility is then calculated on what remains.",
+   "named": [
+    "More than 81% of students receive aid, mostly grants and scholarships",
+    "Selected scholarships add need-based aid on top of full tuition, requiring FAFSA and CSS Profile"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.syracuse.edu/admissions-aid/financial-aid-scholarships/scholarship-opportunities/"
+  ]
+ },
+ "george-washington-university": {
+  "scholarships": {
+   "policy": "Automatic merit consideration for first-year, transfer and international applicants; full need is met only through targeted programmes rather than universally.",
+   "named": [
+    "District Scholars: meets full demonstrated need for qualifying DC residents",
+    "Revolutionary Promise: 50-100% off tuition for those who qualify",
+    "99% of applicants with need receive assistance"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://undergraduate.admissions.gwu.edu/merit-scholarships"
+  ]
+ },
+ "santa-clara-university": {
+  "scholarships": {
+   "policy": "A comprehensive top merit award that also commits to meeting full need for its recipients.",
+   "named": [
+    "Johnson Scholars: full tuition renewable four years, plus full demonstrated need met",
+    "Up to $10,000 in professional development funds after first year",
+    "Requires honours programme participation and a 3.5 GPA"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.scu.edu/johnsonscholars/about-the-programaward/"
+  ]
+ },
+ "st-olaf-college": {
+  "scholarships": {
+   "policy": "Commits to meeting full demonstrated need and runs a broad merit programme alongside it.",
+   "named": [
+    "Academic Scholarships $2,000-$33,000 a year, renewable four years, automatic consideration",
+    "Fine Arts merit awards in music, dance, art and theatre",
+    "Indigenous students under $150k family income: minimum full tuition in grants",
+    "77% qualify for need-based aid; average package $44,708"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://wp.stolaf.edu/admissions/afford/"
+  ]
+ },
+ "fordham-university": {
+  "scholarships": {
+   "policy": "Fordham does NOT commit to meeting full demonstrated need, and requires a substantial minimum family contribution to qualify for aid — a material difference from most peers at this selectivity.",
+   "named": [
+    "Dean's Scholarship starts at $25,000 and rises with demonstrated need",
+    "More than 90% of first-years receive some aid",
+    "FAFSA required to disburse all aid, including merit"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.fordham.edu/undergraduate-financial-aid/types-of-financial-aid/fordham-scholarships-and-grants/"
+  ]
+ },
+ "bard-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need for students admitted in the early rounds (Early Action I and Early Decision I), and makes every effort for other rounds.",
+   "named": [
+    "Bard Excellence merit scholarships from Fall 2025, averaging $10,000 a year",
+    "Merit priority goes to students not eligible for federal need-based aid",
+    "Almost 70% of students receive College support; $73M institutional aid in 2023-24"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.bard.edu/sfs/financial-aid/"
+  ]
+ },
+ "rensselaer-polytechnic-institute": {
+  "scholarships": {
+   "policy": "Best known for a century-old medal awarded through high schools rather than by application.",
+   "named": [
+    "Rensselaer Medal: $40,000 a year, $160,000 over four years, guaranteed to enrolling medalists",
+    "Awarded at more than 4,000 high schools worldwide; nominated by your school in junior year",
+    "No application required"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://financialaid.rpi.edu/types-aid/scholarships/rensselaer-medal"
+  ]
+ },
+ "xavier-university-of-louisiana": {
+  "scholarships": {
+   "policy": "Merit is considered automatically at admission for domestic and international first-years; aid is otherwise federal and state need-based.",
+   "named": [
+    "Institutional scholarships renewable up to eight consecutive semesters",
+    "Combined institutional, federal and state awards cannot exceed direct costs",
+    "FAFSA is the only application needed for federal and state aid"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.xula.edu/financialaid/academic-scholarships/index.html"
+  ]
+ },
+ "rochester-institute-of-technology": {
+  "scholarships": {
+   "policy": "Every applicant is considered for merit regardless of need, with no separate application, and awards renew automatically.",
+   "named": [
+    "First-year merit $14,000-$27,000 a year ($56,000-$108,000 over the degree)",
+    "Transfer merit $14,000-$25,000 a year",
+    "Specialised awards including FIRST robotics and esports"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.rit.edu/admissions/aid/merit-based-scholarships"
+  ]
+ },
+ "sarah-lawrence-college": {
+  "scholarships": {
+   "policy": "Every applicant is automatically considered for merit. Sarah Lawrence makes no published commitment to meeting full demonstrated need.",
+   "named": [
+    "Average aid package over $45,000",
+    "Over 80% of students receive a Sarah Lawrence grant or scholarship",
+    "Merit renewed annually on continued academic success"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.sarahlawrence.edu/financial-aid/undergraduate/sarah-lawrence-aid.html"
+  ]
  }
 }
