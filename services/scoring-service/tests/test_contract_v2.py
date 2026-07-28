@@ -12,8 +12,9 @@ from pydantic import ValidationError
 from app.schemas import CONTRACT_VERSION, CulturePrefs, Profile, University
 
 
-def test_contract_version_is_2():
-    assert CONTRACT_VERSION == "2.0.0"
+def test_contract_version_is_3():
+    """v3.0.0 added the activities and personality dimensions."""
+    assert CONTRACT_VERSION == "3.0.0"
 
 
 def test_profile_needs_no_mbti():

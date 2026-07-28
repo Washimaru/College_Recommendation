@@ -6,11 +6,13 @@ always yields the same RankResponse (enforced by test_determinism).
 from __future__ import annotations
 
 import math
+import re
 
 from .schemas import (
     CULTURE_AXES,
     Culture,
     CulturePrefs,
+    Personality,
     Profile,
     RankRequest,
     RankResponse,
@@ -21,11 +23,47 @@ from .schemas import (
 # Default rubric weights. Overridable per-request via profile.weights and then
 # multiplicatively adjusted by weight_feedback (already clamped by the loop).
 DEFAULT_WEIGHTS: dict[str, float] = {
-    "academic": 0.35,
-    "cost": 0.20,
-    "fit": 0.25,
-    "culture": 0.20,
+    "academic": 0.28,
+    "cost": 0.18,
+    "fit": 0.18,
+    "culture": 0.18,
+    "activities": 0.10,
+    "personality": 0.08,
 }
+
+# Activity keyword -> subject families a school may be strong in. Transparent
+# and testable on purpose: the pairing of what a student does with what a
+# school teaches is the signal, not the activity in isolation.
+_ACTIVITY_SUBJECTS: list[tuple[str, tuple[str, ...]]] = [
+    (r"robot|hackathon|coding|code|program|software|cyber|game dev|app",
+     ("Computer Science", "Engineering", "Data Science", "Cybersecurity")),
+    (r"science fair|olympiad|research|\blab\b|biology|chemistry|physics",
+     ("Biology", "Chemistry", "Physics", "Neuroscience", "Research")),
+    (r"math|calculus|number theory|putnam",
+     ("Mathematics", "Math", "Statistics", "Data Science")),
+    (r"debate|model un|\bmun\b|mock trial|speech|policy",
+     ("Political Science", "International Relations", "Public Policy", "Law", "Philosophy")),
+    (r"business|deca|entrepreneur|startup|invest|finance|marketing",
+     ("Business", "Economics", "Finance", "Marketing", "Management")),
+    (r"volunteer|service|nonprofit|charity|tutor|mentor|community",
+     ("Social Work", "Public Health", "Education", "Sociology")),
+    (r"music|band|orchestra|choir|jazz|piano|violin|composition",
+     ("Music", "Music Performance", "Composition", "Performance")),
+    (r"art|paint|draw|photograph|sculpt|design|ceramics",
+     ("Studio Art", "Art", "Design", "Fine Arts", "Architecture")),
+    (r"theat|drama|acting|film|dance|cinema",
+     ("Drama", "Theatre", "Film", "Performance")),
+    (r"writ|journal|newspaper|poetry|literary|yearbook",
+     ("English", "Journalism", "Creative Writing", "Communications")),
+    (r"environment|sustain|climate|ecology|conservation",
+     ("Environmental Science", "Environmental Studies", "Geology")),
+    (r"hospital|medic|nurs|pre-med|health|dental|pharma",
+     ("Nursing", "Public Health", "Biology", "Health Sciences", "Medicine")),
+    (r"engineer|build|maker|3d print|\bcad\b|rocket|car",
+     ("Engineering", "Mechanical Engineering", "Electrical Engineering", "Architecture")),
+    (r"sport|athlet|varsity|soccer|basketball|swim|track|tennis",
+     ("Kinesiology", "Sport Management", "Health Sciences")),
+]
 
 
 def _clamp01(x: float) -> float:
@@ -79,14 +117,13 @@ def _cost_fit(profile: Profile, uni: University) -> float:
 
 
 def _fit(profile: Profile, uni: University) -> float:
+    """Major and location. Campus size moved to the personality dimension in
+    v3.0.0 so scale is not scored in two places."""
     major = 1.0 if profile.intended_major.lower() in {m.lower() for m in uni.majors} else 0.3
-    size = 1.0
-    if profile.preferences.preferred_size is not None:
-        size = 1.0 if profile.preferences.preferred_size == uni.size else 0.4
     loc = 1.0
     if profile.preferences.locations:
         loc = 1.0 if uni.location in profile.preferences.locations else 0.4
-    return round((0.5 * major + 0.25 * size + 0.25 * loc), 6)
+    return round((0.65 * major + 0.35 * loc), 6)
 
 
 def culture_fit(prefs: CulturePrefs, culture: Culture) -> float:
@@ -116,6 +153,62 @@ def culture_fit(prefs: CulturePrefs, culture: Culture) -> float:
     return round(_clamp01(weighted / total_importance), 6)
 
 
+def activity_fit(activities: list, uni: University) -> float:
+    """How well what the student does lines up with what the school teaches.
+
+    Neutral (0.5) when no activities are given: silence must not be a penalty.
+    """
+    if not activities:
+        return 0.5
+
+    school_subjects = {major.lower() for major in uni.majors}
+    hits = 0
+    for activity in activities:
+        text = f"{activity.name} {activity.kind}".lower()
+        for pattern, subjects in _ACTIVITY_SUBJECTS:
+            if re.search(pattern, text) and any(
+                subject.lower() in school_subjects for subject in subjects
+            ):
+                hits += 1
+                break
+
+    # Diminishing returns: a third matching activity says less than the first.
+    share = hits / len(activities)
+    return round(_clamp01(0.5 + 0.5 * share), 6)
+
+
+def personality_fit(personality: Personality, uni: University) -> float:
+    """Match derived intensity and scale against school attributes the culture
+    dimension does not use, so nothing is scored twice.
+
+    Axes with no school data are skipped rather than guessed; when none are
+    available the result is neutral.
+    """
+    parts: list[float] = []
+    weights: list[float] = []
+
+    if uni.acceptance_rate is not None:
+        # Selectivity as a proxy for academic pressure.
+        selectivity = 1.0 - uni.acceptance_rate
+        importance = abs(personality.intensity - 0.5) * 2
+        parts.append(1.0 - abs(personality.intensity - selectivity))
+        weights.append(importance)
+
+    if uni.enrollment is not None:
+        # 25k undergraduates is treated as the top of the scale.
+        scale = _clamp01(uni.enrollment / 25_000)
+        importance = abs(personality.scale - 0.5) * 2
+        parts.append(1.0 - abs(personality.scale - scale))
+        weights.append(importance)
+
+    total = sum(weights)
+    if total == 0:
+        return 0.5
+    return round(
+        _clamp01(sum(p * w for p, w in zip(parts, weights, strict=True)) / total), 6
+    )
+
+
 def _resolve_weights(profile: Profile, weight_feedback: dict[str, float]) -> dict[str, float]:
     weights = dict(DEFAULT_WEIGHTS)
     if profile.weights is not None:
@@ -133,6 +226,8 @@ def score_one(profile: Profile, uni: University, weights: dict[str, float]) -> S
         "cost": _cost_fit(profile, uni),
         "fit": _fit(profile, uni),
         "culture": culture_fit(profile.culture_prefs, uni.culture),
+        "activities": activity_fit(profile.activities, uni),
+        "personality": personality_fit(profile.personality, uni),
     }
     total_w = sum(weights[k] for k in components) or 1.0
     raw = sum(weights[k] * components[k] for k in components) / total_w

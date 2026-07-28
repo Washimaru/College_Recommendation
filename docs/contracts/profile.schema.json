@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/profile.schema.json",
   "title": "StudentProfile",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["gpa", "intended_major"],
@@ -24,6 +24,31 @@
       },
       "default": {}
     },
+    "personality": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Derived from the questionnaire, on axes the culture vector does not cover so no signal is scored twice. 0.5 means no preference.",
+      "properties": {
+        "intensity": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5, "description": "0 = steady and low-pressure, 1 = driven and highly competitive." },
+        "scale": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5, "description": "0 = small and close-knit, 1 = large and bustling." }
+      },
+      "default": {}
+    },
+    "activities": {
+      "type": "array",
+      "description": "Competitions, clubs and other commitments, matched by keyword against what a school is strong in.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "kind": { "type": "string", "enum": ["competition", "club", "volunteering", "work", "sport", "arts", "research", "other"], "default": "other" },
+          "years": { "type": ["integer", "null"], "minimum": 0, "maximum": 12 }
+        }
+      },
+      "default": []
+    },
     "preferences": {
       "type": "object",
       "additionalProperties": false,
@@ -42,7 +67,9 @@
         "academic": { "type": "number", "minimum": 0 },
         "cost": { "type": "number", "minimum": 0 },
         "fit": { "type": "number", "minimum": 0 },
-        "culture": { "type": "number", "minimum": 0 }
+        "culture": { "type": "number", "minimum": 0 },
+        "activities": { "type": "number", "minimum": 0 },
+        "personality": { "type": "number", "minimum": 0 }
       }
     }
   }

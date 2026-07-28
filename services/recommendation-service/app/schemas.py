@@ -10,7 +10,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "2.0.0"
+CONTRACT_VERSION = "3.0.0"
 
 Size = Literal["small", "medium", "large"]
 StopReason = Literal["R1_converged", "R2_confident", "R3_no_change", "R4_iteration_cap"]
@@ -40,6 +40,26 @@ class Culture(BaseModel):
     seminar: float = Field(ge=0, le=1)
 
 
+ActivityKind = Literal[
+    "competition", "club", "volunteering", "work", "sport", "arts", "research", "other"
+]
+
+
+class Activity(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    name: str = Field(min_length=1)
+    kind: ActivityKind = "other"
+    years: int | None = Field(default=None, ge=0, le=12)
+
+
+class Personality(BaseModel):
+    """Axes the culture vector does not cover, so no signal is scored twice."""
+
+    model_config = ConfigDict(extra="forbid")
+    intensity: float = Field(default=0.5, ge=0, le=1)
+    scale: float = Field(default=0.5, ge=0, le=1)
+
+
 class Preferences(BaseModel):
     model_config = ConfigDict(extra="forbid")
     max_tuition: float | None = Field(default=None, ge=0)
@@ -53,6 +73,8 @@ class Weights(BaseModel):
     cost: float | None = Field(default=None, ge=0)
     fit: float | None = Field(default=None, ge=0)
     culture: float | None = Field(default=None, ge=0)
+    activities: float | None = Field(default=None, ge=0)
+    personality: float | None = Field(default=None, ge=0)
 
 
 class Profile(BaseModel):
@@ -61,6 +83,8 @@ class Profile(BaseModel):
     sat: int | None = Field(default=None, ge=400, le=1600)
     intended_major: str = Field(min_length=1)
     culture_prefs: CulturePrefs = Field(default_factory=CulturePrefs)
+    personality: Personality = Field(default_factory=Personality)
+    activities: list[Activity] = Field(default_factory=list)
     preferences: Preferences = Field(default_factory=Preferences)
     weights: Weights | None = None
 

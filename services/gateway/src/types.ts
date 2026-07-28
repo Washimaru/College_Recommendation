@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "2.0.0";
+export const CONTRACT_VERSION = "3.0.0";
 
 /**
  * Six bipolar culture axes. 0.0 and 1.0 are opposite poles; 0.5 means the
@@ -28,6 +28,28 @@ export const CulturePrefsSchema = z
   })
   .strict();
 
+/** Competitions, clubs and other commitments. */
+export const ActivitySchema = z
+  .object({
+    name: z.string().min(1),
+    kind: z
+      .enum(["competition", "club", "volunteering", "work", "sport", "arts", "research", "other"])
+      .default("other"),
+    years: z.number().int().min(0).max(12).nullable().optional(),
+  })
+  .strict();
+
+/**
+ * Derived from the questionnaire, on axes the culture vector does not cover so
+ * no signal is scored twice. 0.5 means no preference.
+ */
+export const PersonalitySchema = z
+  .object({
+    intensity: z.number().min(0).max(1).default(0.5),
+    scale: z.number().min(0).max(1).default(0.5),
+  })
+  .strict();
+
 export const PreferencesSchema = z
   .object({
     max_tuition: z.number().min(0).nullable().optional(),
@@ -42,6 +64,8 @@ export const WeightsSchema = z
     cost: z.number().min(0).optional(),
     fit: z.number().min(0).optional(),
     culture: z.number().min(0).optional(),
+    activities: z.number().min(0).optional(),
+    personality: z.number().min(0).optional(),
   })
   .strict();
 
@@ -51,6 +75,8 @@ export const ProfileSchema = z
     sat: z.number().int().min(400).max(1600).nullable().optional(),
     intended_major: z.string().min(1),
     culture_prefs: CulturePrefsSchema.optional(),
+    personality: PersonalitySchema.optional(),
+    activities: z.array(ActivitySchema).optional(),
     preferences: PreferencesSchema.optional(),
     weights: WeightsSchema.optional(),
   })
