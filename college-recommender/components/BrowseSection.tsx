@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import type { University } from "@/lib/contract";
 import { formatStat } from "@/lib/format";
@@ -13,9 +13,15 @@ const PAGE = 24;
  * surface in a match. The catalog arrives once and is filtered in memory, so
  * results update as you type.
  */
-export function BrowseSection({ onOpen }: { onOpen: (uni: University) => void }) {
-  const [catalog, setCatalog] = useState<University[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
+export function BrowseSection({
+  catalog,
+  error,
+  onOpen,
+}: {
+  catalog: University[] | null;
+  error: string | null;
+  onOpen: (uni: University) => void;
+}) {
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("");
   const [size, setSize] = useState("");
@@ -35,24 +41,6 @@ export function BrowseSection({ onOpen }: { onOpen: (uni: University) => void })
     setSize(value);
     setShown(PAGE);
   };
-
-  useEffect(() => {
-    let cancelled = false;
-    fetch("/api/universities")
-      .then(async (res) => {
-        if (!res.ok) throw new Error(String(res.status));
-        return res.json();
-      })
-      .then((body) => {
-        if (!cancelled) setCatalog(body.universities as University[]);
-      })
-      .catch(() => {
-        if (!cancelled) setError("Couldn't load the catalog. Is the stack running?");
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   const countries = useMemo(() => (catalog ? countriesOf(catalog) : []), [catalog]);
   const matches = useMemo(

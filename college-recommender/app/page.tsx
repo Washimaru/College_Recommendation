@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { CultureSliders } from "@/components/CultureSliders";
 import { ResultCard } from "@/components/ResultCard";
 import { BrowseSection } from "@/components/BrowseSection";
+import { MajorFinder } from "@/components/MajorFinder";
 import { UniversityModal } from "@/components/UniversityModal";
 import {
   CENTRED_PREFS,
@@ -25,6 +26,10 @@ type Sort = "match" | "price" | "selectivity";
 
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  // Fetched once and shared: browse searches it, and Major Finder uses it to
+  // show which schools are strong in each suggested field.
+  const [catalog, setCatalog] = useState<University[] | null>(null);
+  const [catalogError, setCatalogError] = useState<string | null>(null);
   const [gpa, setGpa] = useState("3.8");
   const [sat, setSat] = useState("");
   const [major, setMajor] = useState("Computer Science");
@@ -44,6 +49,24 @@ export default function Home() {
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/universities")
+      .then(async (res) => {
+        if (!res.ok) throw new Error(String(res.status));
+        return res.json();
+      })
+      .then((body) => {
+        if (!cancelled) setCatalog(body.universities as University[]);
+      })
+      .catch(() => {
+        if (!cancelled) setCatalogError("Couldn't load the catalog. Is the stack running?");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -113,6 +136,7 @@ export default function Home() {
           <div className="nav-links" style={{ marginLeft: "auto" }}>
             <a href="#wizard">Match</a>
             <a href="#browse">Browse</a>
+            <a href="#majorfinder">Major Finder</a>
           </div>
           <button
             className="icon-btn"
@@ -140,7 +164,7 @@ export default function Home() {
         <div className="hero-stats">
           <div>
             <b>364</b>
-            <span>universities · 25 countries</span>
+            <span>universities · 26 countries</span>
           </div>
           <div>
             <b>6</b>
@@ -314,6 +338,12 @@ export default function Home() {
 
       <div className="wrap">
         <BrowseSection
+          catalog={catalog}
+          error={catalogError}
+          onOpen={(uni: University) => setOpen({ name: uni.name, university: uni })}
+        />
+        <MajorFinder
+          catalog={catalog}
           onOpen={(uni: University) => setOpen({ name: uni.name, university: uni })}
         />
       </div>
