@@ -23,9 +23,9 @@ def load_universities(rows: list[dict], url: str) -> int:
                     INSERT INTO universities (
                         id, unitid, name, country, location, avg_gpa, avg_sat,
                         acceptance_rate, net_price, sticker_tuition, enrollment,
-                        size, majors, culture, provenance
+                        size, majors, culture, details, provenance
                     )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (id) DO UPDATE SET
                         unitid = EXCLUDED.unitid,
                         name = EXCLUDED.name,
@@ -40,12 +40,14 @@ def load_universities(rows: list[dict], url: str) -> int:
                         size = EXCLUDED.size,
                         majors = EXCLUDED.majors,
                         culture = EXCLUDED.culture,
+                        details = EXCLUDED.details,
                         provenance = EXCLUDED.provenance
                     """,
                     (r["id"], r.get("unitid"), r["name"], r["country"], r["location"],
                      r["avg_gpa"], r.get("avg_sat"), r.get("acceptance_rate"),
                      r.get("net_price"), r.get("sticker_tuition"), r.get("enrollment"),
                      r["size"], Json(r["majors"]), Json(r["culture"]),
+                     Json(r.get("details")) if r.get("details") else None,
                      Json(r.get("provenance", {}))),
                 )
         conn.commit()

@@ -40,6 +40,7 @@ def _load_from_db(url: str) -> list[University]:  # pragma: no cover - needs Pos
         rows = conn.execute(
             "SELECT id, unitid, name, country, location, avg_gpa, avg_sat, "
             "acceptance_rate, net_price, sticker_tuition, enrollment, size, "
+            "details, "
             "majors, culture, provenance FROM universities"
         ).fetchall()
     return [University(**row) for row in rows]

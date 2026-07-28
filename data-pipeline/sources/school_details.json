@@ -1,0 +1,2982 @@
+{
+ "massachusetts-institute-of-technology": {
+  "src": {
+   "u": "https://ir.mit.edu/cds",
+   "t": "MIT Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1530–1580",
+   "act": "35–36",
+   "acceptRate": "~4.5%",
+   "testPolicy": "Requires SAT/ACT (reinstated)."
+  },
+  "academics": {
+   "ratio": "3:1",
+   "classSize": "Small; heavy problem-set & lab culture",
+   "knownFor": [
+    "Engineering",
+    "Computer Science",
+    "Physics & Math"
+   ]
+  },
+  "programs": [
+   "UROP — the flagship Undergraduate Research Opportunities Program; ~85% of students do research.",
+   "Cross-registration with Harvard & Wellesley.",
+   "MIT Sandbox & The Engine — student startup funding.",
+   "IAP independent activities period each January."
+  ],
+  "aid": {
+   "meritNote": "Need-blind admission; meets 100% of demonstrated need with grants, no loans. Families under ~$140k often pay $0 tuition.",
+   "note": "No merit scholarships — aid is purely need-based."
+  },
+  "scholarships": {
+   "policy": "Entirely need-based — no merit or athletic scholarships; meets 100% of need with grants. Free tuition under ~$140k income.",
+   "named": [
+    "MIT need-based grant — $0 tuition under ~$140k",
+    "No-loan packages",
+    "External/national scholarships applied to cost"
+   ]
+  },
+  "research": {
+   "level": "Among the highest in the world",
+   "undergrad": "Iconic UROP — the large majority of undergraduates do faculty research.",
+   "areas": "AI & computing (CSAIL), quantum science & nanotechnology (incl. quantum dots), genetics & biomedical engineering, economics, and materials/energy."
+  },
+  "faculty": "100+ Nobel-affiliated scholars. Recent notable faculty: Daron Acemoglu & Simon Johnson (2024 Economics Nobel), Moungi Bawendi (2023 Chemistry, quantum dots), and bioengineer Robert Langer — one of the most-cited researchers alive. (Faculty change — verify.)",
+  "gradSchools": "Top-ranked graduate & PhD programs in engineering, science and computing; the Sloan School of Management is a leading MBA.",
+  "studentLife": {
+   "clubs": "500+ student groups and a famous student 'hacking' / maker culture",
+   "career": "Strong career services with heavy tech, consulting & finance recruiting; the UROP office connects students to labs."
+  },
+  "collaborations": [
+   "Cross-registration with Harvard & Wellesley",
+   "Broad Institute genomics (with Harvard)",
+   "Lincoln Laboratory & major industry/government research partnerships"
+  ],
+  "proSchools": [
+   "Top feeder to PhD programs in science & engineering.",
+   "Strong med-school placement via biology/biomedical tracks.",
+   "Sloan pipeline into finance, consulting & tech leadership."
+  ],
+  "campus": {
+   "greek": "Active — roughly a quarter of students join fraternities/sororities/living groups.",
+   "athletics": "NCAA Division III (33 varsity sports — most in DIII).",
+   "housing": "Guaranteed 4-year housing; distinctive dorm cultures."
+  },
+  "outcomes": {
+   "salary": "$95k–$115k (est. median early-career)",
+   "employers": [
+    "Google",
+    "Amazon",
+    "Microsoft",
+    "McKinsey",
+    "Goldman Sachs",
+    "startups/own ventures"
+   ],
+   "paths": "Split between top tech/finance/consulting and PhD study; high startup-founder rate."
+  },
+  "_source": "curated"
+ },
+ "stanford-university": {
+  "src": {
+   "u": "https://irds.stanford.edu/data-findings/cds",
+   "t": "Stanford Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1510–1570",
+   "act": "34–35",
+   "acceptRate": "~3.6%",
+   "testPolicy": "Test-optional for 2024–25; SAT/ACT required from the Class of 2030 onward."
+  },
+  "academics": {
+   "ratio": "6:1",
+   "classSize": "Small seminars alongside large intro courses",
+   "knownFor": [
+    "Computer Science",
+    "Engineering",
+    "Entrepreneurship"
+   ]
+  },
+  "programs": [
+   "Adjacent to Silicon Valley with deep startup/VC ties.",
+   "CS+X joint majors blending computer science with the humanities.",
+   "Stanford d.school (design thinking).",
+   "Bing Overseas Studies in 10+ countries."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; meets full need. Families under ~$100k typically pay no tuition; under ~$150k often no tuition.",
+   "note": "Athletic & a few merit scholarships exist; most aid is need-based."
+  },
+  "scholarships": {
+   "policy": "Primarily need-based — free tuition under ~$100k income, and free tuition + room/board under ~$75k; limited athletic awards.",
+   "named": [
+    "Need-based grants — free tuition under ~$100k",
+    "Athletic scholarships (varsity)",
+    "Knight-Hennessy Scholars (graduate level)"
+   ]
+  },
+  "research": {
+   "level": "Very high",
+   "undergrad": "Extensive — major undergraduate research grants (e.g., VPUE) and lab access.",
+   "areas": "AI & machine learning (SAIL, HAI), human-computer interaction & design, robotics, bioengineering & medicine, and entrepreneurship/innovation."
+  },
+  "faculty": "Notable faculty include Fei-Fei Li (AI, creator of ImageNet; co-director of Stanford HAI) and roboticist Oussama Khatib; Andrew Ng has taught its famous machine-learning course. (Faculty change — verify.)",
+  "gradSchools": "Elite graduate schools: Stanford GSB (business), the School of Medicine, the Law School, and top engineering/CS PhD programs.",
+  "studentLife": {
+   "clubs": "600+ student organizations",
+   "career": "A powerful career hub with deep Silicon Valley tech, venture-capital and startup pipelines."
+  },
+  "collaborations": [
+   "Adjacent Silicon Valley industry & VC ecosystem",
+   "Stanford Research Park corporate partnerships",
+   "Bing Overseas Studies global centers"
+  ],
+  "proSchools": [
+   "Premier feeder to medicine, law, and PhD programs.",
+   "GSB & tech network drive elite consulting/finance/startup outcomes."
+  ],
+  "campus": {
+   "greek": "Present but not dominant (~15–20%).",
+   "athletics": "NCAA Division I (Pac-12 era powerhouse) — 130+ Olympic medals by affiliates.",
+   "housing": "Almost all undergrads live on campus all four years."
+  },
+  "outcomes": {
+   "salary": "$90k–$110k (est. median early-career)",
+   "employers": [
+    "Google",
+    "Apple",
+    "Meta",
+    "McKinsey",
+    "Goldman Sachs",
+    "own startups"
+   ],
+   "paths": "Heavy into tech & startups, plus consulting, finance, and graduate/professional school."
+  },
+  "_source": "curated"
+ },
+ "harvard-university": {
+  "src": {
+   "u": "https://oira.harvard.edu/the-common-data-set/",
+   "t": "Harvard Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1510–1580",
+   "act": "34–36",
+   "acceptRate": "~3.6%"
+  },
+  "academics": {
+   "ratio": "6:1",
+   "knownFor": [
+    "Economics",
+    "Government",
+    "Pre-Med & Biology"
+   ]
+  },
+  "programs": [
+   "House system for upperclass living-learning community.",
+   "Cross-registration with MIT.",
+   "Vast alumni & global research network.",
+   "Generous funded summer research & public-service fellowships."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; meets full need. Families under ~$85k pay nothing; sliding scale to ~$150k+.",
+   "note": "No merit/athletic scholarships — aid is entirely need-based."
+  },
+  "scholarships": {
+   "policy": "Entirely need-based — Harvard offers no merit or athletic scholarships, instead meeting 100% of demonstrated need with grants.",
+   "named": [
+    "Harvard Financial Aid Initiative — $0 cost under ~$85k income",
+    "All-grant, no-loan packages",
+    "Start-up & term-time work grants"
+   ]
+  },
+  "research": {
+   "level": "Very high",
+   "undergrad": "PRISE and many funded programs place undergrads in labs and archives.",
+   "areas": "Economics & social science, molecular/cellular biology & genetics, government & law, public health & medicine, and physics/applied science."
+  },
+  "faculty": "University Professors (its highest rank) include economist Claudia Goldin (2023 Economics Nobel for work on women & the labor market), neuroscientist Catherine Dulac, and physicist Cumrun Vafa (string theory). (Faculty change — verify.)",
+  "gradSchools": "Among the world's most prestigious professional schools — Harvard Business School, Harvard Law School, Harvard Medical School, and the Kennedy School of Government.",
+  "studentLife": {
+   "clubs": "450+ student organizations plus the residential House system",
+   "career": "Extensive career services with finance/consulting/tech recruiting and a vast global alumni network."
+  },
+  "collaborations": [
+   "Cross-registration with MIT",
+   "Broad Institute genomics (with MIT)",
+   "Harvard-affiliated teaching hospitals"
+  ],
+  "proSchools": [
+   "Elite placement into medical, law, and PhD programs.",
+   "HBS & finance/consulting pipelines are among the strongest anywhere."
+  ],
+  "campus": {
+   "greek": "No official Greek system; final clubs & many student orgs instead.",
+   "athletics": "NCAA Division I (Ivy League) — most varsity teams in the nation.",
+   "housing": "Guaranteed four-year housing in the House system."
+  },
+  "outcomes": {
+   "salary": "$85k–$110k (est. median early-career)",
+   "employers": [
+    "McKinsey",
+    "Goldman Sachs",
+    "Google",
+    "Bain",
+    "Government & academia"
+   ],
+   "paths": "Consulting, finance, tech, and very high rates of graduate/professional school."
+  },
+  "_source": "curated"
+ },
+ "yale-university": {
+  "src": {
+   "u": "https://oir.yale.edu/common-data-set",
+   "t": "Yale Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1480–1560",
+   "act": "33–35",
+   "acceptRate": "~3.9%"
+  },
+  "academics": {
+   "ratio": "5:1",
+   "knownFor": [
+    "Drama & the Arts",
+    "Political Science",
+    "History"
+   ]
+  },
+  "programs": [
+   "Residential college system (14 colleges).",
+   "Directed Studies great-books program.",
+   "Renowned drama & a cappella scene.",
+   "Generous global-study & research fellowships."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; meets full need with no loans. Many families pay $0.",
+   "note": "Need-based aid only."
+  },
+  "research": {
+   "undergrad": "Strong — first-year students can join labs; abundant fellowships."
+  },
+  "campus": {
+   "greek": "Modest Greek presence; residential colleges anchor social life.",
+   "athletics": "NCAA Division I (Ivy League).",
+   "housing": "Four years in the residential colleges."
+  },
+  "outcomes": {
+   "employers": [
+    "Consulting & finance firms",
+    "Government & NGOs",
+    "Tech",
+    "Academia"
+   ],
+   "paths": "Strong into law, public service, academia, finance and consulting."
+  },
+  "_source": "curated"
+ },
+ "princeton-university": {
+  "src": {
+   "u": "https://ir.princeton.edu/university-data/common-data-set",
+   "t": "Princeton Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1500–1560",
+   "act": "34–35",
+   "acceptRate": "~4.6%"
+  },
+  "academics": {
+   "ratio": "5:1",
+   "knownFor": [
+    "Engineering & Public Policy",
+    "Economics",
+    "Physics & Math"
+   ]
+  },
+  "programs": [
+   "Mandatory senior thesis & junior independent work.",
+   "Princeton-leads-the-nation no-loan aid since 2001.",
+   "Residential colleges; eating clubs for upperclass dining.",
+   "Strong undergraduate focus (no med/law/business school)."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; meets full need with grants (no loans). Families under ~$100k typically pay $0; very generous to ~$200k+.",
+   "note": "Among the most generous aid in the US — need-based only."
+  },
+  "scholarships": {
+   "policy": "Entirely need-based (no merit awards) — pioneered no-loan aid; free tuition, room & board for families under ~$100k.",
+   "named": [
+    "Princeton grant — replaces all loans",
+    "Free tuition + room & board under ~$100k income",
+    "Generous aid extending to ~$200k+"
+   ]
+  },
+  "research": {
+   "undergrad": "Exceptional — the required independent work means every student does original research."
+  },
+  "campus": {
+   "greek": "Unofficial Greek life; eating clubs are the signature social institution.",
+   "athletics": "NCAA Division I (Ivy League) — broad varsity success.",
+   "housing": "Four-year on-campus housing."
+  },
+  "outcomes": {
+   "salary": "$85k–$105k (est. median early-career)",
+   "employers": [
+    "Finance & consulting firms",
+    "Tech",
+    "Government",
+    "PhD programs"
+   ],
+   "paths": "Very high graduate-study rate plus finance, consulting and tech."
+  },
+  "_source": "curated"
+ },
+ "california-institute-of-technology": {
+  "admissions": {
+   "sat": "1530–1580",
+   "act": "35–36",
+   "acceptRate": "~3%",
+   "testPolicy": "Confirm current testing requirement."
+  },
+  "academics": {
+   "ratio": "3:1",
+   "classSize": "Tiny; intense collaborative problem sets under an Honor Code",
+   "knownFor": [
+    "Physics",
+    "Engineering",
+    "Computer Science"
+   ]
+  },
+  "programs": [
+   "SURF — Summer Undergraduate Research Fellowships, a hallmark.",
+   "Honor Code with take-home exams.",
+   "Tight links to JPL/NASA.",
+   "House system for social life."
+  ],
+  "aid": {
+   "meritNote": "Meets full demonstrated need; need-based grants.",
+   "note": "Need-based aid; a few merit awards."
+  },
+  "research": {
+   "level": "Among the highest per-capita in the world",
+   "undergrad": "Nearly universal — SURF places the vast majority of students in research.",
+   "areas": "Physics & astrophysics (LIGO gravitational waves), chemistry & directed enzyme evolution, planetary science & space (JPL), quantum science, and computation/neural systems."
+  },
+  "faculty": "~80 Nobel-affiliated. Faculty include Kip Thorne (2017 Physics Nobel, LIGO/gravitational waves) and Frances Arnold (2018 Chemistry Nobel, directed evolution of enzymes). (Faculty change — verify.)",
+  "gradSchools": "Small but elite graduate/PhD programs in the physical sciences & engineering; Caltech manages NASA's Jet Propulsion Laboratory.",
+  "studentLife": {
+   "clubs": "~100+ clubs; a tight-knit House system & student-run Honor Code",
+   "career": "Focused career & fellowship advising toward research, deep-tech and PhD study."
+  },
+  "collaborations": [
+   "Manages NASA's Jet Propulsion Laboratory (JPL)",
+   "LIGO observatory (with MIT)",
+   "Keck Observatory & national-lab partnerships"
+  ],
+  "proSchools": [
+   "Dominant PhD feeder in the physical sciences & engineering.",
+   "Solid med-school placement for bio/chem students."
+  ],
+  "campus": {
+   "greek": "No Greek system — the student Houses fill that role.",
+   "athletics": "NCAA Division III (SCIAC).",
+   "housing": "Almost all undergrads live in the Houses."
+  },
+  "outcomes": {
+   "salary": "$90k–$110k (est. median early-career)",
+   "employers": [
+    "Tech & deep-tech firms",
+    "National labs (JPL, NASA)",
+    "PhD programs",
+    "Quant finance"
+   ],
+   "paths": "Predominantly graduate/PhD study and research-heavy industry."
+  },
+  "_source": "curated"
+ },
+ "university-of-chicago": {
+  "admissions": {
+   "sat": "1510–1570",
+   "act": "34–35",
+   "acceptRate": "~5%",
+   "testPolicy": "Test-optional pioneer."
+  },
+  "academics": {
+   "ratio": "5:1",
+   "classSize": "Small, discussion-intensive Core seminars",
+   "knownFor": [
+    "Economics",
+    "Mathematics",
+    "Social Sciences"
+   ]
+  },
+  "programs": [
+   "The Core — a famous rigorous general-education curriculum.",
+   "Birthplace of the 'Chicago School' of economics.",
+   "Strong study-abroad centers worldwide.",
+   "Metcalf internships & funded research."
+  ],
+  "aid": {
+   "meritNote": "No-Barriers program: meets full need, no-loan; free tuition for families under ~$125k.",
+   "note": "Some merit scholarships in addition to need-based aid."
+  },
+  "research": {
+   "undergrad": "Strong — heavy research culture even at undergrad level."
+  },
+  "campus": {
+   "greek": "Small Greek scene; 'where fun comes to be intellectual' ethos.",
+   "athletics": "NCAA Division III (UAA).",
+   "housing": "House system within residence halls."
+  },
+  "outcomes": {
+   "employers": [
+    "Finance & consulting",
+    "Tech",
+    "Academia",
+    "Government & research"
+   ],
+   "paths": "Very high graduate-school rate, plus finance, consulting and tech."
+  },
+  "_source": "curated"
+ },
+ "columbia-university": {
+  "admissions": {
+   "sat": "1510–1560",
+   "act": "34–35",
+   "acceptRate": "~4%"
+  },
+  "academics": {
+   "ratio": "6:1",
+   "knownFor": [
+    "Engineering",
+    "Political Science & Economics",
+    "Journalism"
+   ]
+  },
+  "programs": [
+   "The Core Curriculum.",
+   "Manhattan location — internships across finance, media & tech.",
+   "Combined-plan engineering with partner colleges.",
+   "Global Centers worldwide."
+  ],
+  "aid": {
+   "meritNote": "Need-blind (for US students); meets full need, no loans.",
+   "note": "Need-based aid."
+  },
+  "campus": {
+   "greek": "Moderate Greek presence in NYC.",
+   "athletics": "NCAA Division I (Ivy League).",
+   "housing": "Guaranteed on-campus housing."
+  },
+  "outcomes": {
+   "employers": [
+    "Goldman Sachs",
+    "JPMorgan",
+    "Google",
+    "Media & publishing",
+    "Consulting"
+   ],
+   "paths": "Finance, consulting, tech, media, law and graduate study."
+  },
+  "_source": "curated"
+ },
+ "university-of-pennsylvania": {
+  "admissions": {
+   "sat": "1500–1560",
+   "act": "34–35",
+   "acceptRate": "~6%"
+  },
+  "academics": {
+   "ratio": "6:1",
+   "knownFor": [
+    "Wharton Business",
+    "Nursing",
+    "Engineering"
+   ]
+  },
+  "programs": [
+   "Wharton — the nation's oldest collegiate business school.",
+   "Famous coordinated dual-degree programs (Huntsman, M&T, LSM, Vagelos).",
+   "One-university policy — cross-school flexibility.",
+   "Strong pre-professional & internship culture."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; all-grant, no-loan financial aid.",
+   "note": "Need-based aid only."
+  },
+  "campus": {
+   "greek": "Prominent Greek life (~25%).",
+   "athletics": "NCAA Division I (Ivy League).",
+   "housing": "College House system."
+  },
+  "outcomes": {
+   "salary": "$85k–$100k (est. median early-career)",
+   "employers": [
+    "Goldman Sachs",
+    "JPMorgan",
+    "McKinsey",
+    "Google",
+    "Healthcare systems"
+   ],
+   "paths": "Heavily into finance, consulting and tech via Wharton; strong pre-med & pre-law."
+  },
+  "_source": "curated"
+ },
+ "brown-university": {
+  "admissions": {
+   "sat": "1500–1560",
+   "act": "34–35",
+   "acceptRate": "~5%"
+  },
+  "academics": {
+   "ratio": "6:1",
+   "knownFor": [
+    "Open Curriculum",
+    "Computer Science",
+    "Biology & Public Health"
+   ]
+  },
+  "programs": [
+   "The Open Curriculum — no core requirements; courses can be taken S/NC.",
+   "PLME — 8-year combined med program.",
+   "Brown–RISD dual degree.",
+   "Strong undergraduate teaching focus."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; meets full need, no loans; free tuition under ~$125k.",
+   "note": "Need-based aid."
+  },
+  "campus": {
+   "greek": "Small Greek presence; program houses instead.",
+   "athletics": "NCAA Division I (Ivy League).",
+   "housing": "Guaranteed on-campus housing."
+  },
+  "outcomes": {
+   "employers": [
+    "Tech",
+    "Consulting",
+    "Media & nonprofits",
+    "Healthcare",
+    "Academia"
+   ],
+   "paths": "Diverse — tech, consulting, public-interest work, and graduate/medical school."
+  },
+  "_source": "curated"
+ },
+ "cornell-university": {
+  "admissions": {
+   "sat": "1480–1560",
+   "act": "33–35",
+   "acceptRate": "~8%"
+  },
+  "academics": {
+   "ratio": "9:1",
+   "knownFor": [
+    "Engineering",
+    "Agriculture & Life Sciences",
+    "Hotel Administration"
+   ]
+  },
+  "programs": [
+   "Seven undergraduate colleges incl. three NY state-funded (lower in-state cost).",
+   "World-famous Hotel School & CALS.",
+   "Cornell Tech in NYC.",
+   "Project teams (e.g., racing, rocketry)."
+  ],
+  "aid": {
+   "meritNote": "Need-blind (US); meets full need. State-contract colleges cost less for NY residents.",
+   "note": "Need-based aid; in-state advantage in some colleges."
+  },
+  "campus": {
+   "greek": "Large, historic Greek system (~25%).",
+   "athletics": "NCAA Division I (Ivy League) — strong hockey.",
+   "housing": "First-years on North Campus; varied upperclass options."
+  },
+  "outcomes": {
+   "salary": "$80k–$100k (est. median early-career)",
+   "employers": [
+    "Google",
+    "Amazon",
+    "Goldman Sachs",
+    "Hospitality & ag firms",
+    "Engineering firms"
+   ],
+   "paths": "Tech, finance, engineering, hospitality, plus med/law/grad school."
+  },
+  "_source": "curated"
+ },
+ "duke-university": {
+  "admissions": {
+   "sat": "1510–1570",
+   "act": "34–35",
+   "acceptRate": "~6%"
+  },
+  "academics": {
+   "ratio": "6:1",
+   "knownFor": [
+    "Pre-Med & Biology",
+    "Public Policy (Sanford)",
+    "Engineering (Pratt)"
+   ]
+  },
+  "programs": [
+   "DukeEngage — funded civic-engagement summers.",
+   "Bass Connections interdisciplinary research teams.",
+   "Strong pre-health advising & research hospital.",
+   "Robertson Scholars with UNC."
+  ],
+  "aid": {
+   "meritNote": "Meets full need; free tuition for NC/SC families under ~$150k.",
+   "note": "Need-based aid plus select merit scholarships."
+  },
+  "scholarships": {
+   "policy": "Karsh office offers need-based aid; a few highly competitive full-ride merit scholarships require a separate application.",
+   "named": [
+    "Robertson Scholars — full ride, dual Duke/UNC citizenship + 3 funded summers",
+    "A.B. Duke Scholarship — merit award",
+    "Karsh International Scholars — full funding for international students"
+   ]
+  },
+  "campus": {
+   "greek": "Prominent Greek & selective living groups.",
+   "athletics": "NCAA Division I (ACC) — blue-blood basketball program.",
+   "housing": "First-years on East Campus."
+  },
+  "outcomes": {
+   "salary": "$80k–$100k (est. median early-career)",
+   "employers": [
+    "McKinsey",
+    "Google",
+    "Goldman Sachs",
+    "Healthcare systems",
+    "Consulting"
+   ],
+   "paths": "Consulting, finance, tech, and exceptional med/grad-school placement."
+  },
+  "_source": "curated"
+ },
+ "johns-hopkins-university": {
+  "admissions": {
+   "sat": "1520–1570",
+   "act": "34–35",
+   "acceptRate": "~7%"
+  },
+  "academics": {
+   "ratio": "6:1",
+   "knownFor": [
+    "Biomedical Engineering",
+    "Public Health",
+    "Pre-Med & Neuroscience"
+   ]
+  },
+  "programs": [
+   "#1 biomedical engineering; research from freshman year.",
+   "Affiliated with the top-ranked JH Hospital & Bloomberg School of Public Health.",
+   "Applied Physics Lab.",
+   "Free-tuition for many via Bloomberg gift."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; meets full need, no loans (Bloomberg gift). Many families pay $0.",
+   "note": "Need-based aid."
+  },
+  "research": {
+   "level": "Highest research funding of any US university for decades",
+   "undergrad": "Outstanding — the majority do research, often in the medical/APL ecosystem."
+  },
+  "proSchools": [
+   "One of the strongest med-school feeders in the country.",
+   "Major PhD pipeline in bioscience & public health."
+  ],
+  "campus": {
+   "greek": "Moderate Greek presence.",
+   "athletics": "NCAA Division III (lacrosse plays DI).",
+   "housing": "On-campus first two years."
+  },
+  "outcomes": {
+   "employers": [
+    "Hospitals & research institutes",
+    "Biotech/pharma",
+    "Tech",
+    "Consulting"
+   ],
+   "paths": "Very high rates of medical & graduate school; biotech and research careers."
+  },
+  "_source": "curated"
+ },
+ "northwestern-university": {
+  "admissions": {
+   "sat": "1500–1560",
+   "act": "34–35",
+   "acceptRate": "~7%"
+  },
+  "academics": {
+   "ratio": "6:1",
+   "knownFor": [
+    "Journalism (Medill)",
+    "Theatre & Performance",
+    "Engineering"
+   ]
+  },
+  "programs": [
+   "Medill journalism with the famed Journalism Residency.",
+   "Strong theatre & RTVF (film/TV) feeding the industry.",
+   "Quarter system.",
+   "Co-op & research options in Engineering."
+  ],
+  "aid": {
+   "meritNote": "Meets full need, no loans.",
+   "note": "Need-based aid."
+  },
+  "campus": {
+   "greek": "Large Greek scene (~30%).",
+   "athletics": "NCAA Division I (Big Ten).",
+   "housing": "Residential colleges & halls on a lakefront campus."
+  },
+  "outcomes": {
+   "employers": [
+    "Media & entertainment",
+    "Consulting",
+    "Tech",
+    "Finance"
+   ],
+   "paths": "Strong into media/journalism, theatre/film, consulting and grad school."
+  },
+  "_source": "curated"
+ },
+ "carnegie-mellon-university": {
+  "admissions": {
+   "sat": "1510–1560",
+   "act": "34–35",
+   "acceptRate": "~11%"
+  },
+  "academics": {
+   "ratio": "6:1",
+   "classSize": "Rigorous, project-heavy; intense in CS & arts",
+   "knownFor": [
+    "Computer Science",
+    "Drama & Fine Arts",
+    "Engineering & Robotics"
+   ]
+  },
+  "programs": [
+   "Top-ranked School of Computer Science & Robotics Institute.",
+   "Prestigious School of Drama (conservatory-style).",
+   "Integrative programs like BXA (arts + science).",
+   "Strong industry research partnerships."
+  ],
+  "aid": {
+   "meritNote": "Meets need for many; some merit scholarships. Less uniformly generous than Ivies.",
+   "note": "Mix of need-based and merit aid."
+  },
+  "research": {
+   "undergrad": "Strong, especially in CS, robotics and engineering.",
+   "areas": "Computer science & AI, robotics (the Robotics Institute), machine learning & computer vision, human-computer interaction, and drama/design technology."
+  },
+  "faculty": "World-leading robotics & AI faculty at the Robotics Institute (e.g., Jessica Hodgins, Howie Choset); CMU was central to early machine-learning research. (Faculty change — verify.)",
+  "gradSchools": "Top graduate programs in computer science, robotics and AI, the Tepper School of Business, and a renowned MFA in drama.",
+  "studentLife": {
+   "clubs": "300+ student organizations, with strong maker/tech & arts groups",
+   "career": "A strong career center with heavy tech-industry recruiting."
+  },
+  "collaborations": [
+   "Pittsburgh Supercomputing Center",
+   "On-campus industry AI & robotics labs",
+   "Software Engineering Institute (federally funded)"
+  ],
+  "campus": {
+   "greek": "Moderate Greek presence.",
+   "athletics": "NCAA Division III (UAA).",
+   "housing": "On-campus housing common early on."
+  },
+  "outcomes": {
+   "salary": "$95k–$120k (est. median early-career, CS skews high)",
+   "employers": [
+    "Google",
+    "Microsoft",
+    "Amazon",
+    "Meta",
+    "Entertainment/tech studios"
+   ],
+   "paths": "Top tech-industry placement (esp. CS), plus arts, design and PhD study."
+  },
+  "_source": "curated"
+ },
+ "rice-university": {
+  "src": {
+   "u": "https://oir.rice.edu/common-data-set",
+   "t": "Rice Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1510–1560",
+   "act": "34–35",
+   "acceptRate": "~8%"
+  },
+  "academics": {
+   "ratio": "6:1",
+   "knownFor": [
+    "Engineering",
+    "Computer Science",
+    "Architecture & Music"
+   ]
+  },
+  "programs": [
+   "Residential college system (assigned for all four years).",
+   "Low student:faculty ratio with strong undergrad research.",
+   "Rice 360 global health & strong bioengineering.",
+   "Houston Medical Center proximity."
+  ],
+  "aid": {
+   "meritNote": "The Rice Investment: free tuition under ~$140k income; meets full need.",
+   "note": "Generous need-based aid plus merit awards."
+  },
+  "scholarships": {
+   "policy": "The Rice Investment provides free tuition under ~$140k income (half-tuition $140k–$200k), plus named merit scholarships.",
+   "named": [
+    "The Rice Investment — free/half tuition by income",
+    "Trustee Distinguished Scholarship — merit",
+    "Century Scholars — undergraduate research program"
+   ]
+  },
+  "campus": {
+   "greek": "No Greek system — residential colleges instead.",
+   "athletics": "NCAA Division I (American Conference).",
+   "housing": "Four years in the residential colleges."
+  },
+  "outcomes": {
+   "employers": [
+    "Energy & engineering firms",
+    "Google",
+    "Healthcare/biotech",
+    "Consulting"
+   ],
+   "paths": "Engineering, tech, energy, plus strong med and grad-school placement."
+  },
+  "_source": "curated"
+ },
+ "vanderbilt-university": {
+  "admissions": {
+   "sat": "1500–1560",
+   "act": "34–35",
+   "acceptRate": "~7%"
+  },
+  "academics": {
+   "ratio": "7:1",
+   "knownFor": [
+    "Education (Peabody)",
+    "Engineering",
+    "Music (Blair) & Pre-Med"
+   ]
+  },
+  "programs": [
+   "Opportunity Vanderbilt — no-loan, meets full need.",
+   "Top-ranked Peabody College of Education.",
+   "Maymester & immersive learning.",
+   "Strong Greek + big-time athletics balance."
+  ],
+  "aid": {
+   "meritNote": "Opportunity Vanderbilt meets 100% of need with no loans; notable merit scholarships (e.g., Cornelius Vanderbilt).",
+   "note": "Both need-based and merit aid."
+  },
+  "scholarships": {
+   "policy": "Opportunity Vanderbilt meets 100% of need with no loans; signature full-tuition merit scholarships are awarded regardless of need.",
+   "named": [
+    "Cornelius Vanderbilt Scholarship — full tuition + summer stipend",
+    "Ingram Scholars — full tuition, fees & housing (civic-service focus)",
+    "Chancellor's & other named merit awards"
+   ]
+  },
+  "campus": {
+   "greek": "Prominent Greek life (~30–40%).",
+   "athletics": "NCAA Division I (SEC).",
+   "housing": "First-years on The Commons."
+  },
+  "outcomes": {
+   "employers": [
+    "Consulting",
+    "Healthcare systems",
+    "Finance",
+    "Tech"
+   ],
+   "paths": "Consulting, finance, healthcare, education and graduate/med school."
+  },
+  "_source": "curated"
+ },
+ "university-of-california-berkeley": {
+  "src": {
+   "u": "https://opa.berkeley.edu/campus-data/common-data-set",
+   "t": "UC Berkeley Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "Test-blind — scores not considered",
+   "act": "—",
+   "acceptRate": "~11%",
+   "testPolicy": "The UC system is test-blind: SAT/ACT are not used, even if submitted."
+  },
+  "academics": {
+   "ratio": "19:1",
+   "classSize": "Large intro lectures with discussion sections",
+   "knownFor": [
+    "Engineering & EECS",
+    "Computer Science",
+    "Economics & Sciences"
+   ]
+  },
+  "programs": [
+   "World-leading EECS & research output.",
+   "SPUR & URAP undergraduate research programs.",
+   "Activist history & strong public mission.",
+   "Cal Co-op & startup ecosystem near Silicon Valley."
+  ],
+  "aid": {
+   "meritNote": "Excellent value for CA residents; Blue & Gold plan covers tuition under ~$80k income. Nonresident cost is high.",
+   "note": "Strong in-state aid; out-of-state pays a premium."
+  },
+  "research": {
+   "level": "Very high (top public research university)",
+   "undergrad": "Strong via URAP — undergrads assist on faculty research.",
+   "areas": "Physics & quantum science, CRISPR/gene editing & molecular biology, computer science & AI (BAIR), economics & public policy, and chemistry/materials."
+  },
+  "faculty": "Faculty include CRISPR pioneer Jennifer Doudna (2020 Chemistry Nobel) and physicist John Clarke (2025 Physics Nobel, quantum tunneling); Berkeley counts ~50+ Nobel laureates among faculty & alumni. (Faculty change — verify.)",
+  "gradSchools": "Top-ranked graduate programs across the sciences, engineering, economics and Haas (business) — among the strongest PhD producers in the world.",
+  "studentLife": {
+   "clubs": "1,000+ student organizations",
+   "career": "A large career center with strong tech, government and research recruiting."
+  },
+  "collaborations": [
+   "UC system-wide research network",
+   "Lawrence Berkeley National Laboratory",
+   "UCSF partnership for bioscience & health"
+  ],
+  "campus": {
+   "greek": "Large Greek system among a huge student body.",
+   "athletics": "NCAA Division I (ACC era) — historic Cal Bears.",
+   "housing": "Limited on-campus housing; many live off-campus."
+  },
+  "outcomes": {
+   "salary": "$85k–$110k (est., CS/eng skews high)",
+   "employers": [
+    "Google",
+    "Apple",
+    "Meta",
+    "Deloitte",
+    "startups"
+   ],
+   "paths": "Major tech & startup pipeline, finance, plus strong PhD/grad placement."
+  },
+  "_source": "curated"
+ },
+ "university-of-california-los-angeles": {
+  "src": {
+   "u": "https://apb.ucla.edu/campus-statistics/common-data-set-undergraduate-profile",
+   "t": "UCLA Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "Test-blind — scores not considered",
+   "act": "—",
+   "acceptRate": "~9%",
+   "testPolicy": "The UC system is test-blind: SAT/ACT are not used. Admit weighted-GPA mid-50% ≈ 4.21–4.31."
+  },
+  "academics": {
+   "ratio": "18:1",
+   "knownFor": [
+    "Film & Television",
+    "Biology & Pre-Med",
+    "Engineering"
+   ]
+  },
+  "programs": [
+   "Top-ranked film school (TFT).",
+   "Massive research enterprise & UCLA Health.",
+   "Undergraduate research centers & scholarships.",
+   "Vibrant arts + DI sports culture."
+  ],
+  "aid": {
+   "meritNote": "Blue & Gold plan covers tuition for CA families under ~$80k; great in-state value.",
+   "note": "Strong in-state aid; nonresidents pay more."
+  },
+  "campus": {
+   "greek": "Active Greek life amid a large student body.",
+   "athletics": "NCAA Division I (Big Ten era) — most NCAA championships of any school.",
+   "housing": "Guaranteed housing for first two years."
+  },
+  "outcomes": {
+   "employers": [
+    "Entertainment & media",
+    "Google",
+    "Healthcare",
+    "Consulting",
+    "Tech"
+   ],
+   "paths": "Entertainment, tech, healthcare, plus high med/grad-school placement."
+  },
+  "_source": "curated"
+ },
+ "university-of-michigan": {
+  "src": {
+   "u": "https://obp.umich.edu/campus-statistics/common-data-set/",
+   "t": "U-Michigan Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1360–1530",
+   "act": "31–34",
+   "acceptRate": "~16%"
+  },
+  "academics": {
+   "ratio": "15:1",
+   "knownFor": [
+    "Engineering",
+    "Ross Business",
+    "Computer Science"
+   ]
+  },
+  "programs": [
+   "UROP — large, well-known Undergraduate Research Opportunity Program.",
+   "Ross preferred-admit & strong engineering.",
+   "Huge alumni network & school spirit.",
+   "Semester-in-Detroit & global programs."
+  ],
+  "aid": {
+   "meritNote": "Go Blue Guarantee: free tuition for in-state families under ~$125k.",
+   "note": "Strong in-state aid; out-of-state cost is high."
+  },
+  "scholarships": {
+   "policy": "Go Blue Guarantee covers tuition for in-state families under ~$125k income; named merit awards reach out-of-state students too.",
+   "named": [
+    "Go Blue Guarantee — free tuition (in-state, <$125k)",
+    "Stamps Scholarship — $6k–$90k/yr (incl. non-residents)",
+    "Shipman Scholarship — $30k/yr (out-of-state leadership)"
+   ]
+  },
+  "research": {
+   "undergrad": "Strong — UROP places many first/second-years in research."
+  },
+  "campus": {
+   "greek": "Large Greek system (~20%).",
+   "athletics": "NCAA Division I (Big Ten) — football powerhouse, 'Big House'.",
+   "housing": "First-years typically on campus."
+  },
+  "outcomes": {
+   "salary": "$80k–$100k (est. median early-career)",
+   "employers": [
+    "Google",
+    "Amazon",
+    "Deloitte",
+    "Ford/GM",
+    "Consulting & finance"
+   ],
+   "paths": "Tech, consulting, finance, engineering and graduate/professional school."
+  },
+  "_source": "curated"
+ },
+ "university-of-texas-at-austin": {
+  "admissions": {
+   "sat": "1240–1480",
+   "act": "27–34",
+   "acceptRate": "~30% (auto-admit for top Texas students)"
+  },
+  "academics": {
+   "ratio": "18:1",
+   "knownFor": [
+    "Engineering & Computer Science",
+    "McCombs Business",
+    "Communications"
+   ]
+  },
+  "programs": [
+   "Top-10 CS & engineering; strong honors programs (Turing, Plan II, BHP).",
+   "Auto-admission for top % of Texas high schoolers.",
+   "Major research & startup scene in Austin.",
+   "Huge alumni network in tech & energy."
+  ],
+  "aid": {
+   "meritNote": "Texas Advance: free tuition for in-state families under ~$100k.",
+   "note": "Excellent in-state value; nonresidents pay more."
+  },
+  "scholarships": {
+   "policy": "Texas Advance Commitment covers tuition for in-state families under ~$100k; honors programs carry their own scholarships.",
+   "named": [
+    "Texas Advance — free tuition (in-state, <$100k)",
+    "Forty Acres Scholars — full ride + enrichment (flagship merit)",
+    "Honors scholarships (Turing, Plan II, Business Honors)"
+   ]
+  },
+  "campus": {
+   "greek": "Large Greek system.",
+   "athletics": "NCAA Division I (SEC era) — major football/athletics.",
+   "housing": "Mostly off-campus after first year."
+  },
+  "outcomes": {
+   "salary": "$80k–$100k (est., CS skews high)",
+   "employers": [
+    "Google",
+    "Dell",
+    "Amazon",
+    "Oracle",
+    "Consulting & energy firms"
+   ],
+   "paths": "Strong tech, business, engineering and energy placement plus grad school."
+  },
+  "_source": "curated"
+ },
+ "georgia-institute-of-technology": {
+  "src": {
+   "u": "https://irp.gatech.edu/common-data-set",
+   "t": "Georgia Tech Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1370–1530",
+   "act": "31–35",
+   "acceptRate": "~14%"
+  },
+  "academics": {
+   "ratio": "21:1",
+   "classSize": "Rigorous, large in intro STEM; avg class ~27; strong project work",
+   "knownFor": [
+    "Engineering",
+    "Computer Science",
+    "Industrial & Systems Engineering"
+   ]
+  },
+  "programs": [
+   "One of the largest co-op & internship programs in the US.",
+   "Top-ranked engineering & computing at a public-school price.",
+   "Strong startup/VentureLab ecosystem.",
+   "Research from undergrad via PURA awards."
+  ],
+  "aid": {
+   "meritNote": "Georgia HOPE/Zell Miller scholarships cut cost sharply for in-state students.",
+   "note": "Great in-state value; out-of-state cost higher."
+  },
+  "scholarships": {
+   "policy": "Georgia's HOPE/Zell Miller programs sharply cut cost for in-state students; competitive named merit awards too.",
+   "named": [
+    "Zell Miller / HOPE — state tuition aid (GA residents)",
+    "Stamps President's Scholars — full ride + enrichment",
+    "Provost's & departmental scholarships"
+   ]
+  },
+  "research": {
+   "undergrad": "Strong — PURA grants and heavy industry research."
+  },
+  "campus": {
+   "greek": "Sizable Greek system.",
+   "athletics": "NCAA Division I (ACC).",
+   "housing": "On-campus housing common early on."
+  },
+  "outcomes": {
+   "salary": "$80k–$105k (est., eng/CS skews high)",
+   "employers": [
+    "Google",
+    "Microsoft",
+    "NVIDIA",
+    "Delta",
+    "Engineering & defense firms"
+   ],
+   "paths": "Predominantly engineering & tech industry, plus graduate study."
+  },
+  "_source": "curated"
+ },
+ "university-of-illinois-urbana-champaign": {
+  "admissions": {
+   "sat": "1330–1500",
+   "act": "29–34",
+   "acceptRate": "~45% (varies sharply by major)"
+  },
+  "academics": {
+   "ratio": "20:1",
+   "knownFor": [
+    "Computer Science",
+    "Engineering",
+    "Accountancy"
+   ]
+  },
+  "programs": [
+   "Top-5 CS & engineering; CS+X blended degrees.",
+   "Birthplace of key computing milestones (Mosaic, transistors research).",
+   "Large research park with corporate R&D.",
+   "Strong actuarial science & accountancy."
+  ],
+  "aid": {
+   "meritNote": "Illinois Commitment: free tuition for in-state families under ~$75k.",
+   "note": "Strong in-state value."
+  },
+  "research": {
+   "undergrad": "Strong in engineering, CS and the sciences."
+  },
+  "campus": {
+   "greek": "One of the largest Greek systems in the US.",
+   "athletics": "NCAA Division I (Big Ten).",
+   "housing": "First-years typically on campus."
+  },
+  "outcomes": {
+   "salary": "$80k–$105k (est., CS/eng skews high)",
+   "employers": [
+    "Google",
+    "Microsoft",
+    "Amazon",
+    "John Deere",
+    "Big-4 accounting"
+   ],
+   "paths": "Heavy tech & engineering placement, accountancy, plus PhD programs."
+  },
+  "_source": "curated"
+ },
+ "university-of-north-carolina-at-chapel-hill": {
+  "admissions": {
+   "sat": "1350–1520",
+   "act": "29–34",
+   "acceptRate": "~17%"
+  },
+  "academics": {
+   "ratio": "16:1",
+   "knownFor": [
+    "Journalism & Media",
+    "Business (Kenan-Flagler)",
+    "Public Health & Biology"
+   ]
+  },
+  "programs": [
+   "Morehead-Cain — one of the most generous merit scholarships in the US.",
+   "Strong pre-med & public-health pipeline.",
+   "Carolina Covenant for low-income students (debt-free).",
+   "Robertson Scholars with Duke."
+  ],
+  "aid": {
+   "meritNote": "Carolina Covenant funds low-income students debt-free; meets full need for residents.",
+   "note": "Excellent in-state value; some elite merit scholarships."
+  },
+  "scholarships": {
+   "policy": "Carolina Covenant lets low-income students graduate debt-free; flagship merit scholarships are nationally competitive.",
+   "named": [
+    "Morehead-Cain — full ride + summer enrichment (one of the oldest US merit awards)",
+    "Robertson Scholars — full ride (shared with Duke)",
+    "Carolina Covenant — debt-free for low-income students"
+   ]
+  },
+  "campus": {
+   "greek": "Active Greek life.",
+   "athletics": "NCAA Division I (ACC) — basketball blue-blood.",
+   "housing": "On-campus first-year housing."
+  },
+  "outcomes": {
+   "employers": [
+    "Consulting",
+    "Healthcare & pharma",
+    "Media",
+    "Finance",
+    "Tech"
+   ],
+   "paths": "Strong med/health, business, media and graduate-school outcomes."
+  },
+  "_source": "curated"
+ },
+ "university-of-washington": {
+  "admissions": {
+   "sat": "1240–1470",
+   "act": "27–33",
+   "acceptRate": "~43% (CS far lower)"
+  },
+  "academics": {
+   "ratio": "19:1",
+   "knownFor": [
+    "Computer Science (Allen School)",
+    "Nursing",
+    "Engineering & Medicine"
+   ]
+  },
+  "programs": [
+   "Allen School — a top CS program next to Amazon & Microsoft.",
+   "Strong medicine & global health (UW Medicine).",
+   "Undergraduate research symposium & funding.",
+   "Direct-admit pathways for some majors."
+  ],
+  "aid": {
+   "meritNote": "Husky Promise covers tuition for eligible low-income WA residents.",
+   "note": "Strong in-state value."
+  },
+  "research": {
+   "level": "Very high research funding",
+   "undergrad": "Strong, with a large annual undergraduate research symposium."
+  },
+  "campus": {
+   "greek": "Sizable Greek system.",
+   "athletics": "NCAA Division I (Big Ten era).",
+   "housing": "Mix of on- and off-campus living."
+  },
+  "outcomes": {
+   "salary": "$80k–$105k (est., CS skews high)",
+   "employers": [
+    "Amazon",
+    "Microsoft",
+    "Google",
+    "Boeing",
+    "Healthcare systems"
+   ],
+   "paths": "Major tech pipeline (esp. CS), healthcare, engineering and grad study."
+  },
+  "_source": "curated"
+ },
+ "university-of-virginia": {
+  "admissions": {
+   "sat": "1410–1520",
+   "act": "32–35",
+   "acceptRate": "~17%"
+  },
+  "academics": {
+   "ratio": "15:1",
+   "knownFor": [
+    "McIntire Business",
+    "Economics & Politics",
+    "Engineering"
+   ]
+  },
+  "programs": [
+   "Strong honor system & self-governance traditions.",
+   "Top public business (McIntire) & 2-year entry model.",
+   "AccessUVA meets full need.",
+   "Jeffersonian 'Academical Village' & Lawn rooms."
+  ],
+  "aid": {
+   "meritNote": "AccessUVA meets 100% of demonstrated need; generous to in-state families.",
+   "note": "Need-based aid; some merit (Jefferson Scholars)."
+  },
+  "scholarships": {
+   "policy": "AccessUVA meets 100% of demonstrated need; the Jefferson Scholars Foundation funds prestigious full merit rides.",
+   "named": [
+    "Jefferson Scholars — full ride + stipend + enrichment",
+    "Walentas & other named awards",
+    "AccessUVA — meets full demonstrated need"
+   ]
+  },
+  "campus": {
+   "greek": "Prominent Greek life (~30%).",
+   "athletics": "NCAA Division I (ACC).",
+   "housing": "First-years on campus."
+  },
+  "outcomes": {
+   "salary": "$75k–$95k (est. median early-career)",
+   "employers": [
+    "Consulting",
+    "Finance",
+    "Tech",
+    "Government & law"
+   ],
+   "paths": "Consulting, finance, tech, plus strong law/grad-school placement."
+  },
+  "_source": "curated"
+ },
+ "new-york-university": {
+  "src": {
+   "u": "https://www.nyu.edu/employees/resources-and-services/administrative-services/institutional-research/self-service-reporting-resources/factbook.html",
+   "t": "NYU Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1480–1550",
+   "act": "33–35",
+   "acceptRate": "~8%"
+  },
+  "academics": {
+   "ratio": "8:1",
+   "knownFor": [
+    "Business (Stern)",
+    "Film & Drama (Tisch)",
+    "Economics & Politics"
+   ]
+  },
+  "programs": [
+   "Tisch School of the Arts (film, drama, dance).",
+   "Stern undergraduate business in the heart of NYC.",
+   "Global network with study sites in 10+ cities (Abu Dhabi, Shanghai degrees).",
+   "No central campus — the city is the campus."
+  ],
+  "aid": {
+   "meritNote": "Aid has improved markedly; meets full need for many, but cost can still be high.",
+   "note": "Mix of need-based and merit aid; verify your package."
+  },
+  "campus": {
+   "greek": "Small Greek presence — NYC life dominates.",
+   "athletics": "NCAA Division III (UAA).",
+   "housing": "Residence halls across Manhattan/Brooklyn."
+  },
+  "outcomes": {
+   "employers": [
+    "Finance & consulting",
+    "Media & entertainment",
+    "Tech",
+    "Fashion & arts"
+   ],
+   "paths": "Finance, media/arts, tech and graduate study, with a strong NYC pipeline."
+  },
+  "_source": "curated"
+ },
+ "university-of-southern-california": {
+  "admissions": {
+   "sat": "1450–1540",
+   "act": "32–35",
+   "acceptRate": "~10%"
+  },
+  "academics": {
+   "ratio": "9:1",
+   "knownFor": [
+    "Film (SCA)",
+    "Business (Marshall)",
+    "Engineering (Viterbi)"
+   ]
+  },
+  "programs": [
+   "School of Cinematic Arts — top film program.",
+   "Strong industry ties across LA media & tech.",
+   "Iovine & Young Academy (arts + tech + business).",
+   "Powerful 'Trojan Network' alumni base."
+  ],
+  "aid": {
+   "meritNote": "Free tuition for families under ~$80k; meets full need; notable merit scholarships.",
+   "note": "Both need-based and merit aid."
+  },
+  "scholarships": {
+   "policy": "Need-based aid (free tuition under ~$80k income) plus competitive, mutually-exclusive merit scholarships.",
+   "named": [
+    "Trustee Scholarship — full tuition (~100 awarded/yr)",
+    "Presidential Scholarship — half tuition (~200/yr)",
+    "Dean's Scholarship — quarter tuition",
+    "National Merit Finalist award"
+   ]
+  },
+  "campus": {
+   "greek": "Prominent Greek life.",
+   "athletics": "NCAA Division I (Big Ten era) — major football program.",
+   "housing": "On-campus housing common early on."
+  },
+  "outcomes": {
+   "employers": [
+    "Entertainment studios",
+    "Google",
+    "Consulting",
+    "Engineering & tech firms"
+   ],
+   "paths": "Entertainment/media, tech, business, plus graduate & professional school."
+  },
+  "_source": "curated"
+ },
+ "northeastern-university": {
+  "admissions": {
+   "sat": "1490–1550",
+   "act": "34–35",
+   "acceptRate": "~6%"
+  },
+  "academics": {
+   "ratio": "12:1",
+   "classSize": "Practice-oriented; built around co-op",
+   "knownFor": [
+    "Co-op / Experiential Learning",
+    "Computer Science",
+    "Engineering & Business"
+   ]
+  },
+  "programs": [
+   "Signature co-op program — students alternate study with paid 6-month jobs.",
+   "Global campuses & N.U.in first-semester-abroad.",
+   "Strong employer network from co-op placements.",
+   "Combined majors (e.g., CS + Design)."
+  ],
+  "aid": {
+   "meritNote": "Merit scholarships available; need-based aid varies — confirm your package.",
+   "note": "Mix of merit and need-based aid."
+  },
+  "research": {
+   "undergrad": "Applied/co-op research and a growing research enterprise."
+  },
+  "campus": {
+   "greek": "Modest Greek presence in Boston.",
+   "athletics": "NCAA Division I (CAA; hockey strong).",
+   "housing": "On-campus housing for first years; co-op may relocate students."
+  },
+  "outcomes": {
+   "salary": "$75k–$95k (est., CS skews high)",
+   "employers": [
+    "Tech firms",
+    "Finance & consulting",
+    "Healthcare",
+    "Co-op employer base"
+   ],
+   "paths": "Strong direct-to-industry placement via co-op, plus graduate study."
+  },
+  "_source": "curated"
+ },
+ "university-of-notre-dame": {
+  "admissions": {
+   "sat": "1470–1550",
+   "act": "33–35",
+   "acceptRate": "~12%"
+  },
+  "academics": {
+   "ratio": "9:1",
+   "knownFor": [
+    "Business (Mendoza)",
+    "Engineering",
+    "Political Science & Theology"
+   ]
+  },
+  "programs": [
+   "Residence-hall community (no Greek life) with deep traditions.",
+   "Mendoza business consistently top-ranked.",
+   "Strong service & study-abroad participation.",
+   "Loyal, powerful alumni network."
+  ],
+  "aid": {
+   "meritNote": "Meets full demonstrated need; generous Catholic-mission aid.",
+   "note": "Primarily need-based aid."
+  },
+  "scholarships": {
+   "policy": "Meets full demonstrated need; several named merit scholarships recognize top applicants.",
+   "named": [
+    "Stamps Scholars — full cost of attendance + enrichment",
+    "Hesburgh-Yusko Scholars — merit + leadership development",
+    "Need-based grants (meets full need)"
+   ]
+  },
+  "campus": {
+   "greek": "No Greek system — residence halls fill that role.",
+   "athletics": "NCAA Division I — storied independent football program.",
+   "housing": "Most students stay in their hall community for years."
+  },
+  "outcomes": {
+   "salary": "$75k–$95k (est. median early-career)",
+   "employers": [
+    "Consulting",
+    "Finance",
+    "Tech",
+    "Healthcare & law"
+   ],
+   "paths": "Consulting, finance, plus strong law/med/grad-school placement."
+  },
+  "_source": "curated"
+ },
+ "georgetown-university": {
+  "admissions": {
+   "sat": "1410–1550",
+   "act": "32–35",
+   "acceptRate": "~12%"
+  },
+  "academics": {
+   "ratio": "11:1",
+   "knownFor": [
+    "Walsh School of Foreign Service",
+    "Government & Politics",
+    "Business (McDonough)"
+   ]
+  },
+  "programs": [
+   "School of Foreign Service — premier international-affairs program.",
+   "DC location: internships across government, NGOs & think tanks.",
+   "Strong pre-law & pre-med advising.",
+   "Jesuit values & global campuses (Qatar)."
+  ],
+  "aid": {
+   "meritNote": "Meets full demonstrated need for admitted students.",
+   "note": "Mostly need-based aid."
+  },
+  "campus": {
+   "greek": "Minimal official Greek life.",
+   "athletics": "NCAA Division I (Big East) — basketball tradition.",
+   "housing": "On-campus housing for most years."
+  },
+  "outcomes": {
+   "employers": [
+    "Government & federal agencies",
+    "Consulting",
+    "Finance",
+    "NGOs & think tanks"
+   ],
+   "paths": "Government, international affairs, consulting, finance and law school."
+  },
+  "_source": "curated"
+ },
+ "emory-university": {
+  "admissions": {
+   "sat": "1450–1540",
+   "act": "33–35",
+   "acceptRate": "~11%"
+  },
+  "academics": {
+   "ratio": "9:1",
+   "knownFor": [
+    "Pre-Med & Biology",
+    "Business (Goizueta)",
+    "Nursing & Public Health"
+   ]
+  },
+  "programs": [
+   "Adjacent to the CDC & Emory Healthcare — strong pre-health.",
+   "Goizueta business (junior entry).",
+   "Oxford College 2-year start option.",
+   "Robust undergraduate research."
+  ],
+  "aid": {
+   "meritNote": "Emory Advantage & full-need policies; Woodruff & other merit scholarships.",
+   "note": "Need-based aid plus competitive merit awards."
+  },
+  "scholarships": {
+   "policy": "Meets demonstrated need (Emory Advantage); the Emory Scholars Program awards top applicants signature merit scholarships.",
+   "named": [
+    "Robert W. Woodruff Scholarship — full tuition, fees, room & board (top ~1%)",
+    "Emory Scholars — partial-to-full merit awards",
+    "Oxford College & departmental scholarships"
+   ]
+  },
+  "campus": {
+   "greek": "Active Greek life (~30%).",
+   "athletics": "NCAA Division III (UAA).",
+   "housing": "First-years on campus."
+  },
+  "outcomes": {
+   "employers": [
+    "Healthcare & CDC",
+    "Consulting",
+    "Finance",
+    "Pharma/biotech"
+   ],
+   "paths": "Exceptional med-school placement, consulting, finance and grad study."
+  },
+  "_source": "curated"
+ },
+ "washington-university-in-st-louis": {
+  "admissions": {
+   "sat": "1500–1570",
+   "act": "33–35",
+   "acceptRate": "~12%"
+  },
+  "academics": {
+   "ratio": "7:1",
+   "knownFor": [
+    "Pre-Med & Biology",
+    "Business (Olin)",
+    "Engineering & Architecture"
+   ]
+  },
+  "programs": [
+   "Outstanding pre-health advising & affiliated med school.",
+   "Flexible cross-divisional academics.",
+   "Strong undergraduate research funding.",
+   "Generous recent move to need-blind admission."
+  ],
+  "aid": {
+   "meritNote": "Now need-blind; meets full need. Notable merit scholarships (Danforth, Ervin).",
+   "note": "Need-based plus merit aid."
+  },
+  "campus": {
+   "greek": "Active Greek life.",
+   "athletics": "NCAA Division III (UAA).",
+   "housing": "On-campus housing common early on."
+  },
+  "outcomes": {
+   "employers": [
+    "Healthcare systems",
+    "Consulting",
+    "Finance",
+    "Biotech"
+   ],
+   "paths": "Top med-school placement, consulting, finance and graduate study."
+  },
+  "_source": "curated"
+ },
+ "boston-college": {
+  "admissions": {
+   "sat": "1430–1530",
+   "act": "33–35",
+   "acceptRate": "~15%"
+  },
+  "academics": {
+   "ratio": "10:1",
+   "knownFor": [
+    "Business (Carroll)",
+    "Nursing",
+    "Economics & Communications"
+   ]
+  },
+  "programs": [
+   "Jesuit liberal-arts core with strong business.",
+   "PULSE & service-learning programs.",
+   "Strong study-abroad participation.",
+   "Loyal alumni & athletics culture."
+  ],
+  "aid": {
+   "meritNote": "Meets full demonstrated need; Presidential Scholars merit program.",
+   "note": "Mostly need-based aid plus select merit."
+  },
+  "campus": {
+   "greek": "No Greek system.",
+   "athletics": "NCAA Division I (ACC).",
+   "housing": "Guaranteed housing for most years."
+  },
+  "outcomes": {
+   "employers": [
+    "Finance & consulting",
+    "Healthcare",
+    "Tech",
+    "Education & nonprofits"
+   ],
+   "paths": "Finance, consulting, healthcare and graduate/professional school."
+  },
+  "_source": "curated"
+ },
+ "university-of-california-san-diego": {
+  "admissions": {
+   "sat": "1310–1530",
+   "act": "29–34",
+   "acceptRate": "~24%",
+   "testPolicy": "UC system is test-blind."
+  },
+  "academics": {
+   "ratio": "19:1",
+   "knownFor": [
+    "Biology & Bioengineering",
+    "Computer Science",
+    "Cognitive Science & Oceanography"
+   ]
+  },
+  "programs": [
+   "Seven-college system within the university.",
+   "Scripps Institution of Oceanography.",
+   "Strong research output & biotech ties.",
+   "Triton Research & undergrad programs."
+  ],
+  "aid": {
+   "meritNote": "Blue & Gold covers tuition for CA families under ~$80k.",
+   "note": "Strong in-state value; nonresidents pay more."
+  },
+  "research": {
+   "level": "Very high",
+   "undergrad": "Strong, especially in the biosciences & engineering."
+  },
+  "campus": {
+   "greek": "Moderate Greek presence.",
+   "athletics": "NCAA Division I (Big West).",
+   "housing": "College-based housing."
+  },
+  "outcomes": {
+   "salary": "$80k–$100k (est., bio/CS focus)",
+   "employers": [
+    "Biotech & pharma",
+    "Qualcomm",
+    "Google",
+    "Healthcare & research"
+   ],
+   "paths": "Biotech, tech, healthcare and very high PhD/grad-school rates."
+  },
+  "_source": "curated"
+ },
+ "williams-college": {
+  "admissions": {
+   "sat": "1500–1560",
+   "act": "33–35",
+   "acceptRate": "~9%"
+  },
+  "academics": {
+   "ratio": "7:1",
+   "classSize": "Tiny; signature Oxford-style tutorials",
+   "knownFor": [
+    "Economics",
+    "Art History",
+    "Sciences & Math"
+   ]
+  },
+  "programs": [
+   "Distinctive 'tutorial' courses (2 students + professor).",
+   "Winter Study January term.",
+   "Top-ranked liberal-arts teaching focus.",
+   "Generous all-grant aid."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; meets full need with all-grant (no-loan) aid.",
+   "note": "Need-based aid only."
+  },
+  "campus": {
+   "greek": "No Greek life.",
+   "athletics": "NCAA Division III (NESCAC) — perennial Directors' Cup contender.",
+   "housing": "Four-year on-campus housing."
+  },
+  "outcomes": {
+   "employers": [
+    "Finance & consulting",
+    "Education & nonprofits",
+    "Tech",
+    "Academia"
+   ],
+   "paths": "Finance, consulting, education, and very high graduate-school rates."
+  },
+  "_source": "curated"
+ },
+ "amherst-college": {
+  "admissions": {
+   "sat": "1490–1560",
+   "act": "33–35",
+   "acceptRate": "~7%"
+  },
+  "academics": {
+   "ratio": "7:1",
+   "knownFor": [
+    "Open Curriculum",
+    "Economics & Law-Jurisprudence",
+    "Sciences & English"
+   ]
+  },
+  "programs": [
+   "Open curriculum — no distribution requirements.",
+   "Five College Consortium cross-registration (incl. UMass, Smith, Mount Holyoke).",
+   "Generous all-grant aid.",
+   "Strong undergraduate research with faculty."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; meets full need with no-loan aid.",
+   "note": "Need-based aid only."
+  },
+  "campus": {
+   "greek": "No Greek life.",
+   "athletics": "NCAA Division III (NESCAC).",
+   "housing": "Four-year on-campus housing."
+  },
+  "outcomes": {
+   "employers": [
+    "Finance & consulting",
+    "Nonprofits & education",
+    "Tech",
+    "Academia"
+   ],
+   "paths": "Finance, consulting, public service and very high grad-school rates."
+  },
+  "_source": "curated"
+ },
+ "swarthmore-college": {
+  "admissions": {
+   "sat": "1480–1560",
+   "act": "33–35",
+   "acceptRate": "~7%"
+  },
+  "academics": {
+   "ratio": "8:1",
+   "classSize": "Intense, discussion-based; Honors program with orals",
+   "knownFor": [
+    "Engineering (rare for a LAC)",
+    "Economics & Political Science",
+    "Sciences & Philosophy"
+   ]
+  },
+  "programs": [
+   "Distinctive Honors Program with external examiners.",
+   "One of the few LACs with ABET engineering.",
+   "Quaker values & strong social-justice ethos.",
+   "Tri-College & U-Penn cross-registration."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; meets full need with no-loan aid.",
+   "note": "Need-based aid only."
+  },
+  "campus": {
+   "greek": "Minimal Greek presence.",
+   "athletics": "NCAA Division III (Centennial).",
+   "housing": "Four-year on-campus housing in an arboretum."
+  },
+  "outcomes": {
+   "employers": [
+    "Tech",
+    "Finance & consulting",
+    "Nonprofits",
+    "Academia"
+   ],
+   "paths": "Very high PhD-production rate, plus tech, finance and public-interest work."
+  },
+  "_source": "curated"
+ },
+ "pomona-college": {
+  "admissions": {
+   "sat": "1480–1560",
+   "act": "33–35",
+   "acceptRate": "~7%"
+  },
+  "academics": {
+   "ratio": "7:1",
+   "knownFor": [
+    "Economics & PPE",
+    "Computer Science",
+    "Neuroscience & Sciences"
+   ]
+  },
+  "programs": [
+   "Member of the Claremont Consortium — share courses/dining across 5 colleges.",
+   "Strong undergraduate research (SURP).",
+   "Best-of-both: LAC intimacy with consortium scale.",
+   "Generous no-loan aid."
+  ],
+  "aid": {
+   "meritNote": "Need-blind; meets full need with no-loan aid.",
+   "note": "Need-based aid only."
+  },
+  "campus": {
+   "greek": "No traditional Greek life.",
+   "athletics": "NCAA Division III (SCIAC) — Pomona-Pitzer.",
+   "housing": "Four-year on-campus housing."
+  },
+  "outcomes": {
+   "employers": [
+    "Tech",
+    "Finance & consulting",
+    "Nonprofits",
+    "Academia"
+   ],
+   "paths": "Tech, finance, consulting and very strong graduate-school placement."
+  },
+  "_source": "curated"
+ },
+ "harvey-mudd-college": {
+  "admissions": {
+   "sat": "1490–1570",
+   "act": "34–35",
+   "acceptRate": "~13%"
+  },
+  "academics": {
+   "ratio": "8:1",
+   "classSize": "Small, intense, highly collaborative STEM",
+   "knownFor": [
+    "Engineering",
+    "Computer Science",
+    "Physics & Math"
+   ]
+  },
+  "programs": [
+   "Common STEM core for all students before specializing.",
+   "Famous Clinic Program — real industry projects for credit.",
+   "Member of the Claremont Consortium.",
+   "Highest mid-career salaries among US grads."
+  ],
+  "aid": {
+   "meritNote": "Meets full demonstrated need; some merit awards.",
+   "note": "Need-based aid plus merit."
+  },
+  "research": {
+   "undergrad": "Very strong — small school, heavy faculty-student research & Clinic."
+  },
+  "campus": {
+   "greek": "No Greek life.",
+   "athletics": "NCAA Division III (SCIAC).",
+   "housing": "On-campus, tight-knit dorm culture."
+  },
+  "outcomes": {
+   "salary": "$100k–$120k (est.; among the highest of any college)",
+   "employers": [
+    "Google",
+    "Microsoft",
+    "Amazon",
+    "Engineering & deep-tech firms",
+    "PhD programs"
+   ],
+   "paths": "Elite tech & engineering placement and very high PhD rates."
+  },
+  "_source": "curated"
+ },
+ "wellesley-college": {
+  "admissions": {
+   "sat": "1450–1550",
+   "act": "33–35",
+   "acceptRate": "~14%"
+  },
+  "academics": {
+   "ratio": "7:1",
+   "knownFor": [
+    "Economics & Political Science",
+    "Sciences & Pre-Med",
+    "Computer Science"
+   ]
+  },
+  "programs": [
+   "Leading women's college with a powerful alumnae network.",
+   "Cross-registration with MIT.",
+   "Strong undergraduate research.",
+   "Generous no-loan aid."
+  ],
+  "aid": {
+   "meritNote": "Need-blind (US); meets full need with no-loan aid.",
+   "note": "Need-based aid only."
+  },
+  "campus": {
+   "greek": "No Greek life.",
+   "athletics": "NCAA Division III (NEWMAC).",
+   "housing": "Four-year on-campus housing."
+  },
+  "outcomes": {
+   "employers": [
+    "Consulting & finance",
+    "Healthcare & research",
+    "Tech",
+    "Government & nonprofits"
+   ],
+   "paths": "Consulting, finance, medicine and very high graduate-school rates."
+  },
+  "_source": "curated"
+ },
+ "spelman-college": {
+  "admissions": {
+   "sat": "1110–1280",
+   "act": "22–27",
+   "acceptRate": "~40%"
+  },
+  "academics": {
+   "ratio": "10:1",
+   "knownFor": [
+    "Biology & Pre-Health",
+    "Psychology",
+    "Political Science & CS"
+   ]
+  },
+  "programs": [
+   "Top-ranked HBCU & women's college with a strong sisterhood network.",
+   "Atlanta University Center consortium (with Morehouse & Clark Atlanta).",
+   "Strong pipeline of Black women into PhD & medical programs.",
+   "Study-abroad & research initiatives."
+  ],
+  "aid": {
+   "meritNote": "Need- and merit-based aid; notable donor scholarships in recent years.",
+   "note": "Mix of need-based and merit aid."
+  },
+  "campus": {
+   "greek": "Historically Black sororities have a notable presence.",
+   "athletics": "NCAA Division III.",
+   "housing": "Residential first-year experience."
+  },
+  "outcomes": {
+   "employers": [
+    "Healthcare & research",
+    "Consulting & finance",
+    "Tech",
+    "Education & government"
+   ],
+   "paths": "A leading producer of Black women who earn doctorates; strong med/grad placement."
+  },
+  "_source": "curated"
+ },
+ "howard-university": {
+  "admissions": {
+   "sat": "1150–1310",
+   "act": "22–28",
+   "acceptRate": "~35%"
+  },
+  "academics": {
+   "ratio": "8:1",
+   "knownFor": [
+    "Political Science & Pre-Law",
+    "Biology & Pre-Med",
+    "Business & Journalism"
+   ]
+  },
+  "programs": [
+   "'The Mecca' — flagship HBCU with an elite alumni network.",
+   "Strong pre-law & pre-med pipelines; own medical & law schools.",
+   "DC location for government & media internships.",
+   "Renowned for producing Black professionals & leaders."
+  ],
+  "aid": {
+   "meritNote": "Need- and merit-based aid; competitive scholarships.",
+   "note": "Mix of need-based and merit aid."
+  },
+  "campus": {
+   "greek": "Divine Nine Greek-letter organizations are a major tradition.",
+   "athletics": "NCAA Division I (MEAC).",
+   "housing": "On-campus housing, esp. first year."
+  },
+  "outcomes": {
+   "employers": [
+    "Government & federal agencies",
+    "Media & networks",
+    "Consulting & finance",
+    "Healthcare & law"
+   ],
+   "paths": "A top producer of Black professionals in law, medicine, government and media."
+  },
+  "_source": "curated"
+ },
+ "university-of-florida": {
+  "admissions": {
+   "sat": "1330–1470",
+   "act": "30–34",
+   "acceptRate": "~24%"
+  },
+  "academics": {
+   "ratio": "17:1",
+   "knownFor": [
+    "Engineering",
+    "Business",
+    "Biology & Pre-Health"
+   ]
+  },
+  "programs": [
+   "Top public with strong honors program.",
+   "Bright Futures (FL) makes it very affordable in-state.",
+   "Major research enterprise & startup hub.",
+   "Strong agriculture & health-sciences campus."
+  ],
+  "aid": {
+   "meritNote": "Florida Bright Futures + low in-state tuition make UF a national value leader.",
+   "note": "Excellent in-state value."
+  },
+  "campus": {
+   "greek": "Large Greek system.",
+   "athletics": "NCAA Division I (SEC) — major athletics ('the Swamp').",
+   "housing": "On-campus first-year housing."
+  },
+  "outcomes": {
+   "salary": "$70k–$90k (est. median early-career)",
+   "employers": [
+    "Consulting",
+    "Healthcare",
+    "Tech & engineering firms",
+    "Finance"
+   ],
+   "paths": "Business, engineering, health and strong graduate/professional placement."
+  },
+  "_source": "curated"
+ },
+ "ohio-state-university": {
+  "admissions": {
+   "sat": "1270–1460",
+   "act": "27–33",
+   "acceptRate": "~53%"
+  },
+  "academics": {
+   "ratio": "18:1",
+   "knownFor": [
+    "Business (Fisher)",
+    "Engineering",
+    "Biology & Health Sciences"
+   ]
+  },
+  "programs": [
+   "Huge research university with an honors & scholars program.",
+   "Strong alumni network & school spirit.",
+   "Co-op/internship and study-abroad options.",
+   "Wexner Medical Center for pre-health."
+  ],
+  "aid": {
+   "meritNote": "Land-grant value; merit & need aid for Ohio residents.",
+   "note": "Good in-state value."
+  },
+  "campus": {
+   "greek": "Large Greek system among a huge student body.",
+   "athletics": "NCAA Division I (Big Ten) — national football powerhouse.",
+   "housing": "First two years on campus."
+  },
+  "outcomes": {
+   "employers": [
+    "Consulting & finance",
+    "Healthcare",
+    "Engineering & tech firms",
+    "Government"
+   ],
+   "paths": "Broad industry placement plus graduate & professional school."
+  },
+  "_source": "curated"
+ },
+ "purdue-university": {
+  "admissions": {
+   "sat": "1190–1440",
+   "act": "26–33",
+   "acceptRate": "~50% (engineering far lower)"
+  },
+  "academics": {
+   "ratio": "13:1",
+   "knownFor": [
+    "Engineering",
+    "Computer Science",
+    "Aviation & Agriculture"
+   ]
+  },
+  "programs": [
+   "Top-tier engineering at a frozen-tuition price.",
+   "'Cradle of Astronauts' — strong aerospace & aviation.",
+   "Large co-op & professional-practice program.",
+   "Boilermaker research scale."
+  ],
+  "aid": {
+   "meritNote": "Famous tuition freeze keeps costs low; merit & need aid available.",
+   "note": "Strong value, in- and out-of-state."
+  },
+  "research": {
+   "undergrad": "Strong, especially in engineering and the sciences."
+  },
+  "campus": {
+   "greek": "Large Greek system.",
+   "athletics": "NCAA Division I (Big Ten).",
+   "housing": "On-campus housing common early on."
+  },
+  "outcomes": {
+   "salary": "$75k–$100k (est., eng/CS skews high)",
+   "employers": [
+    "Boeing",
+    "NASA",
+    "Google",
+    "Caterpillar",
+    "Engineering & tech firms"
+   ],
+   "paths": "Predominantly engineering, tech and aviation careers, plus grad study."
+  },
+  "_source": "curated"
+ },
+ "texas-a-m-university": {
+  "admissions": {
+   "sat": "1160–1390",
+   "act": "25–32",
+   "acceptRate": "~63% (auto-admit for top Texas students)"
+  },
+  "academics": {
+   "ratio": "19:1",
+   "knownFor": [
+    "Engineering",
+    "Agriculture",
+    "Business & Architecture"
+   ]
+  },
+  "programs": [
+   "Among the largest engineering programs in the US.",
+   "Deep traditions & the Corps of Cadets.",
+   "Strong co-op/internship & industry ties (esp. energy).",
+   "Massive, loyal 'Aggie Network' alumni base."
+  ],
+  "aid": {
+   "meritNote": "Aggie Assurance & low in-state tuition aid Texas families.",
+   "note": "Strong in-state value."
+  },
+  "campus": {
+   "greek": "Greek life present; the Corps & traditions are more central.",
+   "athletics": "NCAA Division I (SEC) — major football culture.",
+   "housing": "Mix of on- and off-campus living."
+  },
+  "outcomes": {
+   "salary": "$70k–$95k (est., eng skews high)",
+   "employers": [
+    "ExxonMobil",
+    "Engineering & energy firms",
+    "Boeing",
+    "Consulting",
+    "Government"
+   ],
+   "paths": "Engineering, energy and business careers plus graduate study."
+  },
+  "_source": "curated"
+ },
+ "university-of-wisconsin-madison": {
+  "admissions": {
+   "sat": "1320–1480",
+   "act": "28–32",
+   "acceptRate": "~43%"
+  },
+  "academics": {
+   "ratio": "17:1",
+   "knownFor": [
+    "Engineering & Computer Science",
+    "Business",
+    "Biology & Agriculture"
+   ]
+  },
+  "programs": [
+   "Major research university (the 'Wisconsin Idea').",
+   "Strong undergraduate research & WARF innovation legacy.",
+   "Big study-abroad & internship culture.",
+   "Renowned biosciences & agriculture."
+  ],
+  "aid": {
+   "meritNote": "Bucky's Tuition Promise covers tuition for in-state families under ~$65k.",
+   "note": "Strong in-state value."
+  },
+  "campus": {
+   "greek": "Active Greek life.",
+   "athletics": "NCAA Division I (Big Ten).",
+   "housing": "On-campus first-year housing along Lake Mendota."
+  },
+  "outcomes": {
+   "employers": [
+    "Epic Systems",
+    "Consulting & finance",
+    "Healthcare & biotech",
+    "Engineering & tech firms"
+   ],
+   "paths": "Broad industry placement plus very strong PhD/grad-school output."
+  },
+  "_source": "curated"
+ },
+ "university-of-oxford": {
+  "admissions": {
+   "sat": "Top A-levels / IB; subject interviews",
+   "act": "—",
+   "acceptRate": "~17%",
+   "testPolicy": "Admission via subject interviews + admissions tests (e.g., TSA/MAT)."
+  },
+  "academics": {
+   "ratio": "11:1",
+   "classSize": "Weekly one-on-one or small-group tutorials",
+   "knownFor": [
+    "PPE (Philosophy, Politics & Economics)",
+    "Law & Medicine",
+    "Sciences & Humanities"
+   ]
+  },
+  "programs": [
+   "Tutorial system — the signature Oxford pedagogy.",
+   "Collegiate system (39 colleges).",
+   "Three 8-week terms; deep single-subject focus.",
+   "Rhodes Scholarship & global research network."
+  ],
+  "aid": {
+   "meritNote": "UK students benefit from government loans & bursaries; international fees are high but scholarships exist.",
+   "note": "Cost & aid differ sharply for UK vs international students."
+  },
+  "research": {
+   "level": "World-leading",
+   "undergrad": "Tutorials build research skills; strong project & lab work in sciences."
+  },
+  "proSchools": [
+   "Elite pipeline into law, medicine, finance, civil service and academia worldwide."
+  ],
+  "campus": {
+   "greek": "No Greek system — college & society life instead.",
+   "athletics": "College & 'Blues' sport; the Boat Race vs Cambridge.",
+   "housing": "College-provided accommodation."
+  },
+  "outcomes": {
+   "employers": [
+    "Consulting & finance (City of London)",
+    "Government & civil service",
+    "Tech",
+    "Academia & research"
+   ],
+   "paths": "Finance, consulting, law, civil service and graduate/DPhil study."
+  },
+  "_source": "curated"
+ },
+ "university-of-cambridge": {
+  "admissions": {
+   "sat": "Top A-levels / IB; subject interviews",
+   "act": "—",
+   "acceptRate": "~18%",
+   "testPolicy": "Subject interviews + admissions assessments."
+  },
+  "academics": {
+   "ratio": "11:1",
+   "classSize": "Weekly small-group 'supervisions'",
+   "knownFor": [
+    "Mathematics & Natural Sciences",
+    "Engineering",
+    "Computer Science & Medicine"
+   ]
+  },
+  "programs": [
+   "Supervision system — Cambridge's tutorial equivalent.",
+   "31-college collegiate system.",
+   "Triposes with deep specialization.",
+   "Historic scientific legacy (Cavendish Lab)."
+  ],
+  "aid": {
+   "meritNote": "UK students use government loans & bursaries; international fees are high with some scholarships.",
+   "note": "Cost & aid differ for UK vs international students."
+  },
+  "research": {
+   "level": "World-leading",
+   "undergrad": "Strong research training via supervisions and lab projects."
+  },
+  "proSchools": [
+   "Premier pipeline into medicine, finance, tech, and academic research."
+  ],
+  "campus": {
+   "greek": "No Greek system — college life & societies.",
+   "athletics": "College & 'Blues' sport; rowing tradition.",
+   "housing": "College-provided accommodation."
+  },
+  "outcomes": {
+   "employers": [
+    "Tech & deep-tech",
+    "Finance & consulting",
+    "Healthcare & research",
+    "Academia"
+   ],
+   "paths": "Tech, finance, medicine, and graduate/PhD study."
+  },
+  "_source": "curated"
+ },
+ "imperial-college-london": {
+  "admissions": {
+   "sat": "Top A-levels / IB (maths-heavy)",
+   "act": "—",
+   "acceptRate": "~14%",
+   "testPolicy": "A-levels/IB + some admissions tests & interviews."
+  },
+  "academics": {
+   "ratio": "11:1",
+   "knownFor": [
+    "Engineering",
+    "Medicine",
+    "Computing & Physical Sciences"
+   ]
+  },
+  "programs": [
+   "STEM-focused — engineering, medicine, science & business only.",
+   "Central London, near major tech & finance.",
+   "Strong industry placements & research.",
+   "Imperial Enterprise Lab for startups."
+  ],
+  "aid": {
+   "meritNote": "UK loans/bursaries; international fees high with some scholarships.",
+   "note": "Cost differs by UK/international status."
+  },
+  "research": {
+   "level": "World-leading in STEM",
+   "undergrad": "Strong lab & project work; research placements."
+  },
+  "campus": {
+   "greek": "No Greek system.",
+   "athletics": "Club & intramural sport in London.",
+   "housing": "First-year halls in/near London."
+  },
+  "outcomes": {
+   "employers": [
+    "Tech & engineering firms",
+    "Finance (City of London)",
+    "Healthcare",
+    "Consulting"
+   ],
+   "paths": "Engineering, tech, medicine and finance, plus graduate research."
+  },
+  "_source": "curated"
+ },
+ "university-of-toronto": {
+  "admissions": {
+   "sat": "Strong grades; program-specific",
+   "act": "—",
+   "acceptRate": "~43% (program-dependent)",
+   "testPolicy": "Admission largely on grades; supplements for some programs."
+  },
+  "academics": {
+   "ratio": "18:1",
+   "classSize": "Large intro lectures; smaller upper years",
+   "knownFor": [
+    "Computer Science",
+    "Engineering",
+    "Life Sciences & Business (Rotman)"
+   ]
+  },
+  "programs": [
+   "Three campuses; college system at St. George.",
+   "Top global research university (insulin, AI/deep-learning roots).",
+   "PEY co-op for paid year-long internships.",
+   "Strong CS & AI ecosystem (Vector Institute)."
+  ],
+  "aid": {
+   "meritNote": "Lower tuition for domestic students; international fees are high with some entrance scholarships.",
+   "note": "Cost differs sharply for domestic vs international."
+  },
+  "research": {
+   "level": "Very high (Canada's leading research university)",
+   "undergrad": "Strong research & co-op (PEY) opportunities."
+  },
+  "campus": {
+   "greek": "Small Greek presence; college & club life dominates.",
+   "athletics": "U Sports varsity (Varsity Blues) + intramurals.",
+   "housing": "College residences plus off-campus living."
+  },
+  "outcomes": {
+   "employers": [
+    "Tech (incl. AI labs)",
+    "Finance (Bay Street)",
+    "Consulting",
+    "Healthcare & research"
+   ],
+   "paths": "Tech, finance, healthcare and strong graduate/research placement."
+  },
+  "_source": "curated"
+ },
+ "mcgill-university": {
+  "admissions": {
+   "sat": "Strong grades / national exams",
+   "act": "—",
+   "acceptRate": "~40% (program-dependent)",
+   "testPolicy": "Grades-based admission; program-specific requirements."
+  },
+  "academics": {
+   "ratio": "13:1",
+   "knownFor": [
+    "Medicine & Neuroscience",
+    "Engineering",
+    "Management & Economics"
+   ]
+  },
+  "programs": [
+   "Montreal location with bilingual culture (classes in English).",
+   "Strong medical & research tradition.",
+   "Global student body & exchange options.",
+   "Affordable tuition for Quebec/Canadian students."
+  ],
+  "aid": {
+   "meritNote": "Low tuition for Quebec residents; higher for other Canadians & international students.",
+   "note": "Cost varies sharply by residency."
+  },
+  "research": {
+   "level": "Very high",
+   "undergrad": "Research opportunities across the sciences & medicine."
+  },
+  "campus": {
+   "greek": "Small Greek presence.",
+   "athletics": "U Sports (Redbirds/Martlets) + intramurals.",
+   "housing": "First-year residences; many live off-campus after."
+  },
+  "outcomes": {
+   "employers": [
+    "Healthcare & research",
+    "Tech",
+    "Finance & consulting",
+    "Government & NGOs"
+   ],
+   "paths": "Medicine, research, tech and graduate study, with a global outlook."
+  },
+  "_source": "curated"
+ },
+ "eth-zurich": {
+  "admissions": {
+   "sat": "Strong secondary record / Matura",
+   "act": "—",
+   "acceptRate": "Open for Swiss Matura; selective for international",
+   "testPolicy": "Swiss students with Matura admitted; international applicants face entrance exams."
+  },
+  "academics": {
+   "ratio": "15:1",
+   "knownFor": [
+    "Engineering",
+    "Computer Science",
+    "Physics & Architecture"
+   ]
+  },
+  "programs": [
+   "One of the world's top STEM universities (Einstein's alma mater).",
+   "Very low tuition even for international students.",
+   "Strong industry & ETH-spinoff startup culture.",
+   "Research-intensive from early on."
+  ],
+  "aid": {
+   "meritNote": "Remarkably low tuition (~CHF 1.5k/yr) for all students; living costs in Zurich are high.",
+   "note": "Low tuition; budget for high cost of living."
+  },
+  "research": {
+   "level": "World-leading in STEM",
+   "undergrad": "Strong project & lab work; pathway into top master's/PhD."
+  },
+  "campus": {
+   "greek": "No Greek system.",
+   "athletics": "Academic sports association & clubs.",
+   "housing": "Limited university housing; mostly private rentals."
+  },
+  "outcomes": {
+   "employers": [
+    "Google",
+    "Tech & engineering firms",
+    "Finance",
+    "Research institutes & startups"
+   ],
+   "paths": "Engineering & tech industry plus a strong master's/PhD continuation rate."
+  },
+  "_source": "curated"
+ },
+ "national-university-of-singapore": {
+  "admissions": {
+   "sat": "Strong A-levels/IB or national exams",
+   "act": "—",
+   "acceptRate": "Highly selective",
+   "testPolicy": "Admission via A-levels/IB/national exams; SAT may supplement."
+  },
+  "academics": {
+   "ratio": "17:1",
+   "knownFor": [
+    "Engineering & Computing",
+    "Business",
+    "Medicine & Data Science"
+   ]
+  },
+  "programs": [
+   "Asia's top-ranked university.",
+   "NUS Overseas Colleges — entrepreneurship + internships abroad.",
+   "Strong industry & government links.",
+   "Residential college programs."
+  ],
+  "aid": {
+   "meritNote": "Subsidised tuition (esp. for Singaporeans/PRs) plus scholarships; grants for international students.",
+   "note": "Cost varies by citizenship; service bond options exist."
+  },
+  "research": {
+   "level": "Very high",
+   "undergrad": "UROP & strong research integration."
+  },
+  "campus": {
+   "greek": "No Greek system — hall & CCA (co-curricular) culture.",
+   "athletics": "Inter-hall & university sport.",
+   "housing": "Residential colleges & halls."
+  },
+  "outcomes": {
+   "employers": [
+    "Tech (regional & global)",
+    "Finance & consulting",
+    "Government",
+    "Biotech & research"
+   ],
+   "paths": "Tech, finance, government and graduate study across Asia & globally."
+  },
+  "_source": "curated"
+ },
+ "university-of-british-columbia": {
+  "admissions": {
+   "sat": "Strong grades; program-specific",
+   "act": "—",
+   "acceptRate": "~50% (program-dependent)",
+   "testPolicy": "Grades-based with broad-based admission essays."
+  },
+  "academics": {
+   "ratio": "18:1",
+   "knownFor": [
+    "Engineering & Computer Science",
+    "Forestry & Environmental Science",
+    "Business (Sauder)"
+   ]
+  },
+  "programs": [
+   "Two campuses (Vancouver & Okanagan) in a spectacular setting.",
+   "Strong co-op programs & research.",
+   "Global exchange (Go Global).",
+   "Sustainability & forestry leadership."
+  ],
+  "aid": {
+   "meritNote": "Lower tuition for domestic students; international fees high with entrance scholarships.",
+   "note": "Cost differs by domestic vs international status."
+  },
+  "research": {
+   "level": "Very high",
+   "undergrad": "Co-op + research (e.g., Work Learn) opportunities."
+  },
+  "campus": {
+   "greek": "Greek life present but not dominant.",
+   "athletics": "U Sports (Thunderbirds) + recreation.",
+   "housing": "On-campus residences plus off-campus."
+  },
+  "outcomes": {
+   "employers": [
+    "Tech",
+    "Forestry & environmental orgs",
+    "Finance",
+    "Healthcare & research"
+   ],
+   "paths": "Tech, sustainability, business and graduate study with a global outlook."
+  },
+  "_source": "curated"
+ },
+ "university-of-waterloo": {
+  "admissions": {
+   "sat": "Strong grades (esp. math)",
+   "act": "—",
+   "acceptRate": "~50% (CS/eng far lower)",
+   "testPolicy": "Grades-based; Euclid math contest helps for CS/eng."
+  },
+  "academics": {
+   "ratio": "20:1",
+   "classSize": "Large in CS/eng; built around co-op",
+   "knownFor": [
+    "Computer Science",
+    "Software & Computer Engineering",
+    "Mathematics & Actuarial Science"
+   ]
+  },
+  "programs": [
+   "The largest co-op program in the world — up to 6 paid work terms.",
+   "Powerhouse pipeline to Silicon Valley & Big Tech.",
+   "Students keep their startup IP (entrepreneurship-friendly).",
+   "Strong math & quantum-computing research."
+  ],
+  "aid": {
+   "meritNote": "Domestic tuition moderate; entrance & co-op earnings offset cost. International fees higher.",
+   "note": "Co-op earnings substantially offset costs."
+  },
+  "research": {
+   "undergrad": "Co-op + research; strong math/CS undergraduate culture."
+  },
+  "campus": {
+   "greek": "Small Greek presence.",
+   "athletics": "U Sports (Warriors) + intramurals.",
+   "housing": "First-year residences; co-op relocates students for work terms."
+  },
+  "outcomes": {
+   "salary": "$90k–$120k+ (est.; new-grad CS into US tech skews very high)",
+   "employers": [
+    "Google",
+    "Microsoft",
+    "Amazon",
+    "Meta",
+    "Quant-finance & startups"
+   ],
+   "paths": "Exceptional direct-to-Big-Tech placement via co-op, plus startups & grad school."
+  },
+  "_source": "curated"
+ },
+ "university-college-london": {
+  "admissions": {
+   "sat": "Top A-levels / IB",
+   "act": "—",
+   "acceptRate": "~30% (program-dependent)",
+   "testPolicy": "A-levels/IB; some programs add tests/interviews."
+  },
+  "academics": {
+   "ratio": "10:1",
+   "knownFor": [
+    "Engineering & Computer Science",
+    "Medicine & Architecture (Bartlett)",
+    "Economics & Law"
+   ]
+  },
+  "programs": [
+   "Large multidisciplinary university in central London.",
+   "The Bartlett — top architecture school.",
+   "Strong medical & research enterprise.",
+   "Global Engagement & exchange options."
+  ],
+  "aid": {
+   "meritNote": "UK loans/bursaries; international fees high with some scholarships.",
+   "note": "Cost differs by UK/international status."
+  },
+  "research": {
+   "level": "World-leading",
+   "undergrad": "Research-rich environment; project & lab work."
+  },
+  "campus": {
+   "greek": "No Greek system — clubs & societies.",
+   "athletics": "Club & intramural sport in London.",
+   "housing": "First-year halls across London."
+  },
+  "outcomes": {
+   "employers": [
+    "Finance & consulting",
+    "Tech",
+    "Healthcare & architecture firms",
+    "Research & government"
+   ],
+   "paths": "Finance, tech, medicine, architecture and graduate research."
+  },
+  "_source": "curated"
+ },
+ "london-school-of-economics": {
+  "admissions": {
+   "sat": "Top A-levels / IB",
+   "act": "—",
+   "acceptRate": "~9% (very selective)",
+   "testPolicy": "A-levels/IB; some programs require tests."
+  },
+  "academics": {
+   "ratio": "12:1",
+   "knownFor": [
+    "Economics",
+    "Finance & Politics",
+    "Law & International Relations"
+   ]
+  },
+  "programs": [
+   "World-leading social sciences focus.",
+   "Central London, steps from the City finance hub.",
+   "Global, careerist student body.",
+   "Renowned economics & policy faculty."
+  ],
+  "aid": {
+   "meritNote": "UK loans/bursaries; international fees high with competitive scholarships.",
+   "note": "Cost differs by UK/international status."
+  },
+  "research": {
+   "level": "World-leading in social science",
+   "undergrad": "Strong analytical & dissertation work."
+  },
+  "campus": {
+   "greek": "No Greek system — active societies.",
+   "athletics": "Club sport (smaller campus).",
+   "housing": "Halls in central London."
+  },
+  "outcomes": {
+   "salary": "High — strong finance/consulting placement (est.)",
+   "employers": [
+    "Goldman Sachs",
+    "J.P. Morgan",
+    "McKinsey",
+    "Bank of England",
+    "Government & NGOs"
+   ],
+   "paths": "Finance, consulting, economics, policy and graduate study."
+  },
+  "_source": "curated"
+ },
+ "curtis-institute-of-music": {
+  "admissions": {
+   "sat": "Audition-based (no SAT requirement)",
+   "act": "—",
+   "acceptRate": "~4% (audition)",
+   "testPolicy": "Admission is by audition; one of the most selective music schools in the world."
+  },
+  "academics": {
+   "ratio": "3:1",
+   "classSize": "Tiny conservatory — one-on-one studio instruction"
+  },
+  "scholarships": {
+   "policy": "Famously TUITION-FREE: every admitted student receives a full-tuition merit scholarship, regardless of financial need.",
+   "named": [
+    "Full-tuition scholarship for ALL students",
+    "Need-based grants for living costs",
+    "Named studio & performance fellowships"
+   ]
+  },
+  "campus": {
+   "greek": "No Greek life — a tiny performance-focused community.",
+   "athletics": "No varsity athletics.",
+   "housing": "Small residence / off-campus in central Philadelphia."
+  },
+  "outcomes": {
+   "salary": "Varies widely (performance careers)",
+   "employers": [
+    "Major symphony orchestras",
+    "Opera companies",
+    "Soloist & chamber careers",
+    "Conservatory faculty"
+   ],
+   "paths": "Professional performance, orchestral positions, and graduate music study."
+  },
+  "_source": "curated"
+ },
+ "university-of-alabama": {
+  "src": {
+   "u": "https://scholarships.ua.edu/types/",
+   "t": "UA Scholarships (Afford)",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "acceptRate": "~80%",
+   "testPolicy": "Test-optional for admission, but SAT/ACT scores unlock automatic merit scholarships."
+  },
+  "scholarships": {
+   "policy": "Nationally known for GENEROUS AUTOMATIC merit scholarships for out-of-state students — no separate application; awarded purely by GPA + test score.",
+   "named": [
+    "Presidential — $28k/yr (OOS: 3.5 GPA + 32 ACT / 1420 SAT)",
+    "Presidential Elite — full tuition + housing + $2k grant (4.0 + 36 ACT / 1600 SAT)",
+    "UA Scholar / Crimson awards (lower test bands)",
+    "National Merit Finalist package"
+   ]
+  },
+  "campus": {
+   "greek": "One of the largest Greek systems in the US — very prominent socially.",
+   "athletics": "NCAA Division I (SEC) — national football powerhouse.",
+   "housing": "On-campus housing common in the first year."
+  },
+  "_source": "curated"
+ },
+ "boston-university": {
+  "src": {
+   "u": "https://www.bu.edu/asir/bu-facts/common-data-set/",
+   "t": "Boston University Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1430–1540",
+   "act": "32–35",
+   "acceptRate": "~13%"
+  },
+  "academics": {
+   "ratio": "10:1"
+  },
+  "_source": "curated"
+ },
+ "tufts-university": {
+  "src": {
+   "u": "https://provost.tufts.edu/institutionalresearch/about-tufts/common-data-set/",
+   "t": "Tufts Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1480–1540",
+   "act": "33–35",
+   "acceptRate": "~12%"
+  },
+  "academics": {
+   "ratio": "10:1"
+  },
+  "_source": "curated"
+ },
+ "university-of-maryland": {
+  "src": {
+   "u": "https://www.irpa.umd.edu/CampusCounts/cds.html",
+   "t": "U-Maryland Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1410–1520",
+   "act": "31–34",
+   "acceptRate": "~45%"
+  },
+  "academics": {
+   "ratio": "17:1"
+  },
+  "_source": "curated"
+ },
+ "wake-forest-university": {
+  "src": {
+   "u": "https://ir.wfu.edu/fact-book/",
+   "t": "Wake Forest Fact Book / CDS",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1410–1520",
+   "act": "31–34",
+   "acceptRate": "~22%"
+  },
+  "academics": {
+   "ratio": "10:1"
+  },
+  "_source": "curated"
+ },
+ "case-western-reserve-university": {
+  "src": {
+   "u": "https://case.edu/ir/",
+   "t": "Case Western Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1450–1540",
+   "act": "32–35",
+   "acceptRate": "~37%"
+  },
+  "academics": {
+   "ratio": "9:1"
+  },
+  "_source": "curated"
+ },
+ "college-of-william-mary": {
+  "src": {
+   "u": "https://www.wm.edu/offices/ir/university_data/cds/",
+   "t": "William & Mary Common Data Set",
+   "y": "2024–25"
+  },
+  "admissions": {
+   "sat": "1420–1520",
+   "act": "31–34",
+   "acceptRate": "~34%"
+  },
+  "academics": {
+   "ratio": "12:1"
+  },
+  "_source": "curated"
+ }
+}

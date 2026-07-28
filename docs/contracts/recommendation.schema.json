@@ -75,6 +75,11 @@
             "seminar": { "type": "number", "minimum": 0, "maximum": 1 }
           }
         },
+        "details": {
+          "type": ["object", "null"],
+          "description": "Curated per-school profile, or null when none exists.",
+          "default": null
+        },
         "provenance": {
           "type": "object",
           "description": "Per-field origin. A null with provenance not_applicable must not render the same as absent.",

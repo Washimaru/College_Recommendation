@@ -126,6 +126,8 @@ export const UniversitySummarySchema = z
     size: z.enum(["small", "medium", "large"]),
     majors: z.array(z.string()).default([]),
     culture: CultureSchema,
+    /** Curated per-school profile; null when none exists. Heterogeneous by section. */
+    details: z.record(z.unknown()).nullable().optional(),
     provenance: z.record(ProvenanceSchema).default({}),
   })
   .strict();
@@ -185,6 +187,7 @@ export const UniversitySchema = z
     size: z.enum(["small", "medium", "large"]),
     majors: z.array(z.string()).default([]),
     culture: CultureSchema,
+    details: z.record(z.unknown()).nullable().optional(),
     provenance: z.record(ProvenanceSchema).default({}),
   })
   .strict();

@@ -53,6 +53,11 @@
             "seminar": { "type": "number", "minimum": 0, "maximum": 1 }
           }
         },
+        "details": {
+          "type": ["object", "null"],
+          "description": "Curated per-school profile (scholarships, research, outcomes, graduate and professional schools). Free-form because sections are heterogeneous. Null when no profile exists - never generated filler. provenance.details records the tier.",
+          "default": null
+        },
         "provenance": {
           "type": "object",
           "description": "Per-field origin: observed | web_verified | editorial | not_applicable | absent.",

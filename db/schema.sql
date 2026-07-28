@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS universities (
     enrollment      INTEGER     CHECK (enrollment >= 0),   -- undergraduate only
     size            TEXT        NOT NULL CHECK (size IN ('small','medium','large')),
     majors          JSONB       NOT NULL DEFAULT '[]'::jsonb,
-    culture         JSONB       NOT NULL,    -- required: drives 20% of the score
+    culture         JSONB       NOT NULL,    -- required: drives 18% of the score
+    details         JSONB,                    -- curated profile; NULL when none exists
     provenance      JSONB       NOT NULL DEFAULT '{}'::jsonb
 );
 

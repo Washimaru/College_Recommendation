@@ -5,7 +5,13 @@ See docs/superpowers/specs/2026-07-27-real-university-catalog-design.md
 """
 from __future__ import annotations
 
-from build_catalog import coalesce_net_price, enrich, normalize_name, parse_number
+from build_catalog import (
+    attach_details,
+    coalesce_net_price,
+    enrich,
+    normalize_name,
+    parse_number,
+)
 
 
 class TestNormalizeName:
@@ -164,3 +170,42 @@ class TestCache:
         )
 
         assert len(cache) == 1
+
+
+class TestDetails:
+    """Curated per-school profiles (scholarships, research, outcomes, grad and
+    professional schools). Only 67 of 364 schools have them; the rest carry
+    nothing rather than generated filler."""
+
+    def test_curated_details_are_attached_and_marked(self):
+        record = enrich({**NON_US, "country": "USA"}, US_ROW)
+        merged = attach_details(
+            record,
+            {"university-of-oxford": {"outcomes": {"gradRate": "98%"}, "_source": "curated"}},
+        )
+
+        assert merged["details"]["outcomes"]["gradRate"] == "98%"
+        assert merged["provenance"]["details"] == "observed"
+
+    def test_school_without_details_gets_none_not_filler(self):
+        record = enrich(NON_US, None)
+        merged = attach_details(record, {})
+
+        assert merged["details"] is None
+        assert merged["provenance"]["details"] == "absent"
+
+    def test_web_verified_details_are_marked_distinctly(self):
+        record = enrich(NON_US, None)
+        merged = attach_details(
+            record, {"university-of-oxford": {"outcomes": {}, "_source": "web_verified"}}
+        )
+
+        assert merged["provenance"]["details"] == "web_verified"
+
+    def test_estimated_details_are_marked_editorial(self):
+        record = enrich(NON_US, None)
+        merged = attach_details(
+            record, {"university-of-oxford": {"outcomes": {}, "_source": "estimated"}}
+        )
+
+        assert merged["provenance"]["details"] == "editorial"

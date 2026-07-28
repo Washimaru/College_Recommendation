@@ -41,11 +41,31 @@ export type Provenance =
   | "not_applicable"
   | "absent";
 
+export interface Activity {
+  name: string;
+  kind: ActivityKind;
+  years?: number | null;
+}
+
+export type ActivityKind =
+  | "competition" | "club" | "volunteering" | "work"
+  | "sport" | "arts" | "research" | "other";
+
+/** Derived from the questionnaire, on axes the culture vector does not cover. */
+export interface Personality {
+  intensity: number;
+  scale: number;
+}
+
+export const NEUTRAL_PERSONALITY: Personality = { intensity: 0.5, scale: 0.5 };
+
 export interface Profile {
   gpa: number;
   sat?: number | null;
   intended_major: string;
   culture_prefs?: CulturePrefs;
+  personality?: Personality;
+  activities?: Activity[];
   preferences?: {
     max_tuition?: number | null;
     preferred_size?: "small" | "medium" | "large" | null;
@@ -64,7 +84,30 @@ export interface UniversitySummary {
   size: "small" | "medium" | "large";
   majors: string[];
   culture: Record<CultureAxis, number>;
+  /** Curated per-school profile; null when none exists. Sections are heterogeneous. */
+  details?: SchoolDetails | null;
   provenance: Partial<Record<string, Provenance>>;
+}
+
+/**
+ * Curated profile sections. Only ~67 of 364 schools have any, and coverage
+ * varies sharply by section (outcomes 60, research 29, scholarships 17,
+ * grad/professional schools 6-7). Absent sections are simply not rendered.
+ */
+export interface SchoolDetails {
+  scholarships?: { policy?: string; named?: string[] };
+  research?: { level?: string; undergrad?: string; areas?: string; note?: string };
+  outcomes?: { gradRate?: string; salary?: string; employers?: string[]; paths?: string };
+  gradSchools?: string | string[];
+  proSchools?: string | string[];
+  aid?: string | { policy?: string; note?: string };
+  academics?: Record<string, unknown>;
+  programs?: string | string[];
+  studentLife?: string | string[];
+  collaborations?: string | string[];
+  faculty?: string | string[];
+  src?: string[];
+  [key: string]: unknown;
 }
 
 export type AdmitTier = "reach" | "target" | "safety";

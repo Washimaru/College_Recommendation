@@ -154,6 +154,31 @@ def filter_cache(
     return cache
 
 
+# Curated details exist for a minority of schools. `_source` records which tier
+# a profile came from so the UI can label it, and a school with none carries
+# `details: None` rather than generated filler.
+_DETAIL_PROVENANCE = {
+    "curated": "observed",
+    "web_verified": "web_verified",
+    "estimated": "editorial",
+}
+
+
+def attach_details(record: dict, details_by_id: dict[str, dict]) -> dict:
+    """Attach a per-school profile (scholarships, research, outcomes, grad and
+    professional schools) when one exists."""
+    profile = details_by_id.get(record["id"])
+    if not profile:
+        record["details"] = None
+        record["provenance"]["details"] = "absent"
+        return record
+
+    source = profile.get("_source", "curated")
+    record["details"] = {k: v for k, v in profile.items() if k != "_source"}
+    record["provenance"]["details"] = _DETAIL_PROVENANCE.get(source, "editorial")
+    return record
+
+
 def index_scorecard(csv_path: Path) -> dict[str, dict]:
     """Index the Scorecard CSV by normalized institution name."""
     index: dict[str, dict] = {}
@@ -167,6 +192,7 @@ def build(
     tier1: list[dict],
     scorecard: dict[str, dict],
     aliases: dict[str, str] | None = None,
+    details: dict[str, dict] | None = None,
 ) -> tuple[list[dict], list[str]]:
     """Return (catalog, unmatched_us_names). Unmatched names are surfaced so
     the coverage gap is visible rather than silent."""
@@ -178,7 +204,7 @@ def build(
             row = scorecard.get(resolve_key(record, aliases))
             if row is None:
                 unmatched.append(record["name"])
-        catalog.append(enrich(record, row))
+        catalog.append(attach_details(enrich(record, row), details or {}))
     return catalog, unmatched
 
 
@@ -191,6 +217,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--cache", default="sources/scorecard_cache.json")
     parser.add_argument("--aliases", default="sources/aliases.json")
+    parser.add_argument("--details", default="sources/school_details.json")
     parser.add_argument("--out", default="out/universities.json")
     args = parser.parse_args(argv)
 
@@ -215,7 +242,10 @@ def main(argv: list[str] | None = None) -> int:
         sys.stderr.write(f"no cache at {cache_path}; pass --scorecard to build one\n")
         return 2
 
-    catalog, unmatched = build(tier1, scorecard, aliases)
+    details_path = Path(args.details)
+    details = json.loads(details_path.read_text(encoding="utf-8")) if details_path.exists() else {}
+
+    catalog, unmatched = build(tier1, scorecard, aliases, details)
 
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)

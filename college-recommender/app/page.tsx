@@ -2,18 +2,19 @@
 
 import { useEffect, useState } from "react";
 
-import { CultureSliders } from "@/components/CultureSliders";
+import { ActivitiesInput } from "@/components/ActivitiesInput";
+import { Questionnaire } from "@/components/Questionnaire";
 import { ResultCard } from "@/components/ResultCard";
 import { BrowseSection } from "@/components/BrowseSection";
 import { MajorFinder } from "@/components/MajorFinder";
 import { UniversityModal } from "@/components/UniversityModal";
 import {
-  CENTRED_PREFS,
-  type CulturePrefs,
+  type Activity,
   type RecommendationResponse,
   type University,
   type UniversitySummary,
 } from "@/lib/contract";
+import { foldAnswers } from "@/lib/questionnaire";
 import { MAJORS } from "@/lib/majors";
 
 type Status =
@@ -34,7 +35,8 @@ export default function Home() {
   const [sat, setSat] = useState("");
   const [major, setMajor] = useState("Computer Science");
   const [maxNetPrice, setMaxNetPrice] = useState("");
-  const [prefs, setPrefs] = useState<CulturePrefs>(CENTRED_PREFS);
+  const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [activities, setActivities] = useState<Activity[]>([]);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [sort, setSort] = useState<Sort>("match");
   const [tiers, setTiers] = useState<string[]>([]);
@@ -72,12 +74,16 @@ export default function Home() {
     event.preventDefault();
     setStatus({ kind: "loading" });
 
+    const { culturePrefs, personality } = foldAnswers(answers);
+
     const body = {
       profile: {
         gpa: Number(gpa),
         ...(sat ? { sat: Number(sat) } : {}),
         intended_major: major,
-        culture_prefs: prefs,
+        culture_prefs: culturePrefs,
+        personality,
+        activities,
         ...(maxNetPrice ? { preferences: { max_tuition: Number(maxNetPrice) } } : {}),
       },
       top_k: 12,
@@ -227,12 +233,11 @@ export default function Home() {
             </select>
           </div>
 
-          <h2 style={{ marginTop: 30 }}>The vibe check</h2>
-          <p className="lead" style={{ fontSize: 14 }}>
-            These never filter anyone out — they rank by fit. Drag only the ones you care
-            about; anything left in the middle counts as no preference.
-          </p>
-          <CultureSliders value={prefs} onChange={setPrefs} />
+          <h2 style={{ marginTop: 30 }}>About you</h2>
+          <Questionnaire answers={answers} onChange={setAnswers} />
+
+          <h2 style={{ marginTop: 30 }}>What you do</h2>
+          <ActivitiesInput activities={activities} onChange={setActivities} />
 
           <div style={{ display: "flex", gap: 10, marginTop: 22 }}>
             <button className="btn" type="submit" disabled={status.kind === "loading"}>
@@ -242,7 +247,8 @@ export default function Home() {
               type="button"
               className="btn ghost"
               onClick={() => {
-                setPrefs(CENTRED_PREFS);
+                setAnswers({});
+                setActivities([]);
                 setStatus({ kind: "idle" });
                 setTiers([]);
               }}

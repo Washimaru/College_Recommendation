@@ -127,6 +127,7 @@ class University(BaseModel):
     size: Size
     majors: list[str] = Field(default_factory=list)
     culture: Culture
+    details: dict | None = None
     provenance: dict[str, Provenance] = Field(default_factory=dict)
 
 

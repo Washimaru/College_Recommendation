@@ -114,6 +114,7 @@ def _summarize(uni: University) -> UniversitySummary:
         size=uni.size,
         majors=uni.majors,
         culture=uni.culture,
+        details=uni.details,
         provenance=uni.provenance,
     )
 

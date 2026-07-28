@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { AXIS_LABELS, CULTURE_AXES, type AdmitTier, type UniversitySummary } from "@/lib/contract";
 import { formatStat, tierLabel, type StatKind } from "@/lib/format";
+import { SchoolDetailSections } from "./SchoolDetails";
 
 function Stat({
   label,
@@ -146,6 +147,11 @@ export function UniversityModal({
             </div>
           </>
         )}
+
+        <SchoolDetailSections
+          details={uni.details}
+          provenance={uni.provenance.details}
+        />
 
         <p className="muted" style={{ fontSize: 12, marginTop: 22 }}>
           Figures marked <em>est.</em> are approximate; <em>n/a</em> means the measure
