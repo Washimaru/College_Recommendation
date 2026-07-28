@@ -1,7 +1,7 @@
 import pytest
 
 from app.llm import Review
-from app.schemas import Profile, ScoredUniversity
+from app.schemas import Culture, Profile, ScoredUniversity, University
 
 
 @pytest.fixture
@@ -16,9 +16,19 @@ def scored(ids_scores):
     ]
 
 
+NEUTRAL = Culture(collab=0.5, quirky=0.5, idealist=0.5, research=0.5, spirit=0.5, seminar=0.5)
+
+
 @pytest.fixture
-def names():
-    return {"u1": "Alpha", "u2": "Beta", "u3": "Gamma", "u4": "Delta"}
+def universities() -> dict[str, University]:
+    return {
+        uid: University(
+            id=uid, name=name, country="USA", location="CA", avg_gpa=3.7,
+            avg_sat=1400, acceptance_rate=0.3, net_price=25000, enrollment=8000,
+            size="medium", majors=["Computer Science"], culture=NEUTRAL,
+        )
+        for uid, name in [("u1", "Alpha"), ("u2", "Beta"), ("u3", "Gamma"), ("u4", "Delta")]
+    }
 
 
 class StaticLLM:

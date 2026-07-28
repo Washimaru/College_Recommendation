@@ -45,5 +45,7 @@ def _load_from_db(url: str) -> list[University]:  # pragma: no cover - needs Pos
     return [University(**row) for row in rows]
 
 
-def names_map(universities: list[University]) -> dict[str, str]:
-    return {u.id: u.name for u in universities}
+def by_id(universities: list[University]) -> dict[str, University]:
+    """Index by id. The loop needs whole records, not just names, to emit the
+    per-result university summary and admit_tier."""
+    return {u.id: u for u in universities}

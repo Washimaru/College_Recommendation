@@ -98,12 +98,30 @@ class RecommendationRequest(BaseModel):
     top_k: int = Field(default=5, ge=1, le=50)
 
 
+class UniversitySummary(BaseModel):
+    """Compact view of a university, carried on each Result so the client can
+    show why a school is on the list and how trustworthy each figure is."""
+
+    model_config = ConfigDict(extra="forbid")
+    country: str
+    location: str
+    avg_gpa: float = Field(ge=0, le=4.0)
+    avg_sat: int | None = None
+    acceptance_rate: float | None = None
+    net_price: float | None = None
+    enrollment: int | None = None
+    size: Size
+    provenance: dict[str, Provenance] = Field(default_factory=dict)
+
+
 class Result(BaseModel):
     model_config = ConfigDict(extra="forbid")
     university_id: str
     name: str
     score: float = Field(ge=0, le=1)
     rationale: str
+    admit_tier: Literal["reach", "target", "safety"] | None = None
+    university: UniversitySummary
 
 
 class TraceStep(BaseModel):

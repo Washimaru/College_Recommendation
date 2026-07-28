@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 
 from . import db
-from .candidates import load_universities, names_map
+from .candidates import by_id, load_universities
 from .clients import make_rank_fn
 from .llm import MockLLM
 from .loop import iter_loop, run_loop
@@ -27,7 +27,7 @@ def recommend(request: RecommendationRequest) -> RecommendationResponse:
     rank_fn = make_rank_fn(request.profile, universities)
     llm = MockLLM(top_k=request.top_k)
     response = iter_loop(
-        rank_fn, llm, request.profile, names_map(universities),
+        rank_fn, llm, request.profile, by_id(universities),
         max_iterations=request.max_iterations, top_k=request.top_k,
     )
     db.persist(request.profile, response)
@@ -43,7 +43,7 @@ def recommend_stream(request: RecommendationRequest) -> StreamingResponse:
     def sse():
         final = None
         for event in run_loop(
-            rank_fn, llm, request.profile, names_map(universities),
+            rank_fn, llm, request.profile, by_id(universities),
             max_iterations=request.max_iterations, top_k=request.top_k,
         ):
             if event["type"] == "iteration":

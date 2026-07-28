@@ -8,7 +8,24 @@ import type { RecommendationResponse } from "../src/types.js";
 
 const FIXTURE: RecommendationResponse = {
   results: [
-    { university_id: "u1", name: "Alpha U", score: 0.91, rationale: "Great fit." },
+    {
+      university_id: "u1",
+      name: "Alpha U",
+      score: 0.91,
+      rationale: "Great fit.",
+      admit_tier: "target",
+      university: {
+        country: "USA",
+        location: "CA",
+        avg_gpa: 3.8,
+        avg_sat: 1450,
+        acceptance_rate: 0.2,
+        net_price: 24000,
+        enrollment: 8000,
+        size: "medium",
+        provenance: { avg_sat: "observed", acceptance_rate: "observed" },
+      },
+    },
   ],
   confidence: 0.9,
   stop_reason: "R1_converged",

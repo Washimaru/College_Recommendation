@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/recommendation.schema.json",
   "title": "RecommendationResponse",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["results", "confidence", "stop_reason", "trace"],
@@ -32,12 +32,40 @@
     "Result": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["university_id", "name", "score", "rationale"],
+      "required": ["university_id", "name", "score", "rationale", "university"],
       "properties": {
         "university_id": { "type": "string" },
         "name": { "type": "string" },
         "score": { "type": "number", "minimum": 0, "maximum": 1 },
-        "rationale": { "type": "string" }
+        "rationale": { "type": "string" },
+        "admit_tier": {
+          "type": ["string", "null"],
+          "enum": ["reach", "target", "safety", null],
+          "description": "Computed server-side from avg_gpa minus the student's GPA, boundary 0.12 either side. Null when the student gave no GPA."
+        },
+        "university": { "$ref": "#/$defs/UniversitySummary" }
+      }
+    },
+    "UniversitySummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Enough of the university for a client to show why it is listed and how trustworthy each figure is.",
+      "required": ["country", "location", "avg_gpa", "size"],
+      "properties": {
+        "country": { "type": "string" },
+        "location": { "type": "string" },
+        "avg_gpa": { "type": "number", "minimum": 0, "maximum": 4.0 },
+        "avg_sat": { "type": ["integer", "null"], "minimum": 400, "maximum": 1600 },
+        "acceptance_rate": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "net_price": { "type": ["number", "null"], "minimum": 0 },
+        "enrollment": { "type": ["integer", "null"], "minimum": 0 },
+        "size": { "type": "string", "enum": ["small", "medium", "large"] },
+        "provenance": {
+          "type": "object",
+          "description": "Per-field origin. A null with provenance not_applicable must not render the same as absent.",
+          "additionalProperties": { "type": "string", "enum": ["observed", "web_verified", "editorial", "not_applicable", "absent"] },
+          "default": {}
+        }
       }
     },
     "TraceStep": {

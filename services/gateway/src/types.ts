@@ -64,12 +64,43 @@ export const RecommendationRequestSchema = z
   })
   .strict();
 
+export const ProvenanceSchema = z.enum([
+  "observed",
+  "web_verified",
+  "editorial",
+  "not_applicable",
+  "absent",
+]);
+
+/**
+ * Enough of the university to explain why it is listed. Nullable fields are
+ * deliberate: `provenance` says whether a null means "does not apply here"
+ * or "we don't know". Neither may render as a zero.
+ */
+export const UniversitySummarySchema = z
+  .object({
+    country: z.string(),
+    location: z.string(),
+    avg_gpa: z.number().min(0).max(4.0),
+    avg_sat: z.number().int().min(400).max(1600).nullable().optional(),
+    acceptance_rate: z.number().min(0).max(1).nullable().optional(),
+    net_price: z.number().min(0).nullable().optional(),
+    enrollment: z.number().int().min(0).nullable().optional(),
+    size: z.enum(["small", "medium", "large"]),
+    provenance: z.record(ProvenanceSchema).default({}),
+  })
+  .strict();
+
+export const AdmitTierSchema = z.enum(["reach", "target", "safety"]);
+
 export const ResultSchema = z
   .object({
     university_id: z.string(),
     name: z.string(),
     score: z.number().min(0).max(1),
     rationale: z.string(),
+    admit_tier: AdmitTierSchema.nullable().optional(),
+    university: UniversitySummarySchema,
   })
   .strict();
 
@@ -102,3 +133,5 @@ export type Profile = z.infer<typeof ProfileSchema>;
 export type RecommendationRequest = z.infer<typeof RecommendationRequestSchema>;
 export type RecommendationResponse = z.infer<typeof RecommendationResponseSchema>;
 export type TraceStep = z.infer<typeof TraceStepSchema>;
+export type Result = z.infer<typeof ResultSchema>;
+export type UniversitySummary = z.infer<typeof UniversitySummarySchema>;

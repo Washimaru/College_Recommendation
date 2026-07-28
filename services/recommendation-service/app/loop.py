@@ -17,7 +17,14 @@ from __future__ import annotations
 from collections.abc import Callable, Iterator
 
 from .llm import LLM, Review
-from .schemas import RecommendationResponse, Result, ScoredUniversity, TraceStep
+from .schemas import (
+    RecommendationResponse,
+    Result,
+    ScoredUniversity,
+    TraceStep,
+    University,
+    UniversitySummary,
+)
 
 # rank_fn takes clamped weight_feedback and returns candidates sorted by the
 # scoring service (descending score, ascending id).
@@ -26,6 +33,23 @@ RankFn = Callable[[dict[str, float]], list[ScoredUniversity]]
 CONFIDENCE_THRESHOLD = 0.9
 WEIGHT_FEEDBACK_MIN = 0.5
 WEIGHT_FEEDBACK_MAX = 1.5
+
+# Reach/target/safety boundary, in GPA points either side of a match.
+# Inherited from the original UniMatch project's admitTier.
+ADMIT_TIER_DELTA = 0.12
+
+
+def admit_tier(student_gpa: float | None, school_avg_gpa: float) -> str | None:
+    """Classify a school relative to the student. None when the student gave no
+    GPA - there is nothing to compare, and a guess would be worse than a gap."""
+    if student_gpa is None:
+        return None
+    delta = school_avg_gpa - student_gpa
+    if delta >= ADMIT_TIER_DELTA:
+        return "reach"
+    if delta <= -ADMIT_TIER_DELTA:
+        return "safety"
+    return "target"
 
 
 def sanitize_review(raw: Review, candidate_ids: list[str], top_k: int) -> Review:
@@ -78,32 +102,54 @@ def _stop_reason(
     return None
 
 
+def _summarize(uni: University) -> UniversitySummary:
+    return UniversitySummary(
+        country=uni.country,
+        location=uni.location,
+        avg_gpa=uni.avg_gpa,
+        avg_sat=uni.avg_sat,
+        acceptance_rate=uni.acceptance_rate,
+        net_price=uni.net_price,
+        enrollment=uni.enrollment,
+        size=uni.size,
+        provenance=uni.provenance,
+    )
+
+
 def _build_results(
     scored: list[ScoredUniversity],
     clean: Review,
-    names: dict[str, str],
+    universities: dict[str, University],
+    profile,
     top_k: int,
 ) -> list[Result]:
     by_id = {s.university_id: s for s in scored}
     notes = clean["notes"]
     chosen = clean["keep_ids"] or [s.university_id for s in scored[:top_k]]
-    return [
-        Result(
-            university_id=uid,
-            name=names.get(uid, uid),
-            score=by_id[uid].score,
-            rationale=notes.get(uid, "Top-ranked match for this profile."),
+    student_gpa = getattr(profile, "gpa", None)
+    results = []
+    for uid in chosen:
+        if uid not in by_id or uid not in universities:
+            continue
+        uni = universities[uid]
+        results.append(
+            Result(
+                university_id=uid,
+                name=uni.name,
+                score=by_id[uid].score,
+                rationale=notes.get(uid, "Top-ranked match for this profile."),
+                admit_tier=admit_tier(student_gpa, uni.avg_gpa),
+                university=_summarize(uni),
+            )
         )
-        for uid in chosen
-        if uid in by_id
-    ]
+    return results
 
 
 def run_loop(
     rank_fn: RankFn,
     llm: LLM,
     profile,
-    names: dict[str, str],
+    universities: dict[str, University],
     max_iterations: int = 5,
     top_k: int = 5,
 ) -> Iterator[dict]:
@@ -145,7 +191,7 @@ def run_loop(
 
     assert stop_reason is not None  # R4 guarantees termination
     response = RecommendationResponse(
-        results=_build_results(scored, clean, names, top_k),
+        results=_build_results(scored, clean, universities, profile, top_k),
         confidence=clean["confidence"],
         stop_reason=stop_reason,
         trace=trace,
@@ -157,13 +203,13 @@ def iter_loop(
     rank_fn: RankFn,
     llm: LLM,
     profile,
-    names: dict[str, str],
+    universities: dict[str, University],
     max_iterations: int = 5,
     top_k: int = 5,
 ) -> RecommendationResponse:
     """Blocking driver: run the loop to completion and return the final response."""
     final: RecommendationResponse | None = None
-    for event in run_loop(rank_fn, llm, profile, names, max_iterations, top_k):
+    for event in run_loop(rank_fn, llm, profile, universities, max_iterations, top_k):
         if event["type"] == "final":
             final = event["response"]
     assert final is not None
