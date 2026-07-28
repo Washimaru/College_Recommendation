@@ -5,6 +5,8 @@ always yields the same RankResponse (enforced by test_determinism).
 """
 from __future__ import annotations
 
+import math
+
 from .schemas import (
     CULTURE_AXES,
     Culture,
@@ -30,14 +32,33 @@ def _clamp01(x: float) -> float:
     return max(0.0, min(1.0, x))
 
 
+# Academic fit peaks where the student matches the school and decays either
+# side. A monotonic ramp would make an ever-larger overmatch score ever higher,
+# which ranks safety schools above good matches - academic is the heaviest
+# weight, so that inverts the entire result.
+_GPA_SIGMA = 0.35
+_SAT_SIGMA = 130.0
+# Being at or slightly above the school's average is genuinely favourable, so a
+# small bounded bonus applies on that side only.
+_OVERMATCH_BONUS = 0.08
+_OVERMATCH_BONUS_CAP = 0.5
+
+
+def _peaked(gap: float, sigma: float) -> float:
+    """1.0 when gap is 0, decaying as a gaussian either side. `gap` is
+    student minus school, so positive means the student is above."""
+    score = math.exp(-(gap * gap) / (2 * sigma * sigma))
+    if gap >= 0:
+        score += _OVERMATCH_BONUS * min(gap / sigma, _OVERMATCH_BONUS_CAP)
+    return _clamp01(score)
+
+
 def _academic_fit(profile: Profile, uni: University) -> float:
-    gpa_gap = (profile.gpa - uni.avg_gpa) / 4.0
-    gpa_score = _clamp01(0.5 + gpa_gap)  # at/above average scores higher
+    gpa_score = _peaked(profile.gpa - uni.avg_gpa, _GPA_SIGMA)
     # Both sides must be present: the school's SAT is null for every non-US
     # school and every test-free US school, and is never derived from GPA.
     if profile.sat is not None and uni.avg_sat is not None:
-        sat_gap = (profile.sat - uni.avg_sat) / 1200.0
-        sat_score = _clamp01(0.5 + sat_gap)
+        sat_score = _peaked(float(profile.sat - uni.avg_sat), _SAT_SIGMA)
         return round((gpa_score + sat_score) / 2.0, 6)
     return round(gpa_score, 6)
 
