@@ -16,6 +16,9 @@ coverage/
 build/
 *.egg-info/
 
+# Generated catalog. Reproducible offline from the committed sources/ tier files.
+data-pipeline/out/
+
 # Coverage data (incl. macOS " 2" conflict copies)
 .coverage*
 
