@@ -3978,5 +3978,307 @@
   "src": [
    "https://www.sarahlawrence.edu/financial-aid/undergraduate/sarah-lawrence-aid.html"
   ]
+ },
+ "sewanee-the-university-of-the-south": {
+  "scholarships": {
+   "policy": "Publishes a commitment to meeting 100% of demonstrated need for every admitted student, on an endowment ($517.6M as of June 2025) considerably smaller than peers making the same pledge.",
+   "named": [
+    "Merit from $8,000 up to full cost of attendance, automatic consideration",
+    "98% of entering first-years received gift funding",
+    "Average institutional funding just over $34,000 in August 2025"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://new.sewanee.edu/admission-aid/cost-financial-aid/"
+  ]
+ },
+ "rhodes-college": {
+  "scholarships": {
+   "policy": "Combines broad merit awards with need-based aid; meets demonstrated need for admitted international students on student visas.",
+   "named": [
+    "General merit scholarships up to $37,000 a year, automatic consideration",
+    "Chicago Scholars Program meets direct-cost need with scholarship, grant and work",
+    "FAFSA window 1 February to 1 March for need-based awards"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.rhodes.edu/admission-aid/cost-affordability/rhodes-institutional-aid"
+  ]
+ },
+ "centre-college": {
+  "scholarships": {
+   "policy": "The Centre Promise meets 100% of calculated need for admitted US citizens and eligible non-citizens, alongside an unusually broad merit programme.",
+   "named": [
+    "Merit from $1,000 to full cost of attendance; over 50% of applicants qualify",
+    "Automatic $140,000 GSP Scholarship ($35,000 a year) for Kentucky Governor's Scholars",
+    "More than 90% of students receive aid"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.centre.edu/admission-aid/centre-promise"
+  ]
+ },
+ "college-of-wooster": {
+  "scholarships": {
+   "policy": "Automatic merit consideration for every applicant. Wooster publishes a full-need commitment for international students but not for domestic ones.",
+   "named": [
+    "Merit up to $43,000 a year, tuition charges only",
+    "Presidential Scholar: full tuition; College Scholar and Dean's Scholar below it",
+    "99% of students receive some aid"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://wooster.edu/admissions/afford/merit-scholarships/"
+  ]
+ },
+ "agnes-scott-college": {
+  "scholarships": {
+   "policy": "Guaranteed minimum merit for every admit from Fall 2026, though international students are not eligible for need-based assistance.",
+   "named": [
+    "$100K+ Promise: minimum $25,000 a year, at least $100,000 over four years",
+    "Merit $26,000-$32,000 a year for Early Action II applicants",
+    "100% of students receive merit and/or need aid; average cost cut 58%",
+    "No need-based aid for international students"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.agnesscott.edu/admission/undergraduate-admission/scholarships-financial-aid/100k-promise.html"
+  ]
+ },
+ "baylor-university": {
+  "scholarships": {
+   "policy": "Automatic and comprehensive merit consideration for all applicants, including test-optional ones.",
+   "named": [
+    "Merit from $1,000 to full cost of attendance; over 84% of students receive it",
+    "Renewal requires a 3.0 cumulative GPA",
+    "Applications completed after 1 February are considered subject to remaining funds"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://admissions.web.baylor.edu/costs-aid/scholarships-aid/merit-based-scholarships"
+  ]
+ },
+ "pepperdine-university": {
+  "scholarships": {
+   "policy": "Its top award is one of the few that still requires test scores at a test-optional school.",
+   "named": [
+    "Regents Scholars: top 8-10% of the admitted class",
+    "SAT/ACT/CLT scores REQUIRED for consideration despite test-optional admission",
+    "Renewable four years; requires a 3.25 GPA; applies to tuition only"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://seaver.pepperdine.edu/about/administration/dean/regentsscholars/"
+  ]
+ },
+ "emerson-college": {
+  "scholarships": {
+   "policy": "Automatic merit consideration on acceptance, with awards up to full tuition.",
+   "named": [
+    "Emerson Circle of Creative Scholars: tuition, fees, food and housing",
+    "From Fall 2026, out-of-state community college graduates with a 3.0 associate degree receive $30,000 a year"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://emerson.edu/departments/financial-aid/new-undergraduate-students/types-aid-new-undergraduates/scholarships-grants/merit-based-scholarships"
+  ]
+ },
+ "hampton-university": {
+  "scholarships": {
+   "policy": "Merit is automatic for Early Action applicants but gated behind published test and GPA minimums.",
+   "named": [
+    "Requires a 3.5 unweighted GPA and 1000 SAT or 22 ACT",
+    "Early Action deadline 15 November for automatic consideration",
+    "Character Scholarship: $10,000 renewable, 100 first-years a year",
+    "The former Trustee and Presidential named awards no longer exist"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://home.hamptonu.edu/admissions/scholarship-information/"
+  ]
+ },
+ "tuskegee-university": {
+  "scholarships": {
+   "policy": "Publishes exact GPA and test thresholds for each merit tier, which is unusually concrete.",
+   "named": [
+    "University Merit: full tuition at 3.5 GPA and 1200-1290 SAT / 25-27 ACT",
+    "University Achievement: $10,000 at 3.3 GPA and 1100-1190 SAT",
+    "Tuskegee University Grant: $8,000 at 3.1 GPA",
+    "Presidential deadline 1 December; merit deadline 15 January"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.tuskegee.edu/financial-aid/Scholarships.html"
+  ]
+ },
+ "bentley-university": {
+  "scholarships": {
+   "policy": "Merit is automatic for first-year and transfer applicants, with a full-cost award aimed at first-generation students.",
+   "named": [
+    "Merit $10,000 to full tuition",
+    "FirstGen Presidential Fellows: full cost of attendance for four years",
+    "About 75% of aid awarded comes from Bentley's own grant and scholarship funds"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.bentley.edu/support/firstgen-presidential-fellows-program"
+  ]
+ },
+ "loyola-marymount-university": {
+  "scholarships": {
+   "policy": "Automatic merit consideration for first-year and transfer applicants, across a wide range of named awards.",
+   "named": [
+    "Presidential, Arrupe, Leavey Family Foundation, University Hill and others",
+    "Most require a 3.0 cumulative GPA to renew; Leavey and University Hill require 3.2",
+    "No separate application"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://financialaid.lmu.edu/current/scholarships/"
+  ]
+ },
+ "providence-college": {
+  "scholarships": {
+   "policy": "Providence does NOT automatically meet full need for most merit recipients, and states plainly that demonstrated need may not be met in full.",
+   "named": [
+    "Merit goes to about 30% of admitted students, averaging $25,000 a year",
+    "Cristo Rey, MLK and Posse Scholarships are full tuition AND meet full demonstrated need",
+    "For everyone else, resources are limited and need may go unmet"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://financial-aid.providence.edu/types-of-assistance/institutional-merit-based/"
+  ]
+ },
+ "university-of-san-diego": {
+  "scholarships": {
+   "policy": "Merit awards require a 3.0 cumulative GPA and full-time enrolment to retain.",
+   "named": [
+    "Merit renewal requires 3.0 GPA and 12+ units a semester",
+    "Department-level scholarships mix need and programme involvement"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.sandiego.edu/admission-and-aid/scholarships.php"
+  ]
+ },
+ "yeshiva-university": {
+  "scholarships": {
+   "policy": "Merit is gated on a published high-school average, and need assessment explicitly accounts for day-school tuition for siblings and care of elderly relatives.",
+   "named": [
+    "Merit requires a 3.25 (87) high-school average or better",
+    "Straus Scholars Program for Jewish and general studies achievement",
+    "Need assessment counts sibling day-school tuition, elder care and recent business difficulty",
+    "Over $60M awarded a year; more than 90% of students receive something"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://go.yu.edu/merit-scholarships"
+  ]
+ },
+ "manhattan-school-of-music": {
+  "scholarships": {
+   "policy": "The main scholarship blends audition result with demonstrated need; a separate award serves high-merit students with no need.",
+   "named": [
+    "MSM Scholarship: about 75% of full-time students, based on audition and need",
+    "President's Award: high merit with no financial need, capped at 50% of tuition",
+    "A Financial Aid Questionnaire is required of ALL applicants, aid or not"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.msmnyc.edu/admission/scholarships-financial-aid/types-of-aid/"
+  ]
+ },
+ "new-england-conservatory": {
+  "scholarships": {
+   "policy": "Scholarships combine artistic merit with financial need; more than 90% of applicants request assistance.",
+   "named": [
+    "Merit-based and federal need-based aid combined in most packages",
+    "Institutional aid application required, plus FAFSA if eligible",
+    "Stated aim is to avoid career-constraining loan obligations"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://necmusic.edu/admissions/tuition-aid/"
+  ]
+ },
+ "cleveland-institute-of-music": {
+  "scholarships": {
+   "policy": "Aid is described as merit-based and need-informed, with faculty audition recommendations the primary factor.",
+   "named": [
+    "CIM Scholarship renews at the same amount for the normal duration of study",
+    "Yellow Ribbon Match for up to 5 students a year, combined aid at least $10,000",
+    "Nearly 100% of students receive assistance"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.cim.edu/admissions/financialaid/applying-for-aid/types-of-aid-undergraduate"
+  ]
+ },
+ "san-francisco-conservatory-of-music": {
+  "scholarships": {
+   "policy": "Almost every student receives merit aid, averaging around 60% of tuition.",
+   "named": [
+    "99% of students receive merit scholarships, averaging 60% of tuition",
+    "Founders Scholarships from $20,000 to full tuition",
+    "FAFSA required by 15 February; undergraduates need a 2.5 GPA to renew"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://sfcm.edu/study/apply/financial-aid/scholarships-grants"
+  ]
+ },
+ "new-england-conservatory-2": {
+  "scholarships": {
+   "policy": "Scholarships combine artistic merit with financial need; more than 90% of applicants request assistance.",
+   "named": [
+    "Merit-based and federal need-based aid combined in most packages",
+    "Institutional aid application required, plus FAFSA if eligible",
+    "Stated aim is to avoid career-constraining loan obligations"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://necmusic.edu/admissions/tuition-aid/"
+  ]
  }
 }
