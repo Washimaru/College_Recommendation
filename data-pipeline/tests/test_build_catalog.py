@@ -209,3 +209,44 @@ class TestDetails:
         )
 
         assert merged["provenance"]["details"] == "editorial"
+
+
+OUTCOME_ROW = {
+    **US_ROW,
+    "C150_4": "0.9412", "MD_EARN_WNE_P10": "112000", "MD_EARN_WNE_P6": "89000",
+    "GRAD_DEBT_MDN": "21500", "PCTPELL": "0.1834", "PCTFLOAN": "0.2711",
+}
+
+
+class TestOutcomes:
+    """Federal outcome data: graduation rate, median earnings and debt.
+    Observed, not estimated, and available for 97-99% of matched US schools."""
+
+    def test_outcomes_are_extracted_and_marked_observed(self):
+        record = enrich({**NON_US, "country": "USA"}, OUTCOME_ROW)
+
+        assert record["outcomes"]["graduation_rate"] == 0.9412
+        assert record["outcomes"]["median_earnings_10yr"] == 112000
+        assert record["outcomes"]["median_debt"] == 21500
+        assert record["provenance"]["outcomes"] == "observed"
+
+    def test_unmatched_school_has_no_outcomes(self):
+        record = enrich(NON_US, None)
+
+        assert record["outcomes"] is None
+        assert record["provenance"]["outcomes"] == "absent"
+
+    def test_partial_outcome_data_keeps_what_exists(self):
+        row = {**OUTCOME_ROW, "MD_EARN_WNE_P10": "NA", "GRAD_DEBT_MDN": "NA"}
+        record = enrich({**NON_US, "country": "USA"}, row)
+
+        assert record["outcomes"]["graduation_rate"] == 0.9412
+        assert record["outcomes"]["median_earnings_10yr"] is None
+
+    def test_all_outcome_fields_missing_yields_none(self):
+        row = {k: ("NA" if k.startswith(("C150", "MD_EARN", "GRAD_DEBT", "PCT")) else v)
+               for k, v in OUTCOME_ROW.items()}
+        record = enrich({**NON_US, "country": "USA"}, row)
+
+        assert record["outcomes"] is None
+        assert record["provenance"]["outcomes"] == "absent"

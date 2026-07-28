@@ -2978,5 +2978,376 @@
    "ratio": "12:1"
   },
   "_source": "curated"
+ },
+ "dartmouth-college": {
+  "scholarships": {
+   "policy": "Need-blind for all applicants regardless of citizenship, meets 100% of demonstrated need, and no loans — federal and institutional loans were replaced with expanded scholarship grants from summer 2022.",
+   "named": [
+    "Full-tuition scholarship for families under ~$125k income",
+    "No parent contribution under ~$65k income",
+    "No-loan packages"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://financialaid.dartmouth.edu/how-aid-works/introduction-financial-aid"
+  ]
+ },
+ "colby-college": {
+  "scholarships": {
+   "policy": "The Colby Commitment: meets 100% of demonstrated need without loans. No merit scholarships of any kind — aid is based solely on family circumstances.",
+   "named": [
+    "$0 parent contribution under $75k income",
+    "Parent contribution capped at $20k up to $200k income",
+    "Average aid offer over $77,000"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://afa.colby.edu/cost-and-aid/colby-commitment/"
+  ]
+ },
+ "bowdoin-college": {
+  "scholarships": {
+   "policy": "Need-blind for all applicants regardless of citizenship, and has met full calculated need without loans since 2008.",
+   "named": [
+    "Need-based scholarships ranged $3,700–$92,350 in the most recent class",
+    "22% of students receive full aid ($0 student and $0 parent contribution)",
+    "$2,400 on-campus work expectation"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.bowdoin.edu/admissions/costs-and-aid/index.html"
+  ]
+ },
+ "barnard-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need, but packages include loans — unlike the no-loan peers. All institutional aid is need-based only.",
+   "named": [
+    "No merit, athletic or talent scholarships",
+    "Federal Direct loans capped $3,500 (first-year) to $5,500 (senior)",
+    "Outside scholarships reduce loans first"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://barnard.edu/finaid/general-policies"
+  ]
+ },
+ "the-juilliard-school": {
+  "scholarships": {
+   "policy": "Need-blind admission with 'need-based, merit-informed' scholarships — awards weigh financial need first, then audition results. Juilliard does not meet full need for everyone.",
+   "named": [
+    "Over 90% of students receive some financial aid",
+    "Scholarship set by the Juilliard Scholarship Committee at admission"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.juilliard.edu/campus-life/tuition-financial-aid/scholarships-loans-and-grants/juilliard-scholarships"
+  ]
+ },
+ "united-states-naval-academy": {
+  "scholarships": {
+   "policy": "Full scholarship — the Navy pays 100% of tuition, room, board and medical/dental — in exchange for five years of active duty service after graduation.",
+   "named": [
+    "Midshipman basic pay $1,452.90/month from January 2026",
+    "$250 monthly spending stipend, remainder held in pay account",
+    "Interest-free ACE advance for uniforms ($12,500 for the Class of 2030)"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.usna.edu/Admissions/Student-Life/General-Information-for-Midshipmen.php"
+  ]
+ },
+ "claremont-mckenna-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need for all admitted students, including international, DACA and undocumented students. Need-blind for US citizens and permanent residents.",
+   "named": [
+    "Need-aware for international, transfer and waitlisted applicants",
+    "Full need met for all eligible students"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.cmc.edu/financial-aid"
+  ]
+ },
+ "middlebury-college": {
+  "scholarships": {
+   "policy": "Need-blind for domestic first-year applicants and meets 100% of demonstrated need, mostly through grants. No merit aid of any kind.",
+   "named": [
+    "No academic or athletic merit scholarships",
+    "Loan component $1,000–$3,500 per year based on income",
+    "Book support programme and student employment"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.middlebury.edu/college/admissions/financial-aid"
+  ]
+ },
+ "haverford-college": {
+  "scholarships": {
+   "policy": "Meets full demonstrated need for all admitted students including international, transfer and waitlist admits. No merit or talent scholarships.",
+   "named": [
+    "No loans for family income under $60,000",
+    "Loan expectation $1,500–$3,000 above that line",
+    "Student Loan Debt Relief Fund for young alumni"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.haverford.edu/financial-aid/financial-aid-policies"
+  ]
+ },
+ "united-states-military-academy-west-point": {
+  "scholarships": {
+   "policy": "No tuition, room, board or medical/dental charges. Cadets are paid a salary, in exchange for five years active duty plus three years reserve service.",
+   "named": [
+    "$225–$625 monthly spending money after deductions",
+    "Service obligation begins with an oath in junior year"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.westpoint.edu/admissions/tuition-and-service-commitment"
+  ]
+ },
+ "davidson-college": {
+  "scholarships": {
+   "policy": "The Davidson Trust meets 100% of calculated need with grants, scholarships and work-study — no loans, a policy in place since 2007.",
+   "named": [
+    "From fall 2027: full scholarship (tuition, fees, housing, meals) under $85k income",
+    "Tuition-free for family income $85k–$175k",
+    "No loans at any income level"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.davidson.edu/about/mission-and-values/davidson-trust"
+  ]
+ },
+ "hamilton-college": {
+  "scholarships": {
+   "policy": "Need-blind for domestic first-year applicants and meets full demonstrated need for all four years, through scholarship, loans and work-study.",
+   "named": [
+    "Loans capped at $3,500 (first-year) rising to $5,500 (junior/senior)",
+    "Average graduate indebtedness recently $19,800–$22,800"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.hamilton.edu/admission/finaid/needblind"
+  ]
+ },
+ "tulane-university": {
+  "scholarships": {
+   "policy": "Offers substantial merit scholarships alongside need-based aid; all first-year applicants are considered automatically.",
+   "named": [
+    "Dean's Honor Scholarship: full tuition, ~50 awards a year, application due 15 November",
+    "Partial merit awards from $1,000 up to full tuition",
+    "Merit renewable with a 3.0 cumulative GPA"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://financialaid.tulane.edu/types-of-aid/gifts/undergraduate/dhs"
+  ]
+ },
+ "united-states-air-force-academy": {
+  "scholarships": {
+   "policy": "No cost to cadets — the Academy is prohibited by law (10 U.S.C. 4360) from charging tuition, room or board. An education valued at over $416,000 in exchange for service.",
+   "named": [
+    "Minimum five years active duty as an Air Force or Space Force officer",
+    "Ten-year commitment after Undergraduate Pilot Training",
+    "Cadets are paid under 37 USC 203"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.usafa.edu/about/"
+  ]
+ },
+ "grinnell-college": {
+  "scholarships": {
+   "policy": "Need-blind for US citizens and eligible noncitizens, meets 100% of demonstrated need without loans, and also awards merit aid.",
+   "named": [
+    "Merit scholarships up to $28,000, no separate application",
+    "Merit counts as a resource against demonstrated need",
+    "Iowa Access Initiative for in-state students"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.grinnell.edu/admission/financial-aid/types-aid/scholarships"
+  ]
+ },
+ "wesleyan-university": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need without loans for all eligible students regardless of family income — loans were removed from packages from Fall 2024.",
+   "named": [
+    "No merit-based aid",
+    "Aid is grants plus work-study",
+    "Outside scholarships reduce the work expectation first"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.wesleyan.edu/admission/affordability-and-aid/types-of-aid.html"
+  ]
+ },
+ "babson-college": {
+  "scholarships": {
+   "policy": "Merit-driven awards alongside need-based aid, led by the Weissman and Presidential scholarships.",
+   "named": [
+    "Weissman Scholarship: four-year full tuition plus seed money for personal projects",
+    "Presidential Scholars: four-year half tuition, renewable at 3.0 GPA",
+    "First-year applicants only for Weissman"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.babson.edu/tuition-and-financial-aid/undergraduate/merit-awards/weissman-scholarships/"
+  ]
+ },
+ "denison-university": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need and awards merit scholarships that can be combined with need-based aid.",
+   "named": [
+    "Merit scholarships $5,000 up to full tuition, awarded automatically at admission",
+    "Over $70M a year in endowment-funded merit and need aid",
+    "International students eligible for the same aid as domestic"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://denison.edu/campus/finances/types-of-scholarships-aid"
+  ]
+ },
+ "college-of-the-holy-cross": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need as determined by FAFSA and CSS Profile.",
+   "named": [
+    "Full tuition grant for families earning $100,000 or less with reasonable assets",
+    "Nearly 450 first-year students receive Holy Cross Grant funding",
+    "Holy Cross Loan up to $6,800 over four years at 6%"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.holycross.edu/admissions-aid/tuition-financial-aid/scholarships-grants"
+  ]
+ },
+ "colorado-college": {
+  "scholarships": {
+   "policy": "One of roughly 70 US institutions meeting the full demonstrated need of every admitted student, through grants, work-study and modest loans.",
+   "named": [
+    "Donor-funded scholarships and campus grants",
+    "Stafford loan limits $3,500 (first-year) to $5,500 (junior/senior)",
+    "Four Corners Pledge for regional students"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.coloradocollege.edu/admission/financialaid/funding_guide/"
+  ]
+ },
+ "vassar-college": {
+  "scholarships": {
+   "policy": "Need-blind admission, meets 100% of demonstrated need for all four years. Loans are included in packages, but not for lower-income families.",
+   "named": [
+    "Loans eliminated for family income below $60,000 (converted to grants)",
+    "Students may decline the loan component and accept only grant and work-study"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://offices.vassar.edu/student-financial-services/how-aid-works/"
+  ]
+ },
+ "rhode-island-school-of-design": {
+  "scholarships": {
+   "policy": "The RISD Promise: need-based scholarship funding that renews and increases each year in proportion to tuition rises. Merit awards also available.",
+   "named": [
+    "Merit scholarships from $10,000 for National YoungArts Foundation participants",
+    "Society of Presidential Fellows: full tuition for select graduate students",
+    "Yellow Ribbon Program participant"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://sfs.risd.edu/financial-aid/undergraduate-financial-aid"
+  ]
+ },
+ "university-of-miami": {
+  "scholarships": {
+   "policy": "Large merit programme; all applicants are automatically considered with no separate application.",
+   "named": [
+    "Stamps Scholarship: full cost of attendance plus a $12,000 enrichment fund",
+    "President's Scholarship up to $30,000 a year",
+    "Canes Achievement Award up to $20,000 a year",
+    "Singer Scholarship for exceptional applicants"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://admissions.miami.edu/undergraduate/financial-aid/scholarships/freshman/index.html"
+  ]
+ },
+ "berea-college": {
+  "scholarships": {
+   "policy": "No student has paid tuition since 1892. Every admitted student receives the Tuition Promise Scholarship; the endowment funds 74% of the operating budget.",
+   "named": [
+    "Tuition Promise Scholarship — full tuition for all ~1,600 students",
+    "Housing and meals covered as far as FAFSA allows",
+    "Free laptop, $400 professional clothing stipend, ~$4,000 for internships"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.berea.edu/no-tuition"
+  ]
+ },
+ "carleton-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need for all four years, mostly with grants, keeping loans small and work-study manageable.",
+   "named": [
+    "Majority of each package is grant aid",
+    "Outside scholarships reduce loans and work before grants",
+    "Need met with grants, employment and modest loans"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.carleton.edu/financial-aid/our-approach/"
+  ]
  }
 }
