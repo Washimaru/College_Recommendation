@@ -3349,5 +3349,409 @@
   "src": [
    "https://www.carleton.edu/financial-aid/our-approach/"
   ]
+ },
+ "cooper-union": {
+  "scholarships": {
+   "policy": "Every admitted undergraduate receives a half-tuition scholarship regardless of need or citizenship, plus a tuition-free senior year. The college is working toward being 100% tuition-free by 2028-29.",
+   "named": [
+    "Half-tuition scholarship worth $22,275 a year, no application needed",
+    "Tuition-free senior year",
+    "Meets 100% of demonstrated need on top of the scholarship"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://cooper.edu/admissions/sfs/financial-aid"
+  ]
+ },
+ "olin-college-of-engineering": {
+  "scholarships": {
+   "policy": "The Olin Tuition Scholarship, a half-tuition merit award, goes automatically to every admitted student, and Olin then meets full demonstrated need on top.",
+   "named": [
+    "Olin Tuition Scholarship: half tuition for eight semesters, awarded to all admits",
+    "Full demonstrated need met for eight semesters",
+    "Merit awards count toward meeting need, not against family contribution"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.olin.edu/admission/costs-financial-aid"
+  ]
+ },
+ "hillsdale-college": {
+  "scholarships": {
+   "policy": "Hillsdale accepts no federal or state funding and does not permit students to receive federal or state aid, directly or indirectly. Privately funded scholarships and grants replace the usual programmes.",
+   "named": [
+    "No Pell Grant, SEOG or subsidised Stafford Loan — private equivalents instead",
+    "No FAFSA; the college uses its own Confidential Family Financial Statement",
+    "Hundreds of privately funded scholarships for academics, athletics and the arts",
+    "Outside scholarships may need proof they are not federally funded"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.hillsdale.edu/admissions-aid/financial-aid/"
+  ]
+ },
+ "smith-college": {
+  "scholarships": {
+   "policy": "Meets full documented need for all admitted students and has eliminated loans from institutional aid packages, replacing them with grants.",
+   "named": [
+    "No-loan policy covers international, undocumented and transfer students",
+    "Merit scholarships count as a resource against demonstrated need"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.smith.edu/admission-aid/tuition-aid-applicants"
+  ]
+ },
+ "reed-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need for all four years, and deliberately offers no merit aid so the budget goes to need.",
+   "named": [
+    "No academic or athletic scholarships of any kind",
+    "Average Reed grant $47,666",
+    "Aid determined by CSS Profile and FAFSA"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.reed.edu/admission-aid/costs-and-financial-aid/financial-aid/"
+  ]
+ },
+ "macalester-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need and runs a substantial merit programme alongside it.",
+   "named": [
+    "Merit scholarships $8,000-$100,000 over four years; more than half of students receive one",
+    "Macalester Tuition Promise from fall 2026: full tuition under $100k family income",
+    "Average package is 83% grant, 7% loan, 5% employment"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.macalester.edu/financial-aid/policies/macalester-tuition-promise/"
+  ]
+ },
+ "university-of-rochester": {
+  "scholarships": {
+   "policy": "Majority of the aid budget is need-based, but merit scholarships are widespread — about 75% of admitted students received one for 2026-27.",
+   "named": [
+    "High school awards (Bausch + Lomb, Xerox, George Eastman, Frederick Douglass/Susan B. Anthony) $10,000-$35,000 a year",
+    "Bausch + Lomb science award running since 1933",
+    "Average merit award around $20,000"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.rochester.edu/financial-aid/scholarships/"
+  ]
+ },
+ "bryn-mawr-college": {
+  "scholarships": {
+   "policy": "Meets 100% of calculated need, and from fall 2026 tuition is free for US families earning under $175,000.",
+   "named": [
+    "Free tuition under $175k family income from fall 2026",
+    "Merit scholarships up to $45,000, automatic consideration",
+    "No loans below $60k income; $2,000 of loans replaced by grant above it"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.brynmawr.edu/admissions-aid/tuition-financial-aid"
+  ]
+ },
+ "oberlin-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need for every admitted student including international students, and awards merit regardless of need.",
+   "named": [
+    "Oberlin Commitment Scholarship: renewable $10,000 for all new students",
+    "Midwest Merit Scholarship: $100,000 over four years for admits from Ohio and 11 Midwestern states",
+    "Typically 70-80% of an award is grant"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.oberlin.edu/financial-aid/basics/scholarships-offered"
+  ]
+ },
+ "mount-holyoke-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need for all admitted students, including international students.",
+   "named": [
+    "Global Perspectives Award for international first-years",
+    "Merit considered automatically, independent of family finances",
+    "International students who do not apply for aid on entry stay ineligible for all four years"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.mtholyoke.edu/mount-holyoke-commitment"
+  ]
+ },
+ "villanova-university": {
+  "scholarships": {
+   "policy": "Need-blind for US citizens and permanent residents, with aid based on ability to contribute, plus a small full-ride merit programme.",
+   "named": [
+    "Presidential Scholarship: tuition, housing, meal plan, fees and books — 25 awarded a year",
+    "Presidential Scholarship requires no financial aid forms"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.villanova.edu/university/undergraduate-admission/Financial-Assistance-and-scholarship/merit-based-scholarships.html"
+  ]
+ },
+ "brandeis-university": {
+  "scholarships": {
+   "policy": "Meets full calculated need for undergraduates, and considers every applicant for merit automatically.",
+   "named": [
+    "Brandeis Commitment (from fall 2025): full or half tuition by income band",
+    "Wien Scholarship and MLK Jr. Scholarship meet full demonstrated need",
+    "Merit renewable up to eight semesters at a fixed amount"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.brandeis.edu/student-financial-services/financial-aid/scholarships/merit/index.html"
+  ]
+ },
+ "berklee-college-of-music": {
+  "scholarships": {
+   "policy": "Merit scholarships are automatic for all entering students; need-based institutional grants are limited and prioritise the highest need.",
+   "named": [
+    "Presidential Scholarship: tuition, housing, meal plan, laptop and fees for eight semesters",
+    "Over $115M awarded annually across Berklee's schools",
+    "International students are eligible for merit but not institutional need-based aid"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.berklee.edu/scholarships"
+  ]
+ },
+ "morehouse-college": {
+  "scholarships": {
+   "policy": "Combines merit scholarships with need-based grants; around 80% of students receive some aid.",
+   "named": [
+    "Rising Men of Morehouse: merit and need scholarships plus emergency funds",
+    "Institutional awards cover tuition, fees, housing and meals",
+    "About 50% of students come from households earning under $40,000"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://morehouse.edu/aid/financial-aid/scholarships"
+  ]
+ },
+ "scripps-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need, with merit awards for every first-year applicant.",
+   "named": [
+    "Merit scholarships $15,000-$30,000 a year, renewable for four years",
+    "James E. Scripps Scholarship is the highest award",
+    "Average need-based award about $56,000"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.scrippscollege.edu/financialaid/"
+  ]
+ },
+ "kenyon-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need for all four years, with merit awarded regardless of need.",
+   "named": [
+    "Merit scholarships $15,000-$35,000 a year",
+    "Talent scholarships in art, music and writing",
+    "Average net price $44,823 for 2024-25 entrants"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.kenyon.edu/admissions-aid/financial-aid-scholarships/scholarships-grants/"
+  ]
+ },
+ "lafayette-college": {
+  "scholarships": {
+   "policy": "One of 73 US institutions guaranteeing to meet 100% of demonstrated need for on-time applicants.",
+   "named": [
+    "Marquis Fellowship: full tuition. Marquis Scholarship: half tuition",
+    "All applicants considered automatically, no extra materials",
+    "Need beyond a Marquis award is topped up with need-based aid"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://admissions.lafayette.edu/scholarships/"
+  ]
+ },
+ "bucknell-university": {
+  "scholarships": {
+   "policy": "A mix of need-based grants and merit scholarships that do not require need. Merit is applied toward demonstrated need rather than on top of it.",
+   "named": [
+    "Merit awarded at admission, first-years only, renewable eight semesters",
+    "Bauer Scholars Program: $20,000 plus a package meeting full need, for Baltimore students"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.bucknell.edu/admissions-aid/tuition-fees-financial-aid/scholarship-programs"
+  ]
+ },
+ "whitman-college": {
+  "scholarships": {
+   "policy": "Moving to meet full demonstrated need, beginning with first-year and transfer students in 2026-27 and expanding over three years.",
+   "named": [
+    "The 10% Promise: tuition never exceeds 10% of family income",
+    "Merit scholarships up to $35,000, renewable four years, automatic consideration",
+    "Talent scholarships in outdoor recreation, debate, fine arts, music, theatre and dance"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.whitman.edu/admission-and-aid/financial-aid-and-costs/the-whitman-10-percent-promise"
+  ]
+ },
+ "occidental-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need for US citizens and permanent residents applying on time, with merit available regardless of need.",
+   "named": [
+    "Automatic $10,000+ a year for an unweighted GPA of 3.60 or higher",
+    "Merit up to $50,000 a year for stronger records",
+    "Requires both FAFSA and CSS Profile"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.oxy.edu/financial-aid/how-financial-aid-works/grants-scholarships"
+  ]
+ },
+ "pitzer-college": {
+  "scholarships": {
+   "policy": "Meets 100% of need through a mix of grants, work-study and loans, with two modest merit awards.",
+   "named": [
+    "Pitzer Opportunity Grant (from fall 2025): full tuition under $120k household income, in-state or out",
+    "Trustee Community Scholarship: renewable $5,000 a year",
+    "Academic Achievement Scholarship: one-time $2,000"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.pitzer.edu/offices/financial-aid/types-aid/grants-scholarships/pitzer-opportunity-grant"
+  ]
+ },
+ "skidmore-college": {
+  "scholarships": {
+   "policy": "Need-aware in admission, but meets 100% of demonstrated need for every accepted student, re-evaluated annually.",
+   "named": [
+    "Merit aid is limited and highly selective",
+    "Filene Music Scholarship: $20,000 a year, 4-6 awarded",
+    "Porter-Wachenheim Presidential Scholarships: $20,000 a year, about 45 awarded"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.skidmore.edu/admissions/aid/typesofaid.php"
+  ]
+ },
+ "franklin-marshall-college": {
+  "scholarships": {
+   "policy": "Meets 100% of demonstrated need for all four years; need-based aid supports 65% of enrolled students, international students included.",
+   "named": [
+    "Commonwealth Commitment: free tuition for Pennsylvania residents under $75k household income",
+    "PA households $75k-$150k pay no more than Penn State in-state tuition",
+    "All applicants considered for both need and merit"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.fandm.edu/financial-aid/commonwealth-commitment.html"
+  ]
+ },
+ "trinity-university": {
+  "scholarships": {
+   "policy": "Merit-led aid, with automatic consideration through the standard admissions process.",
+   "named": [
+    "Murchison Scholarship: up to $30,000 a year, 3.5 GPA expected",
+    "Select Murchison recipients compete for up to 20 full-tuition awards",
+    "All merit renewable for eight semesters"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://trinity.edu/directory/departments-offices/student-financial-services/financial-aid/scholarship/murchison"
+  ]
+ },
+ "furman-university": {
+  "scholarships": {
+   "policy": "99% of students receive institutional aid; over $90M administered, more than $65M funded by Furman itself.",
+   "named": [
+    "James B. Duke Scholarship for roughly the top 1-2% of applicants",
+    "Joseph Vaughn Scholarships: five exceptional South Carolina residents",
+    "Hollingsworth Scholarships for SC students combining achievement and service",
+    "Admission application doubles as the merit application"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.furman.edu/financial-aid/aid-types/merit-based-scholarships/"
+  ]
+ },
+ "cooper-union-2": {
+  "scholarships": {
+   "policy": "Every admitted undergraduate receives a half-tuition scholarship regardless of need or citizenship, plus a tuition-free senior year. The college is working toward being 100% tuition-free by 2028-29.",
+   "named": [
+    "Half-tuition scholarship worth $22,275 a year, no application needed",
+    "Tuition-free senior year",
+    "Meets 100% of demonstrated need on top of the scholarship"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://cooper.edu/admissions/sfs/financial-aid"
+  ]
+ },
+ "berklee-college-of-music-2": {
+  "scholarships": {
+   "policy": "Merit scholarships are automatic for all entering students; need-based institutional grants are limited and prioritise the highest need.",
+   "named": [
+    "Presidential Scholarship: tuition, housing, meal plan, laptop and fees for eight semesters",
+    "Over $115M awarded annually across Berklee's schools",
+    "International students are eligible for merit but not institutional need-based aid"
+   ]
+  },
+  "_source": "web_verified",
+  "_retrieved": "2026-07-28",
+  "src": [
+   "https://www.berklee.edu/scholarships"
+  ]
  }
 }
