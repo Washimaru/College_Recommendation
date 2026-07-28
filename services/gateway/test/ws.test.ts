@@ -41,7 +41,7 @@ describe("ws relay", () => {
     await app.listen({ port: 0, host: "127.0.0.1" });
     const port = (app.server.address() as { port: number }).port;
     const frames = await collect(port, {
-      profile: { gpa: 3.8, mbti: "ENFP", intended_major: "CS" },
+      profile: { gpa: 3.8, intended_major: "CS" },
     });
     expect(frames.map((f) => f.event)).toContain("final");
   });
@@ -50,7 +50,7 @@ describe("ws relay", () => {
     app = await buildServer({ recsClient: fakeRecs() });
     await app.listen({ port: 0, host: "127.0.0.1" });
     const port = (app.server.address() as { port: number }).port;
-    const frames = await collect(port, { profile: { mbti: "BAD" } });
+    const frames = await collect(port, { profile: { gpa: 99 } });
     expect(frames[0]?.event).toBe("error");
   });
 });

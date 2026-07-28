@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/score.schema.json",
   "title": "RankRequest",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["profile", "universities"],
@@ -24,17 +24,41 @@
     "University": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "name", "avg_gpa", "avg_sat", "acceptance_rate", "tuition", "size", "location", "majors"],
+      "required": ["id", "name", "country", "avg_gpa", "size", "location", "majors", "culture"],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
+        "id": { "type": "string", "minLength": 1, "description": "Slug of the name; uniform across US and non-US schools." },
+        "unitid": { "type": ["string", "null"], "description": "Federal IPEDS UNITID where matched. US only." },
         "name": { "type": "string", "minLength": 1 },
-        "avg_gpa": { "type": "number", "minimum": 0, "maximum": 4.0 },
-        "avg_sat": { "type": "integer", "minimum": 400, "maximum": 1600 },
-        "acceptance_rate": { "type": "number", "minimum": 0, "maximum": 1 },
-        "tuition": { "type": "number", "minimum": 0 },
-        "size": { "type": "string", "enum": ["small", "medium", "large"] },
+        "country": { "type": "string", "minLength": 1, "description": "Gates whether US federal enrichment can apply." },
         "location": { "type": "string" },
-        "majors": { "type": "array", "items": { "type": "string" } }
+        "avg_gpa": { "type": "number", "minimum": 0, "maximum": 4.0 },
+        "avg_sat": { "type": ["integer", "null"], "minimum": 400, "maximum": 1600, "description": "Observed only. Never derived from GPA." },
+        "acceptance_rate": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "net_price": { "type": ["number", "null"], "minimum": 0, "description": "Average annual cost after aid. Renamed from `tuition` in v2.0.0, which conflated net cost with sticker price." },
+        "sticker_tuition": { "type": ["number", "null"], "minimum": 0 },
+        "enrollment": { "type": ["integer", "null"], "minimum": 0, "description": "Undergraduate only, to stay comparable across sources." },
+        "size": { "type": "string", "enum": ["small", "medium", "large"] },
+        "majors": { "type": "array", "items": { "type": "string" } },
+        "culture": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Six bipolar axes, aligned with Profile.culture_prefs. Required: it drives 20% of the score.",
+          "required": ["collab", "quirky", "idealist", "research", "spirit", "seminar"],
+          "properties": {
+            "collab": { "type": "number", "minimum": 0, "maximum": 1 },
+            "quirky": { "type": "number", "minimum": 0, "maximum": 1 },
+            "idealist": { "type": "number", "minimum": 0, "maximum": 1 },
+            "research": { "type": "number", "minimum": 0, "maximum": 1 },
+            "spirit": { "type": "number", "minimum": 0, "maximum": 1 },
+            "seminar": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "description": "Per-field origin: observed | web_verified | editorial | not_applicable | absent.",
+          "additionalProperties": { "type": "string", "enum": ["observed", "web_verified", "editorial", "not_applicable", "absent"] },
+          "default": {}
+        }
       }
     },
     "ScoredUniversity": {

@@ -49,13 +49,13 @@ def test_weight_feedback_shifts_score(profile, universities):
 
 
 def test_cost_fit_without_cap(universities):
-    p = Profile(gpa=3.5, sat=1200, mbti="ISTJ", intended_major="Math")
+    p = Profile(gpa=3.5, sat=1200, intended_major="Math")
     resp = rank(_req(p, universities))
     assert all(0.0 <= s.components["cost"] <= 1.0 for s in resp.scores)
 
 
 def test_no_sat_falls_back_to_gpa(universities):
-    p = Profile(gpa=3.9, mbti="INTJ", intended_major="Math")
+    p = Profile(gpa=3.9, intended_major="Math")
     uni = universities[0]
     s = score_one(p, uni, DEFAULT_WEIGHTS)
     assert 0.0 <= s.components["academic"] <= 1.0

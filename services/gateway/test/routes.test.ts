@@ -28,7 +28,7 @@ function fakeRecs(): RecsClient {
 }
 
 const VALID_BODY = {
-  profile: { gpa: 3.8, sat: 1400, mbti: "ENFP", intended_major: "Computer Science" },
+  profile: { gpa: 3.8, sat: 1400, intended_major: "Computer Science" },
   top_k: 3,
 };
 
@@ -53,12 +53,26 @@ describe("gateway routes", () => {
     expect(res.json().results).toHaveLength(1);
   });
 
-  it("rejects an invalid MBTI", async () => {
+  it("rejects mbti as an unknown field", async () => {
+    // Removed in contract v2.0.0; a stale client must fail loudly, not be ignored.
     app = await buildServer({ recsClient: fakeRecs() });
     const res = await app.inject({
       method: "POST",
       url: "/v1/recommendations",
-      payload: { profile: { gpa: 3.8, mbti: "ZZZZ", intended_major: "CS" } },
+      payload: { profile: { gpa: 3.8, mbti: "INTJ", intended_major: "CS" } },
+    });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error).toBe("invalid_request");
+  });
+
+  it("rejects an out-of-range culture preference", async () => {
+    app = await buildServer({ recsClient: fakeRecs() });
+    const res = await app.inject({
+      method: "POST",
+      url: "/v1/recommendations",
+      payload: {
+        profile: { gpa: 3.8, intended_major: "CS", culture_prefs: { collab: 1.7 } },
+      },
     });
     expect(res.statusCode).toBe(400);
     expect(res.json().error).toBe("invalid_request");

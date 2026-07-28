@@ -1,174 +1,458 @@
 [
-  {
-    "id": "u01",
-    "name": "Stanhope University",
-    "avg_gpa": 3.95,
-    "avg_sat": 1500,
-    "acceptance_rate": 0.06,
-    "tuition": 58000,
-    "size": "large",
-    "location": "CA",
-    "majors": [
-      "Computer Science",
-      "Math",
-      "Physics"
-    ]
+ {
+  "id": "massachusetts-institute-of-technology",
+  "unitid": null,
+  "name": "Massachusetts Institute of Technology",
+  "country": "USA",
+  "location": "Cambridge, MA",
+  "avg_gpa": 3.95,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 25000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "small",
+  "majors": [
+   "Engineering",
+   "Computer Science",
+   "Physics",
+   "Math",
+   "Economics",
+   "Biology"
+  ],
+  "culture": {
+   "collab": 0.7,
+   "idealist": 0.55,
+   "quirky": 0.85,
+   "research": 0.75,
+   "seminar": 0.55,
+   "spirit": 0.35
   },
-  {
-    "id": "u02",
-    "name": "Bayview College",
-    "avg_gpa": 3.6,
-    "avg_sat": 1320,
-    "acceptance_rate": 0.42,
-    "tuition": 41000,
-    "size": "small",
-    "location": "NY",
-    "majors": [
-      "Biology",
-      "Chemistry"
-    ]
-  },
-  {
-    "id": "u03",
-    "name": "Northtech Institute",
-    "avg_gpa": 3.85,
-    "avg_sat": 1460,
-    "acceptance_rate": 0.18,
-    "tuition": 52000,
-    "size": "large",
-    "location": "MA",
-    "majors": [
-      "Computer Science",
-      "Engineering"
-    ]
-  },
-  {
-    "id": "u04",
-    "name": "Riverside State",
-    "avg_gpa": 3.3,
-    "avg_sat": 1200,
-    "acceptance_rate": 0.68,
-    "tuition": 22000,
-    "size": "large",
-    "location": "TX",
-    "majors": [
-      "Economics",
-      "Business"
-    ]
-  },
-  {
-    "id": "u05",
-    "name": "Lakeside College",
-    "avg_gpa": 3.7,
-    "avg_sat": 1380,
-    "acceptance_rate": 0.35,
-    "tuition": 47000,
-    "size": "medium",
-    "location": "IL",
-    "majors": [
-      "Computer Science",
-      "Data Science",
-      "Math"
-    ]
-  },
-  {
-    "id": "u06",
-    "name": "Summit Polytechnic",
-    "avg_gpa": 3.9,
-    "avg_sat": 1470,
-    "acceptance_rate": 0.14,
-    "tuition": 55000,
-    "size": "medium",
-    "location": "WA",
-    "majors": [
-      "Computer Science",
-      "Engineering"
-    ]
-  },
-  {
-    "id": "u07",
-    "name": "Fairmont University",
-    "avg_gpa": 3.5,
-    "avg_sat": 1290,
-    "acceptance_rate": 0.55,
-    "tuition": 38000,
-    "size": "small",
-    "location": "PA",
-    "majors": [
-      "English",
-      "History"
-    ]
-  },
-  {
-    "id": "u08",
-    "name": "Cedar Hill College",
-    "avg_gpa": 3.75,
-    "avg_sat": 1400,
-    "acceptance_rate": 0.28,
-    "tuition": 49000,
-    "size": "medium",
-    "location": "GA",
-    "majors": [
-      "Computer Science",
-      "Data Science",
-      "Math"
-    ]
-  },
-  {
-    "id": "u09",
-    "name": "Portside Tech",
-    "avg_gpa": 3.82,
-    "avg_sat": 1440,
-    "acceptance_rate": 0.2,
-    "tuition": 50000,
-    "size": "large",
-    "location": "CA",
-    "majors": [
-      "Computer Science",
-      "Engineering"
-    ]
-  },
-  {
-    "id": "u10",
-    "name": "Greenfield University",
-    "avg_gpa": 3.4,
-    "avg_sat": 1250,
-    "acceptance_rate": 0.6,
-    "tuition": 30000,
-    "size": "large",
-    "location": "NY",
-    "majors": [
-      "Economics",
-      "Business"
-    ]
-  },
-  {
-    "id": "u11",
-    "name": "Ashford College",
-    "avg_gpa": 3.68,
-    "avg_sat": 1360,
-    "acceptance_rate": 0.38,
-    "tuition": 44000,
-    "size": "small",
-    "location": "MA",
-    "majors": [
-      "English",
-      "History"
-    ]
-  },
-  {
-    "id": "u12",
-    "name": "Vantage Institute",
-    "avg_gpa": 3.88,
-    "avg_sat": 1480,
-    "acceptance_rate": 0.12,
-    "tuition": 56000,
-    "size": "medium",
-    "location": "IL",
-    "majors": [
-      "Computer Science",
-      "Data Science",
-      "Math"
-    ]
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
   }
+ },
+ {
+  "id": "stanford-university",
+  "unitid": null,
+  "name": "Stanford University",
+  "country": "USA",
+  "location": "Stanford, CA",
+  "avg_gpa": 3.95,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 22000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "medium",
+  "majors": [
+   "Computer Science",
+   "Engineering",
+   "Business",
+   "Biology",
+   "Psychology",
+   "Design"
+  ],
+  "culture": {
+   "collab": 0.7,
+   "idealist": 0.5,
+   "quirky": 0.6,
+   "research": 0.6,
+   "seminar": 0.5,
+   "spirit": 0.7
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ },
+ {
+  "id": "harvard-university",
+  "unitid": null,
+  "name": "Harvard University",
+  "country": "USA",
+  "location": "Cambridge, MA",
+  "avg_gpa": 3.95,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 18000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "medium",
+  "majors": [
+   "Economics",
+   "Political Science",
+   "Law",
+   "Biology",
+   "History",
+   "Business"
+  ],
+  "culture": {
+   "collab": 0.55,
+   "idealist": 0.55,
+   "quirky": 0.55,
+   "research": 0.75,
+   "seminar": 0.6,
+   "spirit": 0.5
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ },
+ {
+  "id": "university-of-california-berkeley",
+  "unitid": null,
+  "name": "University of California, Berkeley",
+  "country": "USA",
+  "location": "Berkeley, CA",
+  "avg_gpa": 3.89,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 18000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "large",
+  "majors": [
+   "Engineering",
+   "Computer Science",
+   "Economics",
+   "Environmental Science",
+   "Political Science",
+   "Business"
+  ],
+  "culture": {
+   "collab": 0.45,
+   "idealist": 0.85,
+   "quirky": 0.8,
+   "research": 0.85,
+   "seminar": 0.25,
+   "spirit": 0.7
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ },
+ {
+  "id": "university-of-michigan",
+  "unitid": null,
+  "name": "University of Michigan",
+  "country": "USA",
+  "location": "Ann Arbor, MI",
+  "avg_gpa": 3.88,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 20000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "large",
+  "majors": [
+   "Engineering",
+   "Business",
+   "Computer Science",
+   "Political Science",
+   "Psychology",
+   "Kinesiology"
+  ],
+  "culture": {
+   "collab": 0.55,
+   "idealist": 0.6,
+   "quirky": 0.55,
+   "research": 0.75,
+   "seminar": 0.3,
+   "spirit": 0.95
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ },
+ {
+  "id": "georgia-institute-of-technology",
+  "unitid": null,
+  "name": "Georgia Institute of Technology",
+  "country": "USA",
+  "location": "Atlanta, GA",
+  "avg_gpa": 3.85,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 18000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "large",
+  "majors": [
+   "Engineering",
+   "Computer Science",
+   "Industrial Design",
+   "Business",
+   "Architecture",
+   "Cybersecurity"
+  ],
+  "culture": {
+   "collab": 0.5,
+   "idealist": 0.4,
+   "quirky": 0.6,
+   "research": 0.7,
+   "seminar": 0.3,
+   "spirit": 0.7
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ },
+ {
+  "id": "university-of-oxford",
+  "unitid": null,
+  "name": "University of Oxford",
+  "country": "UK",
+  "location": "Oxford",
+  "avg_gpa": 3.9,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 40000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "medium",
+  "majors": [
+   "Philosophy, Politics & Economics",
+   "Law",
+   "Medicine",
+   "English",
+   "Physics",
+   "History"
+  ],
+  "culture": {
+   "collab": 0.45,
+   "idealist": 0.55,
+   "quirky": 0.8,
+   "research": 0.9,
+   "seminar": 0.95,
+   "spirit": 0.5
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ },
+ {
+  "id": "university-of-cambridge",
+  "unitid": null,
+  "name": "University of Cambridge",
+  "country": "UK",
+  "location": "Cambridge",
+  "avg_gpa": 3.9,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 40000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "medium",
+  "majors": [
+   "Math",
+   "Engineering",
+   "Natural Sciences",
+   "Computer Science",
+   "Economics",
+   "Medicine"
+  ],
+  "culture": {
+   "collab": 0.45,
+   "idealist": 0.5,
+   "quirky": 0.8,
+   "research": 0.92,
+   "seminar": 0.95,
+   "spirit": 0.5
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ },
+ {
+  "id": "eth-zurich",
+  "unitid": null,
+  "name": "ETH Zurich",
+  "country": "Switzerland",
+  "location": "Zurich",
+  "avg_gpa": 3.85,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 8000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "medium",
+  "majors": [
+   "Engineering",
+   "Computer Science",
+   "Physics",
+   "Architecture",
+   "Math",
+   "Environmental Science"
+  ],
+  "culture": {
+   "collab": 0.5,
+   "idealist": 0.55,
+   "quirky": 0.7,
+   "research": 0.95,
+   "seminar": 0.4,
+   "spirit": 0.3
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ },
+ {
+  "id": "university-of-toronto",
+  "unitid": null,
+  "name": "University of Toronto",
+  "country": "Canada",
+  "location": "Toronto, ON",
+  "avg_gpa": 3.8,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 30000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "large",
+  "majors": [
+   "Computer Science",
+   "Engineering",
+   "Business",
+   "Biology",
+   "Economics",
+   "Psychology"
+  ],
+  "culture": {
+   "collab": 0.4,
+   "idealist": 0.6,
+   "quirky": 0.65,
+   "research": 0.85,
+   "seminar": 0.2,
+   "spirit": 0.4
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ },
+ {
+  "id": "national-university-of-singapore",
+  "unitid": null,
+  "name": "National University of Singapore",
+  "country": "Singapore",
+  "location": "Singapore",
+  "avg_gpa": 3.85,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 18000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "large",
+  "majors": [
+   "Engineering",
+   "Computer Science",
+   "Business",
+   "Medicine",
+   "Economics",
+   "Data Science"
+  ],
+  "culture": {
+   "collab": 0.45,
+   "idealist": 0.45,
+   "quirky": 0.5,
+   "research": 0.85,
+   "seminar": 0.3,
+   "spirit": 0.45
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ },
+ {
+  "id": "university-of-melbourne",
+  "unitid": null,
+  "name": "University of Melbourne",
+  "country": "Australia",
+  "location": "Melbourne",
+  "avg_gpa": 3.7,
+  "avg_sat": null,
+  "acceptance_rate": null,
+  "net_price": 30000,
+  "sticker_tuition": null,
+  "enrollment": null,
+  "size": "large",
+  "majors": [
+   "Business",
+   "Engineering",
+   "Medicine",
+   "Law",
+   "English",
+   "Computer Science"
+  ],
+  "culture": {
+   "collab": 0.55,
+   "idealist": 0.7,
+   "quirky": 0.6,
+   "research": 0.8,
+   "seminar": 0.3,
+   "spirit": 0.5
+  },
+  "provenance": {
+   "avg_gpa": "editorial",
+   "net_price": "editorial",
+   "culture": "editorial",
+   "avg_sat": "absent",
+   "acceptance_rate": "absent",
+   "enrollment": "absent"
+  }
+ }
 ]

@@ -8,9 +8,25 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "1.0.0";
+export const CONTRACT_VERSION = "2.0.0";
 
-export const MBTI_REGEX = /^[EI][NS][TF][JP]$/;
+/**
+ * Six bipolar culture axes. 0.0 and 1.0 are opposite poles; 0.5 means the
+ * student has no preference and the axis contributes nothing to the score.
+ * Replaces the MBTI-derived personality dimension removed in v2.0.0.
+ */
+const axis = () => z.number().min(0).max(1).default(0.5);
+
+export const CulturePrefsSchema = z
+  .object({
+    collab: axis(),
+    quirky: axis(),
+    idealist: axis(),
+    research: axis(),
+    spirit: axis(),
+    seminar: axis(),
+  })
+  .strict();
 
 export const PreferencesSchema = z
   .object({
@@ -25,7 +41,7 @@ export const WeightsSchema = z
     academic: z.number().min(0).optional(),
     cost: z.number().min(0).optional(),
     fit: z.number().min(0).optional(),
-    personality: z.number().min(0).optional(),
+    culture: z.number().min(0).optional(),
   })
   .strict();
 
@@ -33,8 +49,8 @@ export const ProfileSchema = z
   .object({
     gpa: z.number().min(0).max(4.0),
     sat: z.number().int().min(400).max(1600).nullable().optional(),
-    mbti: z.string().regex(MBTI_REGEX, "invalid MBTI"),
     intended_major: z.string().min(1),
+    culture_prefs: CulturePrefsSchema.optional(),
     preferences: PreferencesSchema.optional(),
     weights: WeightsSchema.optional(),
   })

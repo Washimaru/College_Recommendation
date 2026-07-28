@@ -26,7 +26,7 @@ def test_healthz():
 
 def test_recommend(monkeypatch):
     monkeypatch.setattr(main, "make_rank_fn", _fake_rank_fn_factory)
-    payload = {"profile": {"gpa": 3.8, "sat": 1400, "mbti": "ENFP",
+    payload = {"profile": {"gpa": 3.8, "sat": 1400,
                            "intended_major": "Computer Science"}, "top_k": 3}
     r = client.post("/recommend", json=payload)
     assert r.status_code == 200
@@ -38,7 +38,7 @@ def test_recommend(monkeypatch):
 
 def test_recommend_stream(monkeypatch):
     monkeypatch.setattr(main, "make_rank_fn", _fake_rank_fn_factory)
-    payload = {"profile": {"gpa": 3.8, "mbti": "ENFP",
+    payload = {"profile": {"gpa": 3.8,
                            "intended_major": "Computer Science"}, "top_k": 2}
     r = client.post("/recommend/stream", json=payload)
     assert r.status_code == 200
@@ -46,6 +46,7 @@ def test_recommend_stream(monkeypatch):
     assert "event: iteration" in r.text
 
 
-def test_rejects_invalid_mbti():
-    payload = {"profile": {"gpa": 3.8, "mbti": "ZZZZ", "intended_major": "CS"}}
+def test_rejects_mbti_as_unknown_field():
+    """Removed in contract v2.0.0; a stale client must fail loudly."""
+    payload = {"profile": {"gpa": 3.8, "mbti": "INTJ", "intended_major": "CS"}}
     assert client.post("/recommend", json=payload).status_code == 422

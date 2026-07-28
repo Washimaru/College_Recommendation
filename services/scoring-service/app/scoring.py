@@ -5,7 +5,16 @@ always yields the same RankResponse (enforced by test_determinism).
 """
 from __future__ import annotations
 
-from .schemas import Profile, RankRequest, RankResponse, ScoredUniversity, University
+from .schemas import (
+    CULTURE_AXES,
+    Culture,
+    CulturePrefs,
+    Profile,
+    RankRequest,
+    RankResponse,
+    ScoredUniversity,
+    University,
+)
 
 # Default rubric weights. Overridable per-request via profile.weights and then
 # multiplicatively adjusted by weight_feedback (already clamped by the loop).
@@ -13,14 +22,8 @@ DEFAULT_WEIGHTS: dict[str, float] = {
     "academic": 0.35,
     "cost": 0.20,
     "fit": 0.25,
-    "personality": 0.20,
+    "culture": 0.20,
 }
-
-# MBTI -> trait priors. Each letter nudges the size the student is predicted to
-# thrive in. Deterministic lookup only.
-_SIZE_ORDER = {"small": 0.0, "medium": 0.5, "large": 1.0}
-_MBTI_SIZE_PREF = {"E": 1.0, "I": 0.0}  # extraversion -> larger campuses
-_MBTI_STRUCTURE_PREF = {"J": 0.0, "P": 1.0}  # judging -> more selective/structured
 
 
 def _clamp01(x: float) -> float:
@@ -30,7 +33,9 @@ def _clamp01(x: float) -> float:
 def _academic_fit(profile: Profile, uni: University) -> float:
     gpa_gap = (profile.gpa - uni.avg_gpa) / 4.0
     gpa_score = _clamp01(0.5 + gpa_gap)  # at/above average scores higher
-    if profile.sat is not None:
+    # Both sides must be present: the school's SAT is null for every non-US
+    # school and every test-free US school, and is never derived from GPA.
+    if profile.sat is not None and uni.avg_sat is not None:
         sat_gap = (profile.sat - uni.avg_sat) / 1200.0
         sat_score = _clamp01(0.5 + sat_gap)
         return round((gpa_score + sat_score) / 2.0, 6)
@@ -38,13 +43,17 @@ def _academic_fit(profile: Profile, uni: University) -> float:
 
 
 def _cost_fit(profile: Profile, uni: University) -> float:
+    # Unknown price scores neutral, never free: an absent value must not make a
+    # school look affordable.
+    if uni.net_price is None:
+        return 0.5
     cap = profile.preferences.max_tuition
     if cap is None:
-        # No stated cap: mild preference for lower tuition (60k reference).
-        return round(_clamp01(1.0 - uni.tuition / 60000.0), 6)
-    if uni.tuition <= cap:
+        # No stated cap: mild preference for lower net price (60k reference).
+        return round(_clamp01(1.0 - uni.net_price / 60000.0), 6)
+    if uni.net_price <= cap:
         return 1.0
-    over = (uni.tuition - cap) / max(cap, 1.0)
+    over = (uni.net_price - cap) / max(cap, 1.0)
     return round(_clamp01(1.0 - over), 6)
 
 
@@ -59,15 +68,31 @@ def _fit(profile: Profile, uni: University) -> float:
     return round((0.5 * major + 0.25 * size + 0.25 * loc), 6)
 
 
-def _personality_fit(profile: Profile, uni: University) -> float:
-    size_pref = _MBTI_SIZE_PREF[profile.mbti[0]]
-    size_val = _SIZE_ORDER[uni.size]
-    size_match = 1.0 - abs(size_pref - size_val)
-    structure_pref = _MBTI_STRUCTURE_PREF[profile.mbti[3]]
-    # Structured students align with more selective schools (low acceptance rate).
-    selectivity = 1.0 - uni.acceptance_rate
-    structure_match = 1.0 - abs(structure_pref - selectivity)
-    return round(_clamp01(0.6 * size_match + 0.4 * structure_match), 6)
+def culture_fit(prefs: CulturePrefs, culture: Culture) -> float:
+    """Preference-weighted agreement over the six bipolar culture axes.
+
+    Each axis contributes in proportion to how far the student moved it from
+    centre, so untouched axes neither help nor hurt. Agreement is closeness,
+    not dot product, because these axes are bipolar: wanting a competitive
+    campus (0.0) and getting one (0.0) is a match, and cosine would score that
+    identically to a total mismatch.
+
+    Returns 0.5 when no preference is expressed at all.
+    """
+    total_importance = 0.0
+    weighted = 0.0
+    for axis in CULTURE_AXES:
+        preference = getattr(prefs, axis)
+        importance = abs(preference - 0.5) * 2
+        if importance == 0.0:
+            continue
+        agreement = 1.0 - abs(preference - getattr(culture, axis))
+        weighted += importance * agreement
+        total_importance += importance
+
+    if total_importance == 0.0:
+        return 0.5
+    return round(_clamp01(weighted / total_importance), 6)
 
 
 def _resolve_weights(profile: Profile, weight_feedback: dict[str, float]) -> dict[str, float]:
@@ -86,7 +111,7 @@ def score_one(profile: Profile, uni: University, weights: dict[str, float]) -> S
         "academic": _academic_fit(profile, uni),
         "cost": _cost_fit(profile, uni),
         "fit": _fit(profile, uni),
-        "personality": _personality_fit(profile, uni),
+        "culture": culture_fit(profile.culture_prefs, uni.culture),
     }
     total_w = sum(weights[k] for k in components) or 1.0
     raw = sum(weights[k] * components[k] for k in components) / total_w

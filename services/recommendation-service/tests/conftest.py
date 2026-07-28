@@ -6,7 +6,7 @@ from app.schemas import Profile, ScoredUniversity
 
 @pytest.fixture
 def profile() -> Profile:
-    return Profile(gpa=3.8, sat=1400, mbti="ENFP", intended_major="Computer Science")
+    return Profile(gpa=3.8, sat=1400, intended_major="Computer Science")
 
 
 def scored(ids_scores):

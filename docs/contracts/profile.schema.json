@@ -2,15 +2,28 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/profile.schema.json",
   "title": "StudentProfile",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "object",
   "additionalProperties": false,
-  "required": ["gpa", "mbti", "intended_major"],
+  "required": ["gpa", "intended_major"],
   "properties": {
     "gpa": { "type": "number", "minimum": 0, "maximum": 4.0 },
     "sat": { "type": ["integer", "null"], "minimum": 400, "maximum": 1600 },
-    "mbti": { "type": "string", "pattern": "^[EI][NS][TF][JP]$" },
     "intended_major": { "type": "string", "minLength": 1 },
+    "culture_prefs": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Self-reported preference on six bipolar axes. 0.5 means indifferent. Replaces the MBTI-derived personality dimension removed in v2.0.0.",
+      "properties": {
+        "collab": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
+        "quirky": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
+        "idealist": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
+        "research": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
+        "spirit": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
+        "seminar": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 }
+      },
+      "default": {}
+    },
     "preferences": {
       "type": "object",
       "additionalProperties": false,
@@ -29,7 +42,7 @@
         "academic": { "type": "number", "minimum": 0 },
         "cost": { "type": "number", "minimum": 0 },
         "fit": { "type": "number", "minimum": 0 },
-        "personality": { "type": "number", "minimum": 0 }
+        "culture": { "type": "number", "minimum": 0 }
       }
     }
   }

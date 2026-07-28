@@ -4,7 +4,7 @@ import { createRecsClient } from "../src/clients/recs.js";
 import type { RecommendationRequest } from "../src/types.js";
 
 const REQ: RecommendationRequest = {
-  profile: { gpa: 3.8, mbti: "ENFP", intended_major: "CS" },
+  profile: { gpa: 3.8, intended_major: "CS" },
   max_iterations: 5,
   top_k: 3,
 };
