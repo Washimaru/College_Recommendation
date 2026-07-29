@@ -52,7 +52,7 @@ export function BrowseSection({
     <section className="section" id="browse">
       <h2>Browse &amp; search all schools</h2>
       <p className="lead">
-        Look up any of the {catalog?.length ?? 364} schools by name, city, country or
+        Look up any of the {catalog?.length ?? 358} schools by name, city, country or
         subject — then open it for the full profile.
       </p>
 

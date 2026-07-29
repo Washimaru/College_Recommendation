@@ -10,6 +10,24 @@ import os
 import sys
 from pathlib import Path
 
+# A build that emits only a handful of records is broken, not a catalog that
+# shrank. Pruning on that would empty the table.
+MIN_SAFE_ROWS = 100
+
+
+def rows_to_delete(existing_ids: set[str], catalog_ids: set[str]) -> set[str]:
+    """Ids present in the database but no longer in the catalog.
+
+    Raises if the catalog looks too small to trust, so a failed build cannot
+    delete the live data.
+    """
+    if len(catalog_ids) < MIN_SAFE_ROWS:
+        raise ValueError(
+            f"refusing to prune: catalog has only {len(catalog_ids)} records, "
+            f"expected at least {MIN_SAFE_ROWS}"
+        )
+    return existing_ids - catalog_ids
+
 
 def load_universities(rows: list[dict], url: str) -> int:
     import psycopg
@@ -50,6 +68,14 @@ def load_universities(rows: list[dict], url: str) -> int:
                      Json(r.get("details")) if r.get("details") else None,
                      Json(r.get("provenance", {}))),
                 )
+            # Removals must propagate: schools dropped from the catalog
+            # (merged, defunct, or deduplicated) have to leave the table too.
+            cur.execute("SELECT id FROM universities")
+            existing = {row[0] for row in cur.fetchall()}
+            stale = rows_to_delete(existing, {r["id"] for r in rows})
+            if stale:
+                cur.execute("DELETE FROM universities WHERE id = ANY(%s)", (list(stale),))
+                sys.stderr.write(f"pruned {len(stale)} schools no longer in the catalog\n")
         conn.commit()
     return len(rows)
 

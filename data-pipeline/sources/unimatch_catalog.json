@@ -475,34 +475,6 @@
   "type": "Private"
  },
  {
-  "avg_gpa": 3.3,
-  "country": "USA",
-  "culture": {
-   "collab": 0.7,
-   "idealist": 0.6,
-   "quirky": 0.85,
-   "research": 0.2,
-   "seminar": 0.7,
-   "spirit": 0.25
-  },
-  "enrollment_editorial": 5000,
-  "id": "berklee-college-of-music-2",
-  "location": "Boston, MA",
-  "majors": [
-   "Music",
-   "Music Production",
-   "Songwriting",
-   "Film Scoring",
-   "Performance",
-   "Music Business"
-  ],
-  "name": "Berklee College of Music",
-  "net_price": 38000,
-  "region": "Northeast",
-  "setting": "urban",
-  "type": "Private"
- },
- {
   "avg_gpa": 3.7,
   "country": "USA",
   "culture": {
@@ -612,34 +584,6 @@
   "net_price": 30000,
   "region": "Northeast",
   "setting": "suburban",
-  "type": "Private"
- },
- {
-  "avg_gpa": 3.2,
-  "country": "USA",
-  "culture": {
-   "collab": 0.65,
-   "idealist": 0.6,
-   "quirky": 0.85,
-   "research": 0.2,
-   "seminar": 0.9,
-   "spirit": 0.15
-  },
-  "enrollment_editorial": 800,
-  "id": "boston-conservatory-at-berklee",
-  "location": "Boston, MA",
-  "majors": [
-   "Musical Theatre",
-   "Dance",
-   "Music",
-   "Theatre",
-   "Performance",
-   "Composition"
-  ],
-  "name": "Boston Conservatory at Berklee",
-  "net_price": 38000,
-  "region": "Northeast",
-  "setting": "urban",
   "type": "Private"
  },
  {
@@ -1558,35 +1502,8 @@
    "Architecture",
    "Design",
    "Computer Science",
-   "Mechanical Engineering"
-  ],
-  "name": "Cooper Union",
-  "net_price": 22000,
-  "region": "Northeast",
-  "setting": "urban",
-  "type": "Private"
- },
- {
-  "avg_gpa": 3.8,
-  "country": "USA",
-  "culture": {
-   "collab": 0.6,
-   "idealist": 0.65,
-   "quirky": 0.88,
-   "research": 0.55,
-   "seminar": 0.9,
-   "spirit": 0.15
-  },
-  "enrollment_editorial": 900,
-  "id": "cooper-union-2",
-  "location": "New York, NY",
-  "majors": [
-   "Art",
-   "Architecture",
-   "Engineering",
-   "Design",
-   "Fine Arts",
-   "Mechanical Engineering"
+   "Mechanical Engineering",
+   "Fine Arts"
   ],
   "name": "Cooper Union",
   "net_price": 22000,
@@ -1620,34 +1537,6 @@
   "net_price": 30000,
   "region": "Northeast",
   "setting": "rural",
-  "type": "Private"
- },
- {
-  "avg_gpa": 3.1,
-  "country": "USA",
-  "culture": {
-   "collab": 0.65,
-   "idealist": 0.72,
-   "quirky": 0.92,
-   "research": 0.25,
-   "seminar": 0.9,
-   "spirit": 0.1
-  },
-  "enrollment_editorial": 600,
-  "id": "cornish-college-of-the-arts",
-  "location": "Seattle, WA",
-  "majors": [
-   "Theatre",
-   "Dance",
-   "Music",
-   "Film",
-   "Fine Arts",
-   "Design"
-  ],
-  "name": "Cornish College of the Arts",
-  "net_price": 34000,
-  "region": "West",
-  "setting": "urban",
   "type": "Private"
  },
  {
@@ -3891,34 +3780,6 @@
   "type": "Private"
  },
  {
-  "avg_gpa": 3.4,
-  "country": "USA",
-  "culture": {
-   "collab": 0.8,
-   "idealist": 0.92,
-   "quirky": 0.85,
-   "research": 0.5,
-   "seminar": 0.9,
-   "spirit": 0.25
-  },
-  "enrollment_editorial": 1000,
-  "id": "mills-college-at-northeastern",
-  "location": "Oakland, CA",
-  "majors": [
-   "Computer Science",
-   "Business",
-   "Education",
-   "Public Policy",
-   "Art",
-   "Psychology"
-  ],
-  "name": "Mills College at Northeastern",
-  "net_price": 24000,
-  "region": "West",
-  "setting": "urban",
-  "type": "Private"
- },
- {
   "avg_gpa": 3.6,
   "country": "USA",
   "culture": {
@@ -4162,35 +4023,8 @@
    "Composition",
    "Jazz Studies",
    "Conducting",
-   "Music Theory"
-  ],
-  "name": "New England Conservatory",
-  "net_price": 35000,
-  "region": "Northeast",
-  "setting": "urban",
-  "type": "Private"
- },
- {
-  "avg_gpa": 3.4,
-  "country": "USA",
-  "culture": {
-   "collab": 0.6,
-   "idealist": 0.6,
-   "quirky": 0.85,
-   "research": 0.25,
-   "seminar": 0.9,
-   "spirit": 0.1
-  },
-  "enrollment_editorial": 800,
-  "id": "new-england-conservatory-2",
-  "location": "Boston, MA",
-  "majors": [
-   "Music",
-   "Performance",
-   "Jazz Studies",
-   "Composition",
-   "Contemporary Improvisation",
-   "Conducting"
+   "Music Theory",
+   "Contemporary Improvisation"
   ],
   "name": "New England Conservatory",
   "net_price": 35000,

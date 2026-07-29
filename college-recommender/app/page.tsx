@@ -169,7 +169,7 @@ export default function Home() {
         </p>
         <div className="hero-stats">
           <div>
-            <b>364</b>
+            <b>358</b>
             <span>universities · 26 countries</span>
           </div>
           <div>

@@ -96,3 +96,57 @@ def test_write_catalog_emits_deterministic_json(tmp_path):
 
     assert out.read_bytes() == first
     assert json.loads(first)[0]["id"] == "alpha-college"
+
+
+DUPLICATE_NAMES = """const UNIS = [
+  {n:"Twice College",loc:"Boston, MA",ctry:"USA",region:"Northeast",type:"Private",size:2000,setting:"urban",net:30000,gpa:3.5,
+   strengths:["Music","Performance"],v:{collab:.5,quirky:.5,idealist:.5,research:.5,spirit:.5,seminar:.5}},
+  {n:"Twice College",loc:"Boston, MA",ctry:"USA",region:"Northeast",type:"Private",size:2000,setting:"urban",net:30000,gpa:3.5,
+   strengths:["Performance","Jazz Studies"],v:{collab:.6,quirky:.5,idealist:.5,research:.5,spirit:.5,seminar:.5}},
+];"""
+
+
+def test_duplicate_names_collapse_to_one_record(tmp_path):
+    """The source dataset lists Berklee, Cooper Union and New England
+    Conservatory twice. Left alone they surface twice in results."""
+    (tmp_path / "data.js").write_text(DUPLICATE_NAMES)
+
+    unis = convert(tmp_path)
+
+    assert [u["name"] for u in unis] == ["Twice College"]
+    assert unis[0]["id"] == "twice-college"
+
+
+def test_merging_duplicates_keeps_every_major(tmp_path):
+    """Each entry reflects a different editor's judgement; dropping one would
+    silently discard subjects the school genuinely offers."""
+    (tmp_path / "data.js").write_text(DUPLICATE_NAMES)
+
+    majors = convert(tmp_path)[0]["majors"]
+
+    assert set(majors) == {"Music", "Performance", "Jazz Studies"}
+    assert majors == sorted(set(majors), key=majors.index)  # stable, no duplicates
+
+
+def test_merge_keeps_the_first_entry_for_scalar_fields(tmp_path):
+    (tmp_path / "data.js").write_text(DUPLICATE_NAMES)
+
+    assert convert(tmp_path)[0]["culture"]["collab"] == 0.5
+
+
+EXCLUDED_SOURCE = """const UNIS = [
+  {n:"Mills College at Northeastern",loc:"Oakland, CA",ctry:"USA",region:"West",type:"Private",size:1000,setting:"urban",net:30000,gpa:3.4,
+   strengths:["Art"],v:{collab:.5,quirky:.5,idealist:.5,research:.5,spirit:.5,seminar:.5}},
+  {n:"Real University",loc:"Boston, MA",ctry:"USA",region:"Northeast",type:"Private",size:9000,setting:"urban",net:30000,gpa:3.6,
+   strengths:["Biology"],v:{collab:.5,quirky:.5,idealist:.5,research:.5,spirit:.5,seminar:.5}},
+];"""
+
+
+def test_institutions_that_no_longer_exist_are_excluded(tmp_path):
+    """Mills merged into Northeastern in 2022 and cannot be applied to as an
+    independent institution; recommending it would send a student nowhere."""
+    (tmp_path / "data.js").write_text(EXCLUDED_SOURCE)
+
+    unis = convert(tmp_path)
+
+    assert [u["name"] for u in unis] == ["Real University"]

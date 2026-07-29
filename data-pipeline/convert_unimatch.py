@@ -83,6 +83,33 @@ def parse_universities(js_text: str) -> list[dict]:
     return out
 
 
+# Institutions that no longer exist as independent schools. Each merged into a
+# parent that is itself in the catalog, so listing them would both duplicate the
+# parent and point a student at somewhere they cannot apply.
+EXCLUDED: dict[str, str] = {
+    "Mills College at Northeastern": "merged into Northeastern University, July 2022",
+    "Cornish College of the Arts": "acquired by Seattle University, June 2025",
+    "Boston Conservatory at Berklee": "merged into Berklee College of Music",
+}
+
+
+def _merge(first: dict, later: dict) -> dict:
+    """Fold a duplicate entry into the first.
+
+    The source lists a few schools twice with slightly different editorial
+    judgements. Scalars keep the first entry; majors take the union, since each
+    list reflects a real subject the school offers and dropping either would
+    lose information.
+    """
+    merged = dict(first)
+    seen = list(first.get("majors") or [])
+    for major in later.get("majors") or []:
+        if major not in seen:
+            seen.append(major)
+    merged["majors"] = seen
+    return merged
+
+
 def slugify(name: str) -> str:
     return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", name.lower())).strip("-")
 
@@ -94,15 +121,25 @@ def convert(source_dir: Path) -> list[dict]:
     deterministic. Ids are slugs; a collision gets a numeric suffix rather than
     silently overwriting.
     """
-    records: list[dict] = []
+    parsed: list[dict] = []
     for path in sorted(source_dir.glob("data*.js")):
-        records.extend(parse_universities(path.read_text(encoding="utf-8", errors="replace")))
+        parsed.extend(parse_universities(path.read_text(encoding="utf-8", errors="replace")))
 
-    seen: dict[str, int] = {}
+    records: list[dict] = []
+    by_name: dict[str, int] = {}
+    for record in parsed:
+        name = record["name"] or ""
+        if name in EXCLUDED:
+            continue
+        if name in by_name:
+            index = by_name[name]
+            records[index] = _merge(records[index], record)
+            continue
+        by_name[name] = len(records)
+        records.append(record)
+
     for record in records:
-        base = slugify(record["name"] or "")
-        seen[base] = seen.get(base, 0) + 1
-        record["id"] = base if seen[base] == 1 else f"{base}-{seen[base]}"
+        record["id"] = slugify(record["name"] or "")
     return records
 
 
@@ -118,7 +155,7 @@ def write_catalog(records: list[dict], out_path: Path) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Convert the UniMatch JS dataset to JSON.")
     parser.add_argument("--source", required=True, help="directory holding data*.js")
-    parser.add_argument("--out", default="sources/unimatch_364.json")
+    parser.add_argument("--out", default="sources/unimatch_catalog.json")
     args = parser.parse_args(argv)
 
     records = convert(Path(args.source).expanduser())

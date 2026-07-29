@@ -3724,36 +3724,6 @@
    "https://www.furman.edu/financial-aid/aid-types/merit-based-scholarships/"
   ]
  },
- "cooper-union-2": {
-  "scholarships": {
-   "policy": "Every admitted undergraduate receives a half-tuition scholarship regardless of need or citizenship, plus a tuition-free senior year. The college is working toward being 100% tuition-free by 2028-29.",
-   "named": [
-    "Half-tuition scholarship worth $22,275 a year, no application needed",
-    "Tuition-free senior year",
-    "Meets 100% of demonstrated need on top of the scholarship"
-   ]
-  },
-  "_source": "web_verified",
-  "_retrieved": "2026-07-28",
-  "src": [
-   "https://cooper.edu/admissions/sfs/financial-aid"
-  ]
- },
- "berklee-college-of-music-2": {
-  "scholarships": {
-   "policy": "Merit scholarships are automatic for all entering students; need-based institutional grants are limited and prioritise the highest need.",
-   "named": [
-    "Presidential Scholarship: tuition, housing, meal plan, laptop and fees for eight semesters",
-    "Over $115M awarded annually across Berklee's schools",
-    "International students are eligible for merit but not institutional need-based aid"
-   ]
-  },
-  "_source": "web_verified",
-  "_retrieved": "2026-07-28",
-  "src": [
-   "https://www.berklee.edu/scholarships"
-  ]
- },
  "california-institute-of-the-arts": {
   "scholarships": {
    "policy": "All admitted students are considered for merit scholarships on the strength of their portfolio or audition. CalArts states plainly that its scholarships do not cover full tuition.",
@@ -4264,21 +4234,6 @@
   "_retrieved": "2026-07-28",
   "src": [
    "https://sfcm.edu/study/apply/financial-aid/scholarships-grants"
-  ]
- },
- "new-england-conservatory-2": {
-  "scholarships": {
-   "policy": "Scholarships combine artistic merit with financial need; more than 90% of applicants request assistance.",
-   "named": [
-    "Merit-based and federal need-based aid combined in most packages",
-    "Institutional aid application required, plus FAFSA if eligible",
-    "Stated aim is to avoid career-constraining loan obligations"
-   ]
-  },
-  "_source": "web_verified",
-  "_retrieved": "2026-07-28",
-  "src": [
-   "https://necmusic.edu/admissions/tuition-aid/"
   ]
  }
 }

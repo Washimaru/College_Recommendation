@@ -1,6 +1,6 @@
 """Merge the three catalog tiers into the canonical universities.json.
 
-Tier 1  editorial baseline (sources/unimatch_364.json) - the only source of
+Tier 1  editorial baseline (sources/unimatch_catalog.json) - the only source of
         avg_gpa and the culture vector.
 Tier 2  College Scorecard bulk CSV - observed US federal statistics.
 Tier 3  manual overrides - hand-curated, each entry citing a source.
@@ -238,7 +238,7 @@ def build(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Build the canonical university catalog.")
-    parser.add_argument("--tier1", default="sources/unimatch_364.json")
+    parser.add_argument("--tier1", default="sources/unimatch_catalog.json")
     parser.add_argument(
         "--scorecard",
         help="Most-Recent-Cohorts-Institution.csv. Only needed to refresh the cache.",
