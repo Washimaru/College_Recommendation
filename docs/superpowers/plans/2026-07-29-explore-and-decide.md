@@ -544,7 +544,7 @@ class TestActivityDescription:
     def test_description_is_accepted(self):
         activity = Activity(
             name="Science Bowl", kind="competition",
-            description="I built an autonomous rover and wrote the vision pipeline",
+            description="I I wrote the code for our robot's autonomous vision system",
         )
 
         assert "rover" in activity.description
@@ -1016,7 +1016,7 @@ class TestClassifyFunction:
     def test_the_description_rescues_an_unrecognised_name(self):
         assert classify_activity("Science Bowl", "competition") == []
         assert "Computer Science" in classify_activity(
-            "Science Bowl", "competition", "built an autonomous rover and wrote the vision pipeline"
+            "Science Bowl", "competition", "I wrote the code for our robot's autonomous vision system"
         )
 
     def test_is_deterministic(self):
@@ -1051,7 +1051,7 @@ class TestClassifyEndpoint:
 
     def test_passes_the_description_through(self):
         response = _post(
-            name="Science Bowl", kind="competition", description="built an autonomous rover"
+            name="Science Bowl", kind="competition", description="I wrote the code for our robot's autonomous vision system"
         )
 
         assert response.json()["subjects"] != []
@@ -1499,7 +1499,7 @@ until curl -fsS localhost:8000/healthz >/dev/null 2>&1; do sleep 2; done
 curl -fsS -X POST localhost:8001/classify -H 'content-type: application/json' \
   -d '{"name":"FIRST Robotics","kind":"competition"}'
 curl -fsS -X POST localhost:8000/v1/activities/classify -H 'content-type: application/json' \
-  -d '{"name":"Science Bowl","kind":"competition","description":"built an autonomous rover"}'
+  -d '{"name":"Science Bowl","kind":"competition","description":"I wrote the code for our robot's autonomous vision system"}'
 ```
 Expected: both return a `subjects` array containing `Computer Science` — the
 second having travelled gateway → recommendation-service → scoring-service.
@@ -2916,7 +2916,7 @@ export function ActivitiesInput({
                   type="text"
                   maxLength={500}
                   defaultValue={activity.description ?? ""}
-                  placeholder="e.g. I built an autonomous rover and wrote the vision pipeline"
+                  placeholder="e.g. I I wrote the code for our robot's autonomous vision system"
                   onBlur={(e) => void explain(index, e.target.value)}
                 />
               </div>
@@ -3788,7 +3788,7 @@ docker compose up -d --build
 until curl -fsS localhost:8000/healthz >/dev/null 2>&1; do sleep 2; done
 curl -fsS -X POST localhost:8000/v1/activities/classify \
   -H 'content-type: application/json' \
-  -d '{"name":"Science Bowl","kind":"competition","description":"built an autonomous rover"}'
+  -d '{"name":"Science Bowl","kind":"competition","description":"I wrote the code for our robot's autonomous vision system"}'
 curl -fsS -X POST localhost:8000/v1/recommendations \
   -H 'content-type: application/json' \
   -d '{"profile":{"gpa":3.8,"intended_major":"Computer Science","preferences":{"regions":["Northeast"],"settings":["urban"],"institution_type":"Private"}},"top_k":5}' \

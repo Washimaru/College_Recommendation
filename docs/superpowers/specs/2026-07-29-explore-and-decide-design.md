@@ -173,9 +173,12 @@ Rejected alternatives: shipping the pattern table to the client (duplicates
 regex evaluation in two languages) and copying the table into the UI (guarantees
 drift on the first edit to either side).
 
-`description` is included in the text the matcher reads, so "I built an
-autonomous rover and wrote the vision pipeline" is recognised even when the name
-field says something the 14 patterns miss. **Each activity still contributes at
+`description` is included in the text the matcher reads, so "I wrote the code
+for our robot's autonomous vision system" is recognised even when the name field
+says something the 14 patterns miss. Note the description must still hit one of
+the 14 existing patterns — the table is not widened, so a description in wholly
+unrecognised vocabulary stays unrecognised, and the UI says so rather than
+pretending otherwise. **Each activity still contributes at
 most one hit**, which `activity_fit` already enforces by breaking on first match.
 Elaboration therefore helps a genuinely relevant activity be *recognised*, but
 stuffing five subjects into one box cannot out-score five real activities.
