@@ -281,15 +281,15 @@ Expected: all pass, `All checks passed!`
 
 - [ ] **Step 5: Refresh the cache from the Scorecard CSV**
 
-The cache holds only `CACHED_COLUMNS`, so it must be rebuilt to pick up the six new ones. The CSV lives in the session scratchpad; if absent, re-download it:
+`sources/scorecard_cache.json` holds only the 16 current `CACHED_COLUMNS` for its 268 matched schools — none of the five new ones — so the cache must be rebuilt from the CSV. The CSV is **not** on disk and must be downloaded. This undated URL was verified live (HTTP 206, `application/zip`); do not add a date suffix, which 404s:
 
 ```bash
 cd data-pipeline
-CSV=/private/tmp/claude-501/*/scratchpad/Most-Recent-Cohorts-Institution.csv
-ls $CSV || curl -sS -o /tmp/sc.zip \
-  https://ed-public-download.scorecard.network/downloads/Most-Recent-Cohorts-Institution_06102026.zip \
-  && unzip -o -q /tmp/sc.zip -d /tmp && CSV=/tmp/Most-Recent-Cohorts-Institution.csv
-.venv/bin/python build_catalog.py --scorecard $CSV
+curl -L --progress-bar -o /tmp/sc.zip \
+  https://ed-public-download.scorecard.network/downloads/Most-Recent-Cohorts-Institution.zip
+unzip -o -q /tmp/sc.zip -d /tmp
+CSV=$(ls /tmp/Most-Recent-Cohorts-Institution*.csv | head -1)
+.venv/bin/python build_catalog.py --scorecard "$CSV"
 .venv/bin/python -c "
 import json
 c = json.load(open('out/universities.json'))
