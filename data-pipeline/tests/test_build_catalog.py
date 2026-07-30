@@ -274,3 +274,46 @@ class TestPlaceFields:
         assert record["provenance"]["region"] == "editorial"
         assert record["provenance"]["setting"] == "editorial"
         assert record["provenance"]["type"] == "editorial"
+
+
+POPULATION_ROW = {
+    **US_ROW,
+    "UGDS_NRA": "0.1172", "UGDS_WOMEN": "0.4823", "FIRST_GEN": "0.2591",
+    "INSTURL": "web.mit.edu/", "NPCURL": "https://npc.collegeboard.org/app/mit",
+}
+
+
+class TestPopulation:
+    """Composition comes from Scorecard and exists for US schools only."""
+
+    def test_shares_are_extracted(self):
+        record = enrich({**NON_US, "country": "USA", "region": "Northeast",
+                         "setting": "urban", "type": "Private"}, POPULATION_ROW)
+
+        assert record["population"]["international_share"] == 0.1172
+        assert record["population"]["women_share"] == 0.4823
+        assert record["population"]["first_gen_share"] == 0.2591
+        assert record["provenance"]["population"] == "observed"
+
+    def test_non_us_school_has_no_population(self):
+        """Absent, not zeroed - Scorecard covers US institutions only."""
+        record = enrich({**NON_US, "region": "International",
+                         "setting": "urban", "type": "Public"}, None)
+
+        assert record["population"] is None
+        assert record["provenance"]["population"] == "not_applicable"
+
+    def test_partial_composition_keeps_what_exists(self):
+        row = {**POPULATION_ROW, "FIRST_GEN": "NA"}
+        record = enrich({**NON_US, "country": "USA", "region": "West",
+                         "setting": "rural", "type": "Public"}, row)
+
+        assert record["population"]["international_share"] == 0.1172
+        assert record["population"]["first_gen_share"] is None
+
+    def test_official_urls_are_carried(self):
+        record = enrich({**NON_US, "country": "USA", "region": "Northeast",
+                         "setting": "urban", "type": "Private"}, POPULATION_ROW)
+
+        assert record["url"] == "web.mit.edu/"
+        assert record["net_price_calculator_url"].endswith("/app/mit")

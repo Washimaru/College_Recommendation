@@ -114,6 +114,11 @@ def enrich(record: dict, row: dict | None) -> dict:
     outcomes = extract_outcomes(row)
     provenance["outcomes"] = "observed" if outcomes else "absent"
 
+    population = extract_population(row)
+    provenance["population"] = (
+        "observed" if population else ("absent" if is_us else "not_applicable")
+    )
+
     fallback_size = enrollment if enrollment is not None else record.get("enrollment_editorial")
     return {
         "id": record["id"],
@@ -134,6 +139,9 @@ def enrich(record: dict, row: dict | None) -> dict:
         "majors": record["majors"],
         "culture": record["culture"],
         "outcomes": outcomes,
+        "population": population,
+        "url": _text_or_none(row, "INSTURL"),
+        "net_price_calculator_url": _text_or_none(row, "NPCURL"),
         "provenance": provenance,
     }
 
@@ -148,6 +156,8 @@ CACHED_COLUMNS = (
     # 97-99% of matched schools - far better coverage than curated prose.
     "C150_4", "MD_EARN_WNE_P10", "MD_EARN_WNE_P6",
     "GRAD_DEBT_MDN", "PCTPELL", "PCTFLOAN",
+    # Student-body composition and the school's own links.
+    "UGDS_NRA", "UGDS_WOMEN", "FIRST_GEN", "INSTURL", "NPCURL",
 )
 
 _OUTCOME_COLUMNS = {
@@ -157,6 +167,12 @@ _OUTCOME_COLUMNS = {
     "median_debt": "GRAD_DEBT_MDN",
     "pct_pell": "PCTPELL",
     "pct_federal_loans": "PCTFLOAN",
+}
+
+_POPULATION_COLUMNS = {
+    "international_share": "UGDS_NRA",
+    "women_share": "UGDS_WOMEN",
+    "first_gen_share": "FIRST_GEN",
 }
 
 
@@ -169,6 +185,25 @@ def extract_outcomes(row: dict | None) -> dict | None:
     if all(v is None for v in values.values()):
         return None
     return values
+
+
+def extract_population(row: dict | None) -> dict | None:
+    """Student-body shares, or None when the school has none.
+
+    Scorecard covers US institutions only, so this is absent rather than zero
+    for every non-US school.
+    """
+    if row is None:
+        return None
+    values = {key: parse_number(row.get(col)) for key, col in _POPULATION_COLUMNS.items()}
+    if all(v is None for v in values.values()):
+        return None
+    return values
+
+
+def _text_or_none(row: dict | None, column: str) -> str | None:
+    value = ((row or {}).get(column) or "").strip()
+    return value if value and value not in _MISSING else None
 
 
 def resolve_key(record: dict, aliases: dict[str, str]) -> str:
