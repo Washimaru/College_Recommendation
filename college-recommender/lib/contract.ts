@@ -67,8 +67,6 @@ export interface Personality {
   scale: number;
 }
 
-export const NEUTRAL_PERSONALITY: Personality = { intensity: 0.5, scale: 0.5 };
-
 export type Scope = "usa" | "international" | "both";
 
 export type Region = "Northeast" | "South" | "West" | "Midwest" | "International";
