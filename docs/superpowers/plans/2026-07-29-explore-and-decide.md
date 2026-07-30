@@ -27,7 +27,7 @@
 ## File Structure
 
 **Data pipeline**
-- Modify `data-pipeline/build_catalog.py` — `enrich()` carries six new fields; `CACHED_COLUMNS` gains six Scorecard columns; new `extract_population()`.
+- Modify `data-pipeline/build_catalog.py` — `enrich()` carries six new fields; `CACHED_COLUMNS` gains five Scorecard columns; new `extract_population()`.
 - Modify `data-pipeline/load.py` — six new columns in the upsert.
 - Modify `db/schema.sql` — six new columns.
 - Modify `data-pipeline/tests/test_build_catalog.py` — new test classes.
@@ -218,7 +218,7 @@ Expected: FAIL with `KeyError: 'population'`
 
 - [ ] **Step 3: Write minimal implementation**
 
-In `data-pipeline/build_catalog.py`, extend `CACHED_COLUMNS` with the six new columns:
+In `data-pipeline/build_catalog.py`, extend `CACHED_COLUMNS` with the five new columns:
 
 ```python
 CACHED_COLUMNS = (
