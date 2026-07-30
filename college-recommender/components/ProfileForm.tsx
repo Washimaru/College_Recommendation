@@ -48,7 +48,12 @@ export function ProfileForm() {
         intended_major: form.major,
         culture_prefs: culturePrefs,
         personality,
-        activities,
+        activities: activities.map(({ name, kind, years, description }) => ({
+          name,
+          kind,
+          ...(years == null ? {} : { years }),
+          ...(description ? { description } : {}),
+        })),
         preferences: {
           scope: form.scope,
           regions: form.regions,

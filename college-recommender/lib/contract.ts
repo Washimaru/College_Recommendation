@@ -48,6 +48,9 @@ export interface Activity {
   name: string;
   kind: ActivityKind;
   years?: number | null;
+  description?: string | null;
+  /** Client-side only: what the classify endpoint recognised. Not sent back. */
+  subjects?: string[];
 }
 
 export type ActivityKind =
