@@ -8,11 +8,18 @@ const KINDS: ActivityKind[] = [
   "competition", "club", "research", "volunteering", "sport", "arts", "work", "other",
 ];
 
+/** What a classify attempt produced: a real (possibly empty) recognition
+ *  result, or "couldn't check" when the service itself could not be reached.
+ *  Collapsing the latter into an empty subjects list is exactly the bug this
+ *  type exists to prevent — it reads to the student as "not recognised". */
+type ClassifyOutcome = { checked: true; subjects: string[] } | { checked: false };
+
 /** Ask the server what an activity matches. The endpoint shares one table with
  *  the scorer, so what we show is exactly what will be scored. */
-async function classify(activity: Activity): Promise<string[]> {
+async function classify(activity: Activity): Promise<ClassifyOutcome> {
+  let res: Response;
   try {
-    const res = await fetch("/api/classify", {
+    res = await fetch("/api/classify", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
@@ -21,12 +28,19 @@ async function classify(activity: Activity): Promise<string[]> {
         description: activity.description ?? null,
       }),
     });
-    if (!res.ok) return [];
-    return (await res.json()).subjects as string[];
   } catch {
-    // Recognition is advisory. Failing to reach it must never block entry.
-    return [];
+    // The classifier is unreachable. This is not "nothing recognised".
+    return { checked: false };
   }
+  if (!res.ok) {
+    // e.g. the /api/classify route's own 503 when the gateway is down, or any
+    // other upstream failure. Same "couldn't check" state, never "not
+    // recognised" — and never blocks adding the activity.
+    return { checked: false };
+  }
+  const body = await res.json().catch(() => null);
+  const subjects = Array.isArray(body?.subjects) ? (body.subjects as string[]) : [];
+  return { checked: true, subjects };
 }
 
 /**
@@ -48,15 +62,27 @@ export function ActivitiesInput({
     const trimmed = name.trim();
     if (!trimmed) return;
     const activity: Activity = { name: trimmed, kind };
-    const next = [...activities, { ...activity, subjects: await classify(activity) }];
+    // Classification is advisory: the activity is added either way, and an
+    // unreachable classifier never blocks entry — only the message shown
+    // below distinguishes "not recognised" from "couldn't check".
+    const outcome = await classify(activity);
+    const next = [
+      ...activities,
+      outcome.checked
+        ? { ...activity, subjects: outcome.subjects, checkFailed: false }
+        : { ...activity, checkFailed: true },
+    ];
     onChange(next);
     setName("");
   };
 
   const explain = async (index: number, description: string) => {
     const updated = { ...activities[index], description };
+    const outcome = await classify(updated);
     const next = [...activities];
-    next[index] = { ...updated, subjects: await classify(updated) };
+    next[index] = outcome.checked
+      ? { ...updated, subjects: outcome.subjects, checkFailed: false }
+      : { ...updated, checkFailed: true };
     onChange(next);
   };
 
@@ -121,7 +147,12 @@ export function ActivitiesInput({
                   </button>
                 </div>
 
-                {recognised ? (
+                {activity.checkFailed ? (
+                  <p style={{ margin: "8px 0 0", fontSize: 13, color: "var(--muted)" }}>
+                    couldn&rsquo;t check this right now — it&rsquo;s been added, and we&rsquo;ll
+                    try again later
+                  </p>
+                ) : recognised ? (
                   <p style={{ margin: "8px 0 0", fontSize: 13, color: "var(--good)" }}>
                     recognised as: {(activity.subjects ?? []).join(", ")}
                   </p>

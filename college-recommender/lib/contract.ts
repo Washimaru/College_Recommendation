@@ -51,6 +51,10 @@ export interface Activity {
   description?: string | null;
   /** Client-side only: what the classify endpoint recognised. Not sent back. */
   subjects?: string[];
+  /** Client-side only: true when the last classify attempt couldn't reach the
+   *  service at all — distinct from a successful check that recognised
+   *  nothing. Not sent back. */
+  checkFailed?: boolean;
 }
 
 export type ActivityKind =
