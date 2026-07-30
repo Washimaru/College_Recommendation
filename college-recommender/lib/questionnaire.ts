@@ -85,9 +85,6 @@ export const QUESTIONS: Question[] = [
   },
 ];
 
-/** 5-point scale; the midpoint is a genuine "no preference". */
-export const CHOICES = [0, 0.25, 0.5, 0.75, 1] as const;
-
 export interface QuestionnaireResult {
   culturePrefs: CulturePrefs;
   personality: Personality;

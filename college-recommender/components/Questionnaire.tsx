@@ -1,6 +1,6 @@
 "use client";
 
-import { CHOICES, QUESTIONS } from "@/lib/questionnaire";
+import { QUESTIONS } from "@/lib/questionnaire";
 
 /**
  * Eight preference questions. Answering none is valid — every unanswered
@@ -23,45 +23,46 @@ export function Questionnaire({
         won&rsquo;t count. {answered} of {QUESTIONS.length} answered.
       </p>
 
-      {QUESTIONS.map((question) => (
-        <fieldset
-          key={question.id}
-          style={{ border: 0, padding: 0, margin: "0 0 20px" }}
-        >
-          <legend style={{ fontSize: 14, fontWeight: 650, marginBottom: 8 }}>
-            {question.prompt}
-          </legend>
-          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-            {CHOICES.map((choice) => {
-              const selected = answers[question.id] === choice;
-              return (
-                <button
-                  key={choice}
-                  type="button"
-                  aria-label={`${question.prompt} — ${
-                    choice < 0.5 ? question.low : choice > 0.5 ? question.high : "no preference"
-                  }`}
-                  aria-pressed={selected}
-                  className={`chip ${selected ? "on" : ""}`}
-                  style={{ flex: 1, textAlign: "center" }}
-                  onClick={() => {
-                    const next = { ...answers };
-                    if (selected) delete next[question.id];
-                    else next[question.id] = choice;
-                    onChange(next);
-                  }}
-                >
-                  {choice === 0.5 ? "either" : choice === 0 || choice === 1 ? "●" : "○"}
-                </button>
-              );
-            })}
+      {QUESTIONS.map((question) => {
+        const value = answers[question.id];
+        const choose = (next: number) => {
+          const updated = { ...answers };
+          if (updated[question.id] === next) delete updated[question.id];
+          else updated[question.id] = next;
+          onChange(updated);
+        };
+        return (
+          <div key={question.id} className="qcard">
+            <p className="qprompt">{question.prompt}</p>
+            <div className="qhalves">
+              <button
+                type="button"
+                className={`qhalf ${value !== undefined && value < 0.5 ? "on" : ""}`}
+                aria-pressed={value !== undefined && value < 0.5}
+                onClick={() => choose(0)}
+              >
+                {question.low}
+              </button>
+              <button
+                type="button"
+                className={`qeither ${value === 0.5 ? "on" : ""}`}
+                aria-pressed={value === 0.5}
+                onClick={() => choose(0.5)}
+              >
+                either
+              </button>
+              <button
+                type="button"
+                className={`qhalf ${value !== undefined && value > 0.5 ? "on" : ""}`}
+                aria-pressed={value !== undefined && value > 0.5}
+                onClick={() => choose(1)}
+              >
+                {question.high}
+              </button>
+            </div>
           </div>
-          <div className="slider-ends">
-            <span>{question.low}</span>
-            <span>{question.high}</span>
-          </div>
-        </fieldset>
-      ))}
+        );
+      })}
     </div>
   );
 }
