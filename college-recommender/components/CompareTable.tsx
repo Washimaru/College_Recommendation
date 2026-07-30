@@ -72,6 +72,28 @@ export function CompareTable({ schools }: { schools: ListedSchool[] }) {
           ))}
 
           <tr>
+            <th>International share</th>
+            {schools.map((s) => {
+              // Provenance lives at the `population` object level, not per
+              // field inside it: absent for 90 non-US schools where the stat
+              // does not apply, present (with international_share possibly
+              // still null) for the rest. Reading a missing population as 0%
+              // would misreport a school as having no international students.
+              const rendered = formatStat(
+                s.university.population?.international_share,
+                s.university.provenance.population,
+                "percent",
+              );
+              return (
+                <td key={s.id} title={rendered.note ?? undefined}>
+                  {rendered.text}
+                  {rendered.note && <span className="note"> {rendered.note}</span>}
+                </td>
+              );
+            })}
+          </tr>
+
+          <tr>
             <th>Setting</th>
             {schools.map((s) => (
               <td key={s.id}>

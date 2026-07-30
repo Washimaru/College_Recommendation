@@ -53,11 +53,57 @@ describe("CompareTable", () => {
     render(
       <CompareTable
         schools={[
-          school("a", { acceptance_rate: null, provenance: { acceptance_rate: "absent" } }),
+          school("a", {
+            acceptance_rate: null,
+            population: { international_share: 0.2 },
+            provenance: { acceptance_rate: "absent", population: "observed" },
+          }),
         ]}
       />,
     );
 
     expect(screen.getByText("—")).toBeTruthy();
+  });
+
+  it("renders a genuine net_price of zero as $0, not a gap", () => {
+    render(
+      <CompareTable
+        schools={[school("a", { net_price: 0, provenance: { net_price: "observed" } })]}
+      />,
+    );
+
+    expect(screen.getByText("$0")).toBeTruthy();
+  });
+
+  it("shows international share as a percentage when present", () => {
+    render(
+      <CompareTable
+        schools={[
+          school("a", {
+            population: { international_share: 0.12 },
+            provenance: { population: "observed" },
+          }),
+        ]}
+      />,
+    );
+
+    expect(screen.getByText("International share")).toBeTruthy();
+    expect(screen.getByText("12%")).toBeTruthy();
+  });
+
+  it("renders a missing international share as n/a, never 0%", () => {
+    render(
+      <CompareTable
+        schools={[
+          school("a", {
+            population: null,
+            provenance: { population: "not_applicable" },
+          }),
+        ]}
+      />,
+    );
+
+    expect(screen.getByText("n/a")).toBeTruthy();
+    expect(screen.queryByText("0%")).toBeNull();
   });
 });
