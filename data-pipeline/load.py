@@ -39,16 +39,22 @@ def load_universities(rows: list[dict], url: str) -> int:
                 cur.execute(
                     """
                     INSERT INTO universities (
-                        id, unitid, name, country, location, avg_gpa, avg_sat,
-                        acceptance_rate, net_price, sticker_tuition, enrollment,
-                        size, majors, culture, details, provenance
+                        id, unitid, name, country, location, region, setting,
+                        type, avg_gpa, avg_sat, acceptance_rate, net_price,
+                        sticker_tuition, enrollment, size, majors, culture,
+                        population, url, net_price_calculator_url, details,
+                        provenance
                     )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                            %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (id) DO UPDATE SET
                         unitid = EXCLUDED.unitid,
                         name = EXCLUDED.name,
                         country = EXCLUDED.country,
                         location = EXCLUDED.location,
+                        region = EXCLUDED.region,
+                        setting = EXCLUDED.setting,
+                        type = EXCLUDED.type,
                         avg_gpa = EXCLUDED.avg_gpa,
                         avg_sat = EXCLUDED.avg_sat,
                         acceptance_rate = EXCLUDED.acceptance_rate,
@@ -58,13 +64,19 @@ def load_universities(rows: list[dict], url: str) -> int:
                         size = EXCLUDED.size,
                         majors = EXCLUDED.majors,
                         culture = EXCLUDED.culture,
+                        population = EXCLUDED.population,
+                        url = EXCLUDED.url,
+                        net_price_calculator_url = EXCLUDED.net_price_calculator_url,
                         details = EXCLUDED.details,
                         provenance = EXCLUDED.provenance
                     """,
                     (r["id"], r.get("unitid"), r["name"], r["country"], r["location"],
+                     r["region"], r["setting"], r["type"],
                      r["avg_gpa"], r.get("avg_sat"), r.get("acceptance_rate"),
                      r.get("net_price"), r.get("sticker_tuition"), r.get("enrollment"),
                      r["size"], Json(r["majors"]), Json(r["culture"]),
+                     Json(r["population"]) if r.get("population") else None,
+                     r.get("url"), r.get("net_price_calculator_url"),
                      Json(r.get("details")) if r.get("details") else None,
                      Json(r.get("provenance", {}))),
                 )

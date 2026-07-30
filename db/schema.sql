@@ -12,6 +12,9 @@ CREATE TABLE IF NOT EXISTS universities (
     name            TEXT        NOT NULL,
     country         TEXT        NOT NULL,
     location        TEXT        NOT NULL,
+    region          TEXT        NOT NULL,
+    setting         TEXT        NOT NULL CHECK (setting IN ('urban','suburban','rural')),
+    type            TEXT        NOT NULL CHECK (type IN ('Public','Private')),
     avg_gpa         NUMERIC(3,2) NOT NULL CHECK (avg_gpa >= 0 AND avg_gpa <= 4.0),
     avg_sat         INTEGER     CHECK (avg_sat BETWEEN 400 AND 1600),
     acceptance_rate NUMERIC(4,3) CHECK (acceptance_rate >= 0 AND acceptance_rate <= 1),
@@ -21,6 +24,9 @@ CREATE TABLE IF NOT EXISTS universities (
     size            TEXT        NOT NULL CHECK (size IN ('small','medium','large')),
     majors          JSONB       NOT NULL DEFAULT '[]'::jsonb,
     culture         JSONB       NOT NULL,    -- required: drives 18% of the score
+    population      JSONB,                    -- absent for non-US schools
+    url             TEXT,
+    net_price_calculator_url TEXT,
     details         JSONB,                    -- curated profile; NULL when none exists
     provenance      JSONB       NOT NULL DEFAULT '{}'::jsonb
 );
@@ -28,6 +34,7 @@ CREATE TABLE IF NOT EXISTS universities (
 CREATE INDEX IF NOT EXISTS idx_universities_size ON universities (size);
 CREATE INDEX IF NOT EXISTS idx_universities_location ON universities (location);
 CREATE INDEX IF NOT EXISTS idx_universities_country ON universities (country);
+CREATE INDEX IF NOT EXISTS idx_universities_region ON universities (region);
 
 CREATE TABLE IF NOT EXISTS recommendations (
     id          BIGSERIAL PRIMARY KEY,
