@@ -116,12 +116,26 @@ def _cost_fit(profile: Profile, uni: University) -> float:
     return round(_clamp01(1.0 - over), 6)
 
 
+def _place_match(preferred: list[str], actual: str) -> float:
+    """1.0 when no preference is stated or the school matches one of them.
+
+    Unstated scores 1.0 rather than neutral 0.5 on purpose: unlike the culture
+    axes, which drop out of their average when untouched, this term is a fixed
+    share of `fit`, so a neutral value would silently cost a student part of the
+    dimension for a question they chose not to answer.
+    """
+    if not preferred:
+        return 1.0
+    return 1.0 if actual in preferred else 0.0
+
+
 def _fit(profile: Profile, uni: University) -> float:
-    """Major match. `preferences.locations` (an exact-string compare against
-    `University.location`, e.g. "Cambridge, MA") was removed in contract
-    v4.0.0 - it could never fire in practice. Region/setting preference
-    scoring is added properly in Task 5; until then fit is major-only."""
-    return 1.0 if profile.intended_major.lower() in {m.lower() for m in uni.majors} else 0.3
+    """Major, region and setting. Campus size lives in the personality
+    dimension; `location` is display-only and never scored."""
+    major = 1.0 if profile.intended_major.lower() in {m.lower() for m in uni.majors} else 0.3
+    region = _place_match(profile.preferences.regions, uni.region)
+    setting = _place_match(profile.preferences.settings, uni.setting)
+    return round(0.50 * major + 0.25 * region + 0.25 * setting, 6)
 
 
 def culture_fit(prefs: CulturePrefs, culture: Culture) -> float:

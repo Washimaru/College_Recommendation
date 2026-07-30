@@ -13,7 +13,7 @@ import pytest
 from pydantic import ValidationError
 
 from app.schemas import Activity, Culture, Personality, Profile, University
-from app.scoring import DEFAULT_WEIGHTS, activity_fit, personality_fit
+from app.scoring import DEFAULT_WEIGHTS, _fit, activity_fit, personality_fit
 
 NEUTRAL = Culture(collab=0.5, quirky=0.5, idealist=0.5, research=0.5, spirit=0.5, seminar=0.5)
 
@@ -165,3 +165,46 @@ class TestActivityDescription:
         )
 
         assert "rover" in activity.description
+
+
+class TestFitPlaceTerms:
+    """Region and setting are soft, folded into `fit` at 0.25 each. An unstated
+    preference scores 1.0, not 0.5: the term is a fixed share of the dimension,
+    so a neutral value would cost a student an eighth of it for declining to
+    answer an optional question."""
+
+    def _profile(self, **prefs) -> Profile:
+        return Profile(gpa=3.7, intended_major="Computer Science", preferences=prefs)
+
+    def test_no_place_preference_scores_the_same_as_a_full_match(self):
+        uni = _uni(region="West", setting="urban")
+
+        assert _fit(self._profile(), uni) == _fit(
+            self._profile(regions=["West"], settings=["urban"]), uni
+        )
+
+    def test_matching_region_beats_a_mismatch(self):
+        matched = _fit(self._profile(regions=["West"]), _uni(region="West"))
+        missed = _fit(self._profile(regions=["West"]), _uni(region="South"))
+
+        assert matched > missed
+
+    def test_matching_setting_beats_a_mismatch(self):
+        matched = _fit(self._profile(settings=["rural"]), _uni(setting="rural"))
+        missed = _fit(self._profile(settings=["rural"]), _uni(setting="urban"))
+
+        assert matched > missed
+
+    def test_any_listed_region_counts(self):
+        profile = self._profile(regions=["Northeast", "West"])
+
+        assert _fit(profile, _uni(region="West")) == _fit(profile, _uni(region="Northeast"))
+
+    def test_stays_in_unit_interval(self):
+        for region in ("West", "South"):
+            for setting in ("urban", "rural"):
+                score = _fit(
+                    self._profile(regions=["West"], settings=["urban"]),
+                    _uni(region=region, setting=setting),
+                )
+                assert 0.0 <= score <= 1.0

@@ -30,7 +30,7 @@ def test_determinism_same_input_same_output(profile, universities):
 def test_major_match_beats_non_match(profile, universities):
     resp = rank(_req(profile, universities))
     top = resp.scores[0].university_id
-    # u2 has neither the major, the size, nor the location the student wants.
+    # u2 does not have the major the student wants; fit scores it lower.
     assert top in {"u1", "u3"}
     ranking = [s.university_id for s in resp.scores]
     assert ranking.index("u2") == len(ranking) - 1

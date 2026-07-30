@@ -37,3 +37,25 @@ def test_international_excludes_us_schools():
 def test_unknown_scope_falls_back_to_everything():
     """A scope we do not recognise must not silently empty the catalog."""
     assert len(in_scope(CATALOG, "nonsense")) == 3
+
+
+def test_institution_type_filters_candidates():
+    catalog = [_uni("USA"), _uni("UK")]
+    catalog[0].type = "Public"
+    catalog[1].type = "Private"
+
+    assert [u.type for u in in_scope(catalog, "both", "Public")] == ["Public"]
+
+
+def test_no_institution_type_keeps_everything():
+    catalog = [_uni("USA"), _uni("UK")]
+
+    assert len(in_scope(catalog, "both", None)) == 2
+
+
+def test_scope_and_type_compose():
+    catalog = [_uni("USA"), _uni("UK")]
+    catalog[0].type = "Private"
+    catalog[1].type = "Private"
+
+    assert [u.country for u in in_scope(catalog, "usa", "Private")] == ["USA"]

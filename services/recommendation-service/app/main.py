@@ -35,7 +35,11 @@ def universities() -> dict[str, list[University]]:
 
 @app.post("/recommend", response_model=RecommendationResponse)
 def recommend(request: RecommendationRequest) -> RecommendationResponse:
-    universities = in_scope(load_universities(), request.profile.preferences.scope)
+    universities = in_scope(
+        load_universities(),
+        request.profile.preferences.scope,
+        request.profile.preferences.institution_type,
+    )
     rank_fn = make_rank_fn(request.profile, universities)
     llm = MockLLM(top_k=request.top_k)
     response = iter_loop(
@@ -48,7 +52,11 @@ def recommend(request: RecommendationRequest) -> RecommendationResponse:
 
 @app.post("/recommend/stream")
 def recommend_stream(request: RecommendationRequest) -> StreamingResponse:
-    universities = in_scope(load_universities(), request.profile.preferences.scope)
+    universities = in_scope(
+        load_universities(),
+        request.profile.preferences.scope,
+        request.profile.preferences.institution_type,
+    )
     rank_fn = make_rank_fn(request.profile, universities)
     llm = MockLLM(top_k=request.top_k)
 

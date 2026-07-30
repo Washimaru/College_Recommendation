@@ -46,17 +46,25 @@ def _load_from_db(url: str) -> list[University]:  # pragma: no cover - needs Pos
     return [University(**row) for row in rows]
 
 
-def in_scope(universities: list[University], scope: str) -> list[University]:
-    """Restrict candidates by country scope.
+def in_scope(
+    universities: list[University],
+    scope: str,
+    institution_type: str | None = None,
+) -> list[University]:
+    """Restrict candidates by country scope and institution type.
 
-    Applied before ranking so a requested top_k is still filled. Anything
-    unrecognised returns the full list rather than an empty one.
+    Both are hard filters applied before ranking so a requested top_k is still
+    filled. An unrecognised scope returns everything rather than nothing.
     """
     if scope == "usa":
-        return [u for u in universities if u.country == "USA"]
-    if scope == "international":
-        return [u for u in universities if u.country != "USA"]
-    return list(universities)
+        kept = [u for u in universities if u.country == "USA"]
+    elif scope == "international":
+        kept = [u for u in universities if u.country != "USA"]
+    else:
+        kept = list(universities)
+    if institution_type is not None:
+        kept = [u for u in kept if u.type == institution_type]
+    return kept
 
 
 def by_id(universities: list[University]) -> dict[str, University]:
