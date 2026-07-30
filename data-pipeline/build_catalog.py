@@ -80,7 +80,13 @@ def enrich(record: dict, row: dict | None) -> dict:
     source publishes them.
     """
     is_us = record["country"] == "USA"
-    provenance = {"avg_gpa": "editorial", "culture": "editorial"}
+    provenance = {
+        "avg_gpa": "editorial",
+        "culture": "editorial",
+        "region": "editorial",
+        "setting": "editorial",
+        "type": "editorial",
+    }
 
     avg_sat = acceptance_rate = enrollment = sticker = None
     net_price = record.get("net_price")
@@ -115,6 +121,9 @@ def enrich(record: dict, row: dict | None) -> dict:
         "name": record["name"],
         "country": record["country"],
         "location": record["location"],
+        "region": record["region"],
+        "setting": record["setting"],
+        "type": record["type"],
         "avg_gpa": record["avg_gpa"],
         "avg_sat": int(avg_sat) if avg_sat is not None else None,
         "acceptance_rate": acceptance_rate,

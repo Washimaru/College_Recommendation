@@ -82,6 +82,7 @@ NON_US = {
     "enrollment_editorial": 12000, "majors": ["PPE"],
     "culture": {"collab": 0.5, "quirky": 0.8, "idealist": 0.6,
                 "research": 0.9, "spirit": 0.4, "seminar": 0.9},
+    "region": "International", "setting": "urban", "type": "Public",
 }
 
 US_ROW = {
@@ -250,3 +251,26 @@ class TestOutcomes:
 
         assert record["outcomes"] is None
         assert record["provenance"]["outcomes"] == "absent"
+
+
+class TestPlaceFields:
+    """region, setting and type exist on every tier-1 record and were being
+    dropped by enrich(), which builds a fresh dict."""
+
+    def test_region_setting_and_type_survive_enrich(self):
+        record = enrich(
+            {**NON_US, "region": "International", "setting": "urban", "type": "Public"}, None
+        )
+
+        assert record["region"] == "International"
+        assert record["setting"] == "urban"
+        assert record["type"] == "Public"
+
+    def test_they_are_marked_editorial(self):
+        record = enrich(
+            {**NON_US, "region": "West", "setting": "rural", "type": "Private"}, None
+        )
+
+        assert record["provenance"]["region"] == "editorial"
+        assert record["provenance"]["setting"] == "editorial"
+        assert record["provenance"]["type"] == "editorial"
