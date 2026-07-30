@@ -117,9 +117,10 @@ export interface UniversitySummary {
 }
 
 /**
- * Curated profile sections. Only ~67 of 364 schools have any, and coverage
- * varies sharply by section (outcomes 60, research 29, scholarships 17,
- * grad/professional schools 6-7). Absent sections are simply not rendered.
+ * Curated profile sections. 151 of the 358 schools have at least one, and
+ * coverage varies sharply by section (scholarships 101, admissions 67,
+ * academics 66, campus 61, outcomes 60, programs 59). Absent sections are
+ * simply not rendered — never filled with a placeholder or a guess.
  */
 export interface SchoolDetails {
   scholarships?: { policy?: string; named?: string[] };
