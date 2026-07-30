@@ -11,6 +11,12 @@ import { useProfileStore } from "@/lib/profileStore";
 import { foldAnswers } from "@/lib/questionnaire";
 import { MAJORS } from "@/lib/majors";
 
+type Status =
+  | { kind: "idle" }
+  | { kind: "loading" }
+  | { kind: "ok" }
+  | { kind: "error"; message: string };
+
 const REGIONS: readonly { value: Region; label: string }[] = [
   { value: "Northeast", label: "Northeast" },
   { value: "South", label: "South" },
@@ -25,16 +31,16 @@ const SETTINGS: readonly { value: Setting; label: string }[] = [
   { value: "rural", label: "Rural" },
 ];
 
-type Status =
-  | { kind: "idle" }
-  | { kind: "loading" }
-  | { kind: "ok"; response: RecommendationResponse }
-  | { kind: "error"; message: string };
-
 export function ProfileForm() {
-  const { form, setForm, answers, setAnswers, activities, setActivities, reset } =
-    useProfileStore();
-  const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const {
+    form, setForm, answers, setAnswers, activities, setActivities, results, setResults, reset,
+  } = useProfileStore();
+  // `results` lives in the profile store (session-scoped, like the compare
+  // tray) so it survives a route change. `status` stays local: it's purely
+  // this render's in-flight/error UI state, not something worth resurrecting
+  // on remount. Initialising from `results` means a student who already has
+  // matches sees them immediately, without re-running the loop.
+  const [status, setStatus] = useState<Status>(() => (results ? { kind: "ok" } : { kind: "idle" }));
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -84,7 +90,8 @@ export function ProfileForm() {
         });
         return;
       }
-      setStatus({ kind: "ok", response: payload as RecommendationResponse });
+      setResults(payload as RecommendationResponse);
+      setStatus({ kind: "ok" });
     } catch {
       setStatus({ kind: "error", message: "Network error. Is the app still running?" });
     }
@@ -220,7 +227,7 @@ export function ProfileForm() {
         </p>
       )}
 
-      {status.kind === "ok" && <MatchResults response={status.response} />}
+      {status.kind === "ok" && results && <MatchResults response={results} />}
     </>
   );
 }

@@ -86,4 +86,63 @@ describe("profile store", () => {
     mount();
     expect(store.list).toEqual([]);
   });
+
+  it("holds recommendation results in memory, not localStorage", () => {
+    const response = {
+      results: [],
+      confidence: 0.9,
+      stop_reason: "R2_confident",
+      trace: [],
+    };
+    mount();
+    act(() => store.setResults(response));
+    expect(store.results).toEqual(response);
+    expect(localStorage.getItem("unimatch.v1")).not.toContain("R2_confident");
+  });
+
+  it("keeps results when the consuming page unmounts and remounts, because ProfileProvider itself (in the root layout) never does", () => {
+    const response = {
+      results: [],
+      confidence: 0.9,
+      stop_reason: "R2_confident",
+      trace: [],
+    };
+    // Simulates a Next.js route change: the outer <ProfileProvider> — mounted
+    // once in app/layout.tsx — stays the same React instance across
+    // navigation, only its `children` (the page) is swapped. A fresh `render`
+    // call would instead create a brand-new provider, which is the wrong
+    // simulation and wouldn't prove anything about surviving navigation.
+    const { rerender } = render(
+      <ProfileProvider>
+        <Probe />
+      </ProfileProvider>,
+    );
+    act(() => store.setResults(response));
+
+    rerender(
+      <ProfileProvider>
+        <div>a different page</div>
+      </ProfileProvider>,
+    );
+    rerender(
+      <ProfileProvider>
+        <Probe />
+      </ProfileProvider>,
+    );
+
+    expect(store.results).toEqual(response);
+  });
+
+  it("clears results on reset", () => {
+    const response = {
+      results: [],
+      confidence: 0.9,
+      stop_reason: "R2_confident",
+      trace: [],
+    };
+    mount();
+    act(() => store.setResults(response));
+    act(() => store.reset());
+    expect(store.results).toBeNull();
+  });
 });

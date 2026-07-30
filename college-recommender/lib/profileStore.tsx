@@ -15,6 +15,7 @@ import type {
   Activity,
   AdmitTier,
   InstitutionType,
+  RecommendationResponse,
   Region,
   Scope,
   Setting,
@@ -135,6 +136,17 @@ interface Store extends Persisted {
   compare: ListedSchool[];
   addToCompare: (school: ListedSchool) => void;
   removeFromCompare: (id: string) => void;
+  /**
+   * The last recommendation run, held in memory only — same lifetime as
+   * `compare`, not `localStorage`. Results are large (the full ranked list
+   * plus rationale and trace) and go stale as soon as the catalog changes
+   * underneath them, so persisting them across browser sessions would be
+   * actively misleading. Session-scoped is exactly enough: it survives a
+   * route change within the app (the provider lives in the root layout,
+   * above the router outlet) but not a reload.
+   */
+  results: RecommendationResponse | null;
+  setResults: (next: RecommendationResponse | null) => void;
   reset: () => void;
 }
 
@@ -153,6 +165,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     localStore.getServerSnapshot,
   );
   const [compare, setCompare] = useState<ListedSchool[]>([]);
+  const [results, setResultsState] = useState<RecommendationResponse | null>(null);
 
   // Mirror every change back to localStorage. This is a plain "sync an
   // external system with the latest React state" effect, not a setState — no
@@ -196,9 +209,14 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     (id: string) => setCompare((current) => current.filter((x) => x.id !== id)),
     [],
   );
+  const setResults = useCallback(
+    (next: RecommendationResponse | null) => setResultsState(next),
+    [],
+  );
   const reset = useCallback(() => {
     setState(() => EMPTY);
     setCompare([]);
+    setResultsState(null);
   }, [setState]);
 
   const value = useMemo<Store>(
@@ -213,10 +231,12 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       compare,
       addToCompare,
       removeFromCompare,
+      results,
+      setResults,
       reset,
     }),
-    [state, compare, setForm, setAnswers, setActivities, addToList, removeFromList,
-     addToCompare, removeFromCompare, reset],
+    [state, compare, results, setForm, setAnswers, setActivities, addToList, removeFromList,
+     addToCompare, removeFromCompare, setResults, reset],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
