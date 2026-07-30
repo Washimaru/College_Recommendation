@@ -106,3 +106,21 @@ class TestProfileShape:
     def test_activity_kind_is_constrained(self):
         with pytest.raises(ValidationError):
             Activity(name="x", kind="not-a-kind")
+
+
+class TestScope:
+    """Country scope is a hard filter, like major or budget - it decides which
+    schools are considered at all, not how they rank."""
+
+    def test_defaults_to_both(self):
+        assert Profile(gpa=3.8, intended_major="CS").preferences.scope == "both"
+
+    def test_accepts_the_three_scopes(self):
+        for scope in ("usa", "international", "both"):
+            assert Profile(
+                gpa=3.8, intended_major="CS", preferences={"scope": scope}
+            ).preferences.scope == scope
+
+    def test_rejects_an_unknown_scope(self):
+        with pytest.raises(ValidationError):
+            Profile(gpa=3.8, intended_major="CS", preferences={"scope": "mars"})

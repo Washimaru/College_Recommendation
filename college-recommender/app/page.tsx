@@ -11,6 +11,7 @@ import { UniversityModal } from "@/components/UniversityModal";
 import {
   type Activity,
   type RecommendationResponse,
+  type Scope,
   type University,
   type UniversitySummary,
 } from "@/lib/contract";
@@ -24,6 +25,16 @@ type Status =
   | { kind: "error"; message: string };
 
 type Sort = "match" | "price" | "selectivity";
+type Tab = "match" | "browse" | "majors";
+
+/** Results revealed per "show more" press. */
+const RESULTS_PAGE = 10;
+
+const TABS: [Tab, string][] = [
+  ["match", "Find my matches"],
+  ["browse", "Browse schools"],
+  ["majors", "Major Finder"],
+];
 
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
@@ -38,6 +49,9 @@ export default function Home() {
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [activities, setActivities] = useState<Activity[]>([]);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const [tab, setTab] = useState<Tab>("match");
+  const [scope, setScope] = useState<Scope>("both");
+  const [shown, setShown] = useState(RESULTS_PAGE);
   const [sort, setSort] = useState<Sort>("match");
   const [tiers, setTiers] = useState<string[]>([]);
   // One modal serves both matches and browse; matches add a rationale and tier.
@@ -73,6 +87,7 @@ export default function Home() {
   async function submit(event: React.FormEvent) {
     event.preventDefault();
     setStatus({ kind: "loading" });
+    setShown(RESULTS_PAGE);
 
     const { culturePrefs, personality } = foldAnswers(answers);
 
@@ -84,9 +99,14 @@ export default function Home() {
         culture_prefs: culturePrefs,
         personality,
         activities,
-        ...(maxNetPrice ? { preferences: { max_tuition: Number(maxNetPrice) } } : {}),
+        preferences: {
+          scope,
+          ...(maxNetPrice ? { max_tuition: Number(maxNetPrice) } : {}),
+        },
       },
-      top_k: 12,
+      // Ask for the maximum so "show more" reveals real extra matches rather
+      // than re-requesting; the contract caps top_k at 50.
+      top_k: 50,
     };
 
     try {
@@ -139,11 +159,7 @@ export default function Home() {
             <span className="dot" />
             Uni<b>Match</b>
           </a>
-          <div className="nav-links" style={{ marginLeft: "auto" }}>
-            <a href="#wizard">Match</a>
-            <a href="#browse">Browse</a>
-            <a href="#majorfinder">Major Finder</a>
-          </div>
+          <div style={{ marginLeft: "auto" }} />
           <button
             className="icon-btn"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -183,7 +199,23 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="wrap" id="wizard">
+      <div className="wrap">
+        <nav className="tabs" aria-label="Sections">
+          {TABS.map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              className={`tab ${tab === key ? "on" : ""}`}
+              aria-current={tab === key ? "page" : undefined}
+              onClick={() => setTab(key)}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      <main className="wrap" id="wizard" style={{ display: tab === "match" ? "block" : "none" }}>
         <form onSubmit={submit} className="panel">
           <h2>Your profile &amp; limits</h2>
           <p className="lead" style={{ fontSize: 14 }}>
@@ -220,7 +252,22 @@ export default function Home() {
             </div>
           </div>
 
-          <div style={{ marginTop: 18 }}>
+          <div className="grid2" style={{ marginTop: 18 }}>
+            <div>
+              <label className="fld" htmlFor="scope">
+                Where do you want to study?
+              </label>
+              <select
+                id="scope"
+                value={scope}
+                onChange={(e) => setScope(e.target.value as Scope)}
+              >
+                <option value="both">Anywhere — US and international</option>
+                <option value="usa">United States only</option>
+                <option value="international">Outside the US only</option>
+              </select>
+            </div>
+            <div>
             <label className="fld" htmlFor="major">
               Intended major / field
             </label>
@@ -231,6 +278,7 @@ export default function Home() {
                 </option>
               ))}
             </select>
+            </div>
           </div>
 
           <h2 style={{ marginTop: 30 }}>About you</h2>
@@ -249,6 +297,8 @@ export default function Home() {
               onClick={() => {
                 setAnswers({});
                 setActivities([]);
+                setScope("both");
+                setShown(RESULTS_PAGE);
                 setStatus({ kind: "idle" });
                 setTiers([]);
               }}
@@ -275,7 +325,9 @@ export default function Home() {
           <section className="section" id="results">
             <h2>Your top matches</h2>
             <p className="muted" style={{ fontSize: 14, margin: "0 0 18px" }}>
-              {results.length} of {all.length} shown · click any school for its full profile
+              Showing {Math.min(shown, results.length)} of {results.length} matches
+              {tiers.length > 0 && <> (filtered from {all.length})</>} · click any school for
+              its full profile
             </p>
 
             <div
@@ -322,7 +374,7 @@ export default function Home() {
             </div>
 
             <div className="cards">
-              {results.map((result, index) => (
+              {results.slice(0, shown).map((result, index) => (
                 <ResultCard
                   key={result.university_id}
                   result={result}
@@ -338,16 +390,31 @@ export default function Home() {
                 />
               ))}
             </div>
+
+            {results.length > shown && (
+              <div style={{ textAlign: "center", marginTop: 20 }}>
+                <button
+                  type="button"
+                  className="btn ghost"
+                  onClick={() => setShown(shown + RESULTS_PAGE)}
+                >
+                  Show more schools ({results.length - shown} left)
+                </button>
+              </div>
+            )}
           </section>
         )}
       </main>
 
-      <div className="wrap">
+      <div className="wrap" style={{ display: tab === "browse" ? "block" : "none" }}>
         <BrowseSection
           catalog={catalog}
           error={catalogError}
           onOpen={(uni: University) => setOpen({ name: uni.name, university: uni })}
         />
+      </div>
+
+      <div className="wrap" style={{ display: tab === "majors" ? "block" : "none" }}>
         <MajorFinder
           catalog={catalog}
           onOpen={(uni: University) => setOpen({ name: uni.name, university: uni })}

@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "3.0.0";
+export const CONTRACT_VERSION = "3.1.0";
 
 /**
  * Six bipolar culture axes. 0.0 and 1.0 are opposite poles; 0.5 means the
@@ -55,6 +55,8 @@ export const PreferencesSchema = z
     max_tuition: z.number().min(0).nullable().optional(),
     preferred_size: z.enum(["small", "medium", "large"]).nullable().optional(),
     locations: z.array(z.string()).default([]),
+    /** Hard filter on which schools are considered, not a ranking signal. */
+    scope: z.enum(["usa", "international", "both"]).optional(),
   })
   .strict();
 

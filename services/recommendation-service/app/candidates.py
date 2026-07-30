@@ -46,6 +46,19 @@ def _load_from_db(url: str) -> list[University]:  # pragma: no cover - needs Pos
     return [University(**row) for row in rows]
 
 
+def in_scope(universities: list[University], scope: str) -> list[University]:
+    """Restrict candidates by country scope.
+
+    Applied before ranking so a requested top_k is still filled. Anything
+    unrecognised returns the full list rather than an empty one.
+    """
+    if scope == "usa":
+        return [u for u in universities if u.country == "USA"]
+    if scope == "international":
+        return [u for u in universities if u.country != "USA"]
+    return list(universities)
+
+
 def by_id(universities: list[University]) -> dict[str, University]:
     """Index by id. The loop needs whole records, not just names, to emit the
     per-result university summary and admit_tier."""

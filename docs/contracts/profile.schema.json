@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/profile.schema.json",
   "title": "StudentProfile",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["gpa", "intended_major"],
@@ -55,7 +55,8 @@
       "properties": {
         "max_tuition": { "type": ["number", "null"], "minimum": 0 },
         "preferred_size": { "type": ["string", "null"], "enum": ["small", "medium", "large", null] },
-        "locations": { "type": "array", "items": { "type": "string" }, "default": [] }
+        "locations": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "scope": { "type": "string", "enum": ["usa", "international", "both"], "default": "both", "description": "Country scope. A hard filter applied at candidate selection, not a ranking signal, so a requested top_k is still filled." }
       },
       "default": {}
     },

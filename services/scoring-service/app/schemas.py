@@ -10,9 +10,11 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "3.0.0"
+CONTRACT_VERSION = "3.1.0"
 
 Size = Literal["small", "medium", "large"]
+# Country scope. A hard filter on which schools are considered at all.
+Scope = Literal["usa", "international", "both"]
 Provenance = Literal["observed", "web_verified", "editorial", "not_applicable", "absent"]
 
 # The six bipolar culture axes, shared by Profile.culture_prefs and
@@ -81,6 +83,7 @@ class Preferences(BaseModel):
     max_tuition: float | None = Field(default=None, ge=0)
     preferred_size: Size | None = None
     locations: list[str] = Field(default_factory=list)
+    scope: Scope = "both"
 
 
 class Weights(BaseModel):

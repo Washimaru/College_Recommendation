@@ -59,6 +59,8 @@ export interface Personality {
 
 export const NEUTRAL_PERSONALITY: Personality = { intensity: 0.5, scale: 0.5 };
 
+export type Scope = "usa" | "international" | "both";
+
 export interface Profile {
   gpa: number;
   sat?: number | null;
@@ -67,6 +69,7 @@ export interface Profile {
   personality?: Personality;
   activities?: Activity[];
   preferences?: {
+    scope?: Scope;
     max_tuition?: number | null;
     preferred_size?: "small" | "medium" | "large" | null;
     locations?: string[];

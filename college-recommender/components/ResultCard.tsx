@@ -37,11 +37,12 @@ export function ResultCard({
 }) {
   const uni = result.university;
   const tier = tierLabel(result.admit_tier);
+  const fit = Math.round(result.score * 100);
 
   return (
     <button type="button" className="card" onClick={() => onOpen(result)}>
       <div className="card-head">
-        <div>
+        <div style={{ minWidth: 0 }}>
           <h3>
             <span className="rank">{rank}</span>
             {result.name}
@@ -50,7 +51,17 @@ export function ResultCard({
             {uni.location} · {uni.country} · {uni.size}
           </div>
         </div>
-        {tier && <span className={`tier ${result.admit_tier}`}>{tier}</span>}
+
+        <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+          {tier && <span className={`tier ${result.admit_tier}`}>{tier}</span>}
+          <div className="fit">
+            <b>{fit}%</b>
+            <span>fit</span>
+            <div className="fit-bar">
+              <span style={{ width: `${fit}%` }} />
+            </div>
+          </div>
+        </div>
       </div>
 
       <p style={{ margin: "10px 0 0", fontSize: 14 }}>{result.rationale}</p>

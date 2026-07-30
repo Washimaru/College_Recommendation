@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 
 from . import db
-from .candidates import by_id, load_universities
+from .candidates import by_id, in_scope, load_universities
 from .clients import make_rank_fn
 from .llm import MockLLM
 from .loop import iter_loop, run_loop
@@ -35,7 +35,7 @@ def universities() -> dict[str, list[University]]:
 
 @app.post("/recommend", response_model=RecommendationResponse)
 def recommend(request: RecommendationRequest) -> RecommendationResponse:
-    universities = load_universities()
+    universities = in_scope(load_universities(), request.profile.preferences.scope)
     rank_fn = make_rank_fn(request.profile, universities)
     llm = MockLLM(top_k=request.top_k)
     response = iter_loop(
@@ -48,7 +48,7 @@ def recommend(request: RecommendationRequest) -> RecommendationResponse:
 
 @app.post("/recommend/stream")
 def recommend_stream(request: RecommendationRequest) -> StreamingResponse:
-    universities = load_universities()
+    universities = in_scope(load_universities(), request.profile.preferences.scope)
     rank_fn = make_rank_fn(request.profile, universities)
     llm = MockLLM(top_k=request.top_k)
 

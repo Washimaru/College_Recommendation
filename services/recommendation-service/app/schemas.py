@@ -10,9 +10,10 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "3.0.0"
+CONTRACT_VERSION = "3.1.0"
 
 Size = Literal["small", "medium", "large"]
+Scope = Literal["usa", "international", "both"]
 StopReason = Literal["R1_converged", "R2_confident", "R3_no_change", "R4_iteration_cap"]
 Provenance = Literal["observed", "web_verified", "editorial", "not_applicable", "absent"]
 
@@ -65,6 +66,7 @@ class Preferences(BaseModel):
     max_tuition: float | None = Field(default=None, ge=0)
     preferred_size: Size | None = None
     locations: list[str] = Field(default_factory=list)
+    scope: Scope = "both"
 
 
 class Weights(BaseModel):

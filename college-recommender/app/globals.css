@@ -491,3 +491,68 @@ footer {
   color: var(--faint);
   font-size: 13px;
 }
+
+/* ---------- page tabs ---------- */
+.tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+  margin: 0 0 8px;
+  overflow-x: auto;
+}
+.tab {
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 650;
+  padding: 14px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.15s;
+}
+.tab:hover {
+  color: var(--ink);
+}
+.tab.on {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+/* ---------- fit meter ---------- */
+.fit {
+  text-align: right;
+  min-width: 84px;
+}
+.fit b {
+  display: block;
+  font-size: 22px;
+  font-weight: 850;
+  letter-spacing: -0.5px;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.1;
+}
+.fit span {
+  font-size: 11px;
+  color: var(--faint);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.fit-bar {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  margin-top: 6px;
+}
+.fit-bar span {
+  display: block;
+  height: 100%;
+  background: var(--grad);
+}
