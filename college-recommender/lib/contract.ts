@@ -1,9 +1,12 @@
 /**
- * Mirrors docs/contracts/{profile,recommendation}.schema.json v2.0.0.
+ * Mirrors docs/contracts/{profile,recommendation}.schema.json v4.0.0.
  *
  * The gateway is the validating authority; these types keep the client honest
- * at compile time. There is deliberately no `mbti` field - it was removed in
- * v2.0.0 and replaced by self-reported culture preferences.
+ * at compile time. Two fields are deliberately absent: `mbti`, removed in
+ * v2.0.0 in favour of self-reported culture preferences, and
+ * `preferences.locations`, removed in v4.0.0 because it compared a typed string
+ * against `University.location` ("Cambridge, MA") and so could never fire.
+ * `location` itself stays, for display only — never as a filter or a score.
  */
 
 export const CULTURE_AXES = [
