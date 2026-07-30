@@ -39,8 +39,11 @@ the working copy was found missing on disk. Consequences:
   `node_modules/`, and a gutted `.git` holding just `logs/`. Its source is gone
   and is not recoverable from that repo. `docs/INTEGRATION.md` and P9 describe
   wiring a frontend that no longer exists here.
-- The repo root is **not a git repo** — `git` commands from the root will fail,
-  and there is no history to fall back on. Treat edits as irreversible.
+- The repo root **is** a git repo now (`git init` was run on 2026-07-27, after the
+  reconstruction), so edits are recoverable — but history starts at that point.
+  Work happens on `feat/real-university-catalog`. Note `data-pipeline/out/` and
+  `.superpowers/` are gitignored: the catalog is a build artifact, reproducible
+  from the committed `data-pipeline/sources/` tier files.
 
 ## Commands
 
