@@ -125,3 +125,43 @@ class TestScope:
     def test_rejects_an_unknown_scope(self):
         with pytest.raises(ValidationError):
             Profile(gpa=3.8, intended_major="CS", preferences={"scope": "mars"})
+
+
+class TestPlacePreferences:
+    def test_defaults_are_empty_and_unset(self):
+        prefs = Profile(gpa=3.8, intended_major="CS").preferences
+
+        assert prefs.regions == []
+        assert prefs.settings == []
+        assert prefs.institution_type is None
+
+    def test_accepts_regions_and_settings(self):
+        prefs = Profile(
+            gpa=3.8, intended_major="CS",
+            preferences={"regions": ["Northeast", "West"], "settings": ["urban"]},
+        ).preferences
+
+        assert prefs.regions == ["Northeast", "West"]
+        assert prefs.settings == ["urban"]
+
+    def test_rejects_an_unknown_region(self):
+        with pytest.raises(ValidationError):
+            Profile(gpa=3.8, intended_major="CS", preferences={"regions": ["Atlantis"]})
+
+    def test_locations_is_gone(self):
+        """It compared against 'Cambridge, MA' and could never fire."""
+        with pytest.raises(ValidationError):
+            Profile(gpa=3.8, intended_major="CS", preferences={"locations": ["CA"]})
+
+
+class TestActivityDescription:
+    def test_description_is_optional(self):
+        assert Activity(name="robotics", kind="club").description is None
+
+    def test_description_is_accepted(self):
+        activity = Activity(
+            name="Science Bowl", kind="competition",
+            description="I built an autonomous rover and wrote the vision pipeline",
+        )
+
+        assert "rover" in activity.description

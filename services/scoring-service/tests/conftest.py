@@ -17,7 +17,7 @@ def profile() -> Profile:
         sat=1400,
         intended_major="Computer Science",
         culture_prefs={"research": 0.9, "collab": 0.8},
-        preferences={"max_tuition": 40000, "preferred_size": "large", "locations": ["CA"]},
+        preferences={"max_tuition": 40000, "preferred_size": "large"},
     )
 
 

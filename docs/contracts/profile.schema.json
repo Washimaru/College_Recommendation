@@ -44,7 +44,8 @@
         "properties": {
           "name": { "type": "string", "minLength": 1 },
           "kind": { "type": "string", "enum": ["competition", "club", "volunteering", "work", "sport", "arts", "research", "other"], "default": "other" },
-          "years": { "type": ["integer", "null"], "minimum": 0, "maximum": 12 }
+          "years": { "type": ["integer", "null"], "minimum": 0, "maximum": 12 },
+          "description": { "type": ["string", "null"], "maxLength": 500, "description": "Feeds recognition only. Each activity still contributes at most one hit." }
         }
       },
       "default": []
@@ -55,8 +56,10 @@
       "properties": {
         "max_tuition": { "type": ["number", "null"], "minimum": 0 },
         "preferred_size": { "type": ["string", "null"], "enum": ["small", "medium", "large", null] },
-        "locations": { "type": "array", "items": { "type": "string" }, "default": [] },
-        "scope": { "type": "string", "enum": ["usa", "international", "both"], "default": "both", "description": "Country scope. A hard filter applied at candidate selection, not a ranking signal, so a requested top_k is still filled." }
+        "scope": { "type": "string", "enum": ["usa", "international", "both"], "default": "both", "description": "Country scope. A hard filter applied at candidate selection, not a ranking signal, so a requested top_k is still filled." },
+        "regions": { "type": "array", "items": { "type": "string", "enum": ["Northeast", "South", "West", "Midwest", "International"] }, "default": [], "description": "Soft preference folded into the fit dimension. Empty means no preference." },
+        "settings": { "type": "array", "items": { "type": "string", "enum": ["urban", "suburban", "rural"] }, "default": [] },
+        "institution_type": { "type": ["string", "null"], "enum": ["Public", "Private", null], "description": "Hard filter applied at candidate selection." }
       },
       "default": {}
     },

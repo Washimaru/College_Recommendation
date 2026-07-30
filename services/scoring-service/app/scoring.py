@@ -117,13 +117,11 @@ def _cost_fit(profile: Profile, uni: University) -> float:
 
 
 def _fit(profile: Profile, uni: University) -> float:
-    """Major and location. Campus size moved to the personality dimension in
-    v3.0.0 so scale is not scored in two places."""
-    major = 1.0 if profile.intended_major.lower() in {m.lower() for m in uni.majors} else 0.3
-    loc = 1.0
-    if profile.preferences.locations:
-        loc = 1.0 if uni.location in profile.preferences.locations else 0.4
-    return round((0.65 * major + 0.35 * loc), 6)
+    """Major match. `preferences.locations` (an exact-string compare against
+    `University.location`, e.g. "Cambridge, MA") was removed in contract
+    v4.0.0 - it could never fire in practice. Region/setting preference
+    scoring is added properly in Task 5; until then fit is major-only."""
+    return 1.0 if profile.intended_major.lower() in {m.lower() for m in uni.majors} else 0.3
 
 
 def culture_fit(prefs: CulturePrefs, culture: Culture) -> float:

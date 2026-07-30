@@ -77,6 +77,7 @@ class Activity(BaseModel):
     name: str = Field(min_length=1)
     kind: ActivityKind = "other"
     years: int | None = Field(default=None, ge=0, le=12)
+    description: str | None = Field(default=None, max_length=500)
 
 
 class Personality(BaseModel):
@@ -96,8 +97,12 @@ class Preferences(BaseModel):
 
     max_tuition: float | None = Field(default=None, ge=0)
     preferred_size: Size | None = None
-    locations: list[str] = Field(default_factory=list)
     scope: Scope = "both"
+    # Soft: fold into the `fit` dimension. An empty list means no preference.
+    regions: list[Region] = Field(default_factory=list)
+    settings: list[Setting] = Field(default_factory=list)
+    # Hard: filters candidates before ranking, like scope.
+    institution_type: InstitutionType | None = None
 
 
 class Weights(BaseModel):

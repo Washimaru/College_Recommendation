@@ -55,6 +55,7 @@ export const ActivitySchema = z
       .enum(["competition", "club", "volunteering", "work", "sport", "arts", "research", "other"])
       .default("other"),
     years: z.number().int().min(0).max(12).nullable().optional(),
+    description: z.string().max(500).nullable().optional(),
   })
   .strict();
 
@@ -73,9 +74,11 @@ export const PreferencesSchema = z
   .object({
     max_tuition: z.number().min(0).nullable().optional(),
     preferred_size: z.enum(["small", "medium", "large"]).nullable().optional(),
-    locations: z.array(z.string()).default([]),
     /** Hard filter on which schools are considered, not a ranking signal. */
     scope: z.enum(["usa", "international", "both"]).optional(),
+    regions: z.array(RegionSchema).optional(),
+    settings: z.array(SettingSchema).optional(),
+    institution_type: InstitutionTypeSchema.nullable().optional(),
   })
   .strict();
 
