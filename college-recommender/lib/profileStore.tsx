@@ -1,0 +1,229 @@
+"use client";
+
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
+
+import type {
+  Activity,
+  AdmitTier,
+  InstitutionType,
+  Region,
+  Scope,
+  Setting,
+  UniversitySummary,
+} from "./contract";
+
+/** Compare holds finalists, not a spreadsheet; a fourth column stops fitting. */
+export const COMPARE_LIMIT = 3;
+
+const STORAGE_KEY = "unimatch.v1";
+
+export interface ListedSchool {
+  id: string;
+  name: string;
+  fit: number | null;
+  tier: AdmitTier | null;
+  university: UniversitySummary;
+}
+
+export interface FormState {
+  gpa: string;
+  sat: string;
+  major: string;
+  maxNetPrice: string;
+  scope: Scope;
+  regions: Region[];
+  settings: Setting[];
+  institutionType: InstitutionType | null;
+}
+
+const EMPTY_FORM: FormState = {
+  gpa: "3.8",
+  sat: "",
+  major: "Computer Science",
+  maxNetPrice: "",
+  scope: "both",
+  regions: [],
+  settings: [],
+  institutionType: null,
+};
+
+interface Persisted {
+  form: FormState;
+  answers: Record<string, number>;
+  activities: Activity[];
+  list: ListedSchool[];
+}
+
+const EMPTY: Persisted = { form: EMPTY_FORM, answers: {}, activities: [], list: [] };
+
+/** A malformed stored value must not white-screen the app. */
+function readStored(): Persisted {
+  if (typeof window === "undefined") return EMPTY;
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return EMPTY;
+    const parsed = JSON.parse(raw) as Partial<Persisted>;
+    return {
+      form: { ...EMPTY_FORM, ...(parsed.form ?? {}) },
+      answers: parsed.answers ?? {},
+      activities: parsed.activities ?? [],
+      list: parsed.list ?? [],
+    };
+  } catch {
+    return EMPTY;
+  }
+}
+
+/**
+ * A tiny external store around localStorage, read through useSyncExternalStore.
+ *
+ * `getSnapshot` does the actual localStorage read, lazily, on its first call.
+ * Reading happens inside `getSnapshot` (invoked synchronously during render)
+ * rather than in a `useEffect` + `setState` — that pattern is what
+ * `react-hooks/set-state-in-effect` flags as a cascading-render smell, and
+ * it's also exactly what `useSyncExternalStore`'s `getServerSnapshot`
+ * parameter exists to solve: the server (and the first client render) sees
+ * `EMPTY`, and once mounted in a real browser React reconciles against the
+ * true client snapshot on its own — no manual "hydrated" flag needed.
+ */
+function createLocalStore() {
+  let current = EMPTY;
+  let hydrated = false;
+  const listeners = new Set<() => void>();
+
+  function ensureHydrated() {
+    if (!hydrated && typeof window !== "undefined") {
+      current = readStored();
+      hydrated = true;
+    }
+  }
+
+  return {
+    getSnapshot: (): Persisted => {
+      ensureHydrated();
+      return current;
+    },
+    getServerSnapshot: (): Persisted => EMPTY,
+    subscribe: (onStoreChange: () => void): (() => void) => {
+      listeners.add(onStoreChange);
+      return () => listeners.delete(onStoreChange);
+    },
+    update: (updater: (prev: Persisted) => Persisted) => {
+      ensureHydrated();
+      current = updater(current);
+      listeners.forEach((listener) => listener());
+    },
+  };
+}
+
+interface Store extends Persisted {
+  setForm: (next: FormState) => void;
+  setAnswers: (next: Record<string, number>) => void;
+  setActivities: (next: Activity[]) => void;
+  addToList: (school: ListedSchool) => void;
+  removeFromList: (id: string) => void;
+  isListed: (id: string) => boolean;
+  compare: ListedSchool[];
+  addToCompare: (school: ListedSchool) => void;
+  removeFromCompare: (id: string) => void;
+  reset: () => void;
+}
+
+const Ctx = createContext<Store | null>(null);
+
+export function ProfileProvider({ children }: { children: ReactNode }) {
+  // Lazy useState initializer, not useRef: reading a ref's `.current` during
+  // render is itself flagged (react-hooks/refs) — a lazy initializer runs
+  // exactly once and gives the same "create it once, keep it stable" result
+  // without touching a ref.
+  const [localStore] = useState(() => createLocalStore());
+
+  const state = useSyncExternalStore(
+    localStore.subscribe,
+    localStore.getSnapshot,
+    localStore.getServerSnapshot,
+  );
+  const [compare, setCompare] = useState<ListedSchool[]>([]);
+
+  // Mirror every change back to localStorage. This is a plain "sync an
+  // external system with the latest React state" effect, not a setState — no
+  // cascading-render concern here.
+  useEffect(() => {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }, [state]);
+
+  const setState = localStore.update;
+
+  const setForm = useCallback((form: FormState) => setState((s) => ({ ...s, form })), [setState]);
+  const setAnswers = useCallback(
+    (answers: Record<string, number>) => setState((s) => ({ ...s, answers })),
+    [setState],
+  );
+  const setActivities = useCallback(
+    (activities: Activity[]) => setState((s) => ({ ...s, activities })),
+    [setState],
+  );
+  const addToList = useCallback(
+    (school: ListedSchool) =>
+      setState((s) =>
+        s.list.some((x) => x.id === school.id) ? s : { ...s, list: [...s.list, school] },
+      ),
+    [setState],
+  );
+  const removeFromList = useCallback(
+    (id: string) => setState((s) => ({ ...s, list: s.list.filter((x) => x.id !== id) })),
+    [setState],
+  );
+  const addToCompare = useCallback(
+    (school: ListedSchool) =>
+      setCompare((current) =>
+        current.length >= COMPARE_LIMIT || current.some((x) => x.id === school.id)
+          ? current
+          : [...current, school],
+      ),
+    [],
+  );
+  const removeFromCompare = useCallback(
+    (id: string) => setCompare((current) => current.filter((x) => x.id !== id)),
+    [],
+  );
+  const reset = useCallback(() => {
+    setState(() => EMPTY);
+    setCompare([]);
+  }, [setState]);
+
+  const value = useMemo<Store>(
+    () => ({
+      ...state,
+      setForm,
+      setAnswers,
+      setActivities,
+      addToList,
+      removeFromList,
+      isListed: (id: string) => state.list.some((x) => x.id === id),
+      compare,
+      addToCompare,
+      removeFromCompare,
+      reset,
+    }),
+    [state, compare, setForm, setAnswers, setActivities, addToList, removeFromList,
+     addToCompare, removeFromCompare, reset],
+  );
+
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+}
+
+export function useProfileStore(): Store {
+  const store = useContext(Ctx);
+  if (!store) throw new Error("useProfileStore must be used inside ProfileProvider");
+  return store;
+}

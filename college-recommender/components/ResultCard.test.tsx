@@ -16,6 +16,9 @@ function result(overrides: Partial<Result["university"]> = {}, tier: Result["adm
     university: {
       country: "USA",
       location: "Cambridge, MA",
+      region: "Northeast",
+      setting: "urban",
+      type: "Private",
       avg_gpa: 3.95,
       avg_sat: 1550,
       acceptance_rate: 0.05,

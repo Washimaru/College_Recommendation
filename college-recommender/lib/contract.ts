@@ -61,6 +61,16 @@ export const NEUTRAL_PERSONALITY: Personality = { intensity: 0.5, scale: 0.5 };
 
 export type Scope = "usa" | "international" | "both";
 
+export type Region = "Northeast" | "South" | "West" | "Midwest" | "International";
+export type Setting = "urban" | "suburban" | "rural";
+export type InstitutionType = "Public" | "Private";
+
+export interface Population {
+  international_share?: number | null;
+  women_share?: number | null;
+  first_gen_share?: number | null;
+}
+
 export interface Profile {
   gpa: number;
   sat?: number | null;
@@ -72,13 +82,18 @@ export interface Profile {
     scope?: Scope;
     max_tuition?: number | null;
     preferred_size?: "small" | "medium" | "large" | null;
-    locations?: string[];
+    regions?: Region[];
+    settings?: Setting[];
+    institution_type?: InstitutionType | null;
   };
 }
 
 export interface UniversitySummary {
   country: string;
   location: string;
+  region: Region;
+  setting: Setting;
+  type: InstitutionType;
   avg_gpa: number;
   avg_sat?: number | null;
   acceptance_rate?: number | null;
@@ -87,6 +102,9 @@ export interface UniversitySummary {
   size: "small" | "medium" | "large";
   majors: string[];
   culture: Record<CultureAxis, number>;
+  population?: Population | null;
+  url?: string | null;
+  net_price_calculator_url?: string | null;
   /** Curated per-school profile; null when none exists. Sections are heterogeneous. */
   details?: SchoolDetails | null;
   provenance: Partial<Record<string, Provenance>>;

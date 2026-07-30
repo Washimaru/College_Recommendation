@@ -8,6 +8,7 @@ const CULTURE = { collab: 0.5, quirky: 0.5, idealist: 0.5, research: 0.5, spirit
 function uni(over: Partial<University>): University {
   return {
     id: "x", name: "X University", country: "USA", location: "Boston, MA",
+    region: "Northeast", setting: "urban", type: "Private",
     avg_gpa: 3.5, size: "medium", majors: ["Biology"], culture: CULTURE, provenance: {},
     ...over,
   } as University;
