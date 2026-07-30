@@ -1,10 +1,18 @@
 import { cleanup, render, screen } from "@testing-library/react";
+import type { ReactElement } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import type { Result } from "@/lib/contract";
+import { ProfileProvider } from "@/lib/profileStore";
 import { ResultCard } from "./ResultCard";
 
 afterEach(cleanup);
+
+/** ResultCard now reads useProfileStore (list/compare controls), so every
+ *  render needs a ProfileProvider ancestor — otherwise the hook throws. */
+function renderCard(ui: ReactElement) {
+  return render(<ProfileProvider>{ui}</ProfileProvider>);
+}
 
 function result(overrides: Partial<Result["university"]> = {}, tier: Result["admit_tier"] = "target"): Result {
   return {
@@ -35,7 +43,7 @@ function result(overrides: Partial<Result["university"]> = {}, tier: Result["adm
 
 describe("ResultCard", () => {
   it("renders observed stats as plain values", () => {
-    render(<ResultCard result={result()} rank={1} onOpen={() => {}} />);
+    renderCard(<ResultCard result={result()} rank={1} onOpen={() => {}} />);
 
     expect(screen.getByText("1550")).toBeTruthy();
     expect(screen.getByText("5%")).toBeTruthy();
@@ -43,14 +51,14 @@ describe("ResultCard", () => {
   });
 
   it("does not round the GPA to a whole number", () => {
-    render(<ResultCard result={result()} rank={1} onOpen={() => {}} />);
+    renderCard(<ResultCard result={result()} rank={1} onOpen={() => {}} />);
 
     expect(screen.getByText("3.95")).toBeTruthy();
     expect(screen.queryByText("4")).toBeNull();
   });
 
   it("renders a not_applicable stat as n/a, never as zero", () => {
-    render(
+    renderCard(
       <ResultCard
         result={result({ avg_sat: null, provenance: { avg_sat: "not_applicable" } })}
         rank={1}
@@ -63,7 +71,7 @@ describe("ResultCard", () => {
   });
 
   it("renders an absent stat distinctly from a not_applicable one", () => {
-    render(
+    renderCard(
       <ResultCard
         result={result({ acceptance_rate: null, provenance: { acceptance_rate: "absent" } })}
         rank={1}
@@ -76,7 +84,7 @@ describe("ResultCard", () => {
   });
 
   it("marks an editorial figure as an estimate", () => {
-    render(
+    renderCard(
       <ResultCard
         result={result({ net_price: 30000, provenance: { net_price: "editorial" } })}
         rank={1}
@@ -88,7 +96,7 @@ describe("ResultCard", () => {
   });
 
   it("renders a genuine zero as a value, not a gap", () => {
-    render(
+    renderCard(
       <ResultCard
         result={result({ net_price: 0, provenance: { net_price: "observed" } })}
         rank={1}
@@ -100,24 +108,24 @@ describe("ResultCard", () => {
   });
 
   it("shows the admit tier badge", () => {
-    render(<ResultCard result={result({}, "reach")} rank={1} onOpen={() => {}} />);
+    renderCard(<ResultCard result={result({}, "reach")} rank={1} onOpen={() => {}} />);
 
     expect(screen.getByText("Reach")).toBeTruthy();
   });
 
   it("omits the badge when there is no tier", () => {
-    render(<ResultCard result={result({}, null)} rank={1} onOpen={() => {}} />);
+    renderCard(<ResultCard result={result({}, null)} rank={1} onOpen={() => {}} />);
 
     for (const label of ["Reach", "Target", "Safety"]) {
       expect(screen.queryByText(label)).toBeNull();
     }
   });
 
-  it("opens the profile when the card is clicked", async () => {
+  it("opens the profile when the 'View full profile' control is clicked", async () => {
     const opened: string[] = [];
-    render(<ResultCard result={result()} rank={1} onOpen={(r) => opened.push(r.name)} />);
+    renderCard(<ResultCard result={result()} rank={1} onOpen={(r) => opened.push(r.name)} />);
 
-    (await screen.findByRole("button")).click();
+    (await screen.findByRole("button", { name: /view full profile/i })).click();
 
     expect(opened).toEqual(["Test University"]);
   });

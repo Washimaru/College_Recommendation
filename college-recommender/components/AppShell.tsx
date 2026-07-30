@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 
+import { CompareTray } from "@/components/CompareTray";
 import { useProfileStore } from "@/lib/profileStore";
 
 const ROUTES: [string, string][] = [
@@ -86,6 +87,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </div>
 
       {children}
+      <CompareTray />
 
       <footer>
         UniMatch · figures are approximate and for exploration only — always verify on official

@@ -1,5 +1,6 @@
 import { formatStat, tierLabel, type StatKind } from "@/lib/format";
 import type { Provenance, Result } from "@/lib/contract";
+import { COMPARE_LIMIT, useProfileStore } from "@/lib/profileStore";
 
 function Stat({
   label,
@@ -24,8 +25,12 @@ function Stat({
   );
 }
 
-/** A whole card is the click target, so opening a profile needs no hunting
- *  for a small "details" link. */
+/**
+ * A card with several interactive controls (view profile, add to list, add
+ * to compare) can't itself be a <button> — a <button> inside a <button> is
+ * invalid HTML and breaks keyboard/screen-reader behaviour. The click target
+ * for opening a profile is the dedicated "View full profile" control below.
+ */
 export function ResultCard({
   result,
   rank,
@@ -39,8 +44,20 @@ export function ResultCard({
   const tier = tierLabel(result.admit_tier);
   const fit = Math.round(result.score * 100);
 
+  const { addToList, isListed, addToCompare, compare } = useProfileStore();
+  const listed = isListed(result.university_id);
+  const compareFull = compare.length >= COMPARE_LIMIT;
+  const inCompare = compare.some((s) => s.id === result.university_id);
+  const asListed = {
+    id: result.university_id,
+    name: result.name,
+    fit: result.score,
+    tier: result.admit_tier ?? null,
+    university: result.university,
+  };
+
   return (
-    <button type="button" className="card" onClick={() => onOpen(result)}>
+    <div className="card" role="group" aria-label={result.name}>
       <div className="card-head">
         <div style={{ minWidth: 0 }}>
           <h3>
@@ -83,9 +100,28 @@ export function ResultCard({
         />
       </dl>
 
-      <div style={{ marginTop: 12, fontSize: 12.5, color: "var(--accent)", fontWeight: 650 }}>
-        View full profile →
+      <div style={{ display: "flex", gap: 8, marginTop: 14, flexWrap: "wrap" }}>
+        <button type="button" className="chip" onClick={() => onOpen(result)}>
+          View full profile →
+        </button>
+        <button
+          type="button"
+          className={`chip ${listed ? "on" : ""}`}
+          disabled={listed}
+          onClick={() => addToList(asListed)}
+        >
+          {listed ? "On your list" : "Add to my list"}
+        </button>
+        <button
+          type="button"
+          className={`chip ${inCompare ? "on" : ""}`}
+          disabled={inCompare || compareFull}
+          title={compareFull && !inCompare ? "Compare is full — remove one to add another" : undefined}
+          onClick={() => addToCompare(asListed)}
+        >
+          {inCompare ? "Comparing" : compareFull ? "Compare full" : "Compare"}
+        </button>
       </div>
-    </button>
+    </div>
   );
 }
