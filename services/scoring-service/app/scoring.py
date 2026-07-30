@@ -66,6 +66,18 @@ _ACTIVITY_SUBJECTS: list[tuple[str, tuple[str, ...]]] = [
 ]
 
 
+def _activity_text(name: str, kind: str, description: str | None) -> str:
+    """The text both the classifier and the scorer match against.
+
+    Shared deliberately. Keeping one pattern table is not enough to keep the
+    promise that what a student is shown is what the scorer does — the two must
+    also read the same input. They once did not: `description` fed
+    classification only, so a student could write an explanation, watch four
+    subjects light up, and see their ranking not move at all.
+    """
+    return " ".join(filter(None, (name, kind, description))).lower()
+
+
 def classify_activity(name: str, kind: str = "other", description: str | None = None) -> list[str]:
     """Subject families an activity matches.
 
@@ -73,7 +85,7 @@ def classify_activity(name: str, kind: str = "other", description: str | None = 
     table `activity_fit` reads. `activity_fit` keeps its own loop because it also
     needs the school-pairing check; this returns the subjects alone.
     """
-    text = " ".join(filter(None, (name, kind, description))).lower()
+    text = _activity_text(name, kind, description)
     for pattern, subjects in _ACTIVITY_SUBJECTS:
         if re.search(pattern, text):
             return list(subjects)
@@ -190,7 +202,7 @@ def activity_fit(activities: list, uni: University) -> float:
     school_subjects = {major.lower() for major in uni.majors}
     hits = 0
     for activity in activities:
-        text = f"{activity.name} {activity.kind}".lower()
+        text = _activity_text(activity.name, activity.kind, activity.description)
         for pattern, subjects in _ACTIVITY_SUBJECTS:
             if re.search(pattern, text) and any(
                 subject.lower() in school_subjects for subject in subjects

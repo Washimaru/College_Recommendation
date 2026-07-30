@@ -5,7 +5,8 @@ from __future__ import annotations
 from fastapi.testclient import TestClient
 
 from app.main import app
-from app.scoring import classify_activity
+from app.schemas import Activity, Culture, University
+from app.scoring import activity_fit, classify_activity
 
 client = TestClient(app)
 
@@ -85,3 +86,60 @@ class TestClassifyEndpoint:
 
     def test_rejects_an_unknown_kind(self):
         assert _post(name="x", kind="not-a-kind").status_code == 422
+
+
+class TestScorerReadsTheSameText:
+    """The product's promise: what the student is shown is what the scorer does.
+
+    Keeping one pattern table is not enough — `classify_activity` and
+    `activity_fit` must also read the same TEXT. They did not: the description
+    fed classification only, so a student could write an explanation, watch four
+    subjects light up, and have their ranking not move at all.
+    """
+
+    def _uni(self) -> University:
+        return University(
+            id="u1", name="U", country="USA", location="CA",
+            region="West", setting="urban", type="Private",
+            avg_gpa=3.7, size="medium",
+            majors=["Computer Science", "Engineering"],
+            culture=Culture(collab=0.5, quirky=0.5, idealist=0.5,
+                            research=0.5, spirit=0.5, seminar=0.5),
+        )
+
+    def test_a_description_that_classifies_also_scores(self):
+        description = "I wrote the code for our robot's autonomous vision system"
+        assert classify_activity("Science Bowl", "competition", description)
+
+        bare = Activity(name="Science Bowl", kind="competition")
+        told = Activity(name="Science Bowl", kind="competition", description=description)
+
+        assert activity_fit([told], self._uni()) > activity_fit([bare], self._uni())
+
+    def test_an_unrecognised_description_still_scores_nothing(self):
+        """The table is deliberately not widened; unrecognised stays unrecognised."""
+        vague = Activity(name="Science Bowl", kind="competition", description="it was fun")
+
+        assert activity_fit([vague], self._uni()) == 0.5
+
+    def test_the_two_paths_agree_on_every_case(self):
+        """The real equivalence property, over cases where the NAME alone fails.
+
+        The previous version of this guard only used "FIRST Robotics", where the
+        name matches and both paths agree trivially — it asserted the property
+        exactly where it could not fail.
+        """
+        uni = self._uni()
+        cases = [
+            ("Science Bowl", "competition", "I wrote the code for our robot"),
+            ("Science Bowl", "competition", "we studied physics and chemistry"),
+            ("Quiz Team", "club", "it was fun"),
+            ("FIRST Robotics", "competition", None),
+        ]
+        for name, kind, description in cases:
+            subjects = classify_activity(name, kind, description)
+            relevant = any(s.lower() in {m.lower() for m in uni.majors} for s in subjects)
+            scored = activity_fit(
+                [Activity(name=name, kind=kind, description=description)], uni
+            )
+            assert (scored > 0.5) is relevant, (name, description, subjects, scored)
