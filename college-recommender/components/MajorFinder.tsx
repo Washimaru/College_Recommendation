@@ -15,9 +15,11 @@ const CENTRED: WorkAxes = { people: 0.5, applied: 0.5, creative: 0.5 };
  */
 export function MajorFinder({
   catalog,
+  error,
   onOpen,
 }: {
   catalog: University[] | null;
+  error: string | null;
   onOpen: (uni: University) => void;
 }) {
   const [courses, setCourses] = useState<Set<string>>(new Set());
@@ -54,6 +56,8 @@ export function MajorFinder({
         Not sure what to study? Tell us what you enjoyed and how you like to work — we&rsquo;ll
         suggest fields, show where each tends to lead, and point you at schools strong in it.
       </p>
+
+      {error && <p className="notice error">{error}</p>}
 
       <div className="panel">
         <label className="fld">
@@ -164,24 +168,35 @@ export function MajorFinder({
                   {major.out.note}
                 </p>
 
-                {schools.length > 0 && (
-                  <>
-                    <p className="fld" style={{ marginTop: 16, marginBottom: 6 }}>
-                      Schools strong in this
-                    </p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                      {schools.map((uni) => (
-                        <button
-                          key={uni.id}
-                          type="button"
-                          className="chip"
-                          onClick={() => onOpen(uni)}
-                        >
-                          {uni.name}
-                        </button>
-                      ))}
-                    </div>
-                  </>
+                {error ? (
+                  <p className="muted" style={{ fontSize: 12.5, marginTop: 16 }}>
+                    Schools for this major aren&rsquo;t shown right now — the catalog service is
+                    unreachable, not empty.
+                  </p>
+                ) : !catalog ? (
+                  <p className="muted" style={{ fontSize: 12.5, marginTop: 16 }}>
+                    Loading schools&hellip;
+                  </p>
+                ) : (
+                  schools.length > 0 && (
+                    <>
+                      <p className="fld" style={{ marginTop: 16, marginBottom: 6 }}>
+                        Schools strong in this
+                      </p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                        {schools.map((uni) => (
+                          <button
+                            key={uni.id}
+                            type="button"
+                            className="chip"
+                            onClick={() => onOpen(uni)}
+                          >
+                            {uni.name}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )
                 )}
               </div>
             );
