@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import type { University } from "@/lib/contract";
 import { formatStat } from "@/lib/format";
+import { COMPARE_LIMIT, useProfileStore } from "@/lib/profileStore";
 import { countriesOf, searchUniversities } from "@/lib/search";
 
 const PAGE = 24;
@@ -26,6 +27,8 @@ export function BrowseSection({
   const [country, setCountry] = useState("");
   const [size, setSize] = useState("");
   const [shown, setShown] = useState(PAGE);
+
+  const { addToList, isListed, addToCompare, compare } = useProfileStore();
 
   // Changing a filter resets paging. Done here rather than in an effect, which
   // would trigger a cascading render.
@@ -119,13 +122,12 @@ export function BrowseSection({
                   uni.provenance.acceptance_rate,
                   "percent",
                 );
+                const listed = isListed(uni.id);
+                const compareFull = compare.length >= COMPARE_LIMIT;
+                const inCompare = compare.some((s) => s.id === uni.id);
+                const asListed = { id: uni.id, name: uni.name, fit: null, tier: null, university: uni };
                 return (
-                  <button
-                    key={uni.id}
-                    type="button"
-                    className="card"
-                    onClick={() => onOpen(uni)}
-                  >
+                  <div key={uni.id} className="card" role="group" aria-label={uni.name}>
                     <div className="card-head">
                       <div>
                         <h3>{uni.name}</h3>
@@ -137,7 +139,34 @@ export function BrowseSection({
                         {price.text} · {rate.text} admit
                       </span>
                     </div>
-                  </button>
+
+                    <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
+                      <button type="button" className="chip" onClick={() => onOpen(uni)}>
+                        Full profile
+                      </button>
+                      <button
+                        type="button"
+                        className={`chip ${listed ? "on" : ""}`}
+                        disabled={listed}
+                        onClick={() => addToList(asListed)}
+                      >
+                        {listed ? "On your list" : "Add to my list"}
+                      </button>
+                      <button
+                        type="button"
+                        className={`chip ${inCompare ? "on" : ""}`}
+                        disabled={inCompare || compareFull}
+                        title={
+                          compareFull && !inCompare
+                            ? "Compare is full — remove one to add another"
+                            : undefined
+                        }
+                        onClick={() => addToCompare(asListed)}
+                      >
+                        {inCompare ? "Comparing" : compareFull ? "Compare full" : "Compare"}
+                      </button>
+                    </div>
+                  </div>
                 );
               })}
             </div>
