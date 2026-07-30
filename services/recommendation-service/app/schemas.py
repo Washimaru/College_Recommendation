@@ -10,12 +10,26 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "3.1.0"
+CONTRACT_VERSION = "4.0.0"
 
 Size = Literal["small", "medium", "large"]
 Scope = Literal["usa", "international", "both"]
 StopReason = Literal["R1_converged", "R2_confident", "R3_no_change", "R4_iteration_cap"]
 Provenance = Literal["observed", "web_verified", "editorial", "not_applicable", "absent"]
+
+Region = Literal["Northeast", "South", "West", "Midwest", "International"]
+Setting = Literal["urban", "suburban", "rural"]
+InstitutionType = Literal["Public", "Private"]
+
+
+class Population(BaseModel):
+    """Student-body composition. Absent for non-US schools."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    international_share: float | None = Field(default=None, ge=0, le=1)
+    women_share: float | None = Field(default=None, ge=0, le=1)
+    first_gen_share: float | None = Field(default=None, ge=0, le=1)
 
 # Six bipolar culture axes. 0.0/1.0 are opposite poles; 0.5 means indifferent.
 CULTURE_AXES = ("collab", "quirky", "idealist", "research", "spirit", "seminar")
@@ -98,6 +112,9 @@ class University(BaseModel):
     name: str = Field(min_length=1)
     country: str = Field(min_length=1)
     location: str
+    region: Region
+    setting: Setting
+    type: InstitutionType
     avg_gpa: float = Field(ge=0, le=4.0)
     avg_sat: int | None = Field(default=None, ge=400, le=1600)
     acceptance_rate: float | None = Field(default=None, ge=0, le=1)
@@ -107,6 +124,9 @@ class University(BaseModel):
     size: Size
     majors: list[str] = Field(default_factory=list)
     culture: Culture
+    population: Population | None = None
+    url: str | None = None
+    net_price_calculator_url: str | None = None
     details: dict | None = None
     provenance: dict[str, Provenance] = Field(default_factory=dict)
 
@@ -132,6 +152,9 @@ class UniversitySummary(BaseModel):
     model_config = ConfigDict(extra="forbid")
     country: str
     location: str
+    region: Region
+    setting: Setting
+    type: InstitutionType
     avg_gpa: float = Field(ge=0, le=4.0)
     avg_sat: int | None = None
     acceptance_rate: float | None = None
@@ -140,6 +163,9 @@ class UniversitySummary(BaseModel):
     size: Size
     majors: list[str] = Field(default_factory=list)
     culture: Culture
+    population: Population | None = None
+    url: str | None = None
+    net_price_calculator_url: str | None = None
     details: dict | None = None
     provenance: dict[str, Provenance] = Field(default_factory=dict)
 

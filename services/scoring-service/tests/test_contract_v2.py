@@ -12,9 +12,10 @@ from pydantic import ValidationError
 from app.schemas import CONTRACT_VERSION, CulturePrefs, Profile, University
 
 
-def test_contract_version_is_3():
-    """v3.0.0 added activities and personality; v3.1.0 added country scope."""
-    assert CONTRACT_VERSION == "3.1.0"
+def test_contract_version_is_4():
+    """v3.0.0 added activities and personality; v3.1.0 added country scope;
+    v4.0.0 adds place and population fields and removes preferences.locations."""
+    assert CONTRACT_VERSION == "4.0.0"
 
 
 def test_profile_needs_no_mbti():
@@ -47,6 +48,7 @@ def test_university_allows_null_admissions_fields():
     """Honest nulls: a school with no observed SAT is null, never derived."""
     uni = University(
         id="oxford", name="University of Oxford", country="UK", location="Oxford",
+        region="International", setting="urban", type="Public",
         avg_gpa=3.9, avg_sat=None, acceptance_rate=None, net_price=None,
         size="medium", majors=["PPE"],
         culture={"collab": 0.5, "quirky": 0.8, "idealist": 0.6,
@@ -64,3 +66,33 @@ def test_university_requires_culture():
             id="x", name="No Culture U", country="USA", location="CA",
             avg_gpa=3.5, size="small", majors=[],
         )
+
+
+def test_university_carries_place_and_population():
+    uni = University(
+        id="mit", name="MIT", country="USA", location="Cambridge, MA",
+        region="Northeast", setting="urban", type="Private",
+        avg_gpa=3.95, size="small", majors=["Engineering"],
+        culture={"collab": 0.7, "quirky": 0.85, "idealist": 0.55,
+                 "research": 0.75, "spirit": 0.35, "seminar": 0.55},
+        population={"international_share": 0.117, "women_share": 0.482,
+                    "first_gen_share": 0.259},
+        url="web.mit.edu/",
+    )
+
+    assert uni.region == "Northeast"
+    assert uni.setting == "urban"
+    assert uni.population.international_share == 0.117
+    assert uni.net_price_calculator_url is None
+
+
+def test_population_may_be_absent():
+    uni = University(
+        id="ox", name="Oxford", country="UK", location="Oxford",
+        region="International", setting="urban", type="Public",
+        avg_gpa=3.9, size="medium", majors=["PPE"],
+        culture={"collab": 0.5, "quirky": 0.8, "idealist": 0.6,
+                 "research": 0.9, "spirit": 0.4, "seminar": 0.9},
+    )
+
+    assert uni.population is None

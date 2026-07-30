@@ -10,12 +10,26 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "3.1.0"
+CONTRACT_VERSION = "4.0.0"
 
 Size = Literal["small", "medium", "large"]
 # Country scope. A hard filter on which schools are considered at all.
 Scope = Literal["usa", "international", "both"]
 Provenance = Literal["observed", "web_verified", "editorial", "not_applicable", "absent"]
+
+Region = Literal["Northeast", "South", "West", "Midwest", "International"]
+Setting = Literal["urban", "suburban", "rural"]
+InstitutionType = Literal["Public", "Private"]
+
+
+class Population(BaseModel):
+    """Student-body composition. Absent for non-US schools."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    international_share: float | None = Field(default=None, ge=0, le=1)
+    women_share: float | None = Field(default=None, ge=0, le=1)
+    first_gen_share: float | None = Field(default=None, ge=0, le=1)
 
 # The six bipolar culture axes, shared by Profile.culture_prefs and
 # University.culture. 0.0 and 1.0 are opposite poles; 0.5 means indifferent.
@@ -121,6 +135,9 @@ class University(BaseModel):
     name: str = Field(min_length=1)
     country: str = Field(min_length=1)
     location: str
+    region: Region
+    setting: Setting
+    type: InstitutionType
     avg_gpa: float = Field(ge=0, le=4.0)
     avg_sat: int | None = Field(default=None, ge=400, le=1600)
     acceptance_rate: float | None = Field(default=None, ge=0, le=1)
@@ -130,6 +147,9 @@ class University(BaseModel):
     size: Size
     majors: list[str] = Field(default_factory=list)
     culture: Culture
+    population: Population | None = None
+    url: str | None = None
+    net_price_calculator_url: str | None = None
     details: dict | None = None
     provenance: dict[str, Provenance] = Field(default_factory=dict)
 

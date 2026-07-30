@@ -15,6 +15,7 @@ NEUTRAL = Culture(collab=0.5, quirky=0.5, idealist=0.5, research=0.5, spirit=0.5
 def _uni(**overrides) -> University:
     base = dict(
         id="u1", name="Test U", country="USA", location="CA",
+        region="West", setting="urban", type="Private",
         avg_gpa=3.7, size="medium", majors=["Computer Science"], culture=NEUTRAL,
     )
     return University(**{**base, **overrides})

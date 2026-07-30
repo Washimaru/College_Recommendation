@@ -106,6 +106,9 @@ def _summarize(uni: University) -> UniversitySummary:
     return UniversitySummary(
         country=uni.country,
         location=uni.location,
+        region=uni.region,
+        setting=uni.setting,
+        type=uni.type,
         avg_gpa=uni.avg_gpa,
         avg_sat=uni.avg_sat,
         acceptance_rate=uni.acceptance_rate,
@@ -114,6 +117,9 @@ def _summarize(uni: University) -> UniversitySummary:
         size=uni.size,
         majors=uni.majors,
         culture=uni.culture,
+        population=uni.population,
+        url=uni.url,
+        net_price_calculator_url=uni.net_price_calculator_url,
         details=uni.details,
         provenance=uni.provenance,
     )

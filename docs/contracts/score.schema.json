@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/score.schema.json",
   "title": "RankRequest",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["profile", "universities"],
@@ -24,13 +24,28 @@
     "University": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "name", "country", "avg_gpa", "size", "location", "majors", "culture"],
+      "required": ["id", "name", "country", "avg_gpa", "size", "location", "majors", "culture", "region", "setting", "type"],
       "properties": {
         "id": { "type": "string", "minLength": 1, "description": "Slug of the name; uniform across US and non-US schools." },
         "unitid": { "type": ["string", "null"], "description": "Federal IPEDS UNITID where matched. US only." },
         "name": { "type": "string", "minLength": 1 },
         "country": { "type": "string", "minLength": 1, "description": "Gates whether US federal enrichment can apply." },
         "location": { "type": "string" },
+        "region": { "type": "string", "enum": ["Northeast", "South", "West", "Midwest", "International"] },
+        "setting": { "type": "string", "enum": ["urban", "suburban", "rural"] },
+        "type": { "type": "string", "enum": ["Public", "Private"] },
+        "population": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "description": "Student-body composition. Null for non-US schools; provenance.population reads not_applicable.",
+          "properties": {
+            "international_share": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+            "women_share": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+            "first_gen_share": { "type": ["number", "null"], "minimum": 0, "maximum": 1 }
+          }
+        },
+        "url": { "type": ["string", "null"], "description": "The institution's own site." },
+        "net_price_calculator_url": { "type": ["string", "null"], "description": "Where a student finds what they specifically would pay." },
         "avg_gpa": { "type": "number", "minimum": 0, "maximum": 4.0 },
         "avg_sat": { "type": ["integer", "null"], "minimum": 400, "maximum": 1600, "description": "Observed only. Never derived from GPA." },
         "acceptance_rate": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },

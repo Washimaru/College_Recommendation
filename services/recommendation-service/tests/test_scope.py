@@ -14,6 +14,7 @@ NEUTRAL = Culture(collab=0.5, quirky=0.5, idealist=0.5, research=0.5, spirit=0.5
 def _uni(country: str) -> University:
     return University(
         id=country.lower(), name=f"U {country}", country=country, location="x",
+        region="International", setting="urban", type="Public",
         avg_gpa=3.5, size="medium", majors=["CS"], culture=NEUTRAL,
     )
 

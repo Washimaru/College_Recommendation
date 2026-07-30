@@ -17,13 +17,15 @@ NEUTRAL = Culture(collab=0.5, quirky=0.5, idealist=0.5, research=0.5, spirit=0.5
 def _universities() -> dict[str, University]:
     return {
         "u1": University(
-            id="u1", name="Alpha", country="USA", location="CA", avg_gpa=3.95,
+            id="u1", name="Alpha", country="USA", location="CA",
+            region="West", setting="urban", type="Private", avg_gpa=3.95,
             avg_sat=1550, acceptance_rate=0.05, net_price=20000, enrollment=4600,
             size="small", majors=["Computer Science"], culture=NEUTRAL,
             provenance={"avg_sat": "observed", "acceptance_rate": "observed"},
         ),
         "u2": University(
-            id="u2", name="Beta", country="UK", location="Oxford", avg_gpa=3.4,
+            id="u2", name="Beta", country="UK", location="Oxford",
+            region="International", setting="urban", type="Public", avg_gpa=3.4,
             avg_sat=None, acceptance_rate=None, net_price=9000,
             size="medium", majors=["PPE"], culture=NEUTRAL,
             provenance={"avg_sat": "not_applicable", "acceptance_rate": "absent"},

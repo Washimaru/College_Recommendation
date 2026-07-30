@@ -8,7 +8,26 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "3.1.0";
+export const CONTRACT_VERSION = "4.0.0";
+
+export const RegionSchema = z.enum([
+  "Northeast",
+  "South",
+  "West",
+  "Midwest",
+  "International",
+]);
+export const SettingSchema = z.enum(["urban", "suburban", "rural"]);
+export const InstitutionTypeSchema = z.enum(["Public", "Private"]);
+
+/** Student-body composition. Absent for non-US schools. */
+export const PopulationSchema = z
+  .object({
+    international_share: z.number().min(0).max(1).nullable().optional(),
+    women_share: z.number().min(0).max(1).nullable().optional(),
+    first_gen_share: z.number().min(0).max(1).nullable().optional(),
+  })
+  .strict();
 
 /**
  * Six bipolar culture axes. 0.0 and 1.0 are opposite poles; 0.5 means the
@@ -120,6 +139,12 @@ export const UniversitySummarySchema = z
   .object({
     country: z.string(),
     location: z.string(),
+    region: RegionSchema,
+    setting: SettingSchema,
+    type: InstitutionTypeSchema,
+    population: PopulationSchema.nullable().optional(),
+    url: z.string().nullable().optional(),
+    net_price_calculator_url: z.string().nullable().optional(),
     avg_gpa: z.number().min(0).max(4.0),
     avg_sat: z.number().int().min(400).max(1600).nullable().optional(),
     acceptance_rate: z.number().min(0).max(1).nullable().optional(),
@@ -180,6 +205,12 @@ export const UniversitySchema = z
     name: z.string(),
     country: z.string(),
     location: z.string(),
+    region: RegionSchema,
+    setting: SettingSchema,
+    type: InstitutionTypeSchema,
+    population: PopulationSchema.nullable().optional(),
+    url: z.string().nullable().optional(),
+    net_price_calculator_url: z.string().nullable().optional(),
     avg_gpa: z.number().min(0).max(4.0),
     avg_sat: z.number().int().nullable().optional(),
     acceptance_rate: z.number().min(0).max(1).nullable().optional(),

@@ -17,6 +17,9 @@ const FIXTURE: RecommendationResponse = {
       university: {
         country: "USA",
         location: "CA",
+        region: "West",
+        setting: "urban",
+        type: "Private",
         avg_gpa: 3.8,
         avg_sat: 1450,
         acceptance_rate: 0.2,

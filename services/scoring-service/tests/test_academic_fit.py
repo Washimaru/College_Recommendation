@@ -16,6 +16,7 @@ NEUTRAL = Culture(collab=0.5, quirky=0.5, idealist=0.5, research=0.5, spirit=0.5
 def _uni(avg_gpa: float, avg_sat: int | None = None) -> University:
     return University(
         id=f"u{avg_gpa}", name="U", country="USA", location="CA",
+        region="West", setting="urban", type="Private",
         avg_gpa=avg_gpa, avg_sat=avg_sat, size="medium", majors=[], culture=NEUTRAL,
     )
 
