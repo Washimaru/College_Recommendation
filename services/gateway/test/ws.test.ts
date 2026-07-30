@@ -15,6 +15,9 @@ function fakeRecs(): RecsClient {
     async universities() {
       return { universities: [] };
     },
+    async classify() {
+      return { subjects: [] };
+    },
     async *stream(): AsyncGenerator<SseFrame> {
       yield { event: "iteration", data: '{"iteration":0}' };
       yield { event: "final", data: JSON.stringify(FINAL) };

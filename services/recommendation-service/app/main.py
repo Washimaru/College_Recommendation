@@ -2,16 +2,24 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 
-from fastapi import FastAPI
+import httpx
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 
 from . import db
 from .candidates import by_id, in_scope, load_universities
-from .clients import make_rank_fn
+from .clients import make_classify_fn, make_rank_fn
 from .llm import MockLLM
 from .loop import iter_loop, run_loop
-from .schemas import RecommendationRequest, RecommendationResponse, University
+from .schemas import (
+    ClassifyRequest,
+    ClassifyResponse,
+    RecommendationRequest,
+    RecommendationResponse,
+    University,
+)
 
 app = FastAPI(title="recommendation-service", version="1.0.0")
 
@@ -76,3 +84,21 @@ def recommend_stream(request: RecommendationRequest) -> StreamingResponse:
             db.persist(request.profile, final)
 
     return StreamingResponse(sse(), media_type="text/event-stream")
+
+
+def get_classify_fn() -> Callable[[str, str, str | None], list[str]]:
+    """Injection point: tests override this so no unit test opens a socket."""
+    return make_classify_fn()
+
+
+@app.post("/activities/classify", response_model=ClassifyResponse)
+def classify(
+    request: ClassifyRequest,
+    classify_fn: Callable[[str, str, str | None], list[str]] = Depends(get_classify_fn),
+) -> ClassifyResponse:
+    """Forward to scoring-service, which owns the pattern table."""
+    try:
+        subjects = classify_fn(request.name, request.kind, request.description)
+    except (httpx.HTTPError, KeyError) as exc:
+        raise HTTPException(status_code=502, detail="scoring_service_unavailable") from exc
+    return ClassifyResponse(subjects=subjects)

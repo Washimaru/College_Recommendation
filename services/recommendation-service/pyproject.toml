@@ -25,6 +25,11 @@ target-version = "py311"
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 
+# FastAPI's DI pattern requires `Depends(...)` as a parameter default; it is
+# evaluated once and is not mutable, so B008 is a false positive here.
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends"]
+
 [tool.pytest.ini_options]
 addopts = "--cov=app --cov-report=term-missing --cov-fail-under=80"
 testpaths = ["tests"]

@@ -66,6 +66,20 @@ _ACTIVITY_SUBJECTS: list[tuple[str, tuple[str, ...]]] = [
 ]
 
 
+def classify_activity(name: str, kind: str = "other", description: str | None = None) -> list[str]:
+    """Subject families an activity matches.
+
+    Exported so the UI can show a student what was recognised, reading the same
+    table `activity_fit` reads. `activity_fit` keeps its own loop because it also
+    needs the school-pairing check; this returns the subjects alone.
+    """
+    text = " ".join(filter(None, (name, kind, description))).lower()
+    for pattern, subjects in _ACTIVITY_SUBJECTS:
+        if re.search(pattern, text):
+            return list(subjects)
+    return []
+
+
 def _clamp01(x: float) -> float:
     return max(0.0, min(1.0, x))
 

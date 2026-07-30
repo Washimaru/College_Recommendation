@@ -199,3 +199,17 @@ class RecommendationResponse(BaseModel):
     confidence: float = Field(ge=0, le=1)
     stop_reason: StopReason
     trace: list[TraceStep]
+
+
+class ClassifyRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(min_length=1)
+    kind: ActivityKind = "other"
+    description: str | None = Field(default=None, max_length=500)
+
+
+class ClassifyResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    subjects: list[str]

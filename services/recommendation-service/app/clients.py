@@ -38,3 +38,29 @@ def make_rank_fn(
         return [ScoredUniversity(**s) for s in data["scores"]]
 
     return rank_fn
+
+
+def make_classify_fn(
+    client: httpx.Client | None = None,
+    url: str = SCORING_URL,
+) -> Callable[[str, str, str | None], list[str]]:
+    """Return classify(name, kind, description) calling scoring-service POST /classify.
+
+    scoring-service owns the pattern table; forwarding keeps one implementation
+    rather than a second copy that could silently diverge from the scorer.
+    """
+
+    def classify(name: str, kind: str, description: str | None) -> list[str]:
+        payload = {"name": name, "kind": kind, "description": description}
+        owns = client is None
+        c = client or httpx.Client(timeout=10.0)
+        try:
+            resp = c.post(f"{url}/classify", json=payload)
+            resp.raise_for_status()
+            data = resp.json()
+        finally:
+            if owns:
+                c.close()
+        return list(data["subjects"])
+
+    return classify

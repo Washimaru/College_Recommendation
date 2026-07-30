@@ -5,7 +5,7 @@
 import type { FastifyInstance } from "fastify";
 
 import type { RecsClient } from "./clients/recs.js";
-import { RecommendationRequestSchema } from "./types.js";
+import { ClassifyRequestSchema, RecommendationRequestSchema } from "./types.js";
 
 export function registerRoutes(app: FastifyInstance, recs: RecsClient): void {
   app.get("/healthz", async () => ({ status: "ok" }));
@@ -30,6 +30,19 @@ export function registerRoutes(app: FastifyInstance, recs: RecsClient): void {
     try {
       const result = await recs.recommend(parsed.data);
       return reply.status(200).send(result);
+    } catch (err) {
+      request.log.error(err);
+      return reply.status(502).send({ error: "upstream_error" });
+    }
+  });
+
+  app.post("/v1/activities/classify", async (request, reply) => {
+    const parsed = ClassifyRequestSchema.safeParse(request.body);
+    if (!parsed.success) {
+      return reply.status(400).send({ error: "invalid_request", details: parsed.error.flatten() });
+    }
+    try {
+      return reply.status(200).send(await recs.classify(parsed.data));
     } catch (err) {
       request.log.error(err);
       return reply.status(502).send({ error: "upstream_error" });

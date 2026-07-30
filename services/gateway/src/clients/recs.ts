@@ -4,6 +4,8 @@
  */
 import type {
   CatalogResponse,
+  ClassifyRequest,
+  ClassifyResponse,
   RecommendationRequest,
   RecommendationResponse,
 } from "../types.js";
@@ -17,6 +19,7 @@ export interface RecsClient {
   recommend(req: RecommendationRequest): Promise<RecommendationResponse>;
   stream(req: RecommendationRequest): AsyncGenerator<SseFrame>;
   universities(): Promise<CatalogResponse>;
+  classify(body: ClassifyRequest): Promise<ClassifyResponse>;
 }
 
 /**
@@ -93,6 +96,18 @@ export function createRecsClient(baseUrl: string): RecsClient {
         throw new Error(`recommendation-service stream returned ${res.status}`);
       }
       yield* streamFrames(res.body);
+    },
+
+    async classify(body: ClassifyRequest): Promise<ClassifyResponse> {
+      const res = await fetch(`${baseUrl}/activities/classify`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        throw new Error(`recommendation-service returned ${res.status}`);
+      }
+      return (await res.json()) as ClassifyResponse;
     },
   };
 }

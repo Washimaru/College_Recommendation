@@ -179,3 +179,17 @@ class RankResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     scores: list[ScoredUniversity]
+
+
+class ClassifyRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(min_length=1)
+    kind: ActivityKind = "other"
+    description: str | None = Field(default=None, max_length=500)
+
+
+class ClassifyResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    subjects: list[str]

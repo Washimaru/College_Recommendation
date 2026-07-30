@@ -232,8 +232,25 @@ export const CatalogResponseSchema = z
   .object({ universities: z.array(UniversitySchema) })
   .strict();
 
+/** What was recognised in one free-text activity, so the UI can show the
+ * student what the scorer will do with it before they submit. */
+export const ClassifyRequestSchema = z
+  .object({
+    name: z.string().min(1),
+    kind: z
+      .enum(["competition", "club", "volunteering", "work", "sport", "arts", "research", "other"])
+      .default("other"),
+    description: z.string().max(500).nullable().optional(),
+  })
+  .strict();
+
+export const ClassifyResponseSchema = z.object({ subjects: z.array(z.string()) }).strict();
+
 export type University = z.infer<typeof UniversitySchema>;
 export type CatalogResponse = z.infer<typeof CatalogResponseSchema>;
+
+export type ClassifyRequest = z.infer<typeof ClassifyRequestSchema>;
+export type ClassifyResponse = z.infer<typeof ClassifyResponseSchema>;
 
 export type Profile = z.infer<typeof ProfileSchema>;
 export type RecommendationRequest = z.infer<typeof RecommendationRequestSchema>;
