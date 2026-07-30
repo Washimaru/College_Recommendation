@@ -15,17 +15,22 @@ for a human on any of H1–H4. Never declare success without T1–T4.
 
 ## Current state
 
-T1–T4 all hold as of 2026-07-27: `verify.sh` prints `VERIFY: GREEN`, coverage is
-above both floors, and `smoke.sh` returns a real recommendation
-(`SMOKE OK: R1_converged 5 results`) with 100 universities in Postgres and a row
-written to `recommendations`. P9 (UI integration) remains `TODO`. Venvs exist;
-lint is clean in all four projects.
+T1–T4 all hold as of 2026-07-30: `verify.sh` prints `VERIFY: GREEN`, coverage is
+above every floor, and `smoke.sh` returns a real recommendation
+(`SMOKE OK: R1_converged 5 results`) with **358 real universities** in Postgres
+and a row written to `recommendations`. **P9 (UI integration) is done** — see
+`docs/INTEGRATION.md`. Venvs exist; lint is clean in all four projects.
 
-Getting there required fixing four defects in paths that had never been executed
-(packaging, both Dockerfiles, smoke seeding, and the gateway build output path) —
-see the `STATUS.md` changelog. **Treat any part of this scaffold you haven't run
-as unproven**, regardless of what the ledger says: the unit suites pass with the
-integration stubbed out, so green tests never exercised the Docker or DB paths.
+The catalog is real, not synthetic: 358 institutions across 26 countries, with
+admissions, cost and outcome figures from the U.S. Dept. of Education College
+Scorecard where they exist, and `null` everywhere they do not.
+
+Two shipped features and the contract version arrived together in
+`feat/real-university-catalog` (contract **v4.0.0**): place and student-body
+fields on `University`, and the four-route frontend. **Treat any part of this
+scaffold you haven't run as unproven** — the unit suites pass with the
+integration stubbed out, so green tests alone never exercise the Docker or DB
+paths.
 
 ### Provenance (explains oddities you'll notice)
 
@@ -35,10 +40,13 @@ the working copy was found missing on disk. Consequences:
 - The docs and code were generated to satisfy the documentation, so they agree
   with each other closely — but that agreement is not independent evidence of
   correctness. Verify against tests, not against prose.
-- `college-recommender/` (the old Next.js UI) is a **husk**: only `.DS_Store`,
-  `node_modules/`, and a gutted `.git` holding just `logs/`. Its source is gone
-  and is not recoverable from that repo. `docs/INTEGRATION.md` and P9 describe
-  wiring a frontend that no longer exists here.
+- `college-recommender/` **was** a husk (only `node_modules/` and a gutted
+  `.git`) and has since been rebuilt from scratch: Next.js 16 / React 19 /
+  Tailwind 4, four routes (`/`, `/browse`, `/majors`, `/list`), three API
+  proxies, and its own vitest suite. It has **no nested `.git`**. It reads
+  `college-recommender/AGENTS.md`, which warns that this Next.js version has
+  breaking changes — check `node_modules/next/dist/docs/` rather than trusting
+  recalled App Router conventions.
 - The repo root **is** a git repo now (`git init` was run on 2026-07-27, after the
   reconstruction), so edits are recoverable — but history starts at that point.
   Work happens on `feat/real-university-catalog`. Note `data-pipeline/out/` and
@@ -142,6 +150,22 @@ have none.
 - One schema owner. `db/schema.sql` is mounted into `docker-entrypoint-initdb.d`
   and **applies only on first init of an empty volume** — there is no Alembic.
   To re-apply after editing it: `docker compose down -v && docker compose up -d db`.
+- **What the UI shows a student must be what the scorer does.** The activity
+  pattern table `_ACTIVITY_SUBJECTS` exists in exactly one place
+  (`scoring-service/app/scoring.py`); recommendation-service forwards to it over
+  HTTP rather than keeping a copy. One table is not sufficient on its own —
+  `classify_activity` and `activity_fit` must also read the *same text*, which is
+  why both go through `_activity_text()`. They once did not, and a student could
+  write an explanation, watch four subjects light up, and see their ranking not
+  move at all. `tests/test_classify.py::TestScorerReadsTheSameText` guards this;
+  note its cases deliberately use names that match nothing, because the property
+  cannot fail on a name that already matches.
+- `University.location` is display-only — never a filter, never a scoring input.
+- **Region and setting are soft; institution type is hard.** `regions` and
+  `settings` fold into `fit` (0.25 each) and only nudge ranking, so schools
+  outside a stated region legitimately still appear. Only 28 of 358 schools are
+  rural; a mild preference must not silently discard 92% of the catalog.
+  `institution_type` and `scope` are the only preference filters.
 
 ## The runtime loop — its stop reasons are not what their names suggest
 
@@ -168,15 +192,25 @@ these runtime conditions live solely in code.
 ## Contracts are law
 
 `docs/contracts/{profile,score,recommendation}.schema.json` (all `version`
-`1.0.0`, draft-07, `additionalProperties: false`) are the source of truth. Three
-mirrors must move with them, in the same change:
+**`4.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
+**Four** mirrors must move with them, in the same change:
 
 - `services/scoring-service/app/schemas.py`
 - `services/recommendation-service/app/schemas.py`
 - `services/gateway/src/types.ts`
+- `college-recommender/lib/contract.ts` — easy to forget; it is the one outside
+  `services/`
 
-Changing a shape without a version bump and all three mirrors is contract drift
+Changing a shape without a version bump and all four mirrors is contract drift
 (H3) — stop and surface it.
+
+What v4.0.0 changed, since it is the most recent and the most load-bearing:
+`University` gained `region`, `setting`, `type`, `population`, `url` and
+`net_price_calculator_url`; `Preferences` swapped `locations` for `regions`,
+`settings` and `institution_type`; `Activity` gained `description`.
+`preferences.locations` was **removed**, not deprecated — it compared a typed
+string against `University.location` (`"Cambridge, MA"`) and could never fire.
+`location` itself stays, for display only.
 
 ## Config
 
