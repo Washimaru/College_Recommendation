@@ -3,19 +3,20 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
+import { GraduationCap, Moon, Sun, UserRound, Search, Compass, ListChecks } from "lucide-react";
 
 import { CompareTray } from "@/components/CompareTray";
 import { useProfileStore } from "@/lib/profileStore";
 
-const ROUTES: [string, string][] = [
-  ["/", "Your profile"],
-  ["/browse", "Browse schools"],
-  ["/majors", "Major Finder"],
-  ["/list", "My college list"],
+const ROUTES: [string, string, ReactNode][] = [
+  ["/", "Your profile", <UserRound key="i" size={16} aria-hidden />],
+  ["/browse", "Browse schools", <Search key="i" size={16} aria-hidden />],
+  ["/majors", "Major Finder", <Compass key="i" size={16} aria-hidden />],
+  ["/list", "My college list", <ListChecks key="i" size={16} aria-hidden />],
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const pathname = usePathname();
   const { list } = useProfileStore();
 
@@ -28,7 +29,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       <nav className="nav">
         <div className="nav-inner">
           <Link href="/" className="brand">
-            <span className="dot" />
+            <span className="dot">
+              <GraduationCap size={18} aria-hidden />
+            </span>
             Uni<b>Match</b>
           </Link>
           <div style={{ marginLeft: "auto" }} />
@@ -38,7 +41,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             title="Toggle theme"
             aria-label="Toggle theme"
           >
-            {theme === "dark" ? "🌙" : "☀️"}
+            {theme === "dark" ? <Sun size={18} aria-hidden /> : <Moon size={18} aria-hidden />}
           </button>
         </div>
       </nav>
@@ -70,13 +73,14 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <div className="wrap">
         <nav className="tabs" aria-label="Sections">
-          {ROUTES.map(([href, label]) => (
+          {ROUTES.map(([href, label, icon]) => (
             <Link
               key={href}
               href={href}
               className={`tab ${pathname === href ? "on" : ""}`}
               aria-current={pathname === href ? "page" : undefined}
             >
+              {icon}
               {label}
               {href === "/list" && list.length > 0 && (
                 <span className="tab-count">{list.length}</span>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Sparkles } from "lucide-react";
 
 import { ActivitiesInput } from "@/components/ActivitiesInput";
 import { MatchResults } from "@/components/MatchResults";
@@ -207,7 +208,14 @@ export function ProfileForm() {
 
         <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
           <button className="btn" type="submit" disabled={status.kind === "loading"}>
-            {status.kind === "loading" ? "Matching…" : "✨ Show my matches"}
+            {status.kind === "loading" ? (
+              "Matching…"
+            ) : (
+              <>
+                <Sparkles size={16} aria-hidden />
+                Show my matches
+              </>
+            )}
           </button>
           <button
             type="button" className="btn ghost"

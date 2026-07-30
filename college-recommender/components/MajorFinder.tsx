@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Sparkles } from "lucide-react";
 
 import type { University } from "@/lib/contract";
 import { recommendMajors, WORK_AXES, type WorkAxes } from "@/lib/majorFinder";
@@ -111,7 +112,8 @@ export function MajorFinder({
 
         <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
           <button className="btn" type="button" onClick={() => setSubmitted(true)}>
-            ✨ Recommend my majors
+            <Sparkles size={16} aria-hidden />
+            Recommend my majors
           </button>
           <button
             className="btn ghost"
