@@ -1,9 +1,9 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, render, screen } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import type { Result } from "@/lib/contract";
-import { ProfileProvider } from "@/lib/profileStore";
+import { COMPARE_LIMIT, ProfileProvider, useProfileStore } from "@/lib/profileStore";
 import { ResultCard } from "./ResultCard";
 
 afterEach(cleanup);
@@ -119,6 +119,37 @@ describe("ResultCard", () => {
     for (const label of ["Reach", "Target", "Safety"]) {
       expect(screen.queryByText(label)).toBeNull();
     }
+  });
+
+  it("disables Compare with a stated reason once the tray is full, instead of silently evicting a choice", () => {
+    let store: ReturnType<typeof useProfileStore>;
+    function Probe() {
+      store = useProfileStore();
+      return null;
+    }
+
+    render(
+      <ProfileProvider>
+        <Probe />
+        <ResultCard result={result()} rank={1} onOpen={() => {}} />
+      </ProfileProvider>,
+    );
+
+    act(() => {
+      for (const id of Array.from({ length: COMPARE_LIMIT }, (_, i) => `filler-${i}`)) {
+        store.addToCompare({
+          id,
+          name: id,
+          fit: null,
+          tier: null,
+          university: result().university,
+        });
+      }
+    });
+
+    const compareButton = screen.getByRole("button", { name: /compare full/i }) as HTMLButtonElement;
+    expect(compareButton.disabled).toBe(true);
+    expect(compareButton.title).toMatch(/compare is full/i);
   });
 
   it("opens the profile when the 'View full profile' control is clicked", async () => {
