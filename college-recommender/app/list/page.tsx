@@ -1,14 +1,18 @@
 "use client";
 
+import Link from "next/link";
+
 import { formatStat, tierLabel } from "@/lib/format";
-import { analyseList, SAFETY_MAX, SAFETY_MIN } from "@/lib/listAnalysis";
+import { analyseList, SAFETY_MAX, SAFETY_MIN, suggestGaps } from "@/lib/listAnalysis";
 import { useProfileStore } from "@/lib/profileStore";
 import { useSchoolModal } from "@/lib/useSchoolModal";
 
 export default function ListPage() {
-  const { list, removeFromList } = useProfileStore();
+  const { list, removeFromList, addToList, results } = useProfileStore();
   const { open, modal } = useSchoolModal();
   const analysis = analyseList(list);
+  const matches = results?.results ?? [];
+  const suggestions = suggestGaps(list, matches);
 
   if (list.length === 0) {
     return (
@@ -58,6 +62,63 @@ export default function ListPage() {
             </p>
           )}
         </div>
+
+        {analysis.needsMoreSafeties && (
+          <div className="panel" style={{ marginBottom: 22 }}>
+            {suggestions.length > 0 ? (
+              <>
+                <p style={{ margin: "0 0 4px", fontSize: 15, fontWeight: 650 }}>
+                  From your own matches, these would be safeties for you
+                </p>
+                <p className="muted" style={{ fontSize: 13, margin: "0 0 12px" }}>
+                  Only schools you were already matched with — we don&rsquo;t reach into the
+                  catalog for names you haven&rsquo;t seen.
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                  {suggestions.map((s) => (
+                    <div key={s.id} className="qcard" style={{ margin: 0, flex: "1 1 220px" }}>
+                      <div className="card-head">
+                        <div style={{ minWidth: 0 }}>
+                          <b style={{ fontSize: 14.5 }}>{s.name}</b>
+                          <div className="loc">
+                            {s.university.location} · {s.university.country}
+                          </div>
+                        </div>
+                        {s.fit !== null && (
+                          <span className="tier safety">{Math.round(s.fit * 100)}% fit</span>
+                        )}
+                      </div>
+                      <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
+                        <button
+                          type="button"
+                          className="chip"
+                          onClick={() => open({ name: s.name, university: s.university })}
+                        >
+                          Full profile
+                        </button>
+                        <button type="button" className="chip on" onClick={() => addToList(s)}>
+                          Add to my list
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : matches.length === 0 ? (
+              <p className="muted" style={{ margin: 0, fontSize: 14 }}>
+                We could suggest safeties from your matches, but you haven&rsquo;t run a match
+                yet. <Link href="/">Fill in your profile</Link> and we&rsquo;ll draw suggestions
+                from what comes back — never from schools you haven&rsquo;t seen.
+              </p>
+            ) : (
+              <p className="muted" style={{ margin: 0, fontSize: 14 }}>
+                Nothing left to suggest: your matches turned up no safeties you haven&rsquo;t
+                already listed. Widening your budget or country scope on{" "}
+                <Link href="/">your profile</Link> would give us more to work with.
+              </p>
+            )}
+          </div>
+        )}
 
         <div className="cards">
           {list.map((school) => {

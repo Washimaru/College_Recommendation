@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { analyseList, SAFETY_MAX, SAFETY_MIN } from "./listAnalysis";
+import { analyseList, MAX_SUGGESTIONS, SAFETY_MAX, SAFETY_MIN, suggestGaps } from "./listAnalysis";
+import type { AdmitTier, Result } from "./contract";
 import type { ListedSchool } from "./profileStore";
 
 const CULTURE = { collab: 0.5, quirky: 0.5, idealist: 0.5, research: 0.5, spirit: 0.5, seminar: 0.5 };
@@ -68,5 +69,95 @@ describe("analyseList", () => {
 
   it("uses the stated 15-20% band", () => {
     expect([SAFETY_MIN, SAFETY_MAX]).toEqual([0.15, 0.2]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Gap suggestions
+// ---------------------------------------------------------------------------
+
+function result(id: string, tier: AdmitTier | null, score: number): Result {
+  return {
+    university_id: id,
+    name: `School ${id}`,
+    score,
+    rationale: "because",
+    admit_tier: tier,
+    university: {
+      country: "USA", location: "CA", region: "West", setting: "urban", type: "Private",
+      avg_gpa: 3.7, size: "medium", majors: ["CS"], culture: CULTURE, provenance: {},
+    },
+  };
+}
+
+describe("suggestGaps", () => {
+  it("suggests matched safeties when the list has too few", () => {
+    const list = listOf(8, 4, 0);
+    const matches = [result("s1", "safety", 0.92), result("s2", "safety", 0.88)];
+
+    const gaps = suggestGaps(list, matches);
+
+    expect(gaps.map((g) => g.id)).toEqual(["s1", "s2"]);
+  });
+
+  it("never suggests a school already on the list", () => {
+    // The student has already chosen it; re-offering it is noise.
+    const listed = school("s1", "safety");
+    const matches = [result("s1", "safety", 0.92), result("s2", "safety", 0.88)];
+
+    const gaps = suggestGaps([...listOf(8, 4, 0), listed], matches);
+
+    expect(gaps.map((g) => g.id)).toEqual(["s2"]);
+  });
+
+  it("never invents a school — with no matches there are no suggestions", () => {
+    // The spec is explicit: drawn only from schools the student has actually
+    // been matched with, never a school they have shown no interest in.
+    expect(suggestGaps(listOf(8, 4, 0), [])).toEqual([]);
+  });
+
+  it("suggests nothing when the list already has enough safeties", () => {
+    const matches = [result("s1", "safety", 0.92)];
+
+    expect(suggestGaps(listOf(8, 4, 3), matches)).toEqual([]);
+  });
+
+  it("suggests nothing for an empty list", () => {
+    expect(suggestGaps([], [result("s1", "safety", 0.92)])).toEqual([]);
+  });
+
+  it("offers only safeties, not reaches or targets", () => {
+    const matches = [
+      result("r1", "reach", 0.99),
+      result("t1", "target", 0.95),
+      result("s1", "safety", 0.70),
+    ];
+
+    expect(suggestGaps(listOf(8, 4, 0), matches).map((g) => g.id)).toEqual(["s1"]);
+  });
+
+  it("ranks by fit, best first", () => {
+    const matches = [
+      result("s1", "safety", 0.71),
+      result("s2", "safety", 0.93),
+      result("s3", "safety", 0.82),
+    ];
+
+    expect(suggestGaps(listOf(8, 4, 0), matches).map((g) => g.id)).toEqual(["s2", "s3", "s1"]);
+  });
+
+  it("caps how many it offers, so the page stays a nudge not a catalog", () => {
+    const matches = Array.from({ length: 9 }, (_, i) =>
+      result(`s${i}`, "safety", 0.9 - i * 0.01),
+    );
+
+    expect(suggestGaps(listOf(8, 4, 0), matches)).toHaveLength(MAX_SUGGESTIONS);
+  });
+
+  it("carries the fit through so the UI can show it", () => {
+    const gaps = suggestGaps(listOf(8, 4, 0), [result("s1", "safety", 0.92)]);
+
+    expect(gaps[0].fit).toBe(0.92);
+    expect(gaps[0].tier).toBe("safety");
   });
 });

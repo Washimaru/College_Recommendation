@@ -104,8 +104,6 @@ Notable because none were caught by the passing test suites that preceded them:
 
 ### Known gaps, deliberately not built
 
-- **List gap-suggestions** ("these would be safeties for you") are specified but
-  not implemented. They need matches to be readable from `/list`.
 - **`region` has no SQL `CHECK` constraint** while `setting` and `type` do.
   Pydantic's `Literal` guards it and the loader is the only writer; adding one
   needs a `docker compose down -v`.

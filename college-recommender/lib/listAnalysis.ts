@@ -1,3 +1,4 @@
+import type { Result } from "./contract";
 import type { ListedSchool } from "./profileStore";
 
 /**
@@ -50,4 +51,51 @@ export function analyseList(list: ListedSchool[]): ListAnalysis {
     targetRange,
     needsMoreSafeties: safetyShare < SAFETY_MIN,
   };
+}
+
+/**
+ * How many gap suggestions to offer at once.
+ *
+ * A handful, not a catalog: the point is to nudge a student who has no safeties
+ * toward ones they already liked, not to re-run the whole recommendation on the
+ * list page.
+ */
+export const MAX_SUGGESTIONS = 3;
+
+/**
+ * Schools from the student's own matches that would fill the safety gap.
+ *
+ * Two honesty constraints, both from the spec and both load-bearing:
+ *
+ *   - **Never invented.** Suggestions are drawn only from `matches` — schools
+ *     this student was actually recommended. With no matches there are no
+ *     suggestions, and the page says so rather than reaching into the catalog
+ *     for schools they have shown no interest in.
+ *   - **Never something already chosen.** A school on the list is filtered out;
+ *     re-offering it reads as noise and makes the count wrong.
+ *
+ * Only the safety floor is served, mirroring `analyseList`: over-reaching is a
+ * choice a student is entitled to make knowingly, so nothing here ever suggests
+ * dropping a reach.
+ */
+export function suggestGaps(
+  list: ListedSchool[],
+  matches: Result[],
+  limit: number = MAX_SUGGESTIONS,
+): ListedSchool[] {
+  if (!analyseList(list).needsMoreSafeties) return [];
+
+  const listed = new Set(list.map((s) => s.id));
+
+  return matches
+    .filter((m) => m.admit_tier === "safety" && !listed.has(m.university_id))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((m) => ({
+      id: m.university_id,
+      name: m.name,
+      fit: m.score,
+      tier: m.admit_tier ?? null,
+      university: m.university,
+    }));
 }
