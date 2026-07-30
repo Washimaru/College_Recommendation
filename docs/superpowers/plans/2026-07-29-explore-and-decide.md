@@ -3798,7 +3798,9 @@ for r in json.load(sys.stdin)['results']:
     u = r['university']
     print(f\"  {round(r['score']*100)}%  {r['name'][:34]:<34} {u['region']:<13} {u['setting']:<9} {u['type']}\")"
 ```
-Expected: classify returns `{"subjects":[...]}` containing `Computer Science`; every recommended school is `Northeast`, `urban` and `Private`.
+Expected: classify returns `{"subjects":[...]}` containing `Computer Science`.
+
+For the recommendations, expect **only** that every school is `Private` — that is the hard filter. `regions` and `settings` are soft by design, so schools outside the stated region still appear, ranked below the ones inside it. Seeing a non-Northeast school here is the feature working, not a bug: only 28 of 358 schools are rural and a mild preference must not silently discard most of the catalog. A run that returns *nothing but* Northeast schools would actually suggest the soft terms had been wrongly implemented as filters.
 
 - [ ] **Step 9: Commit**
 
