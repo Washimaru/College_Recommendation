@@ -336,14 +336,14 @@ def test_university_carries_place_and_population():
         avg_gpa=3.95, size="small", majors=["Engineering"],
         culture={"collab": 0.7, "quirky": 0.85, "idealist": 0.55,
                  "research": 0.75, "spirit": 0.35, "seminar": 0.55},
-        population={"international_share": 0.117, "women_share": 0.482,
-                    "first_gen_share": 0.259},
+        population={"international_share": 0.1028, "women_share": 0.4768,
+                    "first_gen_share": 0.2585},
         url="web.mit.edu/",
     )
 
     assert uni.region == "Northeast"
     assert uni.setting == "urban"
-    assert uni.population.international_share == 0.117
+    assert uni.population.international_share == 0.1028
     assert uni.net_price_calculator_url is None
 
 
