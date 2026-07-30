@@ -16,7 +16,7 @@
 - `University.location` is display-only. It must never be a filter or a scoring input.
 - `population` is absent for non-US schools, with `provenance.population` set to `not_applicable`.
 - Python: type hints everywhere, `ruff` clean (line length 100), pytest. TypeScript: `strict`, no `any` in exported signatures, vitest.
-- Coverage floors: py ≥ 80% (`--cov-fail-under=80` in both services and data-pipeline), ts ≥ 70%.
+- Coverage floors: 80% for both Python services (`--cov-fail-under=80` in their `addopts`), 70% lines/functions/branches/statements for the gateway and the UI. **`data-pipeline` has no coverage floor** — its `pyproject.toml` sets no `addopts`, so a narrowed run there needs no `--no-cov`.
 - Run `PYBIN=.venv/bin/python ./scripts/verify.sh` from the repo root after any Python or gateway change. It must print `VERIFY: GREEN`.
 - The gate's `ruff` steps end in `|| true` and gateway `eslint` is not in the gate at all. Lint must be run explicitly: `.venv/bin/python -m ruff check .` per Python project, `npx eslint app lib components` in `college-recommender`.
 - The 15–20% safety band is a stated preference, not a measured finding. Copy must present it as a suggestion.
@@ -950,68 +950,367 @@ git commit -m "feat: persist place, population and official URLs to Postgres"
 
 ### Task 7: Activity classification endpoint
 
+The table lives in **one place only** — `scoring-service/app/scoring.py`, which
+owns it. recommendation-service forwards to scoring-service over the client it
+already has, so the spec's promise ("what the student is shown is exactly what
+the scorer will do") holds structurally rather than by a test that watches for
+drift. Copying the table into a second service was considered and rejected: the
+two processes share no import, so nothing could detect divergence.
+
+The forwarding function is injected the same way `rank_fn` already is, because
+`recommendation-service/CLAUDE.md` requires unit tests to stay offline.
+
 **Files:**
 - Modify: `services/scoring-service/app/scoring.py`
-- Create: `services/recommendation-service/tests/test_classify.py`
+- Modify: `services/scoring-service/app/schemas.py`
+- Modify: `services/scoring-service/app/main.py`
+- Create: `services/scoring-service/tests/test_classify.py`
+- Modify: `services/recommendation-service/app/clients.py`
 - Modify: `services/recommendation-service/app/main.py`
-- Modify: `services/recommendation-service/app/schemas.py`
+- Create: `services/recommendation-service/tests/test_classify_route.py`
 - Modify: `services/gateway/src/{types.ts,clients/recs.ts,routes.ts}`
 - Create: `services/gateway/test/classify.test.ts`
+- Modify: `services/gateway/test/routes.test.ts`, `services/gateway/test/ws.test.ts`
 
 **Interfaces:**
-- Consumes: `_ACTIVITY_SUBJECTS` in `scoring.py`.
-- Produces: `classify_activity(name, kind, description) -> list[str]`; `POST /activities/classify` on recommendation-service; `POST /v1/activities/classify` on the gateway; `RecsClient.classify(body)`.
+- Consumes: `_ACTIVITY_SUBJECTS` in `scoring-service/app/scoring.py`.
+- Produces:
+  - `scoring.classify_activity(name, kind="other", description=None) -> list[str]`
+  - `POST /classify` on scoring-service, body `{name, kind, description}`, response `{subjects: list[str]}`
+  - `clients.make_classify_fn(client=None, url=SCORING_URL) -> Callable[[str, str, str | None], list[str]]`
+  - `POST /activities/classify` on recommendation-service, overridable in tests via `app.dependency_overrides[get_classify_fn]`
+  - `POST /v1/activities/classify` on the gateway; `RecsClient.classify(body)`
 
-- [ ] **Step 1: Write the failing tests**
+- [ ] **Step 1: Write the failing scoring-service test**
 
-Create `services/recommendation-service/tests/test_classify.py`:
+Create `services/scoring-service/tests/test_classify.py`:
 
 ```python
-"""Activity classification shares one implementation with the scorer, so what a
-student is shown is exactly what will be scored."""
+"""Classification is exposed from the service that owns the pattern table, so
+the UI cannot be shown one answer while the scorer uses another."""
 from __future__ import annotations
 
 from fastapi.testclient import TestClient
 
 from app.main import app
+from app.scoring import classify_activity
 
 client = TestClient(app)
 
 
 def _post(**body):
-    return client.post("/activities/classify", json=body)
+    return client.post("/classify", json=body)
 
 
-def test_recognises_a_known_activity():
-    response = _post(name="FIRST Robotics", kind="competition")
+class TestClassifyFunction:
+    def test_recognises_a_known_activity(self):
+        assert "Computer Science" in classify_activity("FIRST Robotics", "competition")
+
+    def test_returns_empty_for_something_unrecognised(self):
+        """An empty list is the signal the UI uses to prompt for an explanation."""
+        assert classify_activity("qqzzxx", "other") == []
+
+    def test_matching_is_case_insensitive(self):
+        assert classify_activity("ROBOTICS", "club") != []
+
+    def test_the_description_rescues_an_unrecognised_name(self):
+        assert classify_activity("Science Bowl", "competition") == []
+        assert "Computer Science" in classify_activity(
+            "Science Bowl", "competition", "built an autonomous rover and wrote the vision pipeline"
+        )
+
+    def test_is_deterministic(self):
+        first = classify_activity("Model UN", "club")
+        assert first == classify_activity("Model UN", "club")
+
+    def test_agrees_with_what_the_scorer_matches(self):
+        """The property that makes one implementation worth the extra hop: a
+        school strong in a returned subject must score above neutral."""
+        from app.schemas import Activity, Culture, University
+        from app.scoring import activity_fit
+
+        subjects = classify_activity("FIRST Robotics", "competition")
+        assert subjects
+        uni = University(
+            id="u1", name="U", country="USA", location="CA",
+            region="West", setting="urban", type="Private",
+            avg_gpa=3.7, size="medium", majors=list(subjects),
+            culture=Culture(collab=0.5, quirky=0.5, idealist=0.5,
+                            research=0.5, spirit=0.5, seminar=0.5),
+        )
+
+        assert activity_fit([Activity(name="FIRST Robotics", kind="competition")], uni) > 0.5
+
+
+class TestClassifyEndpoint:
+    def test_returns_the_subjects(self):
+        response = _post(name="FIRST Robotics", kind="competition")
+
+        assert response.status_code == 200
+        assert "Computer Science" in response.json()["subjects"]
+
+    def test_passes_the_description_through(self):
+        response = _post(
+            name="Science Bowl", kind="competition", description="built an autonomous rover"
+        )
+
+        assert response.json()["subjects"] != []
+
+    def test_name_is_required(self):
+        assert client.post("/classify", json={"kind": "club"}).status_code == 422
+
+    def test_rejects_an_unknown_kind(self):
+        assert _post(name="x", kind="not-a-kind").status_code == 422
+```
+
+- [ ] **Step 2: Run it to verify it fails**
+
+Run: `cd services/scoring-service && .venv/bin/python -m pytest tests/test_classify.py -q --no-cov`
+Expected: FAIL — `cannot import name 'classify_activity' from 'app.scoring'`
+
+- [ ] **Step 3: Implement classification in scoring-service**
+
+In `services/scoring-service/app/scoring.py`, add directly below the
+`_ACTIVITY_SUBJECTS` table:
+
+```python
+def classify_activity(name: str, kind: str = "other", description: str | None = None) -> list[str]:
+    """Subject families an activity matches.
+
+    Exported so the UI can show a student what was recognised, reading the same
+    table `activity_fit` reads. `activity_fit` keeps its own loop because it also
+    needs the school-pairing check; this returns the subjects alone.
+    """
+    text = " ".join(filter(None, (name, kind, description))).lower()
+    for pattern, subjects in _ACTIVITY_SUBJECTS:
+        if re.search(pattern, text):
+            return list(subjects)
+    return []
+```
+
+In `services/scoring-service/app/schemas.py`, add:
+
+```python
+class ClassifyRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(min_length=1)
+    kind: ActivityKind = "other"
+    description: str | None = Field(default=None, max_length=500)
+
+
+class ClassifyResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    subjects: list[str]
+```
+
+In `services/scoring-service/app/main.py`, add the route:
+
+```python
+from .schemas import ClassifyRequest, ClassifyResponse
+from .scoring import classify_activity
+
+
+@app.post("/classify", response_model=ClassifyResponse)
+def classify(request: ClassifyRequest) -> ClassifyResponse:
+    """Subject families for one activity. Deterministic, like everything here:
+    no clock, no randomness, no network."""
+    return ClassifyResponse(
+        subjects=classify_activity(request.name, request.kind, request.description)
+    )
+```
+
+- [ ] **Step 4: Run it to verify it passes**
+
+Run: `cd services/scoring-service && .venv/bin/python -m pytest -q && .venv/bin/python -m ruff check app`
+Expected: all pass, `All checks passed!`
+
+- [ ] **Step 5: Write the failing recommendation-service test**
+
+Create `services/recommendation-service/tests/test_classify_route.py`:
+
+```python
+"""The route forwards to scoring-service, which owns the pattern table.
+
+The forwarding function is injected, so these tests never open a socket - the
+same discipline `rank_fn` follows.
+"""
+from __future__ import annotations
+
+import httpx
+import pytest
+from fastapi.testclient import TestClient
+
+from app.clients import make_classify_fn
+from app.main import app, get_classify_fn
+
+
+@pytest.fixture
+def client():
+    calls: list[tuple[str, str, str | None]] = []
+
+    def fake(name: str, kind: str, description: str | None) -> list[str]:
+        calls.append((name, kind, description))
+        return ["Computer Science", "Engineering"]
+
+    app.dependency_overrides[get_classify_fn] = lambda: fake
+    yield TestClient(app), calls
+    app.dependency_overrides.clear()
+
+
+def test_returns_the_subjects_from_scoring_service(client):
+    test_client, _ = client
+
+    response = test_client.post(
+        "/activities/classify", json={"name": "FIRST Robotics", "kind": "competition"}
+    )
 
     assert response.status_code == 200
-    assert "Computer Science" in response.json()["subjects"]
+    assert response.json()["subjects"] == ["Computer Science", "Engineering"]
 
 
-def test_returns_empty_for_something_unrecognised():
-    """An empty list is the signal the UI uses to prompt for an explanation."""
-    assert _post(name="qqzzxx", kind="other").json()["subjects"] == []
+def test_forwards_the_description(client):
+    test_client, calls = client
+
+    test_client.post(
+        "/activities/classify",
+        json={"name": "Science Bowl", "kind": "competition", "description": "built a rover"},
+    )
+
+    assert calls == [("Science Bowl", "competition", "built a rover")]
 
 
-def test_the_description_rescues_an_unrecognised_name():
-    bare = _post(name="Science Bowl", kind="competition").json()["subjects"]
-    described = _post(
-        name="Science Bowl", kind="competition",
-        description="built an autonomous rover and wrote the vision pipeline",
-    ).json()["subjects"]
+def test_name_is_required(client):
+    test_client, _ = client
 
-    assert bare == []
-    assert "Computer Science" in described
+    assert test_client.post("/activities/classify", json={"kind": "club"}).status_code == 422
 
 
-def test_matching_is_case_insensitive():
-    assert _post(name="ROBOTICS", kind="club").json()["subjects"] != []
+def test_an_unreachable_scorer_is_a_502_not_a_crash(client):
+    """Recognition is advisory; the UI degrades. It must not surface a 500."""
+    test_client, _ = client
+
+    def broken(name: str, kind: str, description: str | None) -> list[str]:
+        raise httpx.ConnectError("scoring-service is down")
+
+    app.dependency_overrides[get_classify_fn] = lambda: broken
+
+    response = test_client.post("/activities/classify", json={"name": "robotics", "kind": "club"})
+
+    assert response.status_code == 502
 
 
-def test_name_is_required():
-    assert client.post("/activities/classify", json={"kind": "club"}).status_code == 422
+def test_the_client_posts_to_the_scoring_endpoint():
+    """Guards the URL and payload shape without a live service."""
+    seen: dict[str, object] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen["url"] = str(request.url)
+        seen["body"] = request.read().decode()
+        return httpx.Response(200, json={"subjects": ["Music"]})
+
+    transport = httpx.MockTransport(handler)
+    with httpx.Client(transport=transport) as http:
+        classify = make_classify_fn(client=http, url="http://scoring:8001")
+        assert classify("jazz band", "arts", None) == ["Music"]
+
+    assert seen["url"] == "http://scoring:8001/classify"
+    assert '"name":"jazz band"' in str(seen["body"]).replace(" ", "")
 ```
+
+- [ ] **Step 6: Run it to verify it fails**
+
+Run: `cd services/recommendation-service && .venv/bin/python -m pytest tests/test_classify_route.py -q --no-cov`
+Expected: FAIL — `cannot import name 'make_classify_fn' from 'app.clients'`
+
+- [ ] **Step 7: Implement the forwarding route**
+
+In `services/recommendation-service/app/clients.py`, add:
+
+```python
+def make_classify_fn(
+    client: httpx.Client | None = None,
+    url: str = SCORING_URL,
+) -> Callable[[str, str, str | None], list[str]]:
+    """Return classify(name, kind, description) calling scoring-service POST /classify.
+
+    scoring-service owns the pattern table; forwarding keeps one implementation
+    rather than a second copy that could silently diverge from the scorer.
+    """
+
+    def classify(name: str, kind: str, description: str | None) -> list[str]:
+        payload = {"name": name, "kind": kind, "description": description}
+        owns = client is None
+        c = client or httpx.Client(timeout=10.0)
+        try:
+            resp = c.post(f"{url}/classify", json=payload)
+            resp.raise_for_status()
+            data = resp.json()
+        finally:
+            if owns:
+                c.close()
+        return list(data["subjects"])
+
+    return classify
+```
+
+In `services/recommendation-service/app/schemas.py`, add the same two models as
+scoring-service (they mirror one shape across the boundary, exactly as
+`University` and `Profile` already do):
+
+```python
+class ClassifyRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(min_length=1)
+    kind: ActivityKind = "other"
+    description: str | None = Field(default=None, max_length=500)
+
+
+class ClassifyResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    subjects: list[str]
+```
+
+In `services/recommendation-service/app/main.py`, add the dependency and route:
+
+```python
+import httpx
+from fastapi import Depends
+
+from .clients import make_classify_fn
+from .schemas import ClassifyRequest, ClassifyResponse
+
+
+def get_classify_fn() -> Callable[[str, str, str | None], list[str]]:
+    """Injection point: tests override this so no unit test opens a socket."""
+    return make_classify_fn()
+
+
+@app.post("/activities/classify", response_model=ClassifyResponse)
+def classify(
+    request: ClassifyRequest,
+    classify_fn: Callable[[str, str, str | None], list[str]] = Depends(get_classify_fn),
+) -> ClassifyResponse:
+    """Forward to scoring-service, which owns the pattern table."""
+    try:
+        subjects = classify_fn(request.name, request.kind, request.description)
+    except (httpx.HTTPError, KeyError) as exc:
+        raise HTTPException(status_code=502, detail="scoring_service_unavailable") from exc
+    return ClassifyResponse(subjects=subjects)
+```
+
+adding `from collections.abc import Callable` and, if not already imported,
+`HTTPException` to the existing `from fastapi import ...` line.
+
+- [ ] **Step 8: Run it to verify it passes**
+
+Run: `cd services/recommendation-service && .venv/bin/python -m pytest -q && .venv/bin/python -m ruff check app`
+Expected: all pass, `All checks passed!`
+
+- [ ] **Step 9: Write the failing gateway test**
 
 Create `services/gateway/test/classify.test.ts`:
 
@@ -1092,88 +1391,16 @@ describe("POST /v1/activities/classify", () => {
 });
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+Check `services/gateway/src/server.ts` for the exact name of the injected-client
+option before writing this — the plan assumes `{ recsClient }`; use whatever the
+existing `test/routes.test.ts` passes.
 
-Run:
-```bash
-cd services/recommendation-service && .venv/bin/python -m pytest tests/test_classify.py -q --no-cov
-cd ../gateway && npm test 2>&1 | tail -4
-```
-Expected: FAIL — 404 from the Python route; `classify` is not a property of `RecsClient`.
+- [ ] **Step 10: Run it to verify it fails**
 
-- [ ] **Step 3: Write minimal implementation**
+Run: `cd services/gateway && npx vitest run test/classify.test.ts`
+Expected: FAIL — 404, since the route does not exist
 
-In `services/scoring-service/app/scoring.py`, add below `_ACTIVITY_SUBJECTS`:
-
-```python
-def classify_activity(name: str, kind: str = "other", description: str | None = None) -> list[str]:
-    """Subject families an activity matches, using the same table `activity_fit`
-    reads. Exported so the UI can show a student what was recognised and be
-    certain it matches what the scorer will do.
-    """
-    text = " ".join(filter(None, (name, kind, description))).lower()
-    for pattern, subjects in _ACTIVITY_SUBJECTS:
-        if re.search(pattern, text):
-            return list(subjects)
-    return []
-```
-
-`activity_fit` keeps its own loop — it needs the school-pairing check, not just the subjects.
-
-Copy the same `_ACTIVITY_SUBJECTS` table and `classify_activity` into `services/recommendation-service/app/activities.py` as a new file, since recommendation-service cannot import from scoring-service:
-
-```python
-"""Activity classification, mirroring scoring-service's table.
-
-The two must stay identical: a test asserts the endpoint returns the same
-subjects the scorer matches. Change one, change both.
-"""
-from __future__ import annotations
-
-import re
-
-_ACTIVITY_SUBJECTS: list[tuple[str, tuple[str, ...]]] = [
-    # Copy verbatim from services/scoring-service/app/scoring.py.
-]
-
-
-def classify_activity(name: str, kind: str = "other", description: str | None = None) -> list[str]:
-    text = " ".join(filter(None, (name, kind, description))).lower()
-    for pattern, subjects in _ACTIVITY_SUBJECTS:
-        if re.search(pattern, text):
-            return list(subjects)
-    return []
-```
-
-In `services/recommendation-service/app/schemas.py` add:
-
-```python
-class ClassifyRequest(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-    name: str = Field(min_length=1)
-    kind: ActivityKind = "other"
-    description: str | None = Field(default=None, max_length=500)
-
-
-class ClassifyResponse(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-    subjects: list[str]
-```
-
-In `services/recommendation-service/app/main.py` add the route and imports:
-
-```python
-from .activities import classify_activity
-from .schemas import ClassifyRequest, ClassifyResponse
-
-
-@app.post("/activities/classify", response_model=ClassifyResponse)
-def classify(request: ClassifyRequest) -> ClassifyResponse:
-    """Subject families for one activity. Read-only, no scoring, no loop."""
-    return ClassifyResponse(
-        subjects=classify_activity(request.name, request.kind, request.description)
-    )
-```
+- [ ] **Step 11: Implement the gateway route**
 
 In `services/gateway/src/types.ts`:
 
@@ -1194,11 +1421,13 @@ export type ClassifyRequest = z.infer<typeof ClassifyRequestSchema>;
 export type ClassifyResponse = z.infer<typeof ClassifyResponseSchema>;
 ```
 
-In `services/gateway/src/clients/recs.ts`, add to the `RecsClient` interface and the `createRecsClient` return:
+In `services/gateway/src/clients/recs.ts`, add to the `RecsClient` interface:
 
 ```ts
   classify(body: ClassifyRequest): Promise<ClassifyResponse>;
 ```
+
+and to the object `createRecsClient` returns:
 
 ```ts
     async classify(body: ClassifyRequest): Promise<ClassifyResponse> {
@@ -1214,9 +1443,11 @@ In `services/gateway/src/clients/recs.ts`, add to the `RecsClient` interface and
     },
 ```
 
-adding `ClassifyRequest` and `ClassifyResponse` to its type import from `../types.js`.
+adding `ClassifyRequest` and `ClassifyResponse` to its type import from
+`../types.js`.
 
-In `services/gateway/src/routes.ts`, add inside `registerRoutes`:
+In `services/gateway/src/routes.ts`, add inside `registerRoutes`, following the
+shape of the existing `POST /v1/recommendations` handler:
 
 ```ts
   app.post("/v1/activities/classify", async (request, reply) => {
@@ -1233,7 +1464,11 @@ In `services/gateway/src/routes.ts`, add inside `registerRoutes`:
   });
 ```
 
-importing `ClassifyRequestSchema` from `./types.js`. Add the `classify` stub to every existing fake `RecsClient` in `test/routes.test.ts` and `test/ws.test.ts`:
+importing `ClassifyRequestSchema` from `./types.js`.
+
+Add the `classify` stub to every existing fake `RecsClient` in
+`test/routes.test.ts` and `test/ws.test.ts`, or `tsc` fails on the widened
+interface:
 
 ```ts
     async classify() {
@@ -1241,40 +1476,7 @@ importing `ClassifyRequestSchema` from `./types.js`. Add the `classify` stub to 
     },
 ```
 
-- [ ] **Step 4: Write the parity test**
-
-Create `services/recommendation-service/tests/test_classify_parity.py`:
-
-```python
-"""The endpoint and the scorer must agree. If this fails, the two copies of
-_ACTIVITY_SUBJECTS have drifted."""
-from __future__ import annotations
-
-from app.activities import classify_activity
-
-CASES = [
-    ("FIRST Robotics", "competition", None),
-    ("Model UN", "club", None),
-    ("hospital volunteering", "volunteering", None),
-    ("jazz band", "arts", None),
-    ("Science Bowl", "competition", "built an autonomous rover"),
-    ("qqzzxx", "other", None),
-]
-
-
-def test_every_case_classifies_deterministically():
-    for name, kind, description in CASES:
-        first = classify_activity(name, kind, description)
-        second = classify_activity(name, kind, description)
-        assert first == second
-
-
-def test_known_activities_are_recognised_and_unknown_are_not():
-    assert classify_activity("FIRST Robotics", "competition") != []
-    assert classify_activity("qqzzxx", "other") == []
-```
-
-- [ ] **Step 5: Run everything to verify it passes**
+- [ ] **Step 12: Run the full gate to verify it passes**
 
 Run:
 ```bash
@@ -1284,15 +1486,30 @@ PYBIN=.venv/bin/python ./scripts/verify.sh 2>&1 | grep -E "VERIFY|FAILED"
 ```
 Expected: `VERIFY: GREEN`, `eslint clean`
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 13: Verify the real chain end to end**
+
+The unit tests are all offline, so the forwarding hop itself is only proven
+against running services.
+
+```bash
+cd /Users/treakybanana/Documents/College_Recommendation
+open -a Docker; until docker info >/dev/null 2>&1; do sleep 1; done
+docker compose up -d --build
+until curl -fsS localhost:8000/healthz >/dev/null 2>&1; do sleep 2; done
+curl -fsS -X POST localhost:8001/classify -H 'content-type: application/json' \
+  -d '{"name":"FIRST Robotics","kind":"competition"}'
+curl -fsS -X POST localhost:8000/v1/activities/classify -H 'content-type: application/json' \
+  -d '{"name":"Science Bowl","kind":"competition","description":"built an autonomous rover"}'
+```
+Expected: both return a `subjects` array containing `Computer Science` — the
+second having travelled gateway → recommendation-service → scoring-service.
+
+- [ ] **Step 14: Commit**
 
 ```bash
 git add services/
-git commit -m "feat: add activity classification endpoint"
+git commit -m "feat: add activity classification, owned by scoring-service"
 ```
-
----
-
 ### Task 8: Profile store — context plus localStorage
 
 **Files:**
@@ -3598,7 +3815,7 @@ git commit -m "feat: add the college list with tier-balance analysis"
 
 **One spec item deliberately has no task:** "a listed school leaving the catalog is shown as unavailable." `ListedSchool` stores its own `university` snapshot, so a stored entry renders from its own data and cannot dangle. The failure the spec anticipated cannot occur with this shape, so no code is needed. If the list ever stores ids alone, that task returns.
 
-**Type consistency.** `ListedSchool` is defined once in Task 8 and consumed unchanged by 12 and 13. `in_scope(universities, scope, institution_type=None)` keeps its Task 5 signature at both call sites. `classify_activity(name, kind, description)` is identical in both Python copies, and the parity test in Task 7 Step 4 exists to catch drift. `COMPARE_LIMIT` is exported from `profileStore` and imported by `CompareTray`, `ResultCard` and `BrowseSection` rather than being redefined.
+**Type consistency.** `ListedSchool` is defined once in Task 8 and consumed unchanged by 12 and 13. `in_scope(universities, scope, institution_type=None)` keeps its Task 5 signature at both call sites. `classify_activity(name, kind, description)` exists once, in scoring-service, and recommendation-service reaches it through `make_classify_fn` — so there is no second copy to drift. `COMPARE_LIMIT` is exported from `profileStore` and imported by `CompareTray`, `ResultCard` and `BrowseSection` rather than being redefined.
 
 **Identifiers verified against the tree** rather than assumed: `_MISSING` and `parse_number` (`build_catalog.py:22,45`), `is_us` (`:82`), `CACHED_COLUMNS` (`:134`), `StatKind` including `"decimal"` and `"score"` and `tierLabel` accepting null (`lib/format.ts:11,50`), `CULTURE_AXES`, `AXIS_LABELS`, `Scope`, `AdmitTier`, `Result`, `UniversitySummary` (`lib/contract.ts`), `foldAnswers` (`lib/questionnaire.ts:102`), `MAJORS` (`lib/majors.ts:6` — not the unrelated `MAJORS` in `lib/majorsData.ts`). `Question.low`/`Question.high` exist and hold the sentence copy Task 10 renders.
 

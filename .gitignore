@@ -31,3 +31,4 @@ data-pipeline/out/
 # Env / editor
 .env
 .DS_Store
+.superpowers/
