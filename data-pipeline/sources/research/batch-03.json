@@ -1,0 +1,316 @@
+{
+  "university-of-texas-at-austin": {
+    "faculty": "Luis Caffarelli, winner of the 2023 Abel Prize (mathematics' highest honor) for his work on partial differential equations, holds the Sid W. Richardson Regents' Chair in the Department of Mathematics. (Faculty change — verify.)",
+    "research": {
+      "level": "R1 (very high research activity)",
+      "undergrad": "The Freshman Research Initiative places roughly 1,100 first-year students a year into faculty-led lab \"streams,\" billed as the nation's largest undergraduate research program of its kind.",
+      "areas": "AI and computing (Texas Advanced Computing Center), energy, biomedical research, and defense/security work through the Applied Research Laboratories."
+    },
+    "src": [
+      "https://research.utexas.edu/",
+      "https://fri.cns.utexas.edu/",
+      "https://math.utexas.edu/directory/luis-caffarelli"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-california-irvine": {
+    "faculty": "Elizabeth Loftus, a Distinguished Professor and National Academy of Sciences member, is one of the most cited psychologists alive for her research on the malleability of memory and eyewitness testimony. Eric Rignot, also a National Academy of Sciences member, is a leading glaciologist and contributing author to IPCC climate assessments. (Faculty change — verify.)",
+    "research": {
+      "level": "R1 (very high research activity)",
+      "undergrad": "UROP (Undergraduate Research Opportunities Program) advises and funds students across all majors doing faculty-mentored research, culminating in an annual campus-wide symposium.",
+      "areas": "Historic strength in atmospheric/climate chemistry (following the legacy of the late Nobel laureate F. Sherwood Rowland), plus biomedical and computing research."
+    },
+    "src": [
+      "https://uci.edu/about/faculty-honors.php",
+      "https://urop.uci.edu/",
+      "https://nobel.universityofcalifornia.edu/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "case-western-reserve-university": {
+    "research": {
+      "level": "High research activity; AAU-adjacent research university (self-described as the fastest-growing research university in the AAU by expenditure growth)",
+      "undergrad": "The SOURCE office (Support of Undergraduate Research & Creative Endeavors) funds faculty-mentored summer and year-round research, including department-specific programs like the Sponsored Summer Research Program.",
+      "areas": "Biomedical research (cancer, medical imaging), polymer science and macromolecular engineering, and materials/manufacturing for medical applications."
+    },
+    "src": [
+      "https://case.edu/research/",
+      "https://case.edu/studentlife/ugresearch/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-florida": {
+    "research": {
+      "level": "R1 (very high research activity); $1.33 billion in research expenditures in fiscal year 2025",
+      "undergrad": "The University Scholars Program pairs students with faculty mentors on funded research projects across disciplines.",
+      "areas": "Medicine, agricultural sciences, and growing strength in aerospace and semiconductor-related research."
+    },
+    "src": [
+      "https://news.ufl.edu/2026/05/nas-sikivie/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "florida-state-university": {
+    "faculty": "Physicists Gregory Boebinger and Laura Greene, both members of the National Academy of Sciences, lead the FSU-headquartered National High Magnetic Field Laboratory (Boebinger as former longtime director, now back on the physics faculty; Greene as chief scientist), the world's highest-powered magnet lab. (Faculty change — verify.)",
+    "research": {
+      "level": "R1 (very high research activity); FSU doubled its National Academy membership (to 12 faculty) between 2024 and 2025",
+      "undergrad": "The Office of Undergraduate Research coordinates faculty-mentored research opportunities campus-wide.",
+      "areas": "High magnetic field science via the National MagLab, plus growing strength in the physical sciences."
+    },
+    "src": [
+      "https://nationalmaglab.org/news-events/news/maglab-director-named-to-national-academy-of-sciences/",
+      "https://artsandsciences.fsu.edu/article/maglab-chief-scientist-appointed-presidents-council-advisors-science-and-technology",
+      "https://news.fsu.edu/news/university-news/2025/06/25/national-attraction-fsu-doubles-number-of-national-academy-members-on-faculty/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "wake-forest-university": {
+    "faculty": "Anthony Atala, director of the Wake Forest Institute for Regenerative Medicine, is a pioneer of tissue engineering and lab-grown organs, and is a member of both the National Academy of Medicine and a Charter Fellow of the National Academy of Inventors. (Faculty change — verify.)",
+    "research": {
+      "undergrad": "Wake Forest's undergraduate research center supports faculty-mentored projects across the sciences, humanities, and social sciences.",
+      "areas": "Regenerative medicine and tissue engineering, anchored by the Wake Forest Institute for Regenerative Medicine."
+    },
+    "src": [
+      "https://school.wakehealth.edu/faculty/a/anthony-atala"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "skidmore-college": {
+    "research": {
+      "undergrad": "Skidmore's Faculty-Student Summer Research Program (running since 1989) has grown from a handful of students to over 75 students and 45 faculty mentors per summer, spanning fields from biology to management to dance.",
+      "areas": "Broad, faculty-mentored research across sciences, social sciences, and the arts rather than a single signature strength."
+    },
+    "src": [
+      "https://www.skidmore.edu/dof-vpaa/summer-research/index.php"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "berea-college": {
+    "research": {
+      "level": "Small, teaching-focused work college; not a research university",
+      "undergrad": "The Undergraduate Research and Creative Projects Program pairs a small number of students (2-4 per faculty mentor) with faculty for 8-10 week summer projects; every student also participates in Berea's required Labor Program.",
+      "areas": "No signature disciplinary research strength; opportunities are individual, faculty-mentored projects rather than large funded programs."
+    },
+    "src": [
+      "https://www.berea.edu/office-of-academic-affairs/undergraduate-research-and-creative-projects-program"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "florida-a-m-university": {
+    "research": {
+      "level": "R2 (high research activity) Carnegie classification, held since 2018",
+      "undergrad": "The Office of Undergraduate Research, established in 2019, runs the World Class Scholars Research Experience for Undergraduates (WCS REU), pairing students with faculty mentors over an eight-week summer program.",
+      "areas": "No single dominant signature area identified; research spans FAMU's science, pharmacy, and engineering programs."
+    },
+    "src": [
+      "https://famu.edu/administration/undergraduate-research/index.php"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-miami": {
+    "faculty": "Mathematician Maxim Kontsevich, winner of the 1998 Fields Medal, holds a Distinguished Professorship at the University of Miami (alongside his primary post at France's IHES). (Faculty change — verify.)",
+    "research": {
+      "level": "R1 (very high research activity)",
+      "undergrad": "The Rosenstiel School's senior thesis program lets undergraduates conduct original research with a faculty mentor in marine and atmospheric science.",
+      "areas": "Marine, atmospheric, and earth science through the Rosenstiel School of Marine, Atmospheric, and Earth Science is the university's signature research strength."
+    },
+    "src": [
+      "https://news.miami.edu/as/stories/2014/06/um-distinguished-professor-of-mathematics-receives-3-million-inaugural-breakthrough-prize.html",
+      "https://www.rsmas.miami.edu"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "brandeis-university": {
+    "faculty": "Neuroscientist Eve Marder and biochemist Gregory Petsko (professor emeritus) have each received the National Medal of Science, the U.S. government's highest honor for scientists. (Faculty change — verify.)",
+    "research": {
+      "level": "Doctoral/high research activity (Carnegie classification; the university's R1-vs-R2 status has fluctuated in recent reclassifications)",
+      "undergrad": "The Summer Undergraduate Research Fellowship (SURF, since 2012) funds science-division students in faculty labs, often feeding into a senior honors thesis.",
+      "areas": "Life sciences and neuroscience are particular strengths, supported by an NSF-funded Materials Research Science and Engineering Center (MRSEC)."
+    },
+    "src": [
+      "https://www.brandeis.edu/about/faculty.html",
+      "https://www.brandeis.edu/science/undergraduate-research/surf.html"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "trinity-university": {
+    "research": {
+      "undergrad": "The Summer Undergraduate Research Fellowship (SURF) is a 10-week faculty-mentored program culminating in a campus research symposium.",
+      "areas": "Broad, faculty-mentored research across the sciences, data analysis, and creative/community-based scholarship rather than one signature field."
+    },
+    "src": [
+      "https://www.trinity.edu/academics/research/undergraduate-research-opportunities"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "cleveland-institute-of-music": {
+    "faculty": "Jason Vieaux, head of CIM's guitar department since 2001, won the 2014 Grammy Award for Best Classical Instrumental Solo. Violinist Sibbi Bernhardsson, a former member of the Grammy-winning Pacifica Quartet, also teaches at CIM. (Faculty change — verify.)",
+    "research": {
+      "level": "Performance conservatory; not a research institution in the scientific sense",
+      "areas": "Coursework blends classical performance training with career/entrepreneurial studies rather than formal research."
+    },
+    "src": [
+      "https://www.cim.edu/faculty/jason-vieaux"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "scripps-college": {
+    "research": {
+      "undergrad": "Scripps supports independent and faculty-mentored research starting as early as freshman year through its research opportunities office.",
+      "areas": "No dominant signature research area; opportunities are spread across the humanities and sciences typical of a small liberal arts college."
+    },
+    "src": [
+      "https://www.scrippscollege.edu/academics/research-opportunities"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "oberlin-college": {
+    "faculty": "Dance professor Ann Cooper Albright and Integrated Media professor Julia Christensen are current Guggenheim Fellows. (Faculty change — verify.)",
+    "research": {
+      "undergrad": "Two flagship programs — the 8-week residential Oberlin Summer Research Institute (OSRI) and the newer Oberlin Summer Undergraduate Research Fellowship (OSURF) — place students in faculty-mentored research that the college says \"rivals\" graduate-level work.",
+      "areas": "Broad strength across sciences and social sciences rather than one signature area; Oberlin is also a perennial producer of Guggenheim and MacArthur fellows among alumni and faculty."
+    },
+    "src": [
+      "https://www.oberlin.edu/undergraduate-research"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-rochester": {
+    "faculty": "Political scientist James Druckman, the Martin Brewer Anderson Professor of Political Science, was elected to the National Academy of Sciences in 2026 for his research on public opinion formation. (Faculty change — verify.)",
+    "research": {
+      "level": "R1 (very high research activity); $488 million in annual research expenditures",
+      "undergrad": "The Office of Undergraduate Research helps students find funded, faculty-mentored research opportunities from their first year onward.",
+      "areas": "Health/biomedical research, optics and emerging technology (building on the university's long history in optics), and energy/materials research."
+    },
+    "src": [
+      "https://www.rochester.edu/newscenter/james-druckman-national-academy-of-sciences-700662/",
+      "https://www.rochester.edu/research/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "lafayette-college": {
+    "research": {
+      "undergrad": "The EXCEL Scholars Program pairs sophomores through seniors (3.0 GPA+) with faculty mentors on paid research across engineering, sciences, humanities, and social sciences, often producing conference presentations.",
+      "areas": "No single dominant research field; strength is distributed across Lafayette's engineering and liberal arts departments."
+    },
+    "src": [
+      "https://academics.lafayette.edu/undergraduate-research/excel-scholars-program/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "hampton-university": {
+    "research": {
+      "level": "R2 (high research activity), a Carnegie designation requiring at least $5 million in annual research spending and 20+ research doctorates",
+      "areas": "No single signature area verified; R2 status reflects growing research capacity university-wide."
+    },
+    "src": [
+      "https://home.hamptonu.edu/research/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "new-england-conservatory": {
+    "faculty": "Grammy Award-winning trombonist and composer Kalia Vandever joined NEC's Jazz Studies faculty in fall 2024. (Faculty change — verify.)",
+    "research": {
+      "level": "Performance conservatory; not a research institution in the scientific sense",
+      "areas": "NEC's distinctive strength is its Entrepreneurial Musicianship department, which teaches career, marketing, and grant-writing skills alongside performance training rather than traditional academic research."
+    },
+    "src": [
+      "https://necmusic.edu/the-college/departments/community-engagement-and-professional-studies/entrepreneurial-musicianship/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "franklin-marshall-college": {
+    "research": {
+      "undergrad": "The Hackman Summer Research Scholars program pairs 80-100 students with 50+ faculty each summer for paid, full-time research spanning the sciences, humanities, social sciences, and arts.",
+      "areas": "Broad, faculty-mentored research rather than one dominant field."
+    },
+    "src": [
+      "https://www.fandm.edu/research-and-experiential-learning/research/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "smith-college": {
+    "faculty": "Kelly Link, the Elizabeth Drew Professor of English Language and Literature, is a 2018 MacArthur Fellow and Pulitzer Prize finalist (for \"White Cat, Black Dog\") known for genre-blending short fiction. (Faculty change — verify.)",
+    "research": {
+      "undergrad": "The Summer Undergraduate Research Fellowship (SURF), running for 50 years, funds Smith students (with a focus on women in science) to do independent research with science faculty over the summer.",
+      "areas": "Strong tradition in the sciences and engineering for a women's liberal arts college, alongside its long-running SURF program."
+    },
+    "src": [
+      "https://www.smith.edu/people/kelly-link",
+      "https://www.science.smith.edu/student-opportunities/surf/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-california-san-diego": {
+    "faculty": "Kimberly Prather, Distinguished Professor of Atmospheric Chemistry with joint appointments in Chemistry/Biochemistry and Scripps Institution of Oceanography, is a National Academy of Sciences member known for aerosol science, including research on airborne disease transmission. (Faculty change — verify.)",
+    "src": [
+      "https://chemistry.ucsd.edu/faculty/profiles/prather_kimberly_a.html"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "california-institute-of-the-arts": {
+    "faculty": "Julie Tolentino, a School of Art faculty member and 2025 Guggenheim Fellow in Fine Arts, and Guggenheim Fellows Lilli Carré and Juan Pablo González (Film/Video faculty, both named in 2024) are among current CalArts faculty. (Faculty change — verify.)",
+    "research": {
+      "level": "Arts conservatory; \"research\" is practice-based rather than scientific",
+      "areas": "Critical Studies coursework requires students to build a sustained creative research practice; the CHANEL Center for Artists and Technology supports research at the intersection of art and emerging technology, including AI."
+    },
+    "src": [
+      "https://24700.calarts.edu/2025/04/15/calartians-named-in-100th-class-of-guggenheim-fellows/",
+      "https://calarts.edu/members/julie-tolentino"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "babson-college": {
+    "research": {
+      "level": "Business specialist college; not a research university",
+      "undergrad": "Students engage with entrepreneurship research and venture-building through the Arthur M. Blank Center for Entrepreneurship and its programs (Rocket Pitch, B.E.T.A. Challenge, Summer Venture Program).",
+      "areas": "Entrepreneurship research is Babson's signature and near-exclusive strength; the Blank Center says it houses the largest dedicated entrepreneurship faculty of any business school."
+    },
+    "src": [
+      "https://www.babson.edu/entrepreneurship-center/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "rhode-island-school-of-design": {
+    "research": {
+      "level": "Arts and design school; \"research\" is studio- and practice-based rather than scientific",
+      "undergrad": "Students can engage with dedicated research labs like the Studio for Research in Sound and Technology, the Co-Works interdisciplinary making lab, and the Biodesign Makerspace.",
+      "areas": "Design and technology research through the Center for Complexity (transdisciplinary design research) and biodesign, blending art/science/technology."
+    },
+    "src": [
+      "https://www.risd.edu"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "denison-university": {
+    "research": {
+      "undergrad": "The Summer Scholars Research Program (run through the Lisska Center, 20+ years running) funds 120-130 students annually across all disciplines; the Anderson Summer Science Program adds science-specific research assistantships. The Council on Undergraduate Research has recognized Denison with its AURA award for undergraduate research accomplishment.",
+      "areas": "Broad, faculty-mentored research across sciences, social sciences, humanities, and fine arts rather than one dominant field."
+    },
+    "src": [
+      "https://denison.edu/academics/lisska/summer-scholars-research-program"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "villanova-university": {
+    "research": {
+      "level": "Carnegie R2 (high research activity) doctoral university",
+      "undergrad": "The Villanova Undergraduate Research Fellows (VURF) program funds first-years through juniors for a summer of full-time faculty-mentored research (stipend plus supply funds), run through the Center for Research and Fellowships.",
+      "areas": "No single dominant signature research area verified; strength is spread across Villanova's engineering and natural/liberal science departments."
+    },
+    "src": [
+      "https://www.villanova.edu/university/research-scholarship/crf/undergraduate-research/vurf.html"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "hillsdale-college": {
+    "research": {
+      "level": "Small classical liberal arts college; deliberately not research-focused",
+      "areas": "Hillsdale's distinguishing academic feature is its classical-education model rather than funded research; notably, the college refuses all federal and state funding (including student aid) to stay free of related regulation, which also limits federally-funded research activity."
+    },
+    "src": [
+      "https://www.hillsdale.edu"
+    ],
+    "_retrieved": "2026-08-03"
+  }
+}

@@ -1,0 +1,273 @@
+{
+ "curtis-institute-of-music": {
+  "faculty": "Curtis's small, elite conservatory faculty includes Yannick Nézet-Séguin (Head of Conducting; also music director of the Philadelphia Orchestra and the Metropolitan Opera), the violinist Midori (Dorothy Richard Starling Chair in Violin Studies), Anthony McGill (principal clarinet of the New York Philharmonic), and Grammy-winning guitarist Jason Vieaux. (Faculty change — verify.)",
+  "src": [
+   "https://www.curtis.edu/learn/our-faculty/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "princeton-university": {
+  "faculty": "Current faculty include David MacMillan (2021 Nobel Prize in Chemistry, for organocatalysis), F. Duncan Haldane (2016 Nobel Prize in Physics, for topological phases of matter), and John Hopfield (2024 Nobel Prize in Physics, for Hopfield-network foundations of machine learning; now professor emeritus). (Faculty change — verify.)",
+  "src": [
+   "https://www.princeton.edu/meet-princeton/honors-awards"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "yale-university": {
+  "faculty": "James Rothman, Sterling Professor of Cell Biology, shared the 2013 Nobel Prize in Physiology or Medicine for discoveries on vesicle trafficking and remains an active researcher at Yale. William Nordhaus (2018 Nobel Prize in Economic Sciences, for integrating climate change into macroeconomic analysis) is Sterling Professor Emeritus, having retired from active teaching in 2024. (Faculty change — verify.)",
+  "src": [
+   "https://medicine.yale.edu/profile/james-rothman/",
+   "https://emeritus.yale.edu/fellows/william-nordhaus"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "columbia-university": {
+  "faculty": "Joseph Stiglitz (2001 Nobel Prize in Economic Sciences, for analysis of markets with asymmetric information) is a University Professor active at Columbia Business School and SIPA. Martin Chalfie (2008 Nobel Prize in Chemistry, for developing green fluorescent protein as a biological marker) is a University Professor in Biological Sciences. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity",
+   "areas": "Historic strengths in physics (site of the first nuclear fission reaction in North America, invention of FM radio and the laser) and earth/space science (Lamont-Doherty Earth Observatory, NASA's Goddard Institute for Space Studies), plus growing work in neuroscience and brain-computer interfaces through the Mortimer B. Zuckerman Mind Brain Behavior Institute."
+  },
+  "src": [
+   "https://business.columbia.edu/stiglitz/about",
+   "https://en.wikipedia.org/wiki/Martin_Chalfie",
+   "https://en.wikipedia.org/wiki/Columbia_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "the-juilliard-school": {
+  "faculty": "Faculty include violinist Itzhak Perlman, Pulitzer Prize-winning trumpeter and Director of Juilliard Jazz Wynton Marsalis, and a composition faculty that includes Pulitzer and Grawemeyer winners such as John Corigliano and Melinda Wagner (composition department chair). (Faculty change — verify.)",
+  "src": [
+   "https://www.juilliard.edu/news/145886/award-winning-composer-andrew-norman-join-juilliard-faculty",
+   "https://www.juilliard.edu/music/composition"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "brown-university": {
+  "faculty": "Peter Howitt, professor emeritus of economics, shared the 2025 Nobel Memorial Prize in Economic Sciences for the theory of sustained growth through creative destruction. Ieva Jusionyte, Professor of International Security and Anthropology, was named a 2025 MacArthur Fellow for her research on border regions. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; AAU member",
+   "areas": "Long-standing strength in applied mathematics (the oldest applied math program in the U.S.) and engineering (the oldest engineering program in the Ivy League), alongside active humanities and social-science collections research at the Haffenreffer Museum and John Carter Brown Library."
+  },
+  "src": [
+   "https://www.browndailyherald.com/article/2025/10/editorial-in-a-time-of-uncertainty-browns-nobel-prize-and-macarthur-grant-should-motivate-university-researchers",
+   "https://www.brown.edu/news/2025-10-08/ieva-jusionyte-genius-grant",
+   "https://en.wikipedia.org/wiki/Brown_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "duke-university": {
+  "faculty": "Robert Lefkowitz, an HHMI investigator at Duke, shared the 2012 Nobel Prize in Chemistry for studies of G-protein-coupled receptors. Paul Modrich, also an HHMI investigator at Duke, shared the 2015 Nobel Prize in Chemistry for mechanistic studies of DNA repair. (Faculty change — verify.)",
+  "research": {
+   "level": "One of the largest biomedical research enterprises among U.S. universities, with roughly $1 billion in annual sponsored research expenditures",
+   "undergrad": "Undergraduates connect to labs through the Undergraduate Research Support Office, Research Independent Study courses, Graduation with Distinction theses, and interdisciplinary Bass Connections project teams.",
+   "areas": "Research spans essentially every discipline, with particular visibility in biomedical/life sciences, environmental science, and AI/computational research."
+  },
+  "src": [
+   "https://medschool.duke.edu/personnel/robert-j-lefkowitz-md",
+   "https://medschool.duke.edu/research/nobel-laureates/2015-nobel-laureate-chemistry",
+   "https://trinity.duke.edu/undergraduate/research"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "pomona-college": {
+  "faculty": "Novelist Jonathan Lethem, a 2005 MacArthur Fellow who won a 2025 Guggenheim Fellowship in Fiction, teaches creative writing at Pomona. (Faculty change — verify.)",
+  "research": {
+   "undergrad": "The Summer Undergraduate Research Program (SURP) pays stipends of up to $5,600 to more than 200 students each year to conduct research with faculty or pursue independent projects; the Humanities Studio and the Sontag Center for Collaborative Creativity ('the Hive') support scholarship outside the sciences.",
+   "areas": "Strong record of producing future PhDs (11th nationally in doctorates awarded per capita, NSF 2013–2022) and a dedicated Pacific Basin Institute for research on the Pacific Rim."
+  },
+  "src": [
+   "https://www.pomona.edu/news/2025/05/07-prof-jonathan-lethem-awarded-guggenheim-fellowship-fiction",
+   "https://en.wikipedia.org/wiki/Pomona_College"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "united-states-military-academy-west-point": {
+  "research": {
+   "undergrad": "West Point states that cadets are involved in all research conducted at the academy, working alongside faculty through dedicated labs, symposiums, and partnerships with government and industry.",
+   "areas": "Robotics and autonomous systems (Robotics Research Center), cyber operations, counterterrorism and strategic studies (Combating Terrorism Center), and materials science/biodefense research tied to soldier protection."
+  },
+  "src": [
+   "https://www.westpoint.edu/research"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-pennsylvania": {
+  "faculty": "Katalin Karikó (adjunct professor of Neurosurgery) and Drew Weissman (Roberts Family Professor of Vaccine Research), both at the Perelman School of Medicine, shared the 2023 Nobel Prize in Physiology or Medicine for the mRNA discoveries that enabled COVID-19 vaccines. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; $2.172 billion in FY2024 research expenditures, 2nd nationally",
+   "areas": "Historic strength in computing (ENIAC, the first general-purpose electronic computer, built at Penn in 1946) and a large biomedical research complex, now including ongoing mRNA vaccine research building on the Karikó–Weissman work."
+  },
+  "src": [
+   "https://penntoday.upenn.edu/news/katalin-kariko-and-drew-weissman-penns-historic-mrna-vaccine-research-team-win-2023-nobel",
+   "https://en.wikipedia.org/wiki/University_of_Pennsylvania"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "swarthmore-college": {
+  "research": {
+   "undergrad": "Research is closely tied to Swarthmore's Oxbridge-tutorial-inspired honors program, in which many students complete honors theses; the college also runs an uncommon-for-liberal-arts-colleges ABET-accredited engineering B.S. program.",
+   "areas": "No single flagship research center; the strongest evidence of research intensity is indirect — Swarthmore ranks third among all U.S. colleges and universities for the share of graduates who go on to earn PhDs (2013–2022)."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Swarthmore_College"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "united-states-naval-academy": {
+  "research": {
+   "level": "Faculty secure over $10 million in annual grant funding from sources including NSF and the Office of Naval Research",
+   "undergrad": "Midshipmen participate through internships, mentored research via the Trident Scholar and Bowman Scholar programs, and project-based capstone courses.",
+   "areas": "Weapons/robotics/controls, aerospace, mechanical and nuclear engineering, ocean and atmospheric sciences, and cyber operations (the Academy holds NSA Center of Academic Excellence in Cyber Operations designation)."
+  },
+  "src": [
+   "https://www.usna.edu/AcResearch/index.php"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "bowdoin-college": {
+  "research": {
+   "undergrad": "Over 200 Bowdoin students engage in faculty-mentored research each year, which the college cites as making it one of the most research-active liberal arts colleges.",
+   "areas": "Research spans the curriculum with no single dominant focus — recent faculty work cited by the college ranges from healthcare policy to crystalline-structure formation."
+  },
+  "src": [
+   "https://www.bowdoin.edu/academics/research/index.html"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "dartmouth-college": {
+  "faculty": "Heidi Williams '03, the Orvil E. Dryfoos Professor in Economics and Public Affairs, won a MacArthur Fellowship in 2015 for her work on innovation in health care markets. (Faculty change — verify.)",
+  "research": {
+   "level": "\"Very high research activity\" (Carnegie); AAU member since 2019; roughly $97 million in NIH funding in 2025",
+   "areas": "Foundational computing history (the 1956 Dartmouth Workshop that named the field of artificial intelligence, plus the Dartmouth Time-Sharing System and Dartmouth BASIC) and biomedical research, including early-stage findings behind the Pfizer–BioNTech COVID-19 vaccine."
+  },
+  "src": [
+   "https://home.dartmouth.edu/news/2025/10/archaeologist-alum-wins-macarthur-fellowship",
+   "https://en.wikipedia.org/wiki/Dartmouth_College"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "northwestern-university": {
+  "faculty": "Joel Mokyr, professor of economics and history, shared the 2025 Nobel Memorial Prize in Economic Sciences for explaining how scientific and practical innovation combine to drive sustained economic growth. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; about $924 million in research funding (2022) across nearly 1,500 labs",
+   "areas": "Nanotechnology (International Institute for Nanotechnology), materials science, quantum information science, bioelectronics, and astrophysics (Center for Interdisciplinary Exploration and Research in Astrophysics)."
+  },
+  "src": [
+   "https://www.northwestern.edu/about/nobel-laureate.html",
+   "https://en.wikipedia.org/wiki/Northwestern_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "colby-college": {
+  "research": {
+   "undergrad": "Colby emphasizes project-based learning and independent study rather than a large centralized research apparatus.",
+   "areas": "A newer institutional push into AI, marked by the 2022 creation of the Davis Institute for Artificial Intelligence."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Colby_College"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "cornell-university": {
+  "faculty": "Roald Hoffmann, Frank H.T. Rhodes Professor of Humane Letters Emeritus, shared the 1981 Nobel Prize in Chemistry and remains active as a writer and lecturer. Harold Varmus, Lewis Thomas University Professor of Medicine at Weill Cornell Medicine, shared the 1989 Nobel Prize in Physiology or Medicine and continues to run an active lab. (Faculty change — verify.)",
+  "research": {
+   "level": "Roughly $1.66 billion in total research expenditures, about #10 nationally",
+   "areas": "Life sciences and ecology (Cornell Lab of Ornithology, Shoals Marine Laboratory), agriculture, and biomedical research, run through an integrated multidisciplinary research and innovation ecosystem."
+  },
+  "src": [
+   "https://hoffmann.chem.cornell.edu/roald/",
+   "https://news.weill.cornell.edu/news/2015/03/nobel-laureate-harold-varmus-joins-weill-cornell-medical-college-to-advance-cancer-research",
+   "https://research-and-innovation.cornell.edu/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "rice-university": {
+  "faculty": "Naomi Halas, one of Rice's ten University Professors (its highest faculty rank), is known for foundational work in plasmonics and nanophotonics. James Tour, the T.T. and W.F. Chao Professor of Chemistry, is known for work on molecular machines, nanocars, and graphene. Pulickel Ajayan, the Benjamin M. and Mary Greenwood Anderson Professor in Engineering, is a leading carbon-nanotube and materials researcher. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity",
+   "areas": "Nanotechnology is Rice's flagship strength, anchored by the Smalley-Curl Institute — named for Rice's Nobel laureates Richard Smalley and Robert Curl, discoverers of the buckyball — plus strength in materials science, bioengineering, and space research through a 50-plus-year NASA Johnson Space Center partnership."
+  },
+  "src": [
+   "https://research.rice.edu/",
+   "https://en.wikipedia.org/wiki/Rice_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "tulane-university": {
+  "faculty": "Jesmyn Ward, associate professor of creative writing, is a two-time National Book Award winner and 2017 MacArthur Fellow. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; $258.4 million in FY2023 research expenditures; AAU member since 1958",
+   "areas": "Tropical medicine and public health (the School of Public Health and Tropical Medicine, founded 1912, is the only school of its kind in the U.S.), gene therapy research, and one of eight NIH-funded National Primate Research Centers."
+  },
+  "src": [
+   "https://news.tulane.edu/news/see-which-tulane-professor-made-times-most-influential-people-list",
+   "https://en.wikipedia.org/wiki/Tulane_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "vanderbilt-university": {
+  "faculty": "Keivan Stassun, an astrophysicist studying star evolution and exoplanets, is a 2024 MacArthur Fellow. María Magdalena Campos-Pons, Cornelius Vanderbilt Professor of Art, is a 2023 MacArthur Fellow. Ken Catania, Stevenson Professor of Biological Sciences, is a 2006 MacArthur Fellow. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; about $1 billion in R&D spending (2021), 24th nationally",
+   "areas": "Radiation-effects research (the Institute for Space and Defense Electronics is described as the largest academic facility of its kind in the world), plus a biomedical legacy including Alfred Blalock's shock-treatment work and, more recently, a powered exoskeleton for paralyzed patients."
+  },
+  "src": [
+   "https://news.vanderbilt.edu/2024/10/02/vanderbilts-keivan-stassun-named-2024-macarthur-fellow/",
+   "https://en.wikipedia.org/wiki/Vanderbilt_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "claremont-mckenna-college": {
+  "research": {
+   "undergrad": "Twelve on-campus research institutes and centers — including the Rose Institute, the Lowe Institute, the Kravis Leadership Institute, and the Roberts Environmental Center — routinely involve undergraduates directly in faculty research.",
+   "areas": "Economics and finance is CMC's signature strength, anchored by the Robert Day School of Economics and Finance (funded by a $200 million gift in 2007), ranked 4th nationally among liberal arts college economics departments by RePEc in 2020."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Claremont_McKenna_College"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "united-states-air-force-academy": {
+  "research": {
+   "level": "Ranked highest of all undergraduate-only universities in federally funded research per NSF data, surpassing $60 million in 2010",
+   "undergrad": "Cadets do research through their major, coordinated across more than a dozen Academy research centers.",
+   "areas": "National security and space studies (Institute for National Security Studies, Eisenhower Center for Space and Defense Studies), aeronautics (wind tunnels and rocket test cells in the Aeronautics Research Center), and physics education research."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/United_States_Air_Force_Academy"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "barnard-college": {
+  "faculty": "Lesley Sharp, the Barbara Chamberlain & Helen Chamberlain Josefsberg '30 Professor of Anthropology, is a Guggenheim Fellow whose research covers inmate-run, prison-based hospice programs. (Faculty change — verify.)",
+  "research": {
+   "undergrad": "Named research pathways include the Beckman Scholars Program, the Science Pathways Scholars Program, the Summer Research Institute, and the Laidlaw Scholars Program, which pairs undergraduates with faculty mentors."
+  },
+  "src": [
+   "https://barnard.edu/news/barnard-college-faculty-selected-fulbright-guggenheim-and-other-major-awards",
+   "https://barnard.edu/research"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "colorado-college": {
+  "research": {
+   "undergrad": "Colorado College runs on the Block Plan, in which students take one course at a time for 3.5 weeks; this format is often used for immersive, field-based, or independent research blocks rather than research being organized through large centralized institutes."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Colorado_College"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-california-los-angeles": {
+  "faculty": "Andrea Ghez, professor of Physics & Astronomy and holder of the Lauren B. Leichtman & Arthur E. Levine Chair in Astrophysics, won the 2020 Nobel Prize in Physics for the discovery of a supermassive black hole at the center of the Milky Way. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; $1.72 billion in research expenditures in 2024, 7th nationally",
+   "areas": "Medical research strength includes pioneering PET-scanning techniques and nitric-oxide signaling research (the basis of UCLA's 1998 Nobel Prize in Physiology or Medicine); UCLA also ranks among global top-20 departments in materials science, mathematics, and neuroscience."
+  },
+  "src": [
+   "https://newsroom.ucla.edu/stories/2025-nobels-wins-for-ucla-and-a-record-setting-year-for-the-university-of-california",
+   "https://en.wikipedia.org/wiki/University_of_California,_Los_Angeles"
+  ],
+  "_retrieved": "2026-08-03"
+ }
+}
