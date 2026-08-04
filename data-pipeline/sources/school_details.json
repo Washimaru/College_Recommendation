@@ -2400,7 +2400,12 @@
    ],
    "paths": "Broad industry placement plus graduate & professional school."
   },
-  "_source": "curated"
+  "_source": "curated",
+  "faculty": "Pierre Agostini, professor emeritus of physics, shared the 2023 Nobel Prize in Physics with Ferenc Krausz and Anne L'Huillier for experimental methods generating attosecond pulses of light used to study electron dynamics. He became emeritus in 2018 (having joined Ohio State in 2005) and, per the university's own account, remains active in research and graduate mentoring through the Agostini-DiMauro Ultrafast Atomic Physics Research Group alongside Louis DiMauro. Faculty rosters change; verify current status before citing.",
+  "src": [
+   "https://news.osu.edu/ohio-states-agostini-wins-nobel-prize-in-physics/",
+   "https://en.wikipedia.org/wiki/Pierre_Agostini"
+  ]
  },
  "purdue-university": {
   "admissions": {
@@ -4355,8 +4360,15 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.syracuse.edu/admissions-aid/financial-aid-scholarships/scholarship-opportunities/"
-  ]
+   "https://www.syracuse.edu/admissions-aid/financial-aid-scholarships/scholarship-opportunities/",
+   "https://en.wikipedia.org/wiki/Syracuse_University",
+   "https://undergraduateresearch.syracuse.edu/"
+  ],
+  "research": {
+   "level": "Classified as R1 (\"very high research activity\") and a member of the Association of American Universities since 1966.",
+   "undergrad": "SOURCE (Syracuse Office of Undergraduate Research and Creative Engagement) coordinates faculty-mentored research and creative inquiry across all disciplines, including the SOURCE Faculty Research Assistant Grant for first- through third-year students and short-term \"SOURCE Explore\" experiences.",
+   "areas": "Notable initiatives include the Cold Case Justice Initiative, which has identified 196 unresolved civil-rights-era cases, and long-standing pathogen-free animal research facilities supporting biomedical work."
+  }
  },
  "george-washington-university": {
   "scholarships": {
@@ -4502,8 +4514,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.rit.edu/admissions/aid/merit-based-scholarships"
-  ]
+   "https://www.rit.edu/admissions/aid/merit-based-scholarships",
+   "https://en.wikipedia.org/wiki/Rochester_Institute_of_Technology"
+  ],
+  "research": {
+   "level": "RIT's research grants totaled $105 million in fiscal year 2025, supporting thirteen doctoral programs.",
+   "undergrad": "RIT's cooperative-education model gives undergraduates applied research and industry experience through partnerships with organizations including IBM, Xerox, NASA, and DARPA.",
+   "areas": "Signature research strength is in imaging science through the Chester F. Carlson Center for Imaging Science, alongside cybersecurity research at the Center for Advancing the Study of CyberInfrastructure and broader work in computing and sustainability."
+  }
  },
  "sarah-lawrence-college": {
   "scholarships": {
@@ -4578,8 +4596,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.centre.edu/admission-aid/centre-promise"
-  ]
+   "https://www.centre.edu/admission-aid/centre-promise",
+   "https://en.wikipedia.org/wiki/Centre_College"
+  ],
+  "research": {
+   "level": "A small liberal arts college that prioritizes teaching and mentorship over large-scale sponsored research.",
+   "undergrad": "Research is woven into Centre's distinctive CentreTerm, a three-week intensive January term during which students can pursue focused research, internships, or atypical coursework alongside faculty.",
+   "areas": "Centre's outcomes-driven model produced 24 Fulbright winners, six Goldwater Scholars, 11 Rotary International Ambassadorial Scholars, and three NSF Graduate Research Fellows between 2001 and 2011, reflecting strength in preparing students for competitive national fellowships rather than a large in-house research enterprise."
+  }
  },
  "college-of-wooster": {
   "scholarships": {
@@ -4634,8 +4658,15 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://admissions.web.baylor.edu/costs-aid/scholarships-aid/merit-based-scholarships"
-  ]
+   "https://admissions.web.baylor.edu/costs-aid/scholarships-aid/merit-based-scholarships",
+   "https://en.wikipedia.org/wiki/Baylor_University",
+   "https://research.baylor.edu/"
+  ],
+  "research": {
+   "level": "Classified as an R1 (\"very high research activity\") institution since 2021, one of roughly 146 U.S. universities holding that designation.",
+   "undergrad": "Undergraduates take part through the Baylor Research and Innovation Collaborative (BRIC), an interdisciplinary facility established in 2009 to support faculty- and student-driven applied research.",
+   "areas": "Signature strengths include high-energy physics (Baylor joined the Collider Detector at Fermilab, CDF, collaboration in 2005), aerospace and defense materials, the gut microbiome, and Arctic field research through the ARKTOS Research Center; the SMART Hub focuses on spectrum and connectivity technology."
+  }
  },
  "pepperdine-university": {
   "scholarships": {
@@ -5379,6 +5410,266 @@
   "src": [
    "https://en.wikipedia.org/wiki/Deborah_D._L._Chung",
    "https://en.wikipedia.org/wiki/University_at_Buffalo"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "california-state-university-fullerton": {
+  "research": {
+   "level": "Classified Research 2 (High Research Activity) under the Carnegie Classification; CSUF logged $144M in grant submissions and $35M in awards with roughly 630 Scopus-indexed publications in 2024-25.",
+   "undergrad": "The Ronald E. McNair Scholars Program, a federally funded TRIO initiative, pairs about 25 students a year with faculty mentors on original research aimed at PhD preparation, culminating in an annual Research Symposium.",
+   "areas": "Dedicated field stations extend research capacity beyond campus: the Desert Studies Center in Zzyzx (run jointly by seven CSU campuses) for Mojave Desert ecology, the Southern California Marine Institute for coastal science, and the John D. Cooper Archaeological and Paleontological Center. The Pollak Library also holds the Philip K. Dick and Frank Herbert literary archives."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/California_State_University,_Fullerton",
+   "https://www.fullerton.edu/mcnair/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "drake-university": {
+  "research": {
+   "level": "Primarily undergraduate-focused institution; research is organized around named centers rather than large-scale sponsored activity.",
+   "undergrad": "Students engage in research through faculty-mentored projects across the College of Arts & Sciences, with support from the Center for Engaged Citizenship (CEL) network of programs.",
+   "areas": "Drake hosts the Drake Constitutional Law Center, one of only four constitutional law programs established and funded by the U.S. Congress, and the university is a designated NASA Space Grant institution supporting space-related research and education."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Drake_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-south-carolina": {
+  "research": {
+   "level": "Classified among research institutions of \"very high research activity\"; USC was awarded $309 million in sponsored funding in fiscal year 2024, a 27% year-over-year increase.",
+   "undergrad": "The Magellan Scholar award, established in 2005 and administered by the Office of Undergraduate Research, is a competitive grant funding student-led projects across all disciplines from science and medicine to theater, music, and art, each requiring an approved faculty mentor.",
+   "areas": "The Innovista innovation district anchors USC's applied research in biomedicine, nanotechnology, environmental science, and alternative fuels. In 2009 USC was selected by the U.S. Department of Energy as one of 31 universities nationwide to host an Energy Frontier Research Center, bringing $12.5 million in federal funding."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_South_Carolina",
+   "https://sc.edu/about/offices_and_divisions/undergraduate_research/funding_opportunities/our_funding/magellan-scholar-award/index.php"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "ringling-college-of-art-and-design": {
+  "research": {
+   "level": "As a specialized art and design college, Ringling's scholarly output is organized around creative practice and industry-facing project work rather than sponsored scientific research.",
+   "undergrad": "Students work in studio-based practice across BFA and BA programs; the college's National Association of Schools of Art and Design accreditation (held since 1984) anchors its curriculum standards.",
+   "areas": "Signature strengths are in animation, illustration, game art, and concept art/design, reflected in specialized library holdings in game arts, graphic novels, and book arts, and in its $20 million library completed in 2017."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Ringling_College_of_Art_and_Design"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "wayne-state-university": {
+  "research": {
+   "level": "Classified as R1 (\"very high research activity\"); Wayne State received $352.6 million in research awards in 2023 and is one of three members of Michigan's University Research Corridor, alongside Michigan State and the University of Michigan.",
+   "undergrad": "Undergraduate research is coordinated through the university's Division of Research & Innovation, which links students to its named research centers and institutes.",
+   "areas": "Strengths include the Center for Molecular Medicine and Genetics, the Merrill Palmer Skillman Institute (child development), the Institute of Gerontology, and the Center for Urban Responses to Environmental Stressors, reflecting an urban-health research focus tied to Detroit."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Wayne_State_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "the-new-school-parsons": {
+  "research": {
+   "level": "Research and scholarship at Parsons/The New School center on design practice, critical theory, and creative production rather than large sponsored-science portfolios.",
+   "undergrad": "Students engage through studio-based, faculty-mentored project work across Parsons' schools of Fashion, Art/Design/Theory, Art/Media/Technology, Constructed Environments, and Design Strategies.",
+   "areas": "The university houses interdisciplinary research centers such as the Humanities Action Lab, and maintains an art collection of roughly 1,800 postwar and contemporary works supporting design and theory scholarship; the historical presence of composer John Cage (who taught experimental composition 1950-1960) helped shape its experimental-arts identity."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/The_New_School"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "hofstra-university": {
+  "research": {
+   "level": "Designated a private research university offering 185 undergraduate and 170 graduate programs across 28 accredited academic areas.",
+   "undergrad": "Research opportunities are organized through individual departments and the Fred DeMatteis School of Engineering and Applied Science and Zucker School of Medicine, with faculty-mentored projects available across disciplines.",
+   "areas": "Programmatic strength areas include law (Maurice A. Deane School of Law), engineering, and health/medical sciences, supported by Hofstra's location on Long Island near major New York research and clinical institutions."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Hofstra_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-minnesota": {
+  "research": {
+   "level": "Classified as R1 (\"very high research activity\") and a member of the Association of American Universities; research and development expenditures reached $1.202 billion in 2022, ranking 22nd nationally per NSF data.",
+   "undergrad": "The Undergraduate Research Opportunities Program (UROP) funds students ($1,800 stipend plus up to $300 in expenses) to partner with a faculty mentor of their choosing, from any college or department, on a scientific, scholarly, or creative project, with results presented at the annual Undergraduate Research Symposium.",
+   "areas": "Minnesota has been a member of the LIGO (Laser Interferometer Gravitational-Wave Observatory) collaboration since 2007, with faculty involved in the confirmed 2016 gravitational-wave detection; the university counts 25 Nobel laureates in its historical affiliation and operates more than 300 research centers and institutes."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Minnesota",
+   "https://ugresearch.umn.edu/opportunities/urop"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "texas-tech-university": {
+  "research": {
+   "level": "Classified as R1 (\"very high research activity\"); reported $240.1 million in research expenditures in fiscal year 2023 (122nd nationally per NSF).",
+   "undergrad": "Undergraduate research is supported across Texas Tech's 55 research centers and institutes, with faculty-mentored project opportunities available in most colleges.",
+   "areas": "Signature strengths include wind science and engineering (the National Wind Institute), critical infrastructure security, agricultural innovation, and One Health initiatives connecting veterinary, human, and environmental health research."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Texas_Tech_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "depaul-university": {
+  "research": {
+   "level": "Classified as R2 (\"high research activity\") under the Carnegie Classification.",
+   "undergrad": "Research opportunities run through individual departments and the College of Science and Health, with faculty-mentored projects available to undergraduates across disciplines.",
+   "areas": "DePaul has particular depth in continental philosophy at the graduate level and in community/clinical psychology research; psychology professor Leonard A. Jason's community-based research programs are a long-running feature of that department. (Faculty rosters and program strengths shift — verify before citing individuals.)"
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/DePaul_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "loyola-university-chicago": {
+  "research": {
+   "level": "Classified as R1 (\"very high research spending and doctorate production\").",
+   "undergrad": "The Loyola Undergraduate Research Opportunities Program (LUROP), run through the Office of Undergraduate Research within the Center for Engaged Learning, Teaching, and Scholarship (CELTS), administers 14 distinct fellowships for undergraduates and hosts an annual Undergraduate Research and Engagement Symposium.",
+   "areas": "The Institute of Environmental Sustainability, housed in a multipurpose complex with the largest geothermal energy facility in Chicago, anchors Loyola's signature strength in environmental science and sustainability research."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Loyola_University_Chicago",
+   "https://www.luc.edu/undergraduateresearch/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-vermont": {
+  "research": {
+   "level": "Classified as R1 (\"very high research activity\"); UVM attracted $266 million in research and development funding in fiscal year 2025.",
+   "undergrad": "The Patrick Leahy Honors College engages students in mentored research projects and seminars as a core part of its curriculum, alongside department-level undergraduate research opportunities.",
+   "areas": "UVM's engineering and mathematical sciences research centers include the Transportation Research Center, the Complex Systems Center, and the Vermont Advanced Computing Center, reflecting strength in transportation, complex-systems, and computational research tied to the university's land-grant mission."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Vermont"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "temple-university": {
+  "research": {
+   "level": "Classified as R1 (\"very high research activity\"); Temple spent $301.4 million on research and development in 2022 (98th nationally among 899 institutions per NSF).",
+   "undergrad": "Undergraduate research opportunities run through Temple's colleges and the Science Education and Research Center (SERC), a $137 million facility with 52 research labs completed in 2014.",
+   "areas": "Temple's Lewis Katz School of Medicine has a notable research record, including a 2014 study in which its scientists were among the first to remove HIV from human cells using gene-editing techniques."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Temple_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "school-of-visual-arts": {
+  "research": {
+   "level": "As a specialized art college with a faculty of more than 1,100 (many working professionals in their fields), SVA's scholarly output is organized around creative practice and industry-facing work rather than sponsored research.",
+   "undergrad": "Students work in studio- and portfolio-based programs across 11 undergraduate degrees; continuing-education offerings extend into advertising, branding, and illustration taught by industry practitioners.",
+   "areas": "SVA's signature strengths are in illustration, animation, and design, with legacy ties to figures like designer Milton Glaser, and its annual Dusty Film & Animation Festival (running since 1990) showcasing emerging filmmakers."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/School_of_Visual_Arts"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "elon-university": {
+  "research": {
+   "level": "Primarily undergraduate-focused institution; U.S. News ranked Elon #8 nationally for Undergraduate Research/Creative Projects in its 2026 rankings.",
+   "undergrad": "The Undergraduate Research Program funds SURF (Spring Undergraduate Research Forum) presentations and SURE (Summer Undergraduate Research Experience) paid summer projects, plus for-credit mentored research (courses 4998/4999) and travel funding to the National Conference on Undergraduate Research.",
+   "areas": "Research is organized around faculty-mentored scholarship and creative endeavors across disciplines rather than a small number of flagship centers, consistent with Elon's teaching-focused institutional identity."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Elon_University",
+   "https://www.elon.edu/u/academics/undergraduate-research/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-illinois-chicago": {
+  "research": {
+   "level": "Classified as R1 (\"very high research activity\"); UIC spent $361 million on research and development in 2018 (69th nationally per NSF).",
+   "undergrad": "Undergraduate research opportunities are distributed across UIC's more than 90 bachelor's degree programs, with faculty-mentored projects available through individual colleges.",
+   "areas": "UIC's research strength is concentrated in health sciences given its large academic medical center, alongside urban studies and public health tied to its Chicago location."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Illinois_Chicago"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "gonzaga-university": {
+  "research": {
+   "level": "A teaching-focused Jesuit university offering studies in 92 fields; sponsored research is modest relative to R1 public peers.",
+   "undergrad": "Undergraduate research is organized through individual departments and schools, with faculty-mentored projects available particularly within Gonzaga's engineering and natural sciences programs.",
+   "areas": "Programmatic strength is concentrated in its 26 graduate programs and professional schools (law, business, engineering), reflecting Gonzaga's identity as a mid-sized comprehensive university rather than a large research enterprise."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Gonzaga_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "louisiana-state-university": {
+  "research": {
+   "level": "Classified as R1 (\"very high research activity\"); a public land-grant flagship research university.",
+   "undergrad": "Undergraduate research opportunities are coordinated through LSU's colleges and honors programs, with access to the university's major shared research facilities.",
+   "areas": "Signature facilities include the J. Bennett Johnston Sr. Center for Advanced Microstructures and Devices (CAMD), a 1.3 GeV synchrotron radiation facility, and the LSU Institute for Energy Innovation, which researches carbon capture and storage."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Louisiana_State_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "morgan-state-university": {
+  "research": {
+   "level": "Classified as R2 (\"high research activity\") under the Carnegie Classification; Morgan State is Maryland's preeminent public urban research HBCU.",
+   "undergrad": "The Dr. Clara I. Adams Honors College provides scholarship support and extracurricular research opportunities alongside department-level undergraduate research access.",
+   "areas": "Morgan State actively partners with the National Science Foundation, National Institutes of Health, and U.S. Department of Defense on sponsored research, and has educated over 100 Fulbright scholars — the most of any HBCU — including a place on the inaugural Fulbright HBCU Institutional Leaders list."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Morgan_State_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-massachusetts-lowell": {
+  "research": {
+   "level": "Classified as R1 (\"very high research spending and doctorate production\"); total R&D expenditure was $145 million in fiscal year 2025.",
+   "undergrad": "Students get hands-on research experience through facilities like the campus radiation laboratory, giving undergraduates real-world experience in particle physics, nuclear engineering, and health physics.",
+   "areas": "A distinctive applied-research strength is the Baseball Research Center, staffed by mechanical engineering faculty, a full-time engineer, and student lab assistants, alongside the university's core nuclear and radiological engineering programs."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Massachusetts_Lowell"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "ithaca-college": {
+  "research": {
+   "level": "A primarily undergraduate teaching institution; scholarly activity is organized around faculty-mentored student research rather than large sponsored grants.",
+   "undergrad": "The Biology and Biochemistry departments treat undergraduate research as central to their mission, offering a staged research-course sequence (BIOL-290 introductory research, the required junior-year BIOL-302/BIOCHEM-390, and 401/402 advanced honors research) plus paid 8-10 week summer fellowships; over a recent five-year span, 40 undergraduates co-authored peer-reviewed publications.",
+   "areas": "Beyond the sciences, Ithaca's Roy H. Park School of Communications and School of Music, Theatre, and Dance give it particular strength in media, journalism, and performing-arts scholarship."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Ithaca_College",
+   "https://www.ithaca.edu/academics/school-humanities-and-sciences/biology/student-faculty-research"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "butler-university": {
+  "research": {
+   "level": "A primarily undergraduate institution; research is supported through the Butler Institute for Research and Scholarship (BIRS), launched with a $1 million grant from Lilly Endowment.",
+   "undergrad": "The Butler Summer Institute (BSI) is the university's flagship undergraduate research program: an eight-week, full-time summer program (up to 30 students, competitively selected) offering a stipend and free housing for faculty-mentored research or creative work, with results presented at Butler's Undergraduate Research Conference the following spring.",
+   "areas": "Programmatic strengths reflect Butler's small-class, no-teaching-assistant model, with close faculty-student mentorship across its seven colleges, including notable programs in music and creative writing."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Butler_University",
+   "https://www.butler.edu/academics/butlersummerinstitute/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "artcenter-college-of-design": {
+  "research": {
+   "level": "As a specialized design college, ArtCenter's scholarly work is organized around studio-based design practice rather than sponsored scientific research.",
+   "undergrad": "Students engage in industry-connected studio projects across BFA, BS, and graduate programs; the college originated as a vocational school training returning WWII veterans for commercial-arts careers and retains that practice-oriented model.",
+   "areas": "ArtCenter's industrial design programs are consistently ranked number one by DesignIntelligence, and its art, industrial design, and media programs rank among the top 20 graduate design programs nationally per U.S. News; it was ranked 10th globally in Art and Design by QS World University Rankings in 2021 and named to The Hollywood Reporter's Top 25 Global Film Schools. It is also among the few schools offering a dedicated Interaction Design degree."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/ArtCenter_College_of_Design"
   ],
   "_retrieved": "2026-08-03"
  }
