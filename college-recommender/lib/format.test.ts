@@ -56,6 +56,7 @@ describe("formatStat", () => {
 
 describe("tierLabel", () => {
   it("labels each tier", () => {
+    expect(tierLabel("extreme_reach")).toBe("Extreme reach");
     expect(tierLabel("reach")).toBe("Reach");
     expect(tierLabel("target")).toBe("Target");
     expect(tierLabel("safety")).toBe("Safety");

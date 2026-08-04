@@ -39,7 +39,13 @@ export function SchoolDetailSections({
         ? "estimated"
         : "verified profile";
 
-  const { scholarships, research, outcomes, gradSchools, proSchools, programs, src } = details;
+  const { scholarships, research, outcomes, gradSchools, proSchools, programs, faculty, src } =
+    details;
+  const facultyEntries = asList(faculty);
+  // The data itself sometimes already ends with a caveat like
+  // "(Faculty change — verify.)" - only add the general one when none of the
+  // entries already carries it, so we never say it twice.
+  const facultyAlreadyCaveated = facultyEntries.some((entry) => /verify/i.test(entry));
 
   return (
     <>
@@ -126,6 +132,22 @@ export function SchoolDetailSections({
               {item}
             </p>
           ))}
+        </Section>
+      )}
+
+      {facultyEntries.length > 0 && (
+        <Section title="Notable faculty">
+          {facultyEntries.map((item) => (
+            <p key={item} style={{ margin: "6px 0" }}>
+              {item}
+            </p>
+          ))}
+          {!facultyAlreadyCaveated && (
+            <p className="muted" style={{ margin: "6px 0 0", fontSize: 12 }}>
+              Faculty move, retire and change roles — verify current affiliation before relying
+              on this.
+            </p>
+          )}
         </Section>
       )}
 

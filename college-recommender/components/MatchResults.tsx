@@ -3,7 +3,8 @@
 import { useState } from "react";
 
 import { ResultCard } from "@/components/ResultCard";
-import type { RecommendationResponse, Result } from "@/lib/contract";
+import type { AdmitTier, RecommendationResponse, Result } from "@/lib/contract";
+import { tierLabel } from "@/lib/format";
 import { useSchoolModal } from "@/lib/useSchoolModal";
 
 const PAGE = 10;
@@ -68,12 +69,12 @@ export function MatchResults({ response }: { response: RecommendationResponse })
           </button>
         ))}
         <span className="muted" style={{ fontSize: 13, marginLeft: 10 }}>Filter</span>
-        {["reach", "target", "safety"].map((tier) => (
+        {["extreme_reach", "reach", "target", "safety"].map((tier) => (
           <button
             key={tier} type="button" className={`chip ${tiers.includes(tier) ? "on" : ""}`}
             onClick={() => toggleTier(tier)}
           >
-            {tier[0].toUpperCase() + tier.slice(1)}
+            {tierLabel(tier as AdmitTier)}
           </button>
         ))}
       </div>

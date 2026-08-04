@@ -37,6 +37,9 @@ export interface ListedSchool {
 
 export interface FormState {
   gpa: string;
+  /** Weighted GPA, 0.0-5.0. Optional, displayed only - never scored or
+   *  converted. Blank must be omitted from the request body entirely. */
+  gpaWeighted: string;
   sat: string;
   major: string;
   maxNetPrice: string;
@@ -48,6 +51,7 @@ export interface FormState {
 
 const EMPTY_FORM: FormState = {
   gpa: "3.8",
+  gpaWeighted: "",
   sat: "",
   major: "Computer Science",
   maxNetPrice: "",

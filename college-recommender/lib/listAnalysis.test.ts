@@ -19,11 +19,17 @@ function school(id: string, tier: ListedSchool["tier"]): ListedSchool {
   };
 }
 
-function listOf(reach: number, target: number, safety: number): ListedSchool[] {
+function listOf(
+  reach: number,
+  target: number,
+  safety: number,
+  extremeReach = 0,
+): ListedSchool[] {
   return [
     ...Array.from({ length: reach }, (_, i) => school(`r${i}`, "reach")),
     ...Array.from({ length: target }, (_, i) => school(`t${i}`, "target")),
     ...Array.from({ length: safety }, (_, i) => school(`s${i}`, "safety")),
+    ...Array.from({ length: extremeReach }, (_, i) => school(`er${i}`, "extreme_reach")),
   ];
 }
 
@@ -69,6 +75,22 @@ describe("analyseList", () => {
 
   it("uses the stated 15-20% band", () => {
     expect([SAFETY_MIN, SAFETY_MAX]).toEqual([0.15, 0.2]);
+  });
+
+  it("counts extreme reaches separately, not folded into reach", () => {
+    const result = analyseList(listOf(8, 4, 0, 3));
+
+    expect(result.extremeReach).toBe(3);
+    expect(result.reach).toBe(8);
+    expect(result.total).toBe(15);
+  });
+
+  it("still keys the safety floor off safety share alone - extreme reaches count toward the total like any other listed school, with no separate maths path", () => {
+    // 3 safeties out of 20 (including 17 extreme reaches) is exactly the
+    // 15% floor - same formula, same threshold as a list with no extreme
+    // reaches at all, just a bigger denominator.
+    expect(analyseList(listOf(0, 0, 3, 17)).needsMoreSafeties).toBe(false);
+    expect(analyseList(listOf(0, 0, 2, 18)).needsMoreSafeties).toBe(true);
   });
 });
 

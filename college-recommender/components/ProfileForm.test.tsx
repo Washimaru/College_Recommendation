@@ -1,10 +1,14 @@
-import { act, cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ProfileProvider, useProfileStore } from "@/lib/profileStore";
 import { ProfileForm } from "./ProfileForm";
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
+});
 
 function mount() {
   return render(
@@ -44,6 +48,57 @@ describe("ProfileForm", () => {
   it("labels both ends of every preference question", () => {
     mount();
     expect(screen.getByText(/I'd rather we all helped each other/i)).toBeTruthy();
+  });
+
+  it("shows an unweighted GPA field (required, scored) and an optional weighted GPA field", () => {
+    mount();
+
+    const unweighted = screen.getByLabelText(/unweighted gpa/i) as HTMLInputElement;
+    const weighted = screen.getByLabelText(/\bweighted gpa/i) as HTMLInputElement;
+
+    expect(unweighted.required).toBe(true);
+    expect(unweighted.max).toBe("4");
+    expect(weighted.required).toBe(false);
+    expect(weighted.max).toBe("5");
+  });
+
+  it("tells the student which GPA is actually scored", () => {
+    mount();
+
+    expect(screen.getByText(/score on the unweighted/i)).toBeTruthy();
+  });
+
+  it("omits gpa_weighted from the request body when left blank", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ results: [], confidence: 0.9, stop_reason: "R2_confident", trace: [] }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    mount();
+
+    fireEvent.click(screen.getByRole("button", { name: /show my matches/i }));
+    await screen.findByRole("button", { name: /show my matches/i });
+
+    const [, init] = fetchMock.mock.calls[0];
+    const body = JSON.parse(init.body as string);
+    expect("gpa_weighted" in body.profile).toBe(false);
+  });
+
+  it("includes gpa_weighted as a number in the request body when provided", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ results: [], confidence: 0.9, stop_reason: "R2_confident", trace: [] }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    mount();
+
+    fireEvent.change(screen.getByLabelText(/\bweighted gpa/i), { target: { value: "4.42" } });
+    fireEvent.click(screen.getByRole("button", { name: /show my matches/i }));
+    await screen.findByRole("button", { name: /show my matches/i });
+
+    const [, init] = fetchMock.mock.calls[0];
+    const body = JSON.parse(init.body as string);
+    expect(body.profile.gpa_weighted).toBe(4.42);
   });
 
   it("shows matches again after the form remounts (a route change), without re-running the loop", () => {

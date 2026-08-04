@@ -49,5 +49,10 @@ export function formatStat(
 
 export function tierLabel(tier: AdmitTier | null | undefined): string | null {
   if (!tier) return null;
-  return { reach: "Reach", target: "Target", safety: "Safety" }[tier];
+  return {
+    extreme_reach: "Extreme reach",
+    reach: "Reach",
+    target: "Target",
+    safety: "Safety",
+  }[tier];
 }

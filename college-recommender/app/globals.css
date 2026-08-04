@@ -35,6 +35,8 @@
   --good: #0f7a5c;
   --warn: #b9711c;
   --bad: #b23f2e;
+  --danger: #7a2320;
+  --danger-ink: #fff6f4;
   --chip: #efeadf;
   --grad: linear-gradient(135deg, #12886a, #0c6f78);
   --shadow: 0 20px 45px -28px rgba(40, 45, 30, 0.45);
@@ -58,6 +60,8 @@
   --good: #4ec59d;
   --warn: #e0a25a;
   --bad: #ec7c6a;
+  --danger: #ff6b57;
+  --danger-ink: #200604;
   --chip: #26251b;
   --grad: linear-gradient(135deg, #4ec59d, #3fb7ab);
   --shadow: 0 22px 50px -26px rgba(0, 0, 0, 0.75);
@@ -457,6 +461,12 @@ input[type="range"]::-webkit-slider-thumb {
   font-weight: 650;
   white-space: nowrap;
   border: 1px solid transparent;
+}
+.tier.extreme_reach {
+  /* Solid fill, not a tint - deliberately reads as more severe than .tier.reach. */
+  background: var(--danger);
+  color: var(--danger-ink);
+  border-color: var(--danger);
 }
 .tier.reach {
   background: color-mix(in srgb, var(--bad) 14%, transparent);

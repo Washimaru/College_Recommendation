@@ -14,9 +14,14 @@ export const SAFETY_MAX = 0.2;
 
 export interface ListAnalysis {
   total: number;
+  /** Never includes extreme reaches - see `extremeReach` below. */
   reach: number;
   target: number;
   safety: number;
+  /** acceptance_rate <= 0.15 - reported, never folded into `reach` and never
+   *  itself a reason to warn. Over-reaching is a choice a student is
+   *  entitled to make knowingly. */
+  extremeReach: number;
   /** Entries whose tier could not be computed, because no GPA was given. */
   unknown: number;
   safetyShare: number;
@@ -30,11 +35,12 @@ export function analyseList(list: ListedSchool[]): ListAnalysis {
   const reach = count("reach");
   const target = count("target");
   const safety = count("safety");
+  const extremeReach = count("extreme_reach");
   const unknown = list.filter((s) => !s.tier).length;
 
   if (total === 0) {
     return {
-      total: 0, reach: 0, target: 0, safety: 0, unknown: 0,
+      total: 0, reach: 0, target: 0, safety: 0, extremeReach: 0, unknown: 0,
       safetyShare: 0, targetRange: [0, 0], needsMoreSafeties: false,
     };
   }
@@ -46,7 +52,7 @@ export function analyseList(list: ListedSchool[]): ListAnalysis {
   ];
 
   return {
-    total, reach, target, safety, unknown,
+    total, reach, target, safety, extremeReach, unknown,
     safetyShare,
     targetRange,
     needsMoreSafeties: safetyShare < SAFETY_MIN,

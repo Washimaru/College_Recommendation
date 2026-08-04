@@ -35,8 +35,9 @@ export default function ListPage() {
 
         <div className="panel" style={{ marginBottom: 22 }}>
           <p style={{ margin: 0, fontSize: 15 }}>
-            Your list is <b>{analysis.total} schools</b>: {analysis.reach} reaches,{" "}
-            {analysis.target} targets, {analysis.safety} safeties
+            Your list is <b>{analysis.total} schools</b>:{" "}
+            {analysis.extremeReach > 0 && <>{analysis.extremeReach} extreme reaches, </>}
+            {analysis.reach} reaches, {analysis.target} targets, {analysis.safety} safeties
             {analysis.unknown > 0 && <> · {analysis.unknown} without a tier</>}.
           </p>
 

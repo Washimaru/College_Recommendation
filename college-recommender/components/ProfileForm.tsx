@@ -51,6 +51,7 @@ export function ProfileForm() {
     const body = {
       profile: {
         gpa: Number(form.gpa),
+        ...(form.gpaWeighted ? { gpa_weighted: Number(form.gpaWeighted) } : {}),
         ...(form.sat ? { sat: Number(form.sat) } : {}),
         intended_major: form.major,
         culture_prefs: culturePrefs,
@@ -102,14 +103,30 @@ export function ProfileForm() {
     <>
       <form onSubmit={submit} className="panel" style={{ marginTop: 8 }}>
         <h2>Where you stand</h2>
+        <p className="muted" style={{ fontSize: 13, marginTop: 14, marginBottom: 0 }}>
+          We score on the unweighted 4.0 GPA. If your school uses a 5.0 weighted scale, add it
+          too — it tells us you took harder classes, but it doesn&rsquo;t change your matches.
+          We don&rsquo;t convert between the two scales: schools weight differently, so any
+          formula would be a guess.
+        </p>
         <div className="grid3" style={{ marginTop: 14 }}>
           <div>
             <label className="fld" htmlFor="gpa">
-              Your GPA (4.0 scale)
+              Unweighted GPA (4.0 scale)
             </label>
             <input
               id="gpa" type="number" required min={0} max={4} step={0.01}
               value={form.gpa} onChange={(e) => setForm({ ...form, gpa: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className="fld" htmlFor="gpaWeighted">
+              Weighted GPA <span style={{ color: "var(--faint)" }}>(optional, 5.0 scale)</span>
+            </label>
+            <input
+              id="gpaWeighted" type="number" min={0} max={5} step={0.01} placeholder="e.g. 4.42"
+              value={form.gpaWeighted}
+              onChange={(e) => setForm({ ...form, gpaWeighted: e.target.value })}
             />
           </div>
           <div>
