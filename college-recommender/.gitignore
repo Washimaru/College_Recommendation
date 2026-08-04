@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Generated at deploy time from data-pipeline/sources — never committed, so it
+# cannot drift from what the services actually serve.
+/public/catalog.json

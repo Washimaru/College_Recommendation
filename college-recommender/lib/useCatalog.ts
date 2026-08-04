@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import type { University } from "./contract";
+import { CATALOG_URL, IS_STATIC_DEMO } from "./deployment";
 
 /**
  * Module-level cache, shared by every component that calls `useCatalog`.
@@ -22,13 +23,14 @@ let inFlight: Promise<University[]> | null = null;
 function fetchCatalog(): Promise<University[]> {
   if (cache) return Promise.resolve(cache);
   if (!inFlight) {
-    inFlight = fetch("/api/universities")
+    inFlight = fetch(CATALOG_URL)
       .then(async (res) => {
         if (!res.ok) throw new Error(String(res.status));
         return res.json();
       })
       .then((body) => {
-        const universities = body.universities as University[];
+        // The gateway wraps the list; the static file is the bare array.
+        const universities = (Array.isArray(body) ? body : body.universities) as University[];
         cache = universities;
         return universities;
       })
@@ -57,7 +59,13 @@ export function useCatalog() {
         if (!cancelled) setCatalog(universities);
       })
       .catch(() => {
-        if (!cancelled) setError("Couldn't load the catalog. Is the stack running?");
+        if (!cancelled) {
+          setError(
+            IS_STATIC_DEMO
+              ? "Couldn't load the catalog file. Try reloading the page."
+              : "Couldn't load the catalog. Is the stack running?",
+          );
+        }
       });
     return () => {
       cancelled = true;

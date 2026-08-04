@@ -1,0 +1,106 @@
+name: Deploy static demo to GitHub Pages
+
+# Browse, Major Finder and the college list need only the catalog, so they work
+# as a static site. Matching needs the gateway, two Python services and
+# Postgres, which Pages cannot run — that page says so instead of failing.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "college-recommender/**"
+      - "data-pipeline/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; let a newer push supersede an in-flight one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # `data-pipeline/out/` is gitignored — the catalog is a build artifact,
+      # reproducible from the committed `sources/` tier files. Rebuilding it
+      # here keeps one source of truth rather than committing a second copy
+      # that could drift from what the services serve.
+      - name: Rebuild the catalog from committed sources
+        working-directory: data-pipeline
+        run: |
+          python -m pip install --quiet --upgrade pip
+          python -m pip install --quiet .
+          python build_catalog.py
+          python -c "
+          import json, pathlib
+          catalog = json.load(open('out/universities.json'))
+          out = pathlib.Path('../college-recommender/public/catalog.json')
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text(json.dumps(catalog, ensure_ascii=False))
+          us = [r for r in catalog if r['country'] == 'USA']
+          print(f'{len(catalog)} universities, {len(us)} US')
+          print(f\"  faculty:  {sum(1 for r in us if (r.get('details') or {}).get('faculty'))}\")
+          print(f\"  research: {sum(1 for r in us if (r.get('details') or {}).get('research'))}\")
+          "
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: college-recommender/package-lock.json
+
+      - name: Install
+        working-directory: college-recommender
+        run: npm ci
+
+      - name: Test and typecheck
+        working-directory: college-recommender
+        run: |
+          npx vitest run
+          npx tsc --noEmit
+
+      # A static export cannot contain POST route handlers. This checkout is
+      # disposable, so removing them here is safe and leaves local dev — where
+      # they are the real proxy to the gateway — untouched.
+      - name: Drop the server-only API routes
+        working-directory: college-recommender
+        run: rm -rf app/api
+
+      - name: Build static export
+        working-directory: college-recommender
+        env:
+          NEXT_PUBLIC_STATIC_DEMO: "1"
+          NEXT_PUBLIC_BASE_PATH: /College_Recommendation
+        run: npm run build
+
+      # Pages would otherwise run the output through Jekyll, which strips
+      # directories beginning with an underscore — including Next's `_next`,
+      # where every script and stylesheet lives.
+      - name: Disable Jekyll processing
+        run: touch college-recommender/out/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: college-recommender/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
