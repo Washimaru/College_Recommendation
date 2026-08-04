@@ -1,0 +1,265 @@
+{
+  "university-of-missouri": {
+    "faculty": "George P. Smith shared the 2018 Nobel Prize in Chemistry for pioneering phage display; he now holds the title Curators' Distinguished Professor Emeritus of Biological Sciences at Missouri, so he is no longer an active researcher there. Faculty rosters change; verify current status before citing.",
+    "research": {
+      "level": "R1 (very high research activity); Missouri has been an Association of American Universities member since 1908, with roughly $462 million in FY2024 research expenditures.",
+      "areas": "The University of Missouri Research Reactor Center (MURR) is the largest university research reactor in the US and a leading domestic source of medical isotopes. The Missouri School of Journalism (1908) is the oldest journalism school in the world and runs the 'Missouri Method' of hands-on newsroom training through student-staffed professional news outlets."
+    },
+    "src": [
+      "https://en.wikipedia.org/wiki/University_of_Missouri",
+      "https://en.wikipedia.org/wiki/George_P._Smith_(chemist)"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "oregon-state-university": {
+    "research": {
+      "level": "R1 (very high research activity); one of only a few US universities holding land-, sea-, space-, and sun-grant designations together.",
+      "areas": "Oceanography and marine sciences are a signature strength (Hatfield Marine Science Center, ARWU top-5 globally in oceanography), alongside forestry/agricultural sciences, coastal/wave engineering (O.H. Hinsdale Wave Research Laboratory), and nuclear engineering (campus TRIGA research reactor)."
+    },
+    "src": [
+      "https://en.wikipedia.org/wiki/Oregon_State_University",
+      "https://www.oregonstate.edu/research"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "georgia-state-university": {
+    "research": {
+      "level": "R1 (very high research activity); research expenditures topped $200 million in FY2018, reportedly the highest among US universities without an engineering or medical school.",
+      "areas": "Georgia State operates one of the only university-run BSL-4 biosafety labs in the country, used for research on pathogens such as Ebola and hantaviruses. Other signature centers include the Language Research Center (great-ape cognition/communication studies) and the Center for High Angular Resolution Astronomy (CHARA optical interferometer array)."
+    },
+    "src": ["https://en.wikipedia.org/wiki/Georgia_State_University"],
+    "_retrieved": "2026-08-03"
+  },
+  "quinnipiac-university": {
+    "research": {
+      "level": "Primarily a teaching-focused institution; its clearest national research footprint is applied rather than lab-based.",
+      "areas": "The Quinnipiac University Polling Institute conducts nationally cited public-opinion polling on politics and policy, regularly referenced by outlets such as CNN, the Washington Post, and the New York Times, and rated highly for accuracy by FiveThirtyEight."
+    },
+    "src": ["https://en.wikipedia.org/wiki/Quinnipiac_University"],
+    "_retrieved": "2026-08-03"
+  },
+  "marquette-university": {
+    "research": {
+      "level": "R2 (high research activity), offering over 68 doctoral and master's programs across 11 schools/colleges.",
+      "undergrad": "No specific named undergraduate research program is documented; opportunities appear to run through individual departments rather than a signature university-wide initiative."
+    },
+    "src": ["https://en.wikipedia.org/wiki/Marquette_University"],
+    "_retrieved": "2026-08-03"
+  },
+  "kennesaw-state-university": {
+    "research": {
+      "level": "R2 (high research activity), designated December 2018.",
+      "areas": "Research is organized around four institutional themes: biomedical and health sciences, computing and technology, human development and well-being, and sustainable/safe communities."
+    },
+    "src": ["https://en.wikipedia.org/wiki/Kennesaw_State_University"],
+    "_retrieved": "2026-08-03"
+  },
+  "belmont-university": {
+    "faculty": "Alberto Gonzales, former U.S. Attorney General, has served as dean of Belmont University College of Law (teaching National Security Law) as of 2024, holding the Doyle Rogers Distinguished Chair of Law. Faculty and administrative roles change; verify his current status before citing.",
+    "research": {
+      "level": "Teaching- and practice-focused rather than research-intensive.",
+      "areas": "Belmont's signature strength is entertainment/music-industry education through the Mike Curb College of Entertainment & Music Business, which operates professional recording studios (including Ocean Way Nashville), plus clinical partnerships in health sciences via HCA."
+    },
+    "src": [
+      "https://en.wikipedia.org/wiki/Belmont_University",
+      "https://en.wikipedia.org/wiki/Alberto_Gonzales"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "seattle-university": {
+    "research": {
+      "level": "Primarily a teaching-focused Jesuit university; not a major research producer.",
+      "areas": "The psychology graduate program is unusual nationally for its focus on existential-phenomenological approaches to clinical practice; the College of Nursing offers a Doctor of Nursing Practice."
+    },
+    "src": ["https://en.wikipedia.org/wiki/Seattle_University"],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-oklahoma": {
+    "research": {
+      "level": "R1 (very high research activity); over $416 million in research expenditures across its three campuses in 2022.",
+      "areas": "Atmospheric and severe-weather science is OU's signature strength: the National Weather Center on the Norman campus houses NOAA's National Severe Storms Laboratory and the Cooperative Institute for Severe and High-Impact Weather Research, alongside the university's Advanced Radar Research Center."
+    },
+    "src": ["https://en.wikipedia.org/wiki/University_of_Oklahoma"],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-hawaii-at-manoa": {
+    "faculty": "David Karl, Victor and Peggy Brandstrom Pavel Professor of Microbial Oceanography and a National Academy of Sciences member (elected 2006), directs the Center for Microbial Oceanography and continues as co-investigator on the long-running Hawaii Ocean Time-series program. Patrick Vinton Kirch, a Pacific/Hawaiian archaeologist, is an active professor of anthropology at UH Manoa (he also holds emeritus status from UC Berkeley, where he taught previously). Faculty rosters change; verify current status before citing.",
+    "research": {
+      "level": "R1 (very high research activity); roughly $276 million in R&D spending as of 2018.",
+      "areas": "Oceanography and marine/earth sciences are the clear signature strength, led by the School of Ocean and Earth Science and Technology (SOEST, the campus's largest extramurally funded unit), alongside astronomy, volcanology, and Pacific/Asian studies."
+    },
+    "src": [
+      "https://en.wikipedia.org/wiki/University_of_Hawaii_at_Manoa",
+      "https://en.wikipedia.org/wiki/David_Karl",
+      "https://anthropology.manoa.hawaii.edu/patrick-v-kirch/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-oregon": {
+    "faculty": "David J. Wineland, who shared the 2012 Nobel Prize in Physics for work on quantum control of individual particles, moved to the University of Oregon in January 2018 as the Philip H. Knight Distinguished Research Chair and Research Professor of Physics (he still consults with his former NIST group). Faculty affiliations change; verify current status before citing.",
+    "research": {
+      "level": "R1 (very high research activity), AAU member; research spending is comparatively modest for its classification (~$111M in 2018).",
+      "areas": "At least 19 UO faculty have been elected to the National Academy of Sciences over the years; the university has a long-standing strength in molecular biology dating to an institute founded in 1959."
+    },
+    "src": [
+      "https://en.wikipedia.org/wiki/University_of_Oregon",
+      "https://en.wikipedia.org/wiki/David_J._Wineland",
+      "https://cas.uoregon.edu/directory/profiles/all/djw34"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "west-virginia-university": {
+    "research": {
+      "level": "R1 (very high research activity); $246.2 million in R&D spending in FY2023.",
+      "areas": "WVU is the FBI's lead academic partner in biometrics research and created the first Bachelor of Science in Biometric Systems; it also hosts the Rockefeller Neuroscience Institute (Alzheimer's and brain-disease research) and an FBI-linked forensic science program."
+    },
+    "src": ["https://en.wikipedia.org/wiki/West_Virginia_University"],
+    "_retrieved": "2026-08-03"
+  },
+  "san-francisco-state-university": {
+    "research": {
+      "level": "R2 (high research activity).",
+      "areas": "SF State operates the Romberg Tiburon Campus, the only marine and environmental science lab directly on San Francisco Bay, which hosts the Smithsonian Environmental Research Center's Marine Invasions Lab and anchors the San Francisco Bay National Estuarine Research Reserve."
+    },
+    "src": ["https://en.wikipedia.org/wiki/San_Francisco_State_University"],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-colorado-boulder": {
+    "faculty": "Thomas Cech, who shared the 1989 Nobel Prize in Chemistry for discovering catalytic RNA, remains a distinguished professor of biochemistry at CU Boulder and formerly led its BioFrontiers Institute. Eric Cornell, who shared the 2001 Nobel Prize in Physics for Bose-Einstein condensation, is an active professor at CU Boulder and a NIST fellow working out of JILA. John L. Hall, who shared the 2005 Nobel Prize in Physics for laser-based precision spectroscopy, is emeritus (NIST Senior Fellow, emeritus, and adjoint professor of physics at CU Boulder) rather than an active researcher. Note that a fourth CU-affiliated laureate, David Wineland (2012 Physics), left CU Boulder for the University of Oregon in 2018. Faculty rosters change; verify current status before citing.",
+    "src": [
+      "https://en.wikipedia.org/wiki/University_of_Colorado_Boulder",
+      "https://en.wikipedia.org/wiki/Thomas_Cech",
+      "https://en.wikipedia.org/wiki/Eric_Allin_Cornell",
+      "https://en.wikipedia.org/wiki/John_L._Hall",
+      "https://en.wikipedia.org/wiki/David_J._Wineland"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-iowa": {
+    "research": {
+      "level": "R1 (very high research activity); roughly $818 million in research expenditures in FY2021.",
+      "areas": "Iowa's signature strength is creative writing: the Iowa Writers' Workshop, the oldest and among the most selective MFA programs in the country, has produced a large share of the university's 46 Pulitzer Prize affiliates. Iowa was also the first US university to accept creative theses/projects in place of traditional scholarly ones."
+    },
+    "src": ["https://en.wikipedia.org/wiki/University_of_Iowa"],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-new-hampshire": {
+    "faculty": "Chanda Prescod-Weinstein, a theoretical cosmologist working on dark matter/dark energy and quantum gravity, has been UNH physics and astronomy faculty since 2019 and earned tenure in 2023. John D. Mayer, a psychology professor at UNH, co-developed the widely used Mayer-Salovey-Caruso Emotional Intelligence Test (MSCEIT) and the underlying model of emotional intelligence. Note two other UNH-linked figures sometimes cited are no longer current: Pulitzer-winning poet Charles Simic (former UNH professor) died in January 2023, and mathematician/MacArthur fellow Yitang Zhang left UNH for UC Santa Barbara in 2015 and is now at Sun Yat-sen University. Faculty rosters change; verify current status before citing.",
+    "src": [
+      "https://en.wikipedia.org/wiki/University_of_New_Hampshire",
+      "https://en.wikipedia.org/wiki/Chanda_Prescod-Weinstein",
+      "https://en.wikipedia.org/wiki/John_D._Mayer",
+      "https://en.wikipedia.org/wiki/Charles_Simic",
+      "https://en.wikipedia.org/wiki/Yitang_Zhang"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "auburn-university": {
+    "research": {
+      "level": "R1 (very high research activity).",
+      "areas": "Auburn runs the oldest continuous agricultural research station in the Southeast (since 1896) and operates the nation's first FAA-approved Unmanned Aircraft Systems flight school. Its College of Architecture is known for the Rural Studio, a design-build program that puts undergraduates to work on real community building projects."
+    },
+    "src": ["https://en.wikipedia.org/wiki/Auburn_University"],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-arizona": {
+    "research": {
+      "level": "R1 (very high research activity); $954 million in FY2023 research expenditures, among the top 4% of public universities nationally.",
+      "areas": "Space and planetary science is the flagship strength: the Lunar and Planetary Laboratory has led or contributed to numerous NASA missions, including leading the OSIRIS-REx asteroid sample-return mission and the Phoenix Mars lander. The university also operates the Biosphere 2 research facility."
+    },
+    "src": ["https://en.wikipedia.org/wiki/University_of_Arizona"],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-memphis": {
+    "research": {
+      "level": "R1 (very high research activity).",
+      "areas": "The FedEx Institute of Technology focuses on supply-chain management, nanotechnology, and intelligent systems; the Center for Earthquake Research and Information (CERI) is a notable regional seismology center given Memphis's proximity to the New Madrid seismic zone."
+    },
+    "src": ["https://en.wikipedia.org/wiki/University_of_Memphis"],
+    "_retrieved": "2026-08-03"
+  },
+  "wheaton-college-illinois": {
+    "research": {
+      "level": "A teaching-focused liberal arts college rather than a research institution; its distinction is producing doctoral-bound graduates, not conducting research itself. It ranked 9th nationally (1986-1995) and 18th (2010-2020) among baccalaureate institutions for graduates who went on to earn doctorates in non-STEM fields.",
+      "undergrad": "The Human Needs and Global Resources (HNGR) program places students in extended field placements in the developing world, and the Conservatory of Music — the only conservatory within an evangelical school of higher education — offers significant performance-based training."
+    },
+    "src": ["https://en.wikipedia.org/wiki/Wheaton_College_(Illinois)"],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-nevada-reno": {
+    "research": {
+      "level": "R1 (doctoral research university); $144 million in R&D spending as of 2018.",
+      "areas": "Particular strengths in earth sciences and journalism; the Donald W. Reynolds School of Journalism counts six Pulitzer Prizes among its alumni. UNR also hosts the National Judicial College and a dedicated Center for Basque Studies, reflecting the region's Basque immigrant heritage."
+    },
+    "src": ["https://en.wikipedia.org/wiki/University_of_Nevada,_Reno"],
+    "_retrieved": "2026-08-03"
+  },
+  "north-carolina-central-university": {
+    "research": {
+      "level": "A comprehensive HBCU with a modest but real biomedical research footprint rather than a major research producer overall.",
+      "areas": "The Julius L. Chambers Biomedical/Biotechnology Research Institute (BBRI) and the Biomanufacturing Research Institute and Technology Enterprise (BRITE) are NCCU's named research centers, focused on biomedical and biomanufacturing science."
+    },
+    "src": ["https://en.wikipedia.org/wiki/North_Carolina_Central_University"],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-mississippi": {
+    "research": {
+      "level": "R1 (very high research activity); roughly $137 million in R&D spending as of 2018.",
+      "areas": "Ole Miss hosts the National Center for Physical Acoustics and the National Center for Natural Products Research, which since 1968 has run the only federally contracted, FDA-approved cannabis research cultivation facility in the country. Its medical center performed the world's first human lung transplant (1963) and first animal-to-human heart transplant (1964), both historical rather than current events."
+    },
+    "src": ["https://en.wikipedia.org/wiki/University_of_Mississippi"],
+    "_retrieved": "2026-08-03"
+  },
+  "arizona-state-university": {
+    "faculty": "Phil Christensen, a Regents' Professor of geological sciences at ASU since 1981, is a principal investigator on multiple Mars instruments (Mars Odyssey THEMIS, Mars Global Surveyor's Thermal Emission Spectrometer) and directs ASU's Mars Space Flight Facility. Frank Wilczek, who shared the 2004 Nobel Prize in Physics for work on the strong nuclear force, holds a part-time/seasonal distinguished professorship at ASU (roughly February-March each year); his primary appointment is at MIT. Faculty rosters change; verify current status before citing.",
+    "src": [
+      "https://en.wikipedia.org/wiki/Arizona_State_University",
+      "https://en.wikipedia.org/wiki/Phil_Christensen",
+      "https://en.wikipedia.org/wiki/Frank_Wilczek"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "iowa-state-university": {
+    "faculty": "Dan Shechtman, who won the 2011 Nobel Prize in Chemistry for discovering quasicrystals, holds a professorship in materials science at Iowa State and is an associate of the DOE's Ames National Laboratory, but he only spends about five months a year in Ames on a part-time appointment (his primary post is at Technion in Israel). Faculty rosters change; verify current status before citing.",
+    "research": {
+      "level": "R1 (very high research activity); roughly $550 million in research grants for FY2025.",
+      "areas": "Iowa State is the only US university with a Department of Energy national laboratory (Ames National Laboratory) physically on campus, giving it a signature strength in materials science; it was also home to the Atanasoff-Berry Computer, an early electronic digital computer built in 1937-42."
+    },
+    "src": [
+      "https://en.wikipedia.org/wiki/Iowa_State_University",
+      "https://en.wikipedia.org/wiki/Dan_Shechtman"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "george-mason-university": {
+    "research": {
+      "level": "R1 (very high research activity); roughly $149 million in sponsored research as of 2019. Note: Mason is sometimes credited with two Nobel Memorial Prize in Economics laureates, James M. Buchanan and Vernon L. Smith, but neither is current faculty — Buchanan died in 2013, and Smith left for Chapman University in 2008 — so no current Nobel-laureate faculty could be verified.",
+      "areas": "Mason's research is organized around health, sustainability, and security themes, and it hosts the free-market-oriented Mercatus Center and the Krasnow Institute for Advanced Study (neuroscience)."
+    },
+    "src": [
+      "https://en.wikipedia.org/wiki/George_Mason_University",
+      "https://en.wikipedia.org/wiki/James_M._Buchanan",
+      "https://en.wikipedia.org/wiki/Vernon_L._Smith"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "columbia-college-chicago": {
+    "research": {
+      "level": "An arts- and media-focused college organized around practice-based learning rather than traditional academic research.",
+      "areas": "Signature creative/scholarly centers include the Center for Black Music Research, the Center for Book and Paper Arts, and the Museum of Contemporary Photography, reflecting strengths in music, book arts, and photography rather than lab science."
+    },
+    "src": ["https://en.wikipedia.org/wiki/Columbia_College_Chicago"],
+    "_retrieved": "2026-08-03"
+  },
+  "virginia-commonwealth-university": {
+    "research": {
+      "level": "Very high research activity (Carnegie); over $560 million in sponsored research in FY2025. Note: chemist John Fenn, credited with a shared 2002 Nobel Prize in Chemistry while holding a joint VCU chemistry/engineering appointment, is not current faculty — he died in December 2010, though he had remained research-active at VCU until his death.",
+      "areas": "VCU's clearest research strength is cancer: the NCI-designated Massey Cancer Center anchors substantial biomedical research activity, alongside work in biomedical engineering, psychiatric/behavioral genetics, and tobacco/addiction studies."
+    },
+    "src": [
+      "https://en.wikipedia.org/wiki/Virginia_Commonwealth_University",
+      "https://en.wikipedia.org/wiki/John_Bennett_Fenn"
+    ],
+    "_retrieved": "2026-08-03"
+  }
+}
