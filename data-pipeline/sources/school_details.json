@@ -1327,7 +1327,11 @@
    ],
    "paths": "Heavy tech & engineering placement, accountancy, plus PhD programs."
   },
-  "_source": "curated"
+  "_source": "curated",
+  "faculty": "Anthony Leggett shared the 2003 Nobel Prize in Physics for pioneering theoretical work on superconductors and superfluids; he holds the John D. and Catherine T. MacArthur Chair in Physics at Illinois but is now listed as emeritus, having retired from active faculty status. John Bardeen, a two-time Nobel laureate in Physics (1956, 1972, the latter for BCS theory of superconductivity developed at Illinois), was long-time Illinois faculty but is deceased. (Faculty change — verify; note Leggett's emeritus status.)",
+  "src": [
+   "https://physics.illinois.edu/people/directory/profile/aleggett"
+  ]
  },
  "university-of-north-carolina-at-chapel-hill": {
   "admissions": {
@@ -1432,7 +1436,11 @@
    ],
    "paths": "Major tech pipeline (esp. CS), healthcare, engineering and grad study."
   },
-  "_source": "curated"
+  "_source": "curated",
+  "faculty": "David Baker, Henrietta and Aubrey Davis Endowed Professor of Biochemistry and director of the Institute for Protein Design, won half of the 2024 Nobel Prize in Chemistry for computational protein design (developer of Rosetta and RoseTTAFold, and creator of the Foldit citizen-science game). (Faculty change — verify.)",
+  "src": [
+   "https://en.wikipedia.org/wiki/David_Baker_(biochemist)"
+  ]
  },
  "university-of-virginia": {
   "admissions": {
@@ -2247,7 +2255,15 @@
    ],
    "paths": "A leading producer of Black women who earn doctorates; strong med/grad placement."
   },
-  "_source": "curated"
+  "_source": "curated",
+  "research": {
+   "undergrad": "The Office of Undergraduate Research and Training Programs (URTP) pairs students with faculty mentors, provides Responsible Conduct in Research training and professional-development workshops, and coordinates Research Day. Spelman ranks first among baccalaureate institutions in producing Black women who go on to earn STEM doctorates.",
+   "areas": "Research spans STEM (via the Women's Research and Resource Center and robotics, e.g. the SpelBots team) as well as humanities, social sciences, and the arts."
+  },
+  "src": [
+   "https://www.spelman.edu/provost-office/office-of-research-innovation-and-collaboration/undergraduate-research-and-training-programs/index.html",
+   "https://en.wikipedia.org/wiki/Spelman_College"
+  ]
  },
  "howard-university": {
   "admissions": {
@@ -2287,7 +2303,15 @@
    ],
    "paths": "A top producer of Black professionals in law, medicine, government and media."
   },
-  "_source": "curated"
+  "_source": "curated",
+  "research": {
+   "level": "R1 (very high research activity), awarded February 2025 — Howard is the only HBCU to hold R1 status.",
+   "undergrad": "Research participation is available through department- and institute-level projects; Howard undergraduates have gone on to national honors such as the Goldwater Scholarship.",
+   "areas": "Quantum information science, AI/ML and data science, atmospheric science and extreme weather, cybersecurity, and health; Howard also leads the Research Institute for Tactical Autonomy (RITA), a multi-year Department of Defense-funded University Affiliated Research Center."
+  },
+  "src": [
+   "https://research.howard.edu/"
+  ]
  },
  "university-of-florida": {
   "admissions": {
@@ -2421,7 +2445,11 @@
    ],
    "paths": "Predominantly engineering, tech and aviation careers, plus grad study."
   },
-  "_source": "curated"
+  "_source": "curated",
+  "faculty": "Vladimir M. Shalaev, Bob and Anne Burnett Distinguished Professor of Electrical and Computer Engineering and Scientific Director for Nanophotonics at the Birck Nanotechnology Center, was elected to the National Academy of Engineering in 2025 (for negative-refractive-index optical metamaterials) and to the American Academy of Arts and Sciences the same year; his current work centers on quantum meta-photonics. Yuehwern Yih, Tompkins Professor of Industrial Engineering, was elected to the National Academy of Engineering in the same 2025 class. Purdue's historical Nobel laureates in chemistry, Herbert C. Brown (d. 2004) and Ei-ichi Negishi (d. 2021), are no longer living and should not be described as current faculty. (Faculty change — verify.)",
+  "src": [
+   "https://en.wikipedia.org/wiki/Ei-ichi_Negishi"
+  ]
  },
  "texas-a-m-university": {
   "admissions": {
@@ -2463,7 +2491,16 @@
    ],
    "paths": "Engineering, energy and business careers plus graduate study."
   },
-  "_source": "curated"
+  "_source": "curated",
+  "faculty": "Donald J. Darensbourg, Distinguished Professor of Chemistry, was elected to the National Academy of Sciences in 2022 for his work on metal carbonyl complexes and catalytic use of carbon dioxide in copolymerization; he also won the SEC Faculty Achievement Award in 2023. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; NSF-ranked 16th nationally in R&D expenditure (2021), at $1.14 billion",
+   "areas": "Research spans Research Valley and Research Park (about 3 million sq ft of facilities); Texas A&M produced the first cloned pet (a cat, 2001) and was the first academic institution to clone six species, reflecting strength in genomics/biosciences alongside the Hagler Institute for Advanced Study and Cyclotron Institute."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Donald_J._Darensbourg",
+   "https://en.wikipedia.org/wiki/Texas_A%26M_University"
+  ]
  },
  "university-of-wisconsin-madison": {
   "admissions": {
@@ -2503,7 +2540,15 @@
    ],
    "paths": "Broad industry placement plus very strong PhD/grad-school output."
   },
-  "_source": "curated"
+  "_source": "curated",
+  "research": {
+   "undergrad": "The Undergraduate Research Scholars (URS) program pairs first- and second-year students (transfers included) with a faculty or staff mentor from any discipline for a year-long research or creative project, plus weekly seminars led by peer URS Fellows.",
+   "areas": "UW-Madison is a major R1 research university; per its own communications office, as of 2023 it counted 20 Nobel laureates, 41 Pulitzer Prize winners, 2 Fields medalists, and 1 Turing Award recipient among historical alumni, faculty, or researchers (no living faculty member currently holds a Nobel Prize)."
+  },
+  "src": [
+   "https://urs.ls.wisc.edu/",
+   "https://en.wikipedia.org/wiki/University_of_Wisconsin%E2%80%93Madison"
+  ]
  },
  "university-of-oxford": {
   "admissions": {
@@ -3120,11 +3165,16 @@
   "_source": "curated"
  },
  "university-of-maryland": {
-  "src": {
-   "u": "https://www.irpa.umd.edu/CampusCounts/cds.html",
-   "t": "U-Maryland Common Data Set",
-   "y": "2024–25"
-  },
+  "src": [
+   "u",
+   "t",
+   "y",
+   "https://physics.umd.edu/people/faculty",
+   "https://en.wikipedia.org/wiki/S._James_Gates",
+   "https://en.wikipedia.org/wiki/James_A._Yorke",
+   "https://en.wikipedia.org/wiki/John_C._Mather",
+   "http://our.umd.edu/"
+  ],
   "admissions": {
    "sat": "1410–1520",
    "act": "31–34",
@@ -3133,7 +3183,12 @@
   "academics": {
    "ratio": "17:1"
   },
-  "_source": "curated"
+  "_source": "curated",
+  "faculty": "Notable current physics faculty include William D. Phillips (1997 Nobel Prize in Physics, for laser cooling and trapping of atoms), S. James Gates Jr. (National Medal of Science 2013; returned to UMD as the John S. Toll Professor of Physics in 2022 after a stint at Brown), and James A. Yorke (National Medal of Science; Distinguished University Research Professor known for coining the term \"chaos\" in dynamical systems). John C. Mather (2006 Nobel Prize in Physics, for COBE satellite work on cosmic microwave background) holds an adjunct professorship at UMD while his primary post remains senior astrophysicist at NASA Goddard. (Faculty change — verify.)",
+  "research": {
+   "undergrad": "The Office of Undergraduate Research (OUR) runs the ForagerOne matching platform, Vertically Integrated Projects (multi-semester research teams), and the flagship Summer Undergraduate Research Conference (SURC), which recently drew over 220 student presenters; students of any experience level can also join a Student Advisory Board.",
+   "areas": "Spans STEM and humanities alike, including dedicated research groups such as Gene Silencing, Rapid Diagnostics, Music & Social Identity, and Visualizing Social Justice."
+  }
  },
  "wake-forest-university": {
   "src": [
@@ -3181,11 +3236,12 @@
   }
  },
  "college-of-william-mary": {
-  "src": {
-   "u": "https://www.wm.edu/offices/ir/university_data/cds/",
-   "t": "William & Mary Common Data Set",
-   "y": "2024–25"
-  },
+  "src": [
+   "u",
+   "t",
+   "y",
+   "https://www.wm.edu/as/charlescenter/"
+  ],
   "admissions": {
    "sat": "1420–1520",
    "act": "31–34",
@@ -3194,7 +3250,12 @@
   "academics": {
    "ratio": "12:1"
   },
-  "_source": "curated"
+  "_source": "curated",
+  "research": {
+   "level": "Public research university; undergraduate research is centralized through the Roy R. Charles Center.",
+   "undergrad": "About 1 in 3 W&M undergraduates participates in Charles Center programming; 300+ students received Charles Center summer research grants in 2024. WMSURE supports research-focused mentorship, and named tracks include Democracy Scholars, Sharpe Community Scholars, James Monroe Scholars, and 1693 Scholars, plus the Sharp Journalism Seminar.",
+   "areas": "Cross-disciplinary, with dedicated tracks in public policy/democracy, community engagement, and journalism."
+  }
  },
  "dartmouth-college": {
   "scholarships": {
@@ -3550,8 +3611,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.holycross.edu/admissions-aid/tuition-financial-aid/scholarships-grants"
-  ]
+   "https://www.holycross.edu/admissions-aid/tuition-financial-aid/scholarships-grants",
+   "https://www.holycross.edu/academics/experiential-learning/research-scholarship/weiss-summer-research"
+  ],
+  "research": {
+   "level": "Small Jesuit liberal arts college; self-described as 'a national leader in providing undergraduate summer research opportunities.'",
+   "undergrad": "The Weiss Summer Research Program funds roughly 100 students a year for eight weeks of faculty-mentored or self-directed research (a natural-sciences/math track plus a broader humanities/social-sciences/arts track through the J.D. Power Center), culminating in an annual symposium now in its 30th year.",
+   "areas": "Spans natural sciences, math, computer science, and humanities/social sciences."
+  }
  },
  "colorado-college": {
   "scholarships": {
@@ -3761,8 +3828,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.reed.edu/admission-aid/costs-and-financial-aid/financial-aid/"
-  ]
+   "https://www.reed.edu/admission-aid/costs-and-financial-aid/financial-aid/",
+   "https://www.reed.edu/"
+  ],
+  "research": {
+   "level": "Small liberal arts college known for academic rigor; original scholarship is central to the curriculum.",
+   "undergrad": "Reed's 'Research from Day One' approach has students assisting in faculty labs (including at the college's own on-campus research nuclear reactor, one of few at a US undergraduate institution) from early in their time at Reed; every senior completes an original-research senior thesis, archived physically in the campus 'Thesis Tower.'",
+   "areas": "Cross-disciplinary, with a notable hands-on physics/nuclear science track tied to the reactor."
+  }
  },
  "macalester-college": {
   "scholarships": {
@@ -3776,8 +3849,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.macalester.edu/financial-aid/policies/macalester-tuition-promise/"
-  ]
+   "https://www.macalester.edu/financial-aid/policies/macalester-tuition-promise/",
+   "https://www.macalester.edu/student-research/funded-summer-experiences-for-students/"
+  ],
+  "research": {
+   "level": "Small liberal arts college; research funding is open to students in any discipline, not just STEM.",
+   "undergrad": "Summer options include on-campus faculty-mentored research, 'Fellowships to go Anywhere' for off-campus/external research, and department-specific programs such as an undergraduate summer research program in geological science.",
+   "areas": "Broad liberal-arts coverage, with dedicated STEM-focused funding tracks alongside humanities/social-science options."
+  }
  },
  "university-of-rochester": {
   "scholarships": {
@@ -3814,8 +3893,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.brynmawr.edu/admissions-aid/tuition-financial-aid"
-  ]
+   "https://www.brynmawr.edu/admissions-aid/tuition-financial-aid",
+   "https://www.brynmawr.edu/academics/student-research"
+  ],
+  "research": {
+   "level": "Small women's liberal arts college; part of the Bi-College/Tri-College consortium with Haverford and Swarthmore.",
+   "undergrad": "The Summer Science Research (SSR) Program, running since 1989, funds 35+ students a year for 10 weeks of discovery-based lab or field research with Bryn Mawr faculty; open to Bryn Mawr and Haverford students, and all science majors are encouraged to do mentored research during the year or summer.",
+   "areas": "STEM disciplines broadly, via faculty-mentored lab and field work."
+  }
  },
  "oberlin-college": {
   "scholarships": {
@@ -3850,8 +3935,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.mtholyoke.edu/mount-holyoke-commitment"
-  ]
+   "https://www.mtholyoke.edu/mount-holyoke-commitment",
+   "https://www.mtholyoke.edu/academics/research-excellence-and-opportunity"
+  ],
+  "research": {
+   "undergrad": "Students can work in the Science Center's labs as early as their first year; the college also hosts a Beckman Scholars Program, and the 700-acre campus itself functions as a field-research \"living laboratory\" for biology, ecology, sustainability, and environmental history.",
+   "areas": "Interdisciplinary reach across astronomy, biochemistry, biology, chemistry, computer science, and economics, with science facilities ranked among the nation's best by the 2019 Princeton Review."
+  }
  },
  "villanova-university": {
   "scholarships": {
@@ -3908,8 +3998,15 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.berklee.edu/scholarships"
-  ]
+   "https://www.berklee.edu/scholarships",
+   "https://en.wikipedia.org/wiki/Terri_Lyne_Carrington",
+   "https://en.wikipedia.org/wiki/Berklee_College_of_Music"
+  ],
+  "faculty": "Terri Lyne Carrington, appointed professor at her alma mater in 2007, is a four-time Grammy-winning drummer/producer (including Best Jazz Instrumental Album in 2014 and 2023) who founded and directs the Berklee Institute of Jazz and Gender Justice. (Faculty change — verify; note that some prominent past instructors, e.g. vibraphonist Gary Burton, are retired rather than current.)",
+  "research": {
+   "level": "Undergraduate conservatory; scholarly activity is centered on performance, composition, and production rather than laboratory research.",
+   "undergrad": "Students build portfolios and original work through Berklee's performance-based curriculum and capstone projects rather than a traditional sponsored-research track."
+  }
  },
  "morehouse-college": {
   "scholarships": {
@@ -3958,8 +4055,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.kenyon.edu/admissions-aid/financial-aid-scholarships/scholarships-grants/"
-  ]
+   "https://www.kenyon.edu/admissions-aid/financial-aid-scholarships/scholarships-grants/",
+   "https://www.kenyon.edu/academics/student-research/"
+  ],
+  "research": {
+   "level": "Small liberal arts college; research is faculty-mentored rather than lab-scale.",
+   "undergrad": "The Summer Science Scholars Program, Kenyon's oldest student-faculty mentored summer program, pairs 30+ students with faculty for up to 10 weeks of natural-science research (proposal required in spring); the Cascade Scholars Program gives first- and second-years with no prior experience a pathway in.",
+   "areas": "Natural sciences broadly, from molecular biology to chemistry."
+  }
  },
  "lafayette-college": {
   "scholarships": {
@@ -3992,8 +4095,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.bucknell.edu/admissions-aid/tuition-fees-financial-aid/scholarship-programs"
-  ]
+   "https://www.bucknell.edu/admissions-aid/tuition-fees-financial-aid/scholarship-programs",
+   "https://www.bucknell.edu/academics/undergraduate-research-opportunities"
+  ],
+  "research": {
+   "level": "Small research-active liberal arts university with an engineering college — unusual for a LAC.",
+   "undergrad": "The Program for Undergraduate Research (PUR) funds student-faculty summer research ($400/week plus housing, up to 10 weeks) across all divisions; the Bucknell Institute for Public Policy runs a parallel summer fellowship for social-science students.",
+   "areas": "Cross-disciplinary, with engineering as a distinguishing strength among liberal arts peers."
+  }
  },
  "whitman-college": {
   "scholarships": {
@@ -4007,8 +4116,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.whitman.edu/admission-and-aid/financial-aid-and-costs/the-whitman-10-percent-promise"
-  ]
+   "https://www.whitman.edu/admission-and-aid/financial-aid-and-costs/the-whitman-10-percent-promise",
+   "https://www.whitman.edu/academics/experiential-learning/undergraduate-research"
+  ],
+  "research": {
+   "undergrad": "Whitman funds student-faculty research through Faculty-Student Summer Research Awards, Abshire Student Research Scholar Awards, and named biomedical placements including the Helen Hawkes Thompson grants in marine biology (Friday Harbor Laboratories), a Fred Hutchinson Cancer Center summer program, and Mayo Clinic Summer Undergraduate Research Fellowships; students often co-author papers with faculty.",
+   "areas": "Particularly strong placement pipeline into biology and biomedical research at major partner institutions."
+  }
  },
  "occidental-college": {
   "scholarships": {
@@ -4022,8 +4136,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.oxy.edu/financial-aid/how-financial-aid-works/grants-scholarships"
-  ]
+   "https://www.oxy.edu/financial-aid/how-financial-aid-works/grants-scholarships",
+   "https://www.oxy.edu/academics/student-research/urc"
+  ],
+  "research": {
+   "level": "Small liberal arts college; the Undergraduate Research Center (URC) runs a 'nationally recognized' flagship program.",
+   "undergrad": "The Summer Research Program (SRP), running since 1998, funds 125+ students a year for 10 weeks of faculty-mentored research (via Oxy Summer Research Fellowships), now spanning disciplines beyond STEM, with a required CORE 200 course and end-of-summer conference presentation.",
+   "areas": "Broad, including a dedicated fellowship track for corporate responsibility/socially responsible investing research."
+  }
  },
  "pitzer-college": {
   "scholarships": {
@@ -4118,8 +4238,12 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.furman.edu/financial-aid/aid-types/merit-based-scholarships/"
-  ]
+   "https://www.furman.edu/financial-aid/aid-types/merit-based-scholarships/",
+   "https://furman.edu/furman-advantage/"
+  ],
+  "research": {
+   "undergrad": "Undergraduate research is woven into The Furman Advantage, the college's four-year engaged-learning framework, with students pursuing funded research fellowships (e.g., a recent research fellow studying the effects of COVID-19 on immigration) typically in their third and fourth years."
+  }
  },
  "california-institute-of-the-arts": {
   "scholarships": {
@@ -4155,8 +4279,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.fisk.edu/admissions/scholarships/"
-  ]
+   "https://www.fisk.edu/admissions/scholarships/",
+   "https://en.wikipedia.org/wiki/Fisk_University"
+  ],
+  "research": {
+   "undergrad": "The Fisk-Vanderbilt Master's-to-PhD Bridge Program (started 2004, co-directed with Vanderbilt) helps underrepresented students move from a Fisk master's degree into STEM doctoral programs; 21 participants have completed PhDs with dozens more in progress, a completion rate well above the national average.",
+   "areas": "Strength in social sciences (Fisk established one of the first social-science departments at an HBCU in 1910, with an early social-work training center for African American graduate students) and in arts/humanities collections, including the Stieglitz Collection and Harlem Renaissance-era materials."
+  }
  },
  "texas-christian-university": {
   "scholarships": {
@@ -4170,8 +4299,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://admissions.tcu.edu/chancellors-scholars.php"
-  ]
+   "https://admissions.tcu.edu/chancellors-scholars.php",
+   "https://www.tcu.edu/research.php"
+  ],
+  "research": {
+   "level": "Research activity has roughly tripled since 2019, with an 85% increase in externally funded research awards over the past five years.",
+   "undergrad": "TCU documents 100+ Student Departmental Honors Projects annually and hosts an annual Student Research Symposium.",
+   "areas": "Behavioral research is a particular strength — TCU's Institute for Behavioral Research holds a $7.2 million NIH award."
+  }
  },
  "worcester-polytechnic-institute": {
   "scholarships": {
@@ -4185,8 +4320,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.wpi.edu/admissions/tuition-aid/types-of-aid/scholarships-grants/wpi-merit"
-  ]
+   "https://www.wpi.edu/admissions/tuition-aid/types-of-aid/scholarships-grants/wpi-merit",
+   "https://en.wikipedia.org/wiki/Worcester_Polytechnic_Institute"
+  ],
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity (2025 Carnegie designation)",
+   "undergrad": "All students complete an Interactive Qualifying Project (IQP), connecting technology to societal needs, and a Major Qualifying Project (MQP), an independent research project in their major; through the Global Projects Program, more than 60% of students complete these projects at off-campus project centers on six continents.",
+   "areas": "Project-based curriculum on a distinctive seven-week term system; recent MQP research has spanned space-station life-support systems, pharmaceutical polymer design, and liquid-crystal research."
+  }
  },
  "rose-hulman-institute-of-technology": {
   "scholarships": {
@@ -4229,8 +4370,10 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://undergraduate.admissions.gwu.edu/merit-scholarships"
-  ]
+   "https://undergraduate.admissions.gwu.edu/merit-scholarships",
+   "https://www.law.gwu.edu/gw-law-dean-dayna-bowen-matthew-inducted-national-academy-medicine"
+  ],
+  "faculty": "Dayna Bowen Matthew, Dean of GW Law and the Harold H. Greene Professor of Law, was inducted into the National Academy of Medicine in October 2025 for her scholarship on the social determinants of health and legal remedies for racial health disparities (author of 'Just Medicine' and 'Just Health'). (Faculty change — verify.)"
  },
  "santa-clara-university": {
   "scholarships": {
@@ -4244,8 +4387,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.scu.edu/johnsonscholars/about-the-programaward/"
-  ]
+   "https://www.scu.edu/johnsonscholars/about-the-programaward/",
+   "https://www.scu.edu/academics/research/undergraduate-research/"
+  ],
+  "research": {
+   "undergrad": "Students partner with faculty on projects or design independent research, supported by honors programs, grants, and travel stipends through the university's undergraduate research office; recent student work has spanned sociology (climate/disability studies) to fMRI-based machine-learning research on autism spectrum disorder.",
+   "areas": "Cross-disciplinary undergraduate projects supported by an Office of Research Compliance & Integrity, with an emphasis on preparing students for graduate school and national fellowships."
+  }
  },
  "st-olaf-college": {
   "scholarships": {
@@ -4260,8 +4408,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://wp.stolaf.edu/admissions/afford/"
-  ]
+   "https://wp.stolaf.edu/admissions/afford/",
+   "https://wp.stolaf.edu/curi/"
+  ],
+  "research": {
+   "undergrad": "The Collaborative Undergraduate Research and Inquiry (CURI) program lets students from any discipline work closely with a faculty member in a paid research framework, including full-time summer positions, part-time academic-year projects (~10 hrs/week), and travel funding to present at conferences; directed by mathematics professor Jill Dietz.",
+   "areas": "Open to all academic disciplines rather than concentrated in specific signature fields."
+  }
  },
  "fordham-university": {
   "scholarships": {
@@ -4275,8 +4428,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.fordham.edu/undergraduate-financial-aid/types-of-financial-aid/fordham-scholarships-and-grants/"
-  ]
+   "https://www.fordham.edu/undergraduate-financial-aid/types-of-financial-aid/fordham-scholarships-and-grants/",
+   "https://en.wikipedia.org/wiki/Fordham_University"
+  ],
+  "research": {
+   "undergrad": "Fordham hosts an annual Undergraduate Research Symposium (with an accompanying Undergraduate Research Journal) and facilitates placements with partners such as the National Science Foundation, The Cloisters, and the American Museum of Natural History; science students can also cross-register and do research through Fordham's partnership with Albert Einstein College of Medicine, including physician mentoring at Montefiore Medical Center.",
+   "areas": "The Louis Calder Center, a 114-acre biological field station, anchors ecology work including the 81-mile Urban-Rural Gradient Experiment."
+  }
  },
  "bard-college": {
   "scholarships": {
@@ -4290,8 +4448,12 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.bard.edu/sfs/financial-aid/"
-  ]
+   "https://www.bard.edu/sfs/financial-aid/",
+   "https://en.wikipedia.org/wiki/Bard_College"
+  ],
+  "research": {
+   "undergrad": "All Bard students complete a two-part Moderation and Senior Project — an individually supervised capstone research or creative thesis — as the college's signature independent-scholarship requirement."
+  }
  },
  "rensselaer-polytechnic-institute": {
   "scholarships": {
@@ -4305,8 +4467,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://financialaid.rpi.edu/types-aid/scholarships/rensselaer-medal"
-  ]
+   "https://financialaid.rpi.edu/types-aid/scholarships/rensselaer-medal",
+   "https://en.wikipedia.org/wiki/Rensselaer_Polytechnic_Institute"
+  ],
+  "research": {
+   "undergrad": "The Rensselaer Plan explicitly prioritizes growing undergraduate research participation; the Center for Biotechnology and Interdisciplinary Studies alone trains over 1,000 undergraduates (plus 200 doctoral students) in hands-on biotech research, and RPI runs 34 research centers with about $100.8 million in annual sponsored research.",
+   "areas": "Strengths include the Tetherless World Constellation (semantic web/data science, backed by a $1M Gates Foundation grant) alongside biotechnology, nanotechnology, and energy research."
+  }
  },
  "xavier-university-of-louisiana": {
   "scholarships": {
@@ -4350,8 +4517,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.sarahlawrence.edu/financial-aid/undergraduate/sarah-lawrence-aid.html"
-  ]
+   "https://www.sarahlawrence.edu/financial-aid/undergraduate/sarah-lawrence-aid.html",
+   "https://en.wikipedia.org/wiki/Sarah_Lawrence_College"
+  ],
+  "research": {
+   "level": "Undergraduate-focused liberal arts college; not a research university.",
+   "undergrad": "The college's signature pedagogy centers on one-on-one \"don\" (faculty mentor) conferences and independent research projects individually supervised by faculty, rather than lab-based sponsored research.",
+   "areas": "Emphasis on individualized, self-directed scholarship across the arts and humanities."
+  }
  },
  "sewanee-the-university-of-the-south": {
   "scholarships": {
@@ -4365,8 +4538,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://new.sewanee.edu/admission-aid/cost-financial-aid/"
-  ]
+   "https://new.sewanee.edu/admission-aid/cost-financial-aid/",
+   "https://new.sewanee.edu/academics/undergraduate-research/"
+  ],
+  "research": {
+   "undergrad": "The Sewanee Pledge guarantees every student funding for a summer research fellowship with a faculty member or an approved external program; recent cohorts placed roughly 379 students in mentored research, showcased at the Scholarship Sewanee symposium (recent editions featured ~200 projects across sciences and humanities).",
+   "areas": "Broad participation across biology, chemistry, physics, psychology, economics, and humanities rather than a single flagship field."
+  }
  },
  "rhodes-college": {
   "scholarships": {
@@ -4380,8 +4558,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.rhodes.edu/admission-aid/cost-affordability/rhodes-institutional-aid"
-  ]
+   "https://www.rhodes.edu/admission-aid/cost-affordability/rhodes-institutional-aid",
+   "https://www.rhodes.edu/academics/undergraduate-research"
+  ],
+  "research": {
+   "undergrad": "Rhodes pairs advanced undergraduates (typically rising juniors/seniors) with faculty as Student Research Assistants within their major, funds conference travel through the Rhodes Student Travel Fund, and showcases work campus-wide at the annual Rhodes Symposium; opportunities are concentrated in Biology, Chemistry, Psychology, Physics, and the Rhodes Archaeological Field School at Ames Plantation.",
+   "areas": "Notable strength in archaeology via the Ames Plantation field school, alongside the sciences."
+  }
  },
  "centre-college": {
   "scholarships": {
@@ -4410,8 +4593,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://wooster.edu/admissions/afford/merit-scholarships/"
-  ]
+   "https://wooster.edu/admissions/afford/merit-scholarships/",
+   "https://en.wikipedia.org/wiki/College_of_Wooster"
+  ],
+  "research": {
+   "level": "Undergraduate-focused liberal arts college",
+   "undergrad": "Every Wooster student completes Independent Study, a mandatory, year-long senior capstone research or creative thesis mentored one-on-one by a faculty member — the defining feature of the college's curriculum."
+  }
  },
  "agnes-scott-college": {
   "scholarships": {
@@ -4426,8 +4614,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.agnesscott.edu/admission/undergraduate-admission/scholarships-financial-aid/100k-promise.html"
-  ]
+   "https://www.agnesscott.edu/admission/undergraduate-admission/scholarships-financial-aid/100k-promise.html",
+   "https://en.wikipedia.org/wiki/Agnes_Scott_College"
+  ],
+  "research": {
+   "level": "Undergraduate-focused women's liberal arts college",
+   "undergrad": "SUMMIT, the college's signature four-year curriculum, builds leadership development, global learning, and digital literacy into every student's path (Heiskell Award winner, 2019); students can also cross-register for research and coursework at other ARCHE-member institutions in Atlanta."
+  }
  },
  "baylor-university": {
   "scholarships": {
@@ -4456,8 +4649,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://seaver.pepperdine.edu/about/administration/dean/regentsscholars/"
-  ]
+   "https://seaver.pepperdine.edu/about/administration/dean/regentsscholars/",
+   "https://seaver.pepperdine.edu/academics/research/"
+  ],
+  "research": {
+   "level": "Mid-sized university; Seaver College emphasizes faculty-student research within a liberal arts framework.",
+   "undergrad": "The Summer Undergraduate Research Program (SURP) covers all disciplines; Summer Undergraduate Research in Biology (SURB) targets students pursuing biological/biomedical careers; Cross-Disciplinary and Interdisciplinary Undergraduate Research (CDIUR) clusters three faculty from three different disciplines around shared student projects.",
+   "areas": "Business, environmental science, humanities, media, international affairs, psychology, religion, and science/technology."
+  }
  },
  "emerson-college": {
   "scholarships": {
@@ -4470,8 +4669,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://emerson.edu/departments/financial-aid/new-undergraduate-students/types-aid-new-undergraduates/scholarships-grants/merit-based-scholarships"
-  ]
+   "https://emerson.edu/departments/financial-aid/new-undergraduate-students/types-aid-new-undergraduates/scholarships-grants/merit-based-scholarships",
+   "https://www.emerson.edu/academics"
+  ],
+  "research": {
+   "level": "Specialized communication/arts college; scholarly output is oriented toward creative and media work rather than lab science.",
+   "undergrad": "Students engage through the Creativity@Emerson initiative and department-level creative/scholarly projects across Emerson's three schools (Arts & Interdisciplinary Studies, Communication, and Film/Television/Media Arts); faculty and student work is catalogued in the Iwasaki Library's 'Emerson Authors, Researchers, and Creators' repository.",
+   "areas": "Journalism, media and communication studies, film/TV production, marketing communication, and writing/publishing."
+  }
  },
  "hampton-university": {
   "scholarships": {
@@ -4507,8 +4712,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.tuskegee.edu/financial-aid/Scholarships.html"
-  ]
+   "https://www.tuskegee.edu/financial-aid/Scholarships.html",
+   "https://en.wikipedia.org/wiki/Tuskegee_University"
+  ],
+  "research": {
+   "level": "Carnegie-classified as a Master's College/University (Medium Programs); the university has stated an aspiration to reach R2 status and awards some research/scholarly doctoral degrees.",
+   "areas": "The National Center for Bioethics in Research and Health Care is the first bioethics center focused on the sciences, humanities, law, and faith traditions as they bear on research and medical treatment of African Americans and other underserved populations. The School of Veterinary Medicine, founded 1944, has produced roughly 75% of the nation's African American veterinarians."
+  }
  },
  "bentley-university": {
   "scholarships": {
@@ -4522,8 +4732,15 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.bentley.edu/support/firstgen-presidential-fellows-program"
-  ]
+   "https://www.bentley.edu/support/firstgen-presidential-fellows-program",
+   "https://en.wikipedia.org/wiki/Daniel_Everett",
+   "https://www.bentley.edu/centers/valente-center/undergraduate-research-program"
+  ],
+  "faculty": "Daniel Everett, Trustee Professor of Cognitive Sciences, is a linguist known for decades of fieldwork on the Amazonian Pirahã language and for research findings (and the resulting Chomsky debate) challenging claims of universal recursion in human language; his memoir \"Don't Sleep, There Are Snakes\" documents the fieldwork. (Faculty change — verify.)",
+  "research": {
+   "undergrad": "The Valente Center for Arts and Science funds paid, student-proposed independent research projects ($1,000/semester) with a faculty mentor, culminating in Bentley's spring Undergraduate Research Showcase; the honors program also publishes the Fusio research journal.",
+   "areas": "Open across class codes/disciplines, spanning sociology, environmental science, economics, and political science, often at the intersection with business."
+  }
  },
  "loyola-marymount-university": {
   "scholarships": {
@@ -4537,8 +4754,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://financialaid.lmu.edu/current/scholarships/"
-  ]
+   "https://financialaid.lmu.edu/current/scholarships/",
+   "https://academics.lmu.edu/orca/"
+  ],
+  "research": {
+   "level": "R2 (National University/High Research Activity).",
+   "undergrad": "The Office of Research and Creative Arts (ORCA) runs the Undergraduate Research Symposium, a paid Summer Undergraduate Research Program (SURP), a Research Learning Community, the Rains Research Assistant Program, BCLA ASPIRE, and the McNair Scholars Program for first-generation/underrepresented students headed to graduate research.",
+   "areas": "Broad, with engineering a particular strength (undergraduate program ranked 21st nationally by U.S. News, 2023)."
+  }
  },
  "providence-college": {
   "scholarships": {
@@ -4552,8 +4775,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://financial-aid.providence.edu/types-of-assistance/institutional-merit-based/"
-  ]
+   "https://financial-aid.providence.edu/types-of-assistance/institutional-merit-based/",
+   "https://engaged-learning.providence.edu/research/summer-undergraduate-research-program/"
+  ],
+  "research": {
+   "undergrad": "The Center for Engaged Learning runs a Summer Undergraduate Research and Creative Grants Program (up to 10 weeks, $600/week plus expenses) and smaller academic-year grants, pairing sophomores through seniors one-on-one with a faculty mentor; work culminates in a final report and the campus-wide Celebration of Student Scholarship and Creativity.",
+   "areas": "Deliberately open across all fields of study rather than concentrated in particular disciplines."
+  }
  },
  "university-of-san-diego": {
   "scholarships": {
@@ -4566,8 +4794,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.sandiego.edu/admission-and-aid/scholarships.php"
-  ]
+   "https://www.sandiego.edu/admission-and-aid/scholarships.php",
+   "https://www.sandiego.edu/ugresearch/"
+  ],
+  "research": {
+   "undergrad": "USD's Office of Undergraduate Research runs the STAR and BURST Scholars programs, funded summer research stipends, and travel awards for conference presentation, with all participants registering as \"Research Scholars\" and showcasing work at the annual Creative Collaborations Showcase.",
+   "areas": "Program is explicitly cross-disciplinary rather than concentrated in one signature field."
+  }
  },
  "yeshiva-university": {
   "scholarships": {
@@ -4582,8 +4815,12 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://go.yu.edu/merit-scholarships"
-  ]
+   "https://go.yu.edu/merit-scholarships",
+   "https://en.wikipedia.org/wiki/Yeshiva_University"
+  ],
+  "research": {
+   "areas": "Yeshiva's research activity is concentrated in its graduate professional schools (Jewish studies, social work, psychology, law, and medicine via the Albert Einstein College of Medicine affiliation). Historical faculty have included Nobel laureates Paul A. M. Dirac (physics) and Paul Greengard (medicine, d. 2019) and neurologist-writer Oliver Sacks (d. 2015), but none are current."
+  }
  },
  "manhattan-school-of-music": {
   "scholarships": {
@@ -4597,8 +4834,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.msmnyc.edu/admission/scholarships-financial-aid/types-of-aid/"
-  ]
+   "https://www.msmnyc.edu/admission/scholarships-financial-aid/types-of-aid/",
+   "https://www.msmnyc.edu/about/"
+  ],
+  "research": {
+   "level": "Conservatory; training is performance-based rather than research-based.",
+   "undergrad": "Undergraduates get frequent public performance opportunities — recitals, ensembles, and major productions on a daily performance calendar — under artist-faculty instruction across a student body of 960+ from 45+ countries.",
+   "areas": "Classical performance, jazz, and musical theatre/contemporary performance."
+  }
  },
  "new-england-conservatory": {
   "scholarships": {
@@ -4654,8 +4897,16 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://sfcm.edu/study/apply/financial-aid/scholarships-grants"
-  ]
+   "https://sfcm.edu/study/apply/financial-aid/scholarships-grants",
+   "https://en.wikipedia.org/wiki/Mason_Bates",
+   "https://sfcm.edu/study/faculty"
+  ],
+  "faculty": "Mason Bates, on SFCM's composition faculty since 2014, won the 2019 Grammy for Best Opera Recording (for 'The (R)evolution of Steve Jobs') and was rated the second-most-performed living composer among American orchestras in a 2018 survey; he is also a 2008 Guggenheim Fellow. (Faculty change — verify.)",
+  "research": {
+   "level": "Conservatory; training is performance/composition-based rather than research-based.",
+   "undergrad": "Students work directly with artist-faculty across classical, jazz, and contemporary tracks in a small collegiate program of roughly 180 faculty.",
+   "areas": "Composition (including electronic/orchestral hybrid work), orchestral and chamber performance, and historical performance."
+  }
  },
  "university-of-california-irvine": {
   "faculty": "Elizabeth Loftus, a Distinguished Professor and National Academy of Sciences member, is one of the most cited psychologists alive for her research on the malleability of memory and eyewitness testimony. Eric Rignot, also a National Academy of Sciences member, is a leading glaciologist and contributing author to IPCC climate assessments. (Faculty change — verify.)",
@@ -4693,6 +4944,441 @@
   },
   "src": [
    "https://famu.edu/administration/undergraduate-research/index.php"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "san-diego-state-university": {
+  "research": {
+   "level": "R1 (very high research activity) — SDSU received this Carnegie designation in February 2025, the first California State University campus to do so.",
+   "undergrad": "The university frames undergraduate involvement as part of its 'community-centered research' mission, with students contributing alongside doctoral researchers on faculty projects.",
+   "areas": "Community-engaged and applied research (e.g. the MAKE Farm at Mission Valley), plus growing strength in materials/quantum physics and clinical/health partnerships."
+  },
+  "src": [
+   "https://www.sdsu.edu/research-innovation/r1"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-california-santa-barbara": {
+  "faculty": "UCSB carries an unusually dense cluster of current Nobel laureates: Alan Heeger (Chemistry, 2000, for the discovery of conductive polymers), David Gross (Physics, 2004, for asymptotic freedom in the strong interaction; Chancellor's Chair Professor at the Kavli Institute for Theoretical Physics), Shuji Nakamura (Physics, 2014, for the blue LED, Professor of Materials and Electrical/Computer Engineering since 1999), and Finn Kydland (Economics, 2004, for work on dynamic macroeconomics; Kydland splits his appointment with Carnegie Mellon's Tepper School of Business and the Norwegian School of Economics). Note that fellow UCSB physics Nobel laureate Herbert Kroemer died in March 2024 and should not be listed as current. (Faculty change — verify.)",
+  "research": {
+   "level": "AAU member, very high research activity; home to the Kavli Institute for Theoretical Physics (KITP).",
+   "undergrad": "Undergraduates participate through department-based faculty labs and campus research programs.",
+   "areas": "Theoretical physics, materials science/engineering (solid-state lighting), and macroeconomics."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Alan_J._Heeger",
+   "https://en.wikipedia.org/wiki/David_Gross",
+   "https://en.wikipedia.org/wiki/Shuji_Nakamura",
+   "https://en.wikipedia.org/wiki/Finn_E._Kydland",
+   "https://en.wikipedia.org/wiki/Herbert_Kroemer"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "digipen-institute-of-technology": {
+  "research": {
+   "level": "Specialized technical institute focused on applied, project-based work rather than traditional academic research; DigiPen was the first school in the world to offer a four-year video game development degree.",
+   "undergrad": "All students build increasingly complex, multidisciplinary game and engine projects from scratch on shared codebases, culminating in capstone titles; student work has won 1,000+ industry awards and honors.",
+   "areas": "Game engine/real-time simulation programming, game design, and digital art/animation."
+  },
+  "src": [
+   "https://www.digipen.edu/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "california-polytechnic-state-university-slo": {
+  "research": {
+   "level": "Teaching-focused polytechnic built around the 'Learn by Doing' philosophy rather than a traditional research mission.",
+   "undergrad": "Five colleges run their own funded summer research programs (e.g. the Bailey College of Science & Mathematics' Frost Fund, 400+ participants a year); NSF-funded CSU-SPaRA, CIRM-funded COMPASS (regenerative medicine), and NIH-funded U-RISE support underrepresented students in STEM; all undergraduates complete a capstone senior project.",
+   "areas": "Applied engineering, agriculture, and the biological sciences, where a senior research project is a graduation requirement."
+  },
+  "src": [
+   "https://studentresearch.calpoly.edu/undergraduate-research-opportunities"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "california-state-university-long-beach": {
+  "research": {
+   "level": "Large regional public university; research is coordinated through the Office of Research & Economic Development (ORED).",
+   "undergrad": "The Office of Undergraduate Research Services (OURS) supports student researchers; students can compete in the annual Student Research Competition, and the McNair Scholars Program supports first-generation/underrepresented students headed to graduate research careers. CSULB's Shark Lab is a well-known marine biology research facility with public open houses.",
+   "areas": "Marine biology (Shark Lab), field biology (including a Catalina Island field program), and broad cross-disciplinary faculty-mentored research."
+  },
+  "src": [
+   "https://www.csulb.edu/office-of-research-and-economic-development"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "binghamton-university-suny": {
+  "research": {
+   "level": "R1 ('very high research activity'), one of 131 US universities holding the designation.",
+   "undergrad": "The First-year Research Immersion (FRI) program — one of only four in the country and the only one in the Northeast — places incoming students directly into authentic faculty-led research; Summer Research Immersion (SRI) and the Summer Scholars and Artists Fellowship extend this through later years; the Source Project supports humanities/social-science research and BUPNUR welcomes students with no prior research experience.",
+   "areas": "STEM research through FRI/SRI, plus humanities, social sciences, and the arts through the Source Project."
+  },
+  "src": [
+   "https://www.binghamton.edu/academics/binghamton-impact/research.html"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-central-florida": {
+  "research": {
+   "level": "R1 (very high research activity).",
+   "undergrad": "The Office of Undergraduate Research coordinates faculty-mentored opportunities, and the Knights Research Scholars Program expands access; students also work in labs through the Central Florida Research Park, which hosts 12,300+ employees across UCF-affiliated research partnerships.",
+   "areas": "Optics and photonics (CREOL and the Florida Photonics Center of Excellence), modeling and simulation (Institute for Simulation and Training), and space/planetary science, reflecting UCF's self-description as 'America's Space University.'"
+  },
+  "src": [
+   "https://www.ucf.edu/research/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "north-carolina-state-university": {
+  "research": {
+   "level": "R1 (very high research spending and doctorate production).",
+   "undergrad": "The Office of Undergraduate Research (OUR) offers Project Supply Grants, a Federal Work-Study Research Assistant Program, travel awards, and the Envisioning Research Contest, alongside presentation venues like the Research Slam and the Fall Sidewalk Symposium.",
+   "areas": "Big data, biomedical engineering, materials science, and food safety."
+  },
+  "src": [
+   "https://undergradresearch.dasa.ncsu.edu/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-california-davis": {
+  "research": {
+   "level": "Major AAU research university; roughly $961 million in annual research funding, 110 startups over the past decade, and 1,382+ active patents per the campus research office.",
+   "undergrad": "About half of UC Davis undergraduates take part in research or creative projects, through faculty labs, the UC Davis Medical Center, or local industry partners.",
+   "areas": "Veterinary medicine (ranked #1 nationally by QS in 2023) and agriculture/forestry (ranked #2 globally by QS in 2023), plus a Comprehensive Cancer Center."
+  },
+  "src": [
+   "https://research.ucdavis.edu/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-georgia": {
+  "faculty": "Jenna Jambeck, Georgia Athletic Association Distinguished Professor of Environmental Engineering, won a 2022 MacArthur Fellowship for her work quantifying the scale of ocean plastic pollution (via the Debris Tracker app) and developing the Circularity Assessment Protocol. (Faculty change — verify.)",
+  "research": {
+   "level": "R1 (very high research activity).",
+   "undergrad": "The Center for Undergraduate Research Opportunities (CURO), housed in the Morehead Honors College, is open to all undergraduates regardless of year, GPA, or major, and offers a CURO Honors Scholarship ($3,000/year, renewable up to four years) plus an annual research symposium.",
+   "areas": "Broad, spanning international affairs to the life sciences; environmental engineering is a notable strength via Jambeck's work."
+  },
+  "src": [
+   "https://curo.uga.edu/",
+   "https://en.wikipedia.org/wiki/Jenna_Jambeck"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "stony-brook-university": {
+  "research": {
+   "level": "R1 (very high research activity); AAU member.",
+   "undergrad": "URECA (Undergraduate Research & Creative Activities) supports faculty-mentored research and creative work for majors in all fields, including 'Explorations in STEM' for students new to research, and offers grants such as the Jane & Armando Jannelli-URECA award.",
+   "areas": "Broad research base; the campus's C. N. Yang Institute for Theoretical Physics is named for the late Nobel laureate Chen-Ning Yang, who was on the physics faculty from 1965 until his retirement in 1999 (he died in October 2025) — a historical rather than current affiliation."
+  },
+  "src": [
+   "https://you.stonybrook.edu/ureca/",
+   "https://en.wikipedia.org/wiki/Chen-Ning_Yang"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-south-florida": {
+  "research": {
+   "level": "R1 (very high research activity); AAU member; designated a 'Preeminent State Research University' by Florida's Board of Governors.",
+   "undergrad": "Student Engagement for Research & Innovation (SERI) connects undergraduates with faculty research; the annual OneUSF Summer Research Symposium drew 128 student projects from 22 colleges/universities; USF is also a top producer of Gilman Scholars over the last 25 years.",
+   "areas": "Broad research base supported by the Research Development Institute, which provides capacity-building support across disciplines."
+  },
+  "src": [
+   "https://www.usf.edu/research-innovation/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "southern-methodist-university": {
+  "research": {
+   "undergrad": "SMU's Office of Engaged Learning runs several named tracks: the Engaged Learning Fellowship for capstone-level projects, paid Undergraduate Research Assistantships, a Summer Research Internship/SURF track, NSF Research Experiences for Undergraduates, and the First Year Research Experience (FYRE) for incoming students.",
+   "areas": "Includes centers such as the Darwin Deason Institute for Cyber Security and the AT&T Center for Virtualization within the Lyle School of Engineering."
+  },
+  "src": [
+   "https://www.smu.edu/provost/saes/academic-enrichment/engaged-learning/research",
+   "https://en.wikipedia.org/wiki/Southern_Methodist_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "colorado-school-of-mines": {
+  "research": {
+   "undergrad": "The Mines Undergraduate Research Fellowship (MURF) funds full-time undergraduates to collaborate with campus researchers on projects that have spanned particle physics, explosives engineering, and oceanography.",
+   "areas": "Signature strengths in mining and geophysics (founded the world's first geophysics department in 1926; operates the Edgar Experimental Mine), energy/oil-shale research, and the first graduate program in space resources (2018)."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Colorado_School_of_Mines"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "saint-louis-university": {
+  "research": {
+   "undergrad": "SLU's Scholarly Undergraduate Research Grants and Experiences (SURGE) program connects students—often as early as freshman year—with faculty running research and creative projects; students have been named as manuscript co-authors.",
+   "areas": "Strengths include disease diagnostics, cancer-cell research, aerospace safety, and Parkinson's-related devices, alongside the Edward A. Doisy Research Center (~80 labs on vaccines, cancer, liver disease) and the SLU Research Institute (geospatial, water, health data, translational neuroscience)."
+  },
+  "src": [
+   "https://www.slu.edu/research/student-research.php",
+   "https://en.wikipedia.org/wiki/Saint_Louis_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-connecticut": {
+  "research": {
+   "undergrad": "UConn's Office of Undergraduate Research (OUR) coordinates numerous named tracks — SHARE virtual summer apprenticeships, IDEA Grants, the Summer Undergraduate Research Fund (SURF), the Barbara C. Setlow Health Research Program, and a Research Apprenticeship Program — open to students in all majors across all campuses, culminating in the Frontiers in Undergraduate Research poster exhibition.",
+   "areas": "UConn is an R1 university that spent roughly $269 million on R&D in 2018, giving undergraduates access to research spanning STEM and non-STEM fields alike."
+  },
+  "src": [
+   "https://ugradresearch.uconn.edu/",
+   "https://en.wikipedia.org/wiki/University_of_Connecticut"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "north-carolina-a-t-state-university": {
+  "research": {
+   "undergrad": "NC A&T's Division of Research maintains a dedicated undergraduate research track; the university's overall research enterprise ranks among the top three in the 17-campus UNC System, with $96.2 million in external awards in FY25.",
+   "areas": "Research extends beyond its traditional engineering and agriculture strengths into biomedical research, health disparities, evolutionary biology, and computational science, with 20 research centers/institutes partnering with USDA, DoD, and NIH."
+  },
+  "src": [
+   "https://www.ncat.edu/research/index.php",
+   "https://en.wikipedia.org/wiki/North_Carolina_A%26T_State_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-at-albany-suny": {
+  "faculty": "William Kennedy, the 1984 Pulitzer Prize winner for fiction (\"Ironweed\") and a longtime UAlbany creative-writing professor (full professor from 1983), founded the university's New York State Writers Institute in 1983 and remains listed as its founder. (Faculty change — verify current active-teaching status given his age.)",
+  "research": {
+   "undergrad": "The Minerva Center for High-Impact Practices coordinates undergraduate research across UAlbany's nine schools/colleges, including STEP/CSTEP programs, summer research, and a Presidential Award for Undergraduate Research.",
+   "areas": "Notable research centers include the RNA Institute, the Cancer Research Center, and the Atmospheric Sciences Research Center; UAlbany is classified R1 (very high research activity)."
+  },
+  "src": [
+   "https://www.nyswritersinstitute.org/",
+   "https://en.wikipedia.org/wiki/William_Kennedy_(author)",
+   "https://www.albany.edu/undergraduate-research"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "florida-international-university": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; roughly $246 million in annual research expenditures (FY2021).",
+   "areas": "Signature facility is the International Hurricane Research Center, the only university-based tropical-storm research facility of its kind in the U.S., home to the Wall of Wind — an NSF-recognized experimental facility (since 2015) able to simulate Category 5 hurricane conditions."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Florida_International_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "chapman-university": {
+  "faculty": "Vernon L. Smith, 2002 Nobel laureate in Economic Sciences (pioneer of experimental economics), is a current professor of economics and law at Chapman, where he founded the Economic Science Institute. Yakir Aharonov, the James J. Farley Professor of Natural Philosophy, co-discovered the Aharonov–Bohm effect, shared the 1998 Wolf Prize in Physics, received the 2009 National Medal of Science, and was elected a Foreign Member of the Royal Society in 2024; he has taught at Chapman since 2008. (Faculty change — verify.)",
+  "research": {
+   "undergrad": "The Center for Undergraduate Excellence coordinates a Summer Undergraduate Research Fellowship (SURF), credit-bearing Student-Faculty Research and Creative Activity courses (291/491), Scholarly/Creative and Travel Grants, and mentorship programs like \"Lunch with a Professor,\" with work showcased at the Student Scholar Symposium.",
+   "areas": "Examples include undergraduate-led biomaterial development for tissue repair; broader institutional strengths include the Economic Science Institute (experimental economics) and computation/complex-systems centers within Schmid College."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Vernon_L._Smith",
+   "https://en.wikipedia.org/wiki/Yakir_Aharonov",
+   "https://www.chapman.edu/research/index.aspx"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "fashion-institute-of-technology": {
+  "faculty": "Valerie Steele, director and chief curator of The Museum at FIT since 2003, is a widely cited fashion historian and author of numerous books on the history and theory of fashion. (Faculty/role change — verify.)",
+  "research": {
+   "undergrad": "In place of traditional lab research, FIT students engage through specialized studios (photography, sculpture, printmaking, model-making), annual BFA fashion shows, and Gallery FIT, which hosts student and faculty exhibitions."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Fashion_Institute_of_Technology"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "clark-atlanta-university": {
+  "research": {
+   "level": "R2: Doctoral Universities – High research activity",
+   "undergrad": "The Robert H. \"Bob\" Bell Center for Innovation and Entrepreneurial Development provides entrepreneurship training and support for student ventures.",
+   "areas": "The Center for Functional Nanoscale Measures (CFNM) has produced more Black PhDs in nanoscale science than any other HBCU, an advanced-materials research strength. The graduate social work program is nationally ranked."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Clark_Atlanta_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "embry-riddle-aeronautical-university": {
+  "research": {
+   "undergrad": "The Prescott campus offers Ignite Grants (up to $48,000 annually per project for student research under a faculty mentor) and Eagle-Prize (E-Prize) Grants ($60,000 distributed annually to student teams in design/research competitions).",
+   "areas": "Aerospace-focused research including the Aerospace Research and Technology Park and the FAA NextGen Florida Test Bed (Daytona Beach), and the Robertson Safety Institute with its Crash Lab and Aviation Safety and Security Archives (Prescott)."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Embry%E2%80%93Riddle_Aeronautical_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-denver": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research spending and doctorate production"
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Denver"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "suny-geneseo": {
+  "research": {
+   "undergrad": "GREAT Day (Geneseo Recognizing Excellence, Achievement, and Talent) is an annual, college-wide, classes-cancelled symposium where students present research, scholarship, and creative work across posters, papers, performances, and film.",
+   "areas": "Geneseo is a member of the New York Space Grant Consortium and receives NASA grants supporting space-related undergraduate research."
+  },
+  "src": [
+   "https://www.geneseo.edu/great_day",
+   "https://en.wikipedia.org/wiki/SUNY_Geneseo"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "clemson-university": {
+  "faculty": "Trudy Mackay, Director of Clemson's Center for Human Genetics and Self Family Endowed Chair of Human Genetics, is a member of the National Academy of Sciences (elected 2010) and the National Academy of Medicine, and won the 2016 Wolf Prize in Agriculture for her work in quantitative genetics, including establishing the Drosophila Genetic Reference Panel. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity",
+   "areas": "The Clemson University International Center for Automotive Research (CU-ICAR) in Greenville is a major automotive-engineering research park; the Charleston Innovation Campus houses offshore wind-turbine testing facilities and the Warren Lasch Conservation Center."
+  },
+  "src": [
+   "https://www.clemson.edu/health-research/faculty/faculty-scholars/mackay.html",
+   "https://en.wikipedia.org/wiki/Clemson_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-houston": {
+  "faculty": "Paul C. W. Chu, Professor of Physics and T.L.L. Temple Chair of Science, is a National Medal of Science recipient and founding director of the Texas Center for Superconductivity; he is known for helping discover high-temperature superconductivity in 1987 and continues to publish on superconductivity at ambient pressure. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity",
+   "areas": "More than 40 research centers spanning nanotechnology, superconductivity, space commercialization, biomedical sciences, energy, and AI; the university's \"50in5\" initiative (launched 2018) aims to raise research expenditures 50% and double its national research centers within five years."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Paul_Chu",
+   "https://en.wikipedia.org/wiki/University_of_Houston"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-pittsburgh": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; research programs bring in more than $822 million annually to the region and support roughly 23,100 local jobs.",
+   "areas": "Historic strength in biomedicine: Jonas Salk developed the first polio vaccine at Pitt's Virus Research Lab (declared effective 1955), and Thomas Starzl established Pitt as a world leader in organ transplantation in the 1980s."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Pittsburgh"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "creighton-university": {
+  "research": {
+   "level": "R2: Doctoral Universities – High research activity",
+   "areas": "Research is concentrated in Creighton's professional schools (medicine, dentistry, law, nursing, pharmacy); the university also holds Space-Grant status through the National Space Grant College and Fellowship Program."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Creighton_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-california-santa-cruz": {
+  "faculty": "David Haussler, Distinguished Professor of Biomolecular Engineering and founding scientific director of the UC Santa Cruz Genomics Institute, led the team that assembled the first human genome sequence and developed the widely used UCSC Genome Browser; he is a member of both the National Academy of Sciences (2006) and National Academy of Engineering (2018). (Faculty change — verify.)",
+  "research": {
+   "level": "UC Santa Cruz faculty include 16 members of the National Academy of Sciences and 29 fellows of the American Academy of Arts and Sciences.",
+   "areas": "Genomics (UCSC Genome Browser, Human Genome Project contributions), astronomy through administrative oversight of Lick Observatory, adaptive optics (NSF-funded center), and organic agriculture through the nation's oldest university organic-farm program."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/David_Haussler",
+   "https://en.wikipedia.org/wiki/University_of_California,_Santa_Cruz"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-louisville": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity",
+   "areas": "The School of Medicine is known for pioneering transplant surgery, including the first fully self-contained artificial heart transplant and the first successful hand transplantation in the United States."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Louisville"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-massachusetts-amherst": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; $211 million in R&D expenditure (NSF, 2018)",
+   "areas": "Notable research includes molecular sensing technology and flame-retardant polymer development. The English department has hosted Pulitzer Prize-winning and poet-laureate-level writers historically (e.g., James Tate, Ted Hughes), though current creative-writing faculty should be checked directly given turnover."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Massachusetts_Amherst"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "virginia-tech": {
+  "research": {
+   "level": "Research and development expenditures were $542 million in fiscal year 2019, ranking 48th nationally and second in Virginia (NSF).",
+   "undergrad": "The Fralin Life Science Institute runs named undergraduate research programs: the First-Year Fralin Undergraduate program, the Fralin Undergraduate Research Fellowship, and the Fralin Summer Undergraduate Research Fellowship, covering vector-borne and infectious disease, plant sciences, cancer biology, and ecology.",
+   "areas": "Agriculture and biotechnology, ICT, transportation, energy (fuel cells, power electronics), and security/sustainability engineering."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Virginia_Tech"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-california-riverside": {
+  "faculty": "Richard R. Schrock, who shared the 2005 Nobel Prize in Chemistry (for olefin metathesis) while at MIT, joined UC Riverside's faculty in 2018 and now holds the George K. Helmkamp Founder's Chair of Chemistry there. (Faculty change — verify; note his Nobel-era affiliation was MIT, not UCR.)",
+  "research": {
+   "level": "Since 1997, more than 110 UCR faculty have been elected AAAS fellows; seven current or former faculty have been elected to the National Academy of Sciences, and more than 50 have received Guggenheim Fellowships. Research expenditure was $167.8 million in FY2018.",
+   "areas": "Agricultural science has historically represented over half of UCR's research spending, anchored by the Agricultural Experiment Station and the Center for Environmental Research and Technology."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Richard_R._Schrock",
+   "https://en.wikipedia.org/wiki/University_of_California,_Riverside"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "pratt-institute": {
+  "research": {
+   "undergrad": "The Material Lab and Center for Sustainable Design Strategies gives students hands-on access to materials research within the engineering building.",
+   "areas": "The Pratt Center for Community Development, founded by the urban planning department in 1963, applies student and faculty research to neighborhood revitalization in Brooklyn and beyond."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Pratt_Institute"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-delaware": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; $186 million in R&D expenditure (NSF, 2018)",
+   "areas": "The Institute of Energy Conversion is the world's oldest solar-energy research institute (est. 1972; thin-film solar cells); the Delaware Environmental Institute (2009) covers environmental science and policy; the UD Energy Institute (2008) has received multi-million-dollar annual grants for advanced solar research."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Delaware"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "new-jersey-institute-of-technology": {
+  "research": {
+   "level": "27 NJIT faculty have been elected to the National Academy of Inventors (17 Fellows, 10 Senior Members) as of 2025; R&D expenditure was $162 million (NSF, 2018).",
+   "undergrad": "NJIT participates in the McNair Scholars Program (since 1999), preparing underrepresented undergraduates for doctoral study.",
+   "areas": "Applied mathematics and materials science, biomedical engineering, cybersecurity, nanotechnology/polymer science, and solar-terrestrial physics — the latter anchored by the university's operation of the Big Bear Solar Observatory and Owens Valley Solar Array."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/New_Jersey_Institute_of_Technology"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "rutgers-university": {
+  "faculty": "David Case, Distinguished Professor Emeritus of Chemistry, is a National Academy of Sciences member recognized for contributions to computational chemistry and structural biology; as emeritus he is no longer active day-to-day teaching faculty. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity",
+   "areas": "The Waksman Institute of Microbiology, founded 1954 by Nobel laureate Selman Waksman (discoverer of streptomycin), remains an active Rutgers research institute on microbial, developmental, and plant molecular genetics. The Rutgers University Center for Cognitive Science draws faculty from psychology, linguistics, computer science, philosophy, and electrical engineering."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Waksman_Institute_of_Microbiology",
+   "https://en.wikipedia.org/wiki/Rutgers_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-at-buffalo-suny": {
+  "faculty": "Deborah D. L. Chung, SUNY Distinguished Professor of Mechanical and Aerospace Engineering (on the faculty since 1986), directs the Composite Materials Research Laboratory and is known for pioneering interface-area-based design of electromagnetic-interference shielding materials and self-sensing/self-healing structural materials. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; total research expenditures were $401 million in FY2017, with a projected $540 million by 2026.",
+   "areas": "UB hosts two New York State Centers of Excellence, in bioinformatics and in materials informatics."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Deborah_D._L._Chung",
+   "https://en.wikipedia.org/wiki/University_at_Buffalo"
   ],
   "_retrieved": "2026-08-03"
  }

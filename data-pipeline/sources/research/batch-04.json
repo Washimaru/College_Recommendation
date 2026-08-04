@@ -1,0 +1,316 @@
+{
+  "san-diego-state-university": {
+    "research": {
+      "level": "R1 (very high research activity) — SDSU received this Carnegie designation in February 2025, the first California State University campus to do so.",
+      "undergrad": "The university frames undergraduate involvement as part of its 'community-centered research' mission, with students contributing alongside doctoral researchers on faculty projects.",
+      "areas": "Community-engaged and applied research (e.g. the MAKE Farm at Mission Valley), plus growing strength in materials/quantum physics and clinical/health partnerships."
+    },
+    "src": [
+      "https://www.sdsu.edu/research-innovation/r1"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-california-santa-barbara": {
+    "faculty": "UCSB carries an unusually dense cluster of current Nobel laureates: Alan Heeger (Chemistry, 2000, for the discovery of conductive polymers), David Gross (Physics, 2004, for asymptotic freedom in the strong interaction; Chancellor's Chair Professor at the Kavli Institute for Theoretical Physics), Shuji Nakamura (Physics, 2014, for the blue LED, Professor of Materials and Electrical/Computer Engineering since 1999), and Finn Kydland (Economics, 2004, for work on dynamic macroeconomics; Kydland splits his appointment with Carnegie Mellon's Tepper School of Business and the Norwegian School of Economics). Note that fellow UCSB physics Nobel laureate Herbert Kroemer died in March 2024 and should not be listed as current. (Faculty change — verify.)",
+    "research": {
+      "level": "AAU member, very high research activity; home to the Kavli Institute for Theoretical Physics (KITP).",
+      "undergrad": "Undergraduates participate through department-based faculty labs and campus research programs.",
+      "areas": "Theoretical physics, materials science/engineering (solid-state lighting), and macroeconomics."
+    },
+    "src": [
+      "https://en.wikipedia.org/wiki/Alan_J._Heeger",
+      "https://en.wikipedia.org/wiki/David_Gross",
+      "https://en.wikipedia.org/wiki/Shuji_Nakamura",
+      "https://en.wikipedia.org/wiki/Finn_E._Kydland",
+      "https://en.wikipedia.org/wiki/Herbert_Kroemer"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "kenyon-college": {
+    "research": {
+      "level": "Small liberal arts college; research is faculty-mentored rather than lab-scale.",
+      "undergrad": "The Summer Science Scholars Program, Kenyon's oldest student-faculty mentored summer program, pairs 30+ students with faculty for up to 10 weeks of natural-science research (proposal required in spring); the Cascade Scholars Program gives first- and second-years with no prior experience a pathway in.",
+      "areas": "Natural sciences broadly, from molecular biology to chemistry."
+    },
+    "src": [
+      "https://www.kenyon.edu/academics/student-research/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "bucknell-university": {
+    "research": {
+      "level": "Small research-active liberal arts university with an engineering college — unusual for a LAC.",
+      "undergrad": "The Program for Undergraduate Research (PUR) funds student-faculty summer research ($400/week plus housing, up to 10 weeks) across all divisions; the Bucknell Institute for Public Policy runs a parallel summer fellowship for social-science students.",
+      "areas": "Cross-disciplinary, with engineering as a distinguishing strength among liberal arts peers."
+    },
+    "src": [
+      "https://www.bucknell.edu/academics/undergraduate-research-opportunities"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "college-of-the-holy-cross": {
+    "research": {
+      "level": "Small Jesuit liberal arts college; self-described as 'a national leader in providing undergraduate summer research opportunities.'",
+      "undergrad": "The Weiss Summer Research Program funds roughly 100 students a year for eight weeks of faculty-mentored or self-directed research (a natural-sciences/math track plus a broader humanities/social-sciences/arts track through the J.D. Power Center), culminating in an annual symposium now in its 30th year.",
+      "areas": "Spans natural sciences, math, computer science, and humanities/social sciences."
+    },
+    "src": [
+      "https://www.holycross.edu/academics/experiential-learning/research-scholarship/weiss-summer-research"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "digipen-institute-of-technology": {
+    "research": {
+      "level": "Specialized technical institute focused on applied, project-based work rather than traditional academic research; DigiPen was the first school in the world to offer a four-year video game development degree.",
+      "undergrad": "All students build increasingly complex, multidisciplinary game and engine projects from scratch on shared codebases, culminating in capstone titles; student work has won 1,000+ industry awards and honors.",
+      "areas": "Game engine/real-time simulation programming, game design, and digital art/animation."
+    },
+    "src": [
+      "https://www.digipen.edu/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "bryn-mawr-college": {
+    "research": {
+      "level": "Small women's liberal arts college; part of the Bi-College/Tri-College consortium with Haverford and Swarthmore.",
+      "undergrad": "The Summer Science Research (SSR) Program, running since 1989, funds 35+ students a year for 10 weeks of discovery-based lab or field research with Bryn Mawr faculty; open to Bryn Mawr and Haverford students, and all science majors are encouraged to do mentored research during the year or summer.",
+      "areas": "STEM disciplines broadly, via faculty-mentored lab and field work."
+    },
+    "src": [
+      "https://www.brynmawr.edu/academics/student-research"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "california-polytechnic-state-university-slo": {
+    "research": {
+      "level": "Teaching-focused polytechnic built around the 'Learn by Doing' philosophy rather than a traditional research mission.",
+      "undergrad": "Five colleges run their own funded summer research programs (e.g. the Bailey College of Science & Mathematics' Frost Fund, 400+ participants a year); NSF-funded CSU-SPaRA, CIRM-funded COMPASS (regenerative medicine), and NIH-funded U-RISE support underrepresented students in STEM; all undergraduates complete a capstone senior project.",
+      "areas": "Applied engineering, agriculture, and the biological sciences, where a senior research project is a graduation requirement."
+    },
+    "src": [
+      "https://studentresearch.calpoly.edu/undergraduate-research-opportunities"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "howard-university": {
+    "research": {
+      "level": "R1 (very high research activity), awarded February 2025 — Howard is the only HBCU to hold R1 status.",
+      "undergrad": "Research participation is available through department- and institute-level projects; Howard undergraduates have gone on to national honors such as the Goldwater Scholarship.",
+      "areas": "Quantum information science, AI/ML and data science, atmospheric science and extreme weather, cybersecurity, and health; Howard also leads the Research Institute for Tactical Autonomy (RITA), a multi-year Department of Defense-funded University Affiliated Research Center."
+    },
+    "src": [
+      "https://research.howard.edu/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "macalester-college": {
+    "research": {
+      "level": "Small liberal arts college; research funding is open to students in any discipline, not just STEM.",
+      "undergrad": "Summer options include on-campus faculty-mentored research, 'Fellowships to go Anywhere' for off-campus/external research, and department-specific programs such as an undergraduate summer research program in geological science.",
+      "areas": "Broad liberal-arts coverage, with dedicated STEM-focused funding tracks alongside humanities/social-science options."
+    },
+    "src": [
+      "https://www.macalester.edu/student-research/funded-summer-experiences-for-students/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "occidental-college": {
+    "research": {
+      "level": "Small liberal arts college; the Undergraduate Research Center (URC) runs a 'nationally recognized' flagship program.",
+      "undergrad": "The Summer Research Program (SRP), running since 1998, funds 125+ students a year for 10 weeks of faculty-mentored research (via Oxy Summer Research Fellowships), now spanning disciplines beyond STEM, with a required CORE 200 course and end-of-summer conference presentation.",
+      "areas": "Broad, including a dedicated fellowship track for corporate responsibility/socially responsible investing research."
+    },
+    "src": [
+      "https://www.oxy.edu/academics/student-research/urc"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "emerson-college": {
+    "research": {
+      "level": "Specialized communication/arts college; scholarly output is oriented toward creative and media work rather than lab science.",
+      "undergrad": "Students engage through the Creativity@Emerson initiative and department-level creative/scholarly projects across Emerson's three schools (Arts & Interdisciplinary Studies, Communication, and Film/Television/Media Arts); faculty and student work is catalogued in the Iwasaki Library's 'Emerson Authors, Researchers, and Creators' repository.",
+      "areas": "Journalism, media and communication studies, film/TV production, marketing communication, and writing/publishing."
+    },
+    "src": [
+      "https://www.emerson.edu/academics"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "manhattan-school-of-music": {
+    "research": {
+      "level": "Conservatory; training is performance-based rather than research-based.",
+      "undergrad": "Undergraduates get frequent public performance opportunities — recitals, ensembles, and major productions on a daily performance calendar — under artist-faculty instruction across a student body of 960+ from 45+ countries.",
+      "areas": "Classical performance, jazz, and musical theatre/contemporary performance."
+    },
+    "src": [
+      "https://www.msmnyc.edu/about/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "pepperdine-university": {
+    "research": {
+      "level": "Mid-sized university; Seaver College emphasizes faculty-student research within a liberal arts framework.",
+      "undergrad": "The Summer Undergraduate Research Program (SURP) covers all disciplines; Summer Undergraduate Research in Biology (SURB) targets students pursuing biological/biomedical careers; Cross-Disciplinary and Interdisciplinary Undergraduate Research (CDIUR) clusters three faculty from three different disciplines around shared student projects.",
+      "areas": "Business, environmental science, humanities, media, international affairs, psychology, religion, and science/technology."
+    },
+    "src": [
+      "https://seaver.pepperdine.edu/academics/research/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "california-state-university-long-beach": {
+    "research": {
+      "level": "Large regional public university; research is coordinated through the Office of Research & Economic Development (ORED).",
+      "undergrad": "The Office of Undergraduate Research Services (OURS) supports student researchers; students can compete in the annual Student Research Competition, and the McNair Scholars Program supports first-generation/underrepresented students headed to graduate research careers. CSULB's Shark Lab is a well-known marine biology research facility with public open houses.",
+      "areas": "Marine biology (Shark Lab), field biology (including a Catalina Island field program), and broad cross-disciplinary faculty-mentored research."
+    },
+    "src": [
+      "https://www.csulb.edu/office-of-research-and-economic-development"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "college-of-william-mary": {
+    "research": {
+      "level": "Public research university; undergraduate research is centralized through the Roy R. Charles Center.",
+      "undergrad": "About 1 in 3 W&M undergraduates participates in Charles Center programming; 300+ students received Charles Center summer research grants in 2024. WMSURE supports research-focused mentorship, and named tracks include Democracy Scholars, Sharpe Community Scholars, James Monroe Scholars, and 1693 Scholars, plus the Sharp Journalism Seminar.",
+      "areas": "Cross-disciplinary, with dedicated tracks in public policy/democracy, community engagement, and journalism."
+    },
+    "src": [
+      "https://www.wm.edu/as/charlescenter/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "reed-college": {
+    "research": {
+      "level": "Small liberal arts college known for academic rigor; original scholarship is central to the curriculum.",
+      "undergrad": "Reed's 'Research from Day One' approach has students assisting in faculty labs (including at the college's own on-campus research nuclear reactor, one of few at a US undergraduate institution) from early in their time at Reed; every senior completes an original-research senior thesis, archived physically in the campus 'Thesis Tower.'",
+      "areas": "Cross-disciplinary, with a notable hands-on physics/nuclear science track tied to the reactor."
+    },
+    "src": [
+      "https://www.reed.edu/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "binghamton-university-suny": {
+    "research": {
+      "level": "R1 ('very high research activity'), one of 131 US universities holding the designation.",
+      "undergrad": "The First-year Research Immersion (FRI) program — one of only four in the country and the only one in the Northeast — places incoming students directly into authentic faculty-led research; Summer Research Immersion (SRI) and the Summer Scholars and Artists Fellowship extend this through later years; the Source Project supports humanities/social-science research and BUPNUR welcomes students with no prior research experience.",
+      "areas": "STEM research through FRI/SRI, plus humanities, social sciences, and the arts through the Source Project."
+    },
+    "src": [
+      "https://www.binghamton.edu/academics/binghamton-impact/research.html"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "george-washington-university": {
+    "faculty": "Dayna Bowen Matthew, Dean of GW Law and the Harold H. Greene Professor of Law, was inducted into the National Academy of Medicine in October 2025 for her scholarship on the social determinants of health and legal remedies for racial health disparities (author of 'Just Medicine' and 'Just Health'). (Faculty change — verify.)",
+    "src": [
+      "https://www.law.gwu.edu/gw-law-dean-dayna-bowen-matthew-inducted-national-academy-medicine"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-central-florida": {
+    "research": {
+      "level": "R1 (very high research activity).",
+      "undergrad": "The Office of Undergraduate Research coordinates faculty-mentored opportunities, and the Knights Research Scholars Program expands access; students also work in labs through the Central Florida Research Park, which hosts 12,300+ employees across UCF-affiliated research partnerships.",
+      "areas": "Optics and photonics (CREOL and the Florida Photonics Center of Excellence), modeling and simulation (Institute for Simulation and Training), and space/planetary science, reflecting UCF's self-description as 'America's Space University.'"
+    },
+    "src": [
+      "https://www.ucf.edu/research/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "san-francisco-conservatory-of-music": {
+    "faculty": "Mason Bates, on SFCM's composition faculty since 2014, won the 2019 Grammy for Best Opera Recording (for 'The (R)evolution of Steve Jobs') and was rated the second-most-performed living composer among American orchestras in a 2018 survey; he is also a 2008 Guggenheim Fellow. (Faculty change — verify.)",
+    "research": {
+      "level": "Conservatory; training is performance/composition-based rather than research-based.",
+      "undergrad": "Students work directly with artist-faculty across classical, jazz, and contemporary tracks in a small collegiate program of roughly 180 faculty.",
+      "areas": "Composition (including electronic/orchestral hybrid work), orchestral and chamber performance, and historical performance."
+    },
+    "src": [
+      "https://en.wikipedia.org/wiki/Mason_Bates",
+      "https://sfcm.edu/study/faculty"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "north-carolina-state-university": {
+    "research": {
+      "level": "R1 (very high research spending and doctorate production).",
+      "undergrad": "The Office of Undergraduate Research (OUR) offers Project Supply Grants, a Federal Work-Study Research Assistant Program, travel awards, and the Envisioning Research Contest, alongside presentation venues like the Research Slam and the Fall Sidewalk Symposium.",
+      "areas": "Big data, biomedical engineering, materials science, and food safety."
+    },
+    "src": [
+      "https://undergradresearch.dasa.ncsu.edu/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-california-davis": {
+    "research": {
+      "level": "Major AAU research university; roughly $961 million in annual research funding, 110 startups over the past decade, and 1,382+ active patents per the campus research office.",
+      "undergrad": "About half of UC Davis undergraduates take part in research or creative projects, through faculty labs, the UC Davis Medical Center, or local industry partners.",
+      "areas": "Veterinary medicine (ranked #1 nationally by QS in 2023) and agriculture/forestry (ranked #2 globally by QS in 2023), plus a Comprehensive Cancer Center."
+    },
+    "src": [
+      "https://research.ucdavis.edu/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "texas-christian-university": {
+    "research": {
+      "level": "Research activity has roughly tripled since 2019, with an 85% increase in externally funded research awards over the past five years.",
+      "undergrad": "TCU documents 100+ Student Departmental Honors Projects annually and hosts an annual Student Research Symposium.",
+      "areas": "Behavioral research is a particular strength — TCU's Institute for Behavioral Research holds a $7.2 million NIH award."
+    },
+    "src": [
+      "https://www.tcu.edu/research.php"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-georgia": {
+    "faculty": "Jenna Jambeck, Georgia Athletic Association Distinguished Professor of Environmental Engineering, won a 2022 MacArthur Fellowship for her work quantifying the scale of ocean plastic pollution (via the Debris Tracker app) and developing the Circularity Assessment Protocol. (Faculty change — verify.)",
+    "research": {
+      "level": "R1 (very high research activity).",
+      "undergrad": "The Center for Undergraduate Research Opportunities (CURO), housed in the Morehead Honors College, is open to all undergraduates regardless of year, GPA, or major, and offers a CURO Honors Scholarship ($3,000/year, renewable up to four years) plus an annual research symposium.",
+      "areas": "Broad, spanning international affairs to the life sciences; environmental engineering is a notable strength via Jambeck's work."
+    },
+    "src": [
+      "https://curo.uga.edu/",
+      "https://en.wikipedia.org/wiki/Jenna_Jambeck"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "stony-brook-university": {
+    "research": {
+      "level": "R1 (very high research activity); AAU member.",
+      "undergrad": "URECA (Undergraduate Research & Creative Activities) supports faculty-mentored research and creative work for majors in all fields, including 'Explorations in STEM' for students new to research, and offers grants such as the Jane & Armando Jannelli-URECA award.",
+      "areas": "Broad research base; the campus's C. N. Yang Institute for Theoretical Physics is named for the late Nobel laureate Chen-Ning Yang, who was on the physics faculty from 1965 until his retirement in 1999 (he died in October 2025) — a historical rather than current affiliation."
+    },
+    "src": [
+      "https://you.stonybrook.edu/ureca/",
+      "https://en.wikipedia.org/wiki/Chen-Ning_Yang"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "university-of-south-florida": {
+    "research": {
+      "level": "R1 (very high research activity); AAU member; designated a 'Preeminent State Research University' by Florida's Board of Governors.",
+      "undergrad": "Student Engagement for Research & Innovation (SERI) connects undergraduates with faculty research; the annual OneUSF Summer Research Symposium drew 128 student projects from 22 colleges/universities; USF is also a top producer of Gilman Scholars over the last 25 years.",
+      "areas": "Broad research base supported by the Research Development Institute, which provides capacity-building support across disciplines."
+    },
+    "src": [
+      "https://www.usf.edu/research-innovation/"
+    ],
+    "_retrieved": "2026-08-03"
+  },
+  "loyola-marymount-university": {
+    "research": {
+      "level": "R2 (National University/High Research Activity).",
+      "undergrad": "The Office of Research and Creative Arts (ORCA) runs the Undergraduate Research Symposium, a paid Summer Undergraduate Research Program (SURP), a Research Learning Community, the Rains Research Assistant Program, BCLA ASPIRE, and the McNair Scholars Program for first-generation/underrepresented students headed to graduate research.",
+      "areas": "Broad, with engineering a particular strength (undergraduate program ranked 21st nationally by U.S. News, 2023)."
+    },
+    "src": [
+      "https://academics.lmu.edu/orca/"
+    ],
+    "_retrieved": "2026-08-03"
+  }
+}

@@ -1,0 +1,292 @@
+{
+ "clark-atlanta-university": {
+  "research": {
+   "level": "R2: Doctoral Universities – High research activity",
+   "undergrad": "The Robert H. \"Bob\" Bell Center for Innovation and Entrepreneurial Development provides entrepreneurship training and support for student ventures.",
+   "areas": "The Center for Functional Nanoscale Measures (CFNM) has produced more Black PhDs in nanoscale science than any other HBCU, an advanced-materials research strength. The graduate social work program is nationally ranked."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Clark_Atlanta_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "worcester-polytechnic-institute": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity (2025 Carnegie designation)",
+   "undergrad": "All students complete an Interactive Qualifying Project (IQP), connecting technology to societal needs, and a Major Qualifying Project (MQP), an independent research project in their major; through the Global Projects Program, more than 60% of students complete these projects at off-campus project centers on six continents.",
+   "areas": "Project-based curriculum on a distinctive seven-week term system; recent MQP research has spanned space-station life-support systems, pharmaceutical polymer design, and liquid-crystal research."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Worcester_Polytechnic_Institute"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "embry-riddle-aeronautical-university": {
+  "research": {
+   "undergrad": "The Prescott campus offers Ignite Grants (up to $48,000 annually per project for student research under a faculty mentor) and Eagle-Prize (E-Prize) Grants ($60,000 distributed annually to student teams in design/research competitions).",
+   "areas": "Aerospace-focused research including the Aerospace Research and Technology Park and the FAA NextGen Florida Test Bed (Daytona Beach), and the Robertson Safety Institute with its Crash Lab and Aviation Safety and Security Archives (Prescott)."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Embry%E2%80%93Riddle_Aeronautical_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-denver": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research spending and doctorate production"
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Denver"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "tuskegee-university": {
+  "research": {
+   "level": "Carnegie-classified as a Master's College/University (Medium Programs); the university has stated an aspiration to reach R2 status and awards some research/scholarly doctoral degrees.",
+   "areas": "The National Center for Bioethics in Research and Health Care is the first bioethics center focused on the sciences, humanities, law, and faith traditions as they bear on research and medical treatment of African Americans and other underserved populations. The School of Veterinary Medicine, founded 1944, has produced roughly 75% of the nation's African American veterinarians."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Tuskegee_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "suny-geneseo": {
+  "research": {
+   "undergrad": "GREAT Day (Geneseo Recognizing Excellence, Achievement, and Talent) is an annual, college-wide, classes-cancelled symposium where students present research, scholarship, and creative work across posters, papers, performances, and film.",
+   "areas": "Geneseo is a member of the New York Space Grant Consortium and receives NASA grants supporting space-related undergraduate research."
+  },
+  "src": [
+   "https://www.geneseo.edu/great_day",
+   "https://en.wikipedia.org/wiki/SUNY_Geneseo"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "clemson-university": {
+  "faculty": "Trudy Mackay, Director of Clemson's Center for Human Genetics and Self Family Endowed Chair of Human Genetics, is a member of the National Academy of Sciences (elected 2010) and the National Academy of Medicine, and won the 2016 Wolf Prize in Agriculture for her work in quantitative genetics, including establishing the Drosophila Genetic Reference Panel. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity",
+   "areas": "The Clemson University International Center for Automotive Research (CU-ICAR) in Greenville is a major automotive-engineering research park; the Charleston Innovation Campus houses offshore wind-turbine testing facilities and the Warren Lasch Conservation Center."
+  },
+  "src": [
+   "https://www.clemson.edu/health-research/faculty/faculty-scholars/mackay.html",
+   "https://en.wikipedia.org/wiki/Clemson_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-houston": {
+  "faculty": "Paul C. W. Chu, Professor of Physics and T.L.L. Temple Chair of Science, is a National Medal of Science recipient and founding director of the Texas Center for Superconductivity; he is known for helping discover high-temperature superconductivity in 1987 and continues to publish on superconductivity at ambient pressure. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity",
+   "areas": "More than 40 research centers spanning nanotechnology, superconductivity, space commercialization, biomedical sciences, energy, and AI; the university's \"50in5\" initiative (launched 2018) aims to raise research expenditures 50% and double its national research centers within five years."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Paul_Chu",
+   "https://en.wikipedia.org/wiki/University_of_Houston"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "texas-a-m-university": {
+  "faculty": "Donald J. Darensbourg, Distinguished Professor of Chemistry, was elected to the National Academy of Sciences in 2022 for his work on metal carbonyl complexes and catalytic use of carbon dioxide in copolymerization; he also won the SEC Faculty Achievement Award in 2023. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; NSF-ranked 16th nationally in R&D expenditure (2021), at $1.14 billion",
+   "areas": "Research spans Research Valley and Research Park (about 3 million sq ft of facilities); Texas A&M produced the first cloned pet (a cat, 2001) and was the first academic institution to clone six species, reflecting strength in genomics/biosciences alongside the Hagler Institute for Advanced Study and Cyclotron Institute."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Donald_J._Darensbourg",
+   "https://en.wikipedia.org/wiki/Texas_A%26M_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-illinois-urbana-champaign": {
+  "faculty": "Anthony Leggett shared the 2003 Nobel Prize in Physics for pioneering theoretical work on superconductors and superfluids; he holds the John D. and Catherine T. MacArthur Chair in Physics at Illinois but is now listed as emeritus, having retired from active faculty status. John Bardeen, a two-time Nobel laureate in Physics (1956, 1972, the latter for BCS theory of superconductivity developed at Illinois), was long-time Illinois faculty but is deceased. (Faculty change — verify; note Leggett's emeritus status.)",
+  "src": [
+   "https://physics.illinois.edu/people/directory/profile/aleggett"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-pittsburgh": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; research programs bring in more than $822 million annually to the region and support roughly 23,100 local jobs.",
+   "areas": "Historic strength in biomedicine: Jonas Salk developed the first polio vaccine at Pitt's Virus Research Lab (declared effective 1955), and Thomas Starzl established Pitt as a world leader in organ transplantation in the 1980s."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Pittsburgh"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "creighton-university": {
+  "research": {
+   "level": "R2: Doctoral Universities – High research activity",
+   "areas": "Research is concentrated in Creighton's professional schools (medicine, dentistry, law, nursing, pharmacy); the university also holds Space-Grant status through the National Space Grant College and Fellowship Program."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Creighton_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-california-santa-cruz": {
+  "faculty": "David Haussler, Distinguished Professor of Biomolecular Engineering and founding scientific director of the UC Santa Cruz Genomics Institute, led the team that assembled the first human genome sequence and developed the widely used UCSC Genome Browser; he is a member of both the National Academy of Sciences (2006) and National Academy of Engineering (2018). (Faculty change — verify.)",
+  "research": {
+   "level": "UC Santa Cruz faculty include 16 members of the National Academy of Sciences and 29 fellows of the American Academy of Arts and Sciences.",
+   "areas": "Genomics (UCSC Genome Browser, Human Genome Project contributions), astronomy through administrative oversight of Lick Observatory, adaptive optics (NSF-funded center), and organic agriculture through the nation's oldest university organic-farm program."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/David_Haussler",
+   "https://en.wikipedia.org/wiki/University_of_California,_Santa_Cruz"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-louisville": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity",
+   "areas": "The School of Medicine is known for pioneering transplant surgery, including the first fully self-contained artificial heart transplant and the first successful hand transplantation in the United States."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Louisville"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "furman-university": {
+  "research": {
+   "undergrad": "Undergraduate research is woven into The Furman Advantage, the college's four-year engaged-learning framework, with students pursuing funded research fellowships (e.g., a recent research fellow studying the effects of COVID-19 on immigration) typically in their third and fourth years."
+  },
+  "src": [
+   "https://furman.edu/furman-advantage/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "college-of-wooster": {
+  "research": {
+   "level": "Undergraduate-focused liberal arts college",
+   "undergrad": "Every Wooster student completes Independent Study, a mandatory, year-long senior capstone research or creative thesis mentored one-on-one by a faculty member — the defining feature of the college's curriculum."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/College_of_Wooster"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-massachusetts-amherst": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; $211 million in R&D expenditure (NSF, 2018)",
+   "areas": "Notable research includes molecular sensing technology and flame-retardant polymer development. The English department has hosted Pulitzer Prize-winning and poet-laureate-level writers historically (e.g., James Tate, Ted Hughes), though current creative-writing faculty should be checked directly given turnover."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Massachusetts_Amherst"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "virginia-tech": {
+  "research": {
+   "level": "Research and development expenditures were $542 million in fiscal year 2019, ranking 48th nationally and second in Virginia (NSF).",
+   "undergrad": "The Fralin Life Science Institute runs named undergraduate research programs: the First-Year Fralin Undergraduate program, the Fralin Undergraduate Research Fellowship, and the Fralin Summer Undergraduate Research Fellowship, covering vector-borne and infectious disease, plant sciences, cancer biology, and ecology.",
+   "areas": "Agriculture and biotechnology, ICT, transportation, energy (fuel cells, power electronics), and security/sustainability engineering."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Virginia_Tech"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-california-riverside": {
+  "faculty": "Richard R. Schrock, who shared the 2005 Nobel Prize in Chemistry (for olefin metathesis) while at MIT, joined UC Riverside's faculty in 2018 and now holds the George K. Helmkamp Founder's Chair of Chemistry there. (Faculty change — verify; note his Nobel-era affiliation was MIT, not UCR.)",
+  "research": {
+   "level": "Since 1997, more than 110 UCR faculty have been elected AAAS fellows; seven current or former faculty have been elected to the National Academy of Sciences, and more than 50 have received Guggenheim Fellowships. Research expenditure was $167.8 million in FY2018.",
+   "areas": "Agricultural science has historically represented over half of UCR's research spending, anchored by the Agricultural Experiment Station and the Center for Environmental Research and Technology."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Richard_R._Schrock",
+   "https://en.wikipedia.org/wiki/University_of_California,_Riverside"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "pratt-institute": {
+  "research": {
+   "undergrad": "The Material Lab and Center for Sustainable Design Strategies gives students hands-on access to materials research within the engineering building.",
+   "areas": "The Pratt Center for Community Development, founded by the urban planning department in 1963, applies student and faculty research to neighborhood revitalization in Brooklyn and beyond."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Pratt_Institute"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-delaware": {
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; $186 million in R&D expenditure (NSF, 2018)",
+   "areas": "The Institute of Energy Conversion is the world's oldest solar-energy research institute (est. 1972; thin-film solar cells); the Delaware Environmental Institute (2009) covers environmental science and policy; the UD Energy Institute (2008) has received multi-million-dollar annual grants for advanced solar research."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Delaware"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "new-jersey-institute-of-technology": {
+  "research": {
+   "level": "27 NJIT faculty have been elected to the National Academy of Inventors (17 Fellows, 10 Senior Members) as of 2025; R&D expenditure was $162 million (NSF, 2018).",
+   "undergrad": "NJIT participates in the McNair Scholars Program (since 1999), preparing underrepresented undergraduates for doctoral study.",
+   "areas": "Applied mathematics and materials science, biomedical engineering, cybersecurity, nanotechnology/polymer science, and solar-terrestrial physics — the latter anchored by the university's operation of the Big Bear Solar Observatory and Owens Valley Solar Array."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/New_Jersey_Institute_of_Technology"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "fisk-university": {
+  "research": {
+   "undergrad": "The Fisk-Vanderbilt Master's-to-PhD Bridge Program (started 2004, co-directed with Vanderbilt) helps underrepresented students move from a Fisk master's degree into STEM doctoral programs; 21 participants have completed PhDs with dozens more in progress, a completion rate well above the national average.",
+   "areas": "Strength in social sciences (Fisk established one of the first social-science departments at an HBCU in 1910, with an early social-work training center for African American graduate students) and in arts/humanities collections, including the Stieglitz Collection and Harlem Renaissance-era materials."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Fisk_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "rutgers-university": {
+  "faculty": "David Case, Distinguished Professor Emeritus of Chemistry, is a National Academy of Sciences member recognized for contributions to computational chemistry and structural biology; as emeritus he is no longer active day-to-day teaching faculty. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity",
+   "areas": "The Waksman Institute of Microbiology, founded 1954 by Nobel laureate Selman Waksman (discoverer of streptomycin), remains an active Rutgers research institute on microbial, developmental, and plant molecular genetics. The Rutgers University Center for Cognitive Science draws faculty from psychology, linguistics, computer science, philosophy, and electrical engineering."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Waksman_Institute_of_Microbiology",
+   "https://en.wikipedia.org/wiki/Rutgers_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-at-buffalo-suny": {
+  "faculty": "Deborah D. L. Chung, SUNY Distinguished Professor of Mechanical and Aerospace Engineering (on the faculty since 1986), directs the Composite Materials Research Laboratory and is known for pioneering interface-area-based design of electromagnetic-interference shielding materials and self-sensing/self-healing structural materials. (Faculty change — verify.)",
+  "research": {
+   "level": "R1: Doctoral Universities – Very high research activity; total research expenditures were $401 million in FY2017, with a projected $540 million by 2026.",
+   "areas": "UB hosts two New York State Centers of Excellence, in bioinformatics and in materials informatics."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Deborah_D._L._Chung",
+   "https://en.wikipedia.org/wiki/University_at_Buffalo"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "purdue-university": {
+  "faculty": "Vladimir M. Shalaev, Bob and Anne Burnett Distinguished Professor of Electrical and Computer Engineering and Scientific Director for Nanophotonics at the Birck Nanotechnology Center, was elected to the National Academy of Engineering in 2025 (for negative-refractive-index optical metamaterials) and to the American Academy of Arts and Sciences the same year; his current work centers on quantum meta-photonics. Yuehwern Yih, Tompkins Professor of Industrial Engineering, was elected to the National Academy of Engineering in the same 2025 class. Purdue's historical Nobel laureates in chemistry, Herbert C. Brown (d. 2004) and Ei-ichi Negishi (d. 2021), are no longer living and should not be described as current faculty. (Faculty change — verify.)",
+  "src": [
+   "https://en.wikipedia.org/wiki/Ei-ichi_Negishi"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "yeshiva-university": {
+  "research": {
+   "areas": "Yeshiva's research activity is concentrated in its graduate professional schools (Jewish studies, social work, psychology, law, and medicine via the Albert Einstein College of Medicine affiliation). Historical faculty have included Nobel laureates Paul A. M. Dirac (physics) and Paul Greengard (medicine, d. 2019) and neurologist-writer Oliver Sacks (d. 2015), but none are current."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Yeshiva_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "agnes-scott-college": {
+  "research": {
+   "level": "Undergraduate-focused women's liberal arts college",
+   "undergrad": "SUMMIT, the college's signature four-year curriculum, builds leadership development, global learning, and digital literacy into every student's path (Heiskell Award winner, 2019); students can also cross-register for research and coursework at other ARCHE-member institutions in Atlanta."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Agnes_Scott_College"
+  ],
+  "_retrieved": "2026-08-03"
+ }
+}
