@@ -1,5 +1,5 @@
 /**
- * Mirrors docs/contracts/{profile,recommendation}.schema.json v4.0.0.
+ * Mirrors docs/contracts/{profile,recommendation}.schema.json v5.0.0.
  *
  * The gateway is the validating authority; these types keep the client honest
  * at compile time. Two fields are deliberately absent: `mbti`, removed in
@@ -7,6 +7,10 @@
  * `preferences.locations`, removed in v4.0.0 because it compared a typed string
  * against `University.location` ("Cambridge, MA") and so could never fire.
  * `location` itself stays, for display only — never as a filter or a score.
+ *
+ * v5.0.0 adds `Profile.gpa_weighted` (displayed only, never scored — see
+ * docs/superpowers/specs/2026-08-03-gpa-scales-tiers-and-profiles-design.md)
+ * and the `extreme_reach` member of `AdmitTier`.
  */
 
 export const CULTURE_AXES = [
@@ -81,6 +85,9 @@ export interface Population {
 
 export interface Profile {
   gpa: number;
+  /** Weighted GPA, 0.0-5.0. Displayed only — never scored, never converted to
+   *  or from the unweighted `gpa` above. */
+  gpa_weighted?: number | null;
   sat?: number | null;
   intended_major: string;
   culture_prefs?: CulturePrefs;
@@ -140,7 +147,7 @@ export interface SchoolDetails {
   [key: string]: unknown;
 }
 
-export type AdmitTier = "reach" | "target" | "safety";
+export type AdmitTier = "extreme_reach" | "reach" | "target" | "safety";
 
 export interface Result {
   university_id: string;

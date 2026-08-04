@@ -12,10 +12,11 @@ from pydantic import ValidationError
 from app.schemas import CONTRACT_VERSION, CulturePrefs, Profile, University
 
 
-def test_contract_version_is_4():
+def test_contract_version_is_5():
     """v3.0.0 added activities and personality; v3.1.0 added country scope;
-    v4.0.0 adds place and population fields and removes preferences.locations."""
-    assert CONTRACT_VERSION == "4.0.0"
+    v4.0.0 adds place and population fields and removes preferences.locations;
+    v5.0.0 adds Profile.gpa_weighted and the extreme_reach admit tier."""
+    assert CONTRACT_VERSION == "5.0.0"
 
 
 def test_profile_needs_no_mbti():
@@ -28,6 +29,29 @@ def test_profile_rejects_mbti():
     """The field is gone; extra='forbid' must reject it rather than ignore it."""
     with pytest.raises(ValidationError):
         Profile(gpa=3.8, intended_major="Computer Science", mbti="ENFP")
+
+
+def test_profile_gpa_weighted_is_optional():
+    """Its absence changes nothing; unweighted gpa alone is still valid."""
+    profile = Profile(gpa=3.8, intended_major="Computer Science")
+
+    assert profile.gpa_weighted is None
+
+
+def test_profile_accepts_gpa_weighted_up_to_five():
+    profile = Profile(gpa=3.8, gpa_weighted=4.42, intended_major="Computer Science")
+
+    assert profile.gpa_weighted == 4.42
+
+
+def test_profile_rejects_gpa_weighted_above_five():
+    with pytest.raises(ValidationError):
+        Profile(gpa=3.8, gpa_weighted=5.01, intended_major="Computer Science")
+
+
+def test_profile_rejects_negative_gpa_weighted():
+    with pytest.raises(ValidationError):
+        Profile(gpa=3.8, gpa_weighted=-0.1, intended_major="Computer Science")
 
 
 def test_culture_prefs_default_to_centre():

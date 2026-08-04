@@ -10,7 +10,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "4.0.0"
+CONTRACT_VERSION = "5.0.0"
 
 Size = Literal["small", "medium", "large"]
 # Country scope. A hard filter on which schools are considered at all.
@@ -120,6 +120,10 @@ class Profile(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     gpa: float = Field(ge=0, le=4.0)
+    # Weighted GPA (0.0-5.0). Displayed only - never scored, never converted to
+    # or from the unweighted `gpa` above. See docs/superpowers/specs/
+    # 2026-08-03-gpa-scales-tiers-and-profiles-design.md decision 1.
+    gpa_weighted: float | None = Field(default=None, ge=0, le=5.0)
     sat: int | None = Field(default=None, ge=400, le=1600)
     intended_major: str = Field(min_length=1)
     culture_prefs: CulturePrefs = Field(default_factory=CulturePrefs)

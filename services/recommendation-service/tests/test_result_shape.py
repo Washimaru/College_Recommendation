@@ -45,11 +45,13 @@ def _run(profile, universities):
 
 
 def test_result_includes_admit_tier(profile):
-    """profile fixture is gpa 3.8: u1 at 3.95 is a reach, u2 at 3.4 a safety."""
+    """profile fixture is gpa 3.8: u1's 0.05 acceptance rate makes it an
+    extreme_reach regardless of its GPA gap; u2 at 3.4 with no acceptance rate
+    falls through to the GPA rule and is a safety."""
     response = _run(profile, _universities())
 
     tiers = {r.university_id: r.admit_tier for r in response.results}
-    assert tiers == {"u1": "reach", "u2": "safety"}
+    assert tiers == {"u1": "extreme_reach", "u2": "safety"}
 
 
 def test_result_includes_university_summary(profile):

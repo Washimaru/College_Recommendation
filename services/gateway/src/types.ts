@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "4.0.0";
+export const CONTRACT_VERSION = "5.0.0";
 
 export const RegionSchema = z.enum([
   "Northeast",
@@ -96,6 +96,9 @@ export const WeightsSchema = z
 export const ProfileSchema = z
   .object({
     gpa: z.number().min(0).max(4.0),
+    /** Weighted GPA. Displayed only - never scored, never converted to or from
+     * the unweighted `gpa` above. */
+    gpa_weighted: z.number().min(0).max(5.0).nullable().optional(),
     sat: z.number().int().min(400).max(1600).nullable().optional(),
     intended_major: z.string().min(1),
     culture_prefs: CulturePrefsSchema.optional(),
@@ -162,7 +165,7 @@ export const UniversitySummarySchema = z
   })
   .strict();
 
-export const AdmitTierSchema = z.enum(["reach", "target", "safety"]);
+export const AdmitTierSchema = z.enum(["extreme_reach", "reach", "target", "safety"]);
 
 export const ResultSchema = z
   .object({

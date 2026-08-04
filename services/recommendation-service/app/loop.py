@@ -38,12 +38,28 @@ WEIGHT_FEEDBACK_MAX = 1.5
 # Inherited from the original UniMatch project's admitTier.
 ADMIT_TIER_DELTA = 0.12
 
+# Selectivity threshold for the extreme_reach tier. A stated judgement, not a
+# measured finding - like ADMIT_TIER_DELTA, the copy must present it that way.
+EXTREME_REACH_ACCEPTANCE_RATE_MAX = 0.15
 
-def admit_tier(student_gpa: float | None, school_avg_gpa: float) -> str | None:
+
+def admit_tier(
+    student_gpa: float | None, school_avg_gpa: float, acceptance_rate: float | None
+) -> str | None:
     """Classify a school relative to the student. None when the student gave no
-    GPA - there is nothing to compare, and a guess would be worse than a gap."""
+    GPA - there is nothing to compare, and a guess would be worse than a gap.
+
+    extreme_reach is checked first and is keyed on selectivity, not GPA: at a
+    4% admit rate a 4.0 student is still rejected far more often than not, so
+    a GPA that clears the school's average must not read as a "target". A null
+    acceptance_rate (every non-US school, and some US ones) never fires this
+    tier - it falls through to the GPA rule exactly as if the check were
+    absent, so a missing value cannot manufacture a tier.
+    """
     if student_gpa is None:
         return None
+    if acceptance_rate is not None and acceptance_rate <= EXTREME_REACH_ACCEPTANCE_RATE_MAX:
+        return "extreme_reach"
     delta = school_avg_gpa - student_gpa
     if delta >= ADMIT_TIER_DELTA:
         return "reach"
@@ -147,7 +163,7 @@ def _build_results(
                 name=uni.name,
                 score=by_id[uid].score,
                 rationale=notes.get(uid, "Top-ranked match for this profile."),
-                admit_tier=admit_tier(student_gpa, uni.avg_gpa),
+                admit_tier=admit_tier(student_gpa, uni.avg_gpa, uni.acceptance_rate),
                 university=_summarize(uni),
             )
         )

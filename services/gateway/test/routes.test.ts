@@ -96,6 +96,31 @@ describe("gateway routes", () => {
     expect(res.json().error).toBe("invalid_request");
   });
 
+  it("accepts a request with gpa_weighted", async () => {
+    app = await buildServer({ recsClient: fakeRecs() });
+    const res = await app.inject({
+      method: "POST",
+      url: "/v1/recommendations",
+      payload: {
+        profile: { gpa: 3.8, gpa_weighted: 4.42, intended_major: "Computer Science" },
+      },
+    });
+    expect(res.statusCode).toBe(200);
+  });
+
+  it("rejects gpa_weighted above 5.0", async () => {
+    app = await buildServer({ recsClient: fakeRecs() });
+    const res = await app.inject({
+      method: "POST",
+      url: "/v1/recommendations",
+      payload: {
+        profile: { gpa: 3.8, gpa_weighted: 5.5, intended_major: "Computer Science" },
+      },
+    });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error).toBe("invalid_request");
+  });
+
   it("rejects an out-of-range culture preference", async () => {
     app = await buildServer({ recsClient: fakeRecs() });
     const res = await app.inject({

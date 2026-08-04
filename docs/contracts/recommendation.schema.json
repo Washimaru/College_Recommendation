@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/recommendation.schema.json",
   "title": "RecommendationResponse",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["results", "confidence", "stop_reason", "trace"],
@@ -40,8 +40,8 @@
         "rationale": { "type": "string" },
         "admit_tier": {
           "type": ["string", "null"],
-          "enum": ["reach", "target", "safety", null],
-          "description": "Computed server-side from avg_gpa minus the student's GPA, boundary 0.12 either side. Null when the student gave no GPA."
+          "enum": ["extreme_reach", "reach", "target", "safety", null],
+          "description": "Computed server-side. extreme_reach fires first when acceptance_rate is not null and <= 0.15 (a stated judgement, not a measured finding); otherwise reach/target/safety come from avg_gpa minus the student's GPA, boundary 0.12 either side. A null acceptance_rate never produces extreme_reach - it falls through to the GPA rule. Null admit_tier when the student gave no GPA."
         },
         "university": { "$ref": "#/$defs/UniversitySummary" }
       }
