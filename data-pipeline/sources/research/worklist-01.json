@@ -1,0 +1,198 @@
+[
+ {
+  "id": "curtis-institute-of-music",
+  "name": "Curtis Institute of Music",
+  "location": "Philadelphia, PA",
+  "acceptance_rate": 0.0244,
+  "has_research": false
+ },
+ {
+  "id": "princeton-university",
+  "name": "Princeton University",
+  "location": "Princeton, NJ",
+  "acceptance_rate": 0.0563,
+  "has_research": true
+ },
+ {
+  "id": "yale-university",
+  "name": "Yale University",
+  "location": "New Haven, CT",
+  "acceptance_rate": 0.0653,
+  "has_research": true
+ },
+ {
+  "id": "columbia-university",
+  "name": "Columbia University",
+  "location": "New York, NY",
+  "acceptance_rate": 0.0666,
+  "has_research": false
+ },
+ {
+  "id": "university-of-chicago",
+  "name": "University of Chicago",
+  "location": "Chicago, IL",
+  "acceptance_rate": 0.0731,
+  "has_research": true
+ },
+ {
+  "id": "the-juilliard-school",
+  "name": "The Juilliard School",
+  "location": "New York, NY",
+  "acceptance_rate": 0.0764,
+  "has_research": false
+ },
+ {
+  "id": "brown-university",
+  "name": "Brown University",
+  "location": "Providence, RI",
+  "acceptance_rate": 0.0767,
+  "has_research": false
+ },
+ {
+  "id": "duke-university",
+  "name": "Duke University",
+  "location": "Durham, NC",
+  "acceptance_rate": 0.0774,
+  "has_research": false
+ },
+ {
+  "id": "pomona-college",
+  "name": "Pomona College",
+  "location": "Claremont, CA",
+  "acceptance_rate": 0.0862,
+  "has_research": false
+ },
+ {
+  "id": "united-states-military-academy-west-point",
+  "name": "United States Military Academy (West Point)",
+  "location": "West Point, NY",
+  "acceptance_rate": 0.0864,
+  "has_research": false
+ },
+ {
+  "id": "university-of-pennsylvania",
+  "name": "University of Pennsylvania",
+  "location": "Philadelphia, PA",
+  "acceptance_rate": 0.0898,
+  "has_research": false
+ },
+ {
+  "id": "swarthmore-college",
+  "name": "Swarthmore College",
+  "location": "Swarthmore, PA",
+  "acceptance_rate": 0.0906,
+  "has_research": false
+ },
+ {
+  "id": "united-states-naval-academy",
+  "name": "United States Naval Academy",
+  "location": "Annapolis, MD",
+  "acceptance_rate": 0.0908,
+  "has_research": false
+ },
+ {
+  "id": "bowdoin-college",
+  "name": "Bowdoin College",
+  "location": "Brunswick, ME",
+  "acceptance_rate": 0.0916,
+  "has_research": false
+ },
+ {
+  "id": "dartmouth-college",
+  "name": "Dartmouth College",
+  "location": "Hanover, NH",
+  "acceptance_rate": 0.0922,
+  "has_research": false
+ },
+ {
+  "id": "northwestern-university",
+  "name": "Northwestern University",
+  "location": "Evanston, IL",
+  "acceptance_rate": 0.0931,
+  "has_research": false
+ },
+ {
+  "id": "colby-college",
+  "name": "Colby College",
+  "location": "Waterville, ME",
+  "acceptance_rate": 0.1027,
+  "has_research": false
+ },
+ {
+  "id": "cornell-university",
+  "name": "Cornell University",
+  "location": "Ithaca, NY",
+  "acceptance_rate": 0.1071,
+  "has_research": false
+ },
+ {
+  "id": "rice-university",
+  "name": "Rice University",
+  "location": "Houston, TX",
+  "acceptance_rate": 0.1089,
+  "has_research": false
+ },
+ {
+  "id": "johns-hopkins-university",
+  "name": "Johns Hopkins University",
+  "location": "Baltimore, MD",
+  "acceptance_rate": 0.1106,
+  "has_research": true
+ },
+ {
+  "id": "tulane-university",
+  "name": "Tulane University",
+  "location": "New Orleans, LA",
+  "acceptance_rate": 0.1111,
+  "has_research": false
+ },
+ {
+  "id": "vanderbilt-university",
+  "name": "Vanderbilt University",
+  "location": "Nashville, TN",
+  "acceptance_rate": 0.1162,
+  "has_research": false
+ },
+ {
+  "id": "amherst-college",
+  "name": "Amherst College",
+  "location": "Amherst, MA",
+  "acceptance_rate": 0.1183,
+  "has_research": false
+ },
+ {
+  "id": "claremont-mckenna-college",
+  "name": "Claremont McKenna College",
+  "location": "Claremont, CA",
+  "acceptance_rate": 0.1334,
+  "has_research": false
+ },
+ {
+  "id": "united-states-air-force-academy",
+  "name": "United States Air Force Academy",
+  "location": "Colorado Springs, CO",
+  "acceptance_rate": 0.1343,
+  "has_research": false
+ },
+ {
+  "id": "barnard-college",
+  "name": "Barnard College",
+  "location": "New York, NY",
+  "acceptance_rate": 0.136,
+  "has_research": false
+ },
+ {
+  "id": "colorado-college",
+  "name": "Colorado College",
+  "location": "Colorado Springs, CO",
+  "acceptance_rate": 0.136,
+  "has_research": false
+ },
+ {
+  "id": "university-of-california-los-angeles",
+  "name": "University of California, Los Angeles",
+  "location": "Los Angeles, CA",
+  "acceptance_rate": 0.1433,
+  "has_research": false
+ }
+]

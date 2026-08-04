@@ -1,0 +1,198 @@
+[
+ {
+  "id": "williams-college",
+  "name": "Williams College",
+  "location": "Williamstown, MA",
+  "acceptance_rate": 0.1512,
+  "has_research": false
+ },
+ {
+  "id": "washington-university-in-st-louis",
+  "name": "Washington University in St. Louis",
+  "location": "St. Louis, MO",
+  "acceptance_rate": 0.1602,
+  "has_research": false
+ },
+ {
+  "id": "university-of-southern-california",
+  "name": "University of Southern California",
+  "location": "Los Angeles, CA",
+  "acceptance_rate": 0.1611,
+  "has_research": false
+ },
+ {
+  "id": "tufts-university",
+  "name": "Tufts University",
+  "location": "Medford, MA",
+  "acceptance_rate": 0.163,
+  "has_research": false
+ },
+ {
+  "id": "olin-college-of-engineering",
+  "name": "Olin College of Engineering",
+  "location": "Needham, MA",
+  "acceptance_rate": 0.1644,
+  "has_research": false
+ },
+ {
+  "id": "pitzer-college",
+  "name": "Pitzer College",
+  "location": "Claremont, CA",
+  "acceptance_rate": 0.1657,
+  "has_research": false
+ },
+ {
+  "id": "georgetown-university",
+  "name": "Georgetown University",
+  "location": "Washington, DC",
+  "acceptance_rate": 0.1681,
+  "has_research": false
+ },
+ {
+  "id": "cooper-union",
+  "name": "Cooper Union",
+  "location": "New York, NY",
+  "acceptance_rate": 0.1751,
+  "has_research": false
+ },
+ {
+  "id": "harvey-mudd-college",
+  "name": "Harvey Mudd College",
+  "location": "Claremont, CA",
+  "acceptance_rate": 0.1796,
+  "has_research": true
+ },
+ {
+  "id": "haverford-college",
+  "name": "Haverford College",
+  "location": "Haverford, PA",
+  "acceptance_rate": 0.1823,
+  "has_research": false
+ },
+ {
+  "id": "hamilton-college",
+  "name": "Hamilton College",
+  "location": "Clinton, NY",
+  "acceptance_rate": 0.1841,
+  "has_research": false
+ },
+ {
+  "id": "university-of-notre-dame",
+  "name": "University of Notre Dame",
+  "location": "Notre Dame, IN",
+  "acceptance_rate": 0.1899,
+  "has_research": false
+ },
+ {
+  "id": "emory-university",
+  "name": "Emory University",
+  "location": "Atlanta, GA",
+  "acceptance_rate": 0.1917,
+  "has_research": false
+ },
+ {
+  "id": "grinnell-college",
+  "name": "Grinnell College",
+  "location": "Grinnell, IA",
+  "acceptance_rate": 0.1925,
+  "has_research": false
+ },
+ {
+  "id": "davidson-college",
+  "name": "Davidson College",
+  "location": "Davidson, NC",
+  "acceptance_rate": 0.2,
+  "has_research": false
+ },
+ {
+  "id": "boston-university",
+  "name": "Boston University",
+  "location": "Boston, MA",
+  "acceptance_rate": 0.2009,
+  "has_research": false
+ },
+ {
+  "id": "wellesley-college",
+  "name": "Wellesley College",
+  "location": "Wellesley, MA",
+  "acceptance_rate": 0.2041,
+  "has_research": false
+ },
+ {
+  "id": "northeastern-university",
+  "name": "Northeastern University",
+  "location": "Boston, MA",
+  "acceptance_rate": 0.2048,
+  "has_research": true
+ },
+ {
+  "id": "wesleyan-university",
+  "name": "Wesleyan University",
+  "location": "Middletown, CT",
+  "acceptance_rate": 0.209,
+  "has_research": false
+ },
+ {
+  "id": "new-york-university",
+  "name": "New York University",
+  "location": "New York, NY",
+  "acceptance_rate": 0.2109,
+  "has_research": false
+ },
+ {
+  "id": "carleton-college",
+  "name": "Carleton College",
+  "location": "Northfield, MN",
+  "acceptance_rate": 0.2118,
+  "has_research": false
+ },
+ {
+  "id": "georgia-institute-of-technology",
+  "name": "Georgia Institute of Technology",
+  "location": "Atlanta, GA",
+  "acceptance_rate": 0.2134,
+  "has_research": true
+ },
+ {
+  "id": "middlebury-college",
+  "name": "Middlebury College",
+  "location": "Middlebury, VT",
+  "acceptance_rate": 0.2204,
+  "has_research": false
+ },
+ {
+  "id": "university-of-virginia",
+  "name": "University of Virginia",
+  "location": "Charlottesville, VA",
+  "acceptance_rate": 0.2258,
+  "has_research": false
+ },
+ {
+  "id": "vassar-college",
+  "name": "Vassar College",
+  "location": "Poughkeepsie, NY",
+  "acceptance_rate": 0.2454,
+  "has_research": false
+ },
+ {
+  "id": "university-of-north-carolina-at-chapel-hill",
+  "name": "University of North Carolina at Chapel Hill",
+  "location": "Chapel Hill, NC",
+  "acceptance_rate": 0.25,
+  "has_research": false
+ },
+ {
+  "id": "university-of-michigan",
+  "name": "University of Michigan",
+  "location": "Ann Arbor, MI",
+  "acceptance_rate": 0.2611,
+  "has_research": true
+ },
+ {
+  "id": "boston-college",
+  "name": "Boston College",
+  "location": "Chestnut Hill, MA",
+  "acceptance_rate": 0.2638,
+  "has_research": false
+ }
+]

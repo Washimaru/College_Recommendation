@@ -1,0 +1,198 @@
+[
+ {
+  "id": "babson-college",
+  "name": "Babson College",
+  "location": "Wellesley, MA",
+  "acceptance_rate": 0.2697,
+  "has_research": false
+ },
+ {
+  "id": "rhode-island-school-of-design",
+  "name": "Rhode Island School of Design",
+  "location": "Providence, RI",
+  "acceptance_rate": 0.2712,
+  "has_research": false
+ },
+ {
+  "id": "california-institute-of-the-arts",
+  "name": "California Institute of the Arts",
+  "location": "Valencia, CA",
+  "acceptance_rate": 0.2742,
+  "has_research": false
+ },
+ {
+  "id": "denison-university",
+  "name": "Denison University",
+  "location": "Granville, OH",
+  "acceptance_rate": 0.2817,
+  "has_research": false
+ },
+ {
+  "id": "university-of-california-irvine",
+  "name": "University of California, Irvine",
+  "location": "Irvine, CA",
+  "acceptance_rate": 0.2992,
+  "has_research": false
+ },
+ {
+  "id": "case-western-reserve-university",
+  "name": "Case Western Reserve University",
+  "location": "Cleveland, OH",
+  "acceptance_rate": 0.3027,
+  "has_research": false
+ },
+ {
+  "id": "villanova-university",
+  "name": "Villanova University",
+  "location": "Villanova, PA",
+  "acceptance_rate": 0.3066,
+  "has_research": false
+ },
+ {
+  "id": "university-of-florida",
+  "name": "University of Florida",
+  "location": "Gainesville, FL",
+  "acceptance_rate": 0.3113,
+  "has_research": false
+ },
+ {
+  "id": "university-of-texas-at-austin",
+  "name": "University of Texas at Austin",
+  "location": "Austin, TX",
+  "acceptance_rate": 0.3195,
+  "has_research": false
+ },
+ {
+  "id": "wake-forest-university",
+  "name": "Wake Forest University",
+  "location": "Winston-Salem, NC",
+  "acceptance_rate": 0.3198,
+  "has_research": false
+ },
+ {
+  "id": "skidmore-college",
+  "name": "Skidmore College",
+  "location": "Saratoga Springs, NY",
+  "acceptance_rate": 0.3217,
+  "has_research": false
+ },
+ {
+  "id": "florida-state-university",
+  "name": "Florida State University",
+  "location": "Tallahassee, FL",
+  "acceptance_rate": 0.3245,
+  "has_research": false
+ },
+ {
+  "id": "berea-college",
+  "name": "Berea College",
+  "location": "Berea, KY",
+  "acceptance_rate": 0.3296,
+  "has_research": false
+ },
+ {
+  "id": "florida-a-m-university",
+  "name": "Florida A&M University",
+  "location": "Tallahassee, FL",
+  "acceptance_rate": 0.3298,
+  "has_research": false
+ },
+ {
+  "id": "university-of-miami",
+  "name": "University of Miami",
+  "location": "Coral Gables, FL",
+  "acceptance_rate": 0.3309,
+  "has_research": false
+ },
+ {
+  "id": "brandeis-university",
+  "name": "Brandeis University",
+  "location": "Waltham, MA",
+  "acceptance_rate": 0.334,
+  "has_research": false
+ },
+ {
+  "id": "trinity-university",
+  "name": "Trinity University",
+  "location": "San Antonio, TX",
+  "acceptance_rate": 0.3362,
+  "has_research": false
+ },
+ {
+  "id": "cleveland-institute-of-music",
+  "name": "Cleveland Institute of Music",
+  "location": "Cleveland, OH",
+  "acceptance_rate": 0.3416,
+  "has_research": false
+ },
+ {
+  "id": "scripps-college",
+  "name": "Scripps College",
+  "location": "Claremont, CA",
+  "acceptance_rate": 0.3513,
+  "has_research": false
+ },
+ {
+  "id": "oberlin-college",
+  "name": "Oberlin College",
+  "location": "Oberlin, OH",
+  "acceptance_rate": 0.3536,
+  "has_research": false
+ },
+ {
+  "id": "university-of-rochester",
+  "name": "University of Rochester",
+  "location": "Rochester, NY",
+  "acceptance_rate": 0.3543,
+  "has_research": false
+ },
+ {
+  "id": "lafayette-college",
+  "name": "Lafayette College",
+  "location": "Easton, PA",
+  "acceptance_rate": 0.3557,
+  "has_research": false
+ },
+ {
+  "id": "hampton-university",
+  "name": "Hampton University",
+  "location": "Hampton, VA",
+  "acceptance_rate": 0.36,
+  "has_research": false
+ },
+ {
+  "id": "new-england-conservatory",
+  "name": "New England Conservatory",
+  "location": "Boston, MA",
+  "acceptance_rate": 0.3627,
+  "has_research": false
+ },
+ {
+  "id": "hillsdale-college",
+  "name": "Hillsdale College",
+  "location": "Hillsdale, MI",
+  "acceptance_rate": 0.3648,
+  "has_research": false
+ },
+ {
+  "id": "franklin-marshall-college",
+  "name": "Franklin & Marshall College",
+  "location": "Lancaster, PA",
+  "acceptance_rate": 0.365,
+  "has_research": false
+ },
+ {
+  "id": "smith-college",
+  "name": "Smith College",
+  "location": "Northampton, MA",
+  "acceptance_rate": 0.3652,
+  "has_research": false
+ },
+ {
+  "id": "university-of-california-san-diego",
+  "name": "University of California, San Diego",
+  "location": "La Jolla, CA",
+  "acceptance_rate": 0.3661,
+  "has_research": true
+ }
+]

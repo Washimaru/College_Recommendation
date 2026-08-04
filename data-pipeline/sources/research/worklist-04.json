@@ -1,0 +1,198 @@
+[
+ {
+  "id": "san-diego-state-university",
+  "name": "San Diego State University",
+  "location": "San Diego, CA",
+  "acceptance_rate": 0.367,
+  "has_research": false
+ },
+ {
+  "id": "university-of-california-santa-barbara",
+  "name": "University of California, Santa Barbara",
+  "location": "Santa Barbara, CA",
+  "acceptance_rate": 0.367,
+  "has_research": false
+ },
+ {
+  "id": "kenyon-college",
+  "name": "Kenyon College",
+  "location": "Gambier, OH",
+  "acceptance_rate": 0.3689,
+  "has_research": false
+ },
+ {
+  "id": "bucknell-university",
+  "name": "Bucknell University",
+  "location": "Lewisburg, PA",
+  "acceptance_rate": 0.3753,
+  "has_research": false
+ },
+ {
+  "id": "college-of-the-holy-cross",
+  "name": "College of the Holy Cross",
+  "location": "Worcester, MA",
+  "acceptance_rate": 0.3794,
+  "has_research": false
+ },
+ {
+  "id": "digipen-institute-of-technology",
+  "name": "DigiPen Institute of Technology",
+  "location": "Redmond, WA",
+  "acceptance_rate": 0.3824,
+  "has_research": false
+ },
+ {
+  "id": "bryn-mawr-college",
+  "name": "Bryn Mawr College",
+  "location": "Bryn Mawr, PA",
+  "acceptance_rate": 0.3836,
+  "has_research": false
+ },
+ {
+  "id": "california-polytechnic-state-university-slo",
+  "name": "California Polytechnic State University, SLO",
+  "location": "San Luis Obispo, CA",
+  "acceptance_rate": 0.3843,
+  "has_research": false
+ },
+ {
+  "id": "howard-university",
+  "name": "Howard University",
+  "location": "Washington, DC",
+  "acceptance_rate": 0.3864,
+  "has_research": false
+ },
+ {
+  "id": "macalester-college",
+  "name": "Macalester College",
+  "location": "St. Paul, MN",
+  "acceptance_rate": 0.3869,
+  "has_research": false
+ },
+ {
+  "id": "occidental-college",
+  "name": "Occidental College",
+  "location": "Los Angeles, CA",
+  "acceptance_rate": 0.409,
+  "has_research": false
+ },
+ {
+  "id": "emerson-college",
+  "name": "Emerson College",
+  "location": "Boston, MA",
+  "acceptance_rate": 0.4105,
+  "has_research": false
+ },
+ {
+  "id": "manhattan-school-of-music",
+  "name": "Manhattan School of Music",
+  "location": "New York, NY",
+  "acceptance_rate": 0.4156,
+  "has_research": false
+ },
+ {
+  "id": "pepperdine-university",
+  "name": "Pepperdine University",
+  "location": "Malibu, CA",
+  "acceptance_rate": 0.4185,
+  "has_research": false
+ },
+ {
+  "id": "california-state-university-long-beach",
+  "name": "California State University, Long Beach",
+  "location": "Long Beach, CA",
+  "acceptance_rate": 0.4212,
+  "has_research": false
+ },
+ {
+  "id": "college-of-william-mary",
+  "name": "College of William & Mary",
+  "location": "Williamsburg, VA",
+  "acceptance_rate": 0.4216,
+  "has_research": false
+ },
+ {
+  "id": "reed-college",
+  "name": "Reed College",
+  "location": "Portland, OR",
+  "acceptance_rate": 0.4234,
+  "has_research": false
+ },
+ {
+  "id": "binghamton-university-suny",
+  "name": "Binghamton University (SUNY)",
+  "location": "Binghamton, NY",
+  "acceptance_rate": 0.4303,
+  "has_research": false
+ },
+ {
+  "id": "george-washington-university",
+  "name": "George Washington University",
+  "location": "Washington, DC",
+  "acceptance_rate": 0.4304,
+  "has_research": false
+ },
+ {
+  "id": "university-of-central-florida",
+  "name": "University of Central Florida",
+  "location": "Orlando, FL",
+  "acceptance_rate": 0.4517,
+  "has_research": false
+ },
+ {
+  "id": "san-francisco-conservatory-of-music",
+  "name": "San Francisco Conservatory of Music",
+  "location": "San Francisco, CA",
+  "acceptance_rate": 0.4562,
+  "has_research": false
+ },
+ {
+  "id": "north-carolina-state-university",
+  "name": "North Carolina State University",
+  "location": "Raleigh, NC",
+  "acceptance_rate": 0.4622,
+  "has_research": false
+ },
+ {
+  "id": "university-of-california-davis",
+  "name": "University of California, Davis",
+  "location": "Davis, CA",
+  "acceptance_rate": 0.4635,
+  "has_research": false
+ },
+ {
+  "id": "texas-christian-university",
+  "name": "Texas Christian University",
+  "location": "Fort Worth, TX",
+  "acceptance_rate": 0.4803,
+  "has_research": false
+ },
+ {
+  "id": "university-of-georgia",
+  "name": "University of Georgia",
+  "location": "Athens, GA",
+  "acceptance_rate": 0.4838,
+  "has_research": false
+ },
+ {
+  "id": "stony-brook-university",
+  "name": "Stony Brook University",
+  "location": "Stony Brook, NY",
+  "acceptance_rate": 0.4891,
+  "has_research": false
+ },
+ {
+  "id": "university-of-south-florida",
+  "name": "University of South Florida",
+  "location": "Tampa, FL",
+  "acceptance_rate": 0.4924,
+  "has_research": false
+ },
+ {
+  "id": "loyola-marymount-university",
+  "name": "Loyola Marymount University",
+  "location": "Los Angeles, CA",
+  "acceptance_rate": 0.5014,
+  "has_research": false
+ }
+]

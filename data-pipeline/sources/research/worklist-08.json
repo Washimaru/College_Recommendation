@@ -1,0 +1,198 @@
+[
+ {
+  "id": "michigan-state-university",
+  "name": "Michigan State University",
+  "location": "East Lansing, MI",
+  "acceptance_rate": 0.7631,
+  "has_research": false
+ },
+ {
+  "id": "prairie-view-a-m-university",
+  "name": "Prairie View A&M University",
+  "location": "Prairie View, TX",
+  "acceptance_rate": 0.7637,
+  "has_research": false
+ },
+ {
+  "id": "university-of-cincinnati",
+  "name": "University of Cincinnati",
+  "location": "Cincinnati, OH",
+  "acceptance_rate": 0.764,
+  "has_research": false
+ },
+ {
+  "id": "rose-hulman-institute-of-technology",
+  "name": "Rose-Hulman Institute of Technology",
+  "location": "Terre Haute, IN",
+  "acceptance_rate": 0.7662,
+  "has_research": false
+ },
+ {
+  "id": "morehouse-college",
+  "name": "Morehouse College",
+  "location": "Atlanta, GA",
+  "acceptance_rate": 0.7707,
+  "has_research": false
+ },
+ {
+  "id": "drexel-university",
+  "name": "Drexel University",
+  "location": "Philadelphia, PA",
+  "acceptance_rate": 0.7719,
+  "has_research": false
+ },
+ {
+  "id": "boise-state-university",
+  "name": "Boise State University",
+  "location": "Boise, ID",
+  "acceptance_rate": 0.7749,
+  "has_research": false
+ },
+ {
+  "id": "university-of-arkansas",
+  "name": "University of Arkansas",
+  "location": "Fayetteville, AR",
+  "acceptance_rate": 0.7767,
+  "has_research": false
+ },
+ {
+  "id": "university-of-nebraska-lincoln",
+  "name": "University of Nebraska\u2013Lincoln",
+  "location": "Lincoln, NE",
+  "acceptance_rate": 0.7774,
+  "has_research": false
+ },
+ {
+  "id": "school-of-the-art-institute-of-chicago",
+  "name": "School of the Art Institute of Chicago",
+  "location": "Chicago, IL",
+  "acceptance_rate": 0.7778,
+  "has_research": false
+ },
+ {
+  "id": "hope-college",
+  "name": "Hope College",
+  "location": "Holland, MI",
+  "acceptance_rate": 0.7783,
+  "has_research": false
+ },
+ {
+  "id": "savannah-college-of-art-and-design",
+  "name": "Savannah College of Art and Design",
+  "location": "Savannah, GA",
+  "acceptance_rate": 0.7792,
+  "has_research": false
+ },
+ {
+  "id": "rowan-university",
+  "name": "Rowan University",
+  "location": "Glassboro, NJ",
+  "acceptance_rate": 0.7801,
+  "has_research": false
+ },
+ {
+  "id": "university-of-tennessee",
+  "name": "University of Tennessee",
+  "location": "Knoxville, TN",
+  "acceptance_rate": 0.7815,
+  "has_research": false
+ },
+ {
+  "id": "seton-hall-university",
+  "name": "Seton Hall University",
+  "location": "South Orange, NJ",
+  "acceptance_rate": 0.7823,
+  "has_research": false
+ },
+ {
+  "id": "pennsylvania-state-university",
+  "name": "Pennsylvania State University",
+  "location": "University Park, PA",
+  "acceptance_rate": 0.7827,
+  "has_research": false
+ },
+ {
+  "id": "towson-university",
+  "name": "Towson University",
+  "location": "Towson, MD",
+  "acceptance_rate": 0.788,
+  "has_research": false
+ },
+ {
+  "id": "university-of-texas-at-dallas",
+  "name": "University of Texas at Dallas",
+  "location": "Richardson, TX",
+  "acceptance_rate": 0.7936,
+  "has_research": false
+ },
+ {
+  "id": "university-of-utah",
+  "name": "University of Utah",
+  "location": "Salt Lake City, UT",
+  "acceptance_rate": 0.794,
+  "has_research": false
+ },
+ {
+  "id": "university-of-north-carolina-at-charlotte",
+  "name": "University of North Carolina at Charlotte",
+  "location": "Charlotte, NC",
+  "acceptance_rate": 0.7953,
+  "has_research": false
+ },
+ {
+  "id": "washington-state-university",
+  "name": "Washington State University",
+  "location": "Pullman, WA",
+  "acceptance_rate": 0.7995,
+  "has_research": false
+ },
+ {
+  "id": "otis-college-of-art-and-design",
+  "name": "Otis College of Art and Design",
+  "location": "Los Angeles, CA",
+  "acceptance_rate": 0.8032,
+  "has_research": false
+ },
+ {
+  "id": "indiana-university-bloomington",
+  "name": "Indiana University Bloomington",
+  "location": "Bloomington, IN",
+  "acceptance_rate": 0.8038,
+  "has_research": false
+ },
+ {
+  "id": "university-of-alabama",
+  "name": "University of Alabama",
+  "location": "Tuscaloosa, AL",
+  "acceptance_rate": 0.8039,
+  "has_research": false
+ },
+ {
+  "id": "james-madison-university",
+  "name": "James Madison University",
+  "location": "Harrisonburg, VA",
+  "acceptance_rate": 0.8049,
+  "has_research": false
+ },
+ {
+  "id": "university-of-alabama-at-birmingham",
+  "name": "University of Alabama at Birmingham",
+  "location": "Birmingham, AL",
+  "acceptance_rate": 0.806,
+  "has_research": false
+ },
+ {
+  "id": "xavier-university-of-louisiana",
+  "name": "Xavier University of Louisiana",
+  "location": "New Orleans, LA",
+  "acceptance_rate": 0.8062,
+  "has_research": false
+ },
+ {
+  "id": "missouri-university-of-science-and-technology",
+  "name": "Missouri University of Science and Technology",
+  "location": "Rolla, MO",
+  "acceptance_rate": 0.8146,
+  "has_research": false
+ }
+]

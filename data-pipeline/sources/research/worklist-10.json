@@ -1,0 +1,72 @@
+[
+ {
+  "id": "university-of-kansas",
+  "name": "University of Kansas",
+  "location": "Lawrence, KS",
+  "acceptance_rate": 0.9093,
+  "has_research": false
+ },
+ {
+  "id": "miami-university",
+  "name": "Miami University",
+  "location": "Oxford, OH",
+  "acceptance_rate": 0.9195,
+  "has_research": false
+ },
+ {
+  "id": "kansas-state-university",
+  "name": "Kansas State University",
+  "location": "Manhattan, KS",
+  "acceptance_rate": 0.9415,
+  "has_research": false
+ },
+ {
+  "id": "university-of-wyoming",
+  "name": "University of Wyoming",
+  "location": "Laramie, WY",
+  "acceptance_rate": 0.9423,
+  "has_research": false
+ },
+ {
+  "id": "portland-state-university",
+  "name": "Portland State University",
+  "location": "Portland, OR",
+  "acceptance_rate": 0.9519,
+  "has_research": false
+ },
+ {
+  "id": "old-dominion-university",
+  "name": "Old Dominion University",
+  "location": "Norfolk, VA",
+  "acceptance_rate": 0.9541,
+  "has_research": false
+ },
+ {
+  "id": "pacific-northwest-college-of-art",
+  "name": "Pacific Northwest College of Art",
+  "location": "Portland, OR",
+  "acceptance_rate": 0.9597,
+  "has_research": false
+ },
+ {
+  "id": "university-of-new-mexico",
+  "name": "University of New Mexico",
+  "location": "Albuquerque, NM",
+  "acceptance_rate": 0.9634,
+  "has_research": false
+ },
+ {
+  "id": "university-of-kentucky",
+  "name": "University of Kentucky",
+  "location": "Lexington, KY",
+  "acceptance_rate": 0.9636,
+  "has_research": false
+ },
+ {
+  "id": "tennessee-state-university",
+  "name": "Tennessee State University",
+  "location": "Nashville, TN",
+  "acceptance_rate": null,
+  "has_research": false
+ }
+]

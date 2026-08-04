@@ -1,0 +1,198 @@
+[
+ {
+  "id": "university-of-missouri",
+  "name": "University of Missouri",
+  "location": "Columbia, MO",
+  "acceptance_rate": 0.8178,
+  "has_research": false
+ },
+ {
+  "id": "oregon-state-university",
+  "name": "Oregon State University",
+  "location": "Corvallis, OR",
+  "acceptance_rate": 0.8221,
+  "has_research": false
+ },
+ {
+  "id": "georgia-state-university",
+  "name": "Georgia State University",
+  "location": "Atlanta, GA",
+  "acceptance_rate": 0.8239,
+  "has_research": false
+ },
+ {
+  "id": "quinnipiac-university",
+  "name": "Quinnipiac University",
+  "location": "Hamden, CT",
+  "acceptance_rate": 0.8239,
+  "has_research": false
+ },
+ {
+  "id": "marquette-university",
+  "name": "Marquette University",
+  "location": "Milwaukee, WI",
+  "acceptance_rate": 0.8249,
+  "has_research": false
+ },
+ {
+  "id": "kennesaw-state-university",
+  "name": "Kennesaw State University",
+  "location": "Kennesaw, GA",
+  "acceptance_rate": 0.8311,
+  "has_research": false
+ },
+ {
+  "id": "belmont-university",
+  "name": "Belmont University",
+  "location": "Nashville, TN",
+  "acceptance_rate": 0.8323,
+  "has_research": false
+ },
+ {
+  "id": "seattle-university",
+  "name": "Seattle University",
+  "location": "Seattle, WA",
+  "acceptance_rate": 0.8323,
+  "has_research": false
+ },
+ {
+  "id": "university-of-oklahoma",
+  "name": "University of Oklahoma",
+  "location": "Norman, OK",
+  "acceptance_rate": 0.8338,
+  "has_research": false
+ },
+ {
+  "id": "university-of-hawaii-at-manoa",
+  "name": "University of Hawaii at Manoa",
+  "location": "Honolulu, HI",
+  "acceptance_rate": 0.8369,
+  "has_research": false
+ },
+ {
+  "id": "university-of-oregon",
+  "name": "University of Oregon",
+  "location": "Eugene, OR",
+  "acceptance_rate": 0.8381,
+  "has_research": false
+ },
+ {
+  "id": "west-virginia-university",
+  "name": "West Virginia University",
+  "location": "Morgantown, WV",
+  "acceptance_rate": 0.8389,
+  "has_research": false
+ },
+ {
+  "id": "san-francisco-state-university",
+  "name": "San Francisco State University",
+  "location": "San Francisco, CA",
+  "acceptance_rate": 0.8409,
+  "has_research": false
+ },
+ {
+  "id": "university-of-colorado-boulder",
+  "name": "University of Colorado Boulder",
+  "location": "Boulder, CO",
+  "acceptance_rate": 0.842,
+  "has_research": false
+ },
+ {
+  "id": "university-of-iowa",
+  "name": "University of Iowa",
+  "location": "Iowa City, IA",
+  "acceptance_rate": 0.8428,
+  "has_research": false
+ },
+ {
+  "id": "university-of-new-hampshire",
+  "name": "University of New Hampshire",
+  "location": "Durham, NH",
+  "acceptance_rate": 0.8481,
+  "has_research": false
+ },
+ {
+  "id": "auburn-university",
+  "name": "Auburn University",
+  "location": "Auburn, AL",
+  "acceptance_rate": 0.8507,
+  "has_research": false
+ },
+ {
+  "id": "university-of-arizona",
+  "name": "University of Arizona",
+  "location": "Tucson, AZ",
+  "acceptance_rate": 0.8513,
+  "has_research": false
+ },
+ {
+  "id": "university-of-memphis",
+  "name": "University of Memphis",
+  "location": "Memphis, TN",
+  "acceptance_rate": 0.852,
+  "has_research": false
+ },
+ {
+  "id": "wheaton-college-illinois",
+  "name": "Wheaton College (Illinois)",
+  "location": "Wheaton, IL",
+  "acceptance_rate": 0.8695,
+  "has_research": false
+ },
+ {
+  "id": "university-of-nevada-reno",
+  "name": "University of Nevada, Reno",
+  "location": "Reno, NV",
+  "acceptance_rate": 0.873,
+  "has_research": false
+ },
+ {
+  "id": "north-carolina-central-university",
+  "name": "North Carolina Central University",
+  "location": "Durham, NC",
+  "acceptance_rate": 0.8742,
+  "has_research": false
+ },
+ {
+  "id": "university-of-mississippi",
+  "name": "University of Mississippi",
+  "location": "Oxford, MS",
+  "acceptance_rate": 0.8802,
+  "has_research": false
+ },
+ {
+  "id": "arizona-state-university",
+  "name": "Arizona State University",
+  "location": "Tempe, AZ",
+  "acceptance_rate": 0.8837,
+  "has_research": false
+ },
+ {
+  "id": "iowa-state-university",
+  "name": "Iowa State University",
+  "location": "Ames, IA",
+  "acceptance_rate": 0.8842,
+  "has_research": false
+ },
+ {
+  "id": "george-mason-university",
+  "name": "George Mason University",
+  "location": "Fairfax, VA",
+  "acceptance_rate": 0.892,
+  "has_research": false
+ },
+ {
+  "id": "columbia-college-chicago",
+  "name": "Columbia College Chicago",
+  "location": "Chicago, IL",
+  "acceptance_rate": 0.8953,
+  "has_research": false
+ },
+ {
+  "id": "virginia-commonwealth-university",
+  "name": "Virginia Commonwealth University",
+  "location": "Richmond, VA",
+  "acceptance_rate": 0.906,
+  "has_research": false
+ }
+]

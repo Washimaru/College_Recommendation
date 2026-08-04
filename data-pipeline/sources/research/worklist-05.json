@@ -1,0 +1,198 @@
+[
+ {
+  "id": "santa-clara-university",
+  "name": "Santa Clara University",
+  "location": "Santa Clara, CA",
+  "acceptance_rate": 0.5072,
+  "has_research": false
+ },
+ {
+  "id": "st-olaf-college",
+  "name": "St. Olaf College",
+  "location": "Northfield, MN",
+  "acceptance_rate": 0.5081,
+  "has_research": false
+ },
+ {
+  "id": "university-of-maryland",
+  "name": "University of Maryland",
+  "location": "College Park, MD",
+  "acceptance_rate": 0.5096,
+  "has_research": false
+ },
+ {
+  "id": "rhodes-college",
+  "name": "Rhodes College",
+  "location": "Memphis, TN",
+  "acceptance_rate": 0.5136,
+  "has_research": false
+ },
+ {
+  "id": "berklee-college-of-music",
+  "name": "Berklee College of Music",
+  "location": "Boston, MA",
+  "acceptance_rate": 0.516,
+  "has_research": false
+ },
+ {
+  "id": "mount-holyoke-college",
+  "name": "Mount Holyoke College",
+  "location": "South Hadley, MA",
+  "acceptance_rate": 0.5247,
+  "has_research": false
+ },
+ {
+  "id": "fordham-university",
+  "name": "Fordham University",
+  "location": "New York, NY",
+  "acceptance_rate": 0.5253,
+  "has_research": false
+ },
+ {
+  "id": "spelman-college",
+  "name": "Spelman College",
+  "location": "Atlanta, GA",
+  "acceptance_rate": 0.5258,
+  "has_research": false
+ },
+ {
+  "id": "southern-methodist-university",
+  "name": "Southern Methodist University",
+  "location": "Dallas, TX",
+  "acceptance_rate": 0.5267,
+  "has_research": false
+ },
+ {
+  "id": "providence-college",
+  "name": "Providence College",
+  "location": "Providence, RI",
+  "acceptance_rate": 0.5386,
+  "has_research": false
+ },
+ {
+  "id": "whitman-college",
+  "name": "Whitman College",
+  "location": "Walla Walla, WA",
+  "acceptance_rate": 0.5413,
+  "has_research": false
+ },
+ {
+  "id": "sarah-lawrence-college",
+  "name": "Sarah Lawrence College",
+  "location": "Bronxville, NY",
+  "acceptance_rate": 0.5463,
+  "has_research": false
+ },
+ {
+  "id": "colorado-school-of-mines",
+  "name": "Colorado School of Mines",
+  "location": "Golden, CO",
+  "acceptance_rate": 0.5497,
+  "has_research": false
+ },
+ {
+  "id": "saint-louis-university",
+  "name": "Saint Louis University",
+  "location": "St. Louis, MO",
+  "acceptance_rate": 0.5554,
+  "has_research": false
+ },
+ {
+  "id": "university-of-washington",
+  "name": "University of Washington",
+  "location": "Seattle, WA",
+  "acceptance_rate": 0.5586,
+  "has_research": true
+ },
+ {
+  "id": "sewanee-the-university-of-the-south",
+  "name": "Sewanee: The University of the South",
+  "location": "Sewanee, TN",
+  "acceptance_rate": 0.5607,
+  "has_research": false
+ },
+ {
+  "id": "university-of-connecticut",
+  "name": "University of Connecticut",
+  "location": "Storrs, CT",
+  "acceptance_rate": 0.5609,
+  "has_research": false
+ },
+ {
+  "id": "north-carolina-a-t-state-university",
+  "name": "North Carolina A&T State University",
+  "location": "Greensboro, NC",
+  "acceptance_rate": 0.5671,
+  "has_research": false
+ },
+ {
+  "id": "bard-college",
+  "name": "Bard College",
+  "location": "Annandale-on-Hudson, NY",
+  "acceptance_rate": 0.5695,
+  "has_research": false
+ },
+ {
+  "id": "university-at-albany-suny",
+  "name": "University at Albany (SUNY)",
+  "location": "Albany, NY",
+  "acceptance_rate": 0.5715,
+  "has_research": false
+ },
+ {
+  "id": "university-of-wisconsin-madison",
+  "name": "University of Wisconsin\u2013Madison",
+  "location": "Madison, WI",
+  "acceptance_rate": 0.5725,
+  "has_research": false
+ },
+ {
+  "id": "rensselaer-polytechnic-institute",
+  "name": "Rensselaer Polytechnic Institute",
+  "location": "Troy, NY",
+  "acceptance_rate": 0.5726,
+  "has_research": false
+ },
+ {
+  "id": "bentley-university",
+  "name": "Bentley University",
+  "location": "Waltham, MA",
+  "acceptance_rate": 0.5782,
+  "has_research": false
+ },
+ {
+  "id": "american-academy-of-dramatic-arts",
+  "name": "American Academy of Dramatic Arts",
+  "location": "New York, NY",
+  "acceptance_rate": 0.5787,
+  "has_research": false
+ },
+ {
+  "id": "florida-international-university",
+  "name": "Florida International University",
+  "location": "Miami, FL",
+  "acceptance_rate": 0.5788,
+  "has_research": false
+ },
+ {
+  "id": "chapman-university",
+  "name": "Chapman University",
+  "location": "Orange, CA",
+  "acceptance_rate": 0.5826,
+  "has_research": false
+ },
+ {
+  "id": "university-of-san-diego",
+  "name": "University of San Diego",
+  "location": "San Diego, CA",
+  "acceptance_rate": 0.587,
+  "has_research": false
+ },
+ {
+  "id": "fashion-institute-of-technology",
+  "name": "Fashion Institute of Technology",
+  "location": "New York, NY",
+  "acceptance_rate": 0.5898,
+  "has_research": false
+ }
+]

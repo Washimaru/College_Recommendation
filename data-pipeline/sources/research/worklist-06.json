@@ -1,0 +1,198 @@
+[
+ {
+  "id": "clark-atlanta-university",
+  "name": "Clark Atlanta University",
+  "location": "Atlanta, GA",
+  "acceptance_rate": 0.5905,
+  "has_research": false
+ },
+ {
+  "id": "worcester-polytechnic-institute",
+  "name": "Worcester Polytechnic Institute",
+  "location": "Worcester, MA",
+  "acceptance_rate": 0.5905,
+  "has_research": false
+ },
+ {
+  "id": "embry-riddle-aeronautical-university",
+  "name": "Embry-Riddle Aeronautical University",
+  "location": "Daytona Beach, FL",
+  "acceptance_rate": 0.606,
+  "has_research": false
+ },
+ {
+  "id": "university-of-denver",
+  "name": "University of Denver",
+  "location": "Denver, CO",
+  "acceptance_rate": 0.6067,
+  "has_research": false
+ },
+ {
+  "id": "tuskegee-university",
+  "name": "Tuskegee University",
+  "location": "Tuskegee, AL",
+  "acceptance_rate": 0.6113,
+  "has_research": false
+ },
+ {
+  "id": "suny-geneseo",
+  "name": "SUNY Geneseo",
+  "location": "Geneseo, NY",
+  "acceptance_rate": 0.6136,
+  "has_research": false
+ },
+ {
+  "id": "clemson-university",
+  "name": "Clemson University",
+  "location": "Clemson, SC",
+  "acceptance_rate": 0.6194,
+  "has_research": false
+ },
+ {
+  "id": "university-of-houston",
+  "name": "University of Houston",
+  "location": "Houston, TX",
+  "acceptance_rate": 0.6279,
+  "has_research": false
+ },
+ {
+  "id": "texas-a-m-university",
+  "name": "Texas A&M University",
+  "location": "College Station, TX",
+  "acceptance_rate": 0.6327,
+  "has_research": false
+ },
+ {
+  "id": "university-of-illinois-urbana-champaign",
+  "name": "University of Illinois Urbana-Champaign",
+  "location": "Champaign, IL",
+  "acceptance_rate": 0.633,
+  "has_research": true
+ },
+ {
+  "id": "university-of-pittsburgh",
+  "name": "University of Pittsburgh",
+  "location": "Pittsburgh, PA",
+  "acceptance_rate": 0.6388,
+  "has_research": false
+ },
+ {
+  "id": "creighton-university",
+  "name": "Creighton University",
+  "location": "Omaha, NE",
+  "acceptance_rate": 0.6402,
+  "has_research": false
+ },
+ {
+  "id": "university-of-california-santa-cruz",
+  "name": "University of California, Santa Cruz",
+  "location": "Santa Cruz, CA",
+  "acceptance_rate": 0.6473,
+  "has_research": false
+ },
+ {
+  "id": "university-of-louisville",
+  "name": "University of Louisville",
+  "location": "Louisville, KY",
+  "acceptance_rate": 0.6512,
+  "has_research": false
+ },
+ {
+  "id": "furman-university",
+  "name": "Furman University",
+  "location": "Greenville, SC",
+  "acceptance_rate": 0.6525,
+  "has_research": false
+ },
+ {
+  "id": "college-of-wooster",
+  "name": "College of Wooster",
+  "location": "Wooster, OH",
+  "acceptance_rate": 0.653,
+  "has_research": false
+ },
+ {
+  "id": "university-of-massachusetts-amherst",
+  "name": "University of Massachusetts Amherst",
+  "location": "Amherst, MA",
+  "acceptance_rate": 0.6532,
+  "has_research": false
+ },
+ {
+  "id": "virginia-tech",
+  "name": "Virginia Tech",
+  "location": "Blacksburg, VA",
+  "acceptance_rate": 0.6577,
+  "has_research": false
+ },
+ {
+  "id": "university-of-california-riverside",
+  "name": "University of California, Riverside",
+  "location": "Riverside, CA",
+  "acceptance_rate": 0.6578,
+  "has_research": false
+ },
+ {
+  "id": "pratt-institute",
+  "name": "Pratt Institute",
+  "location": "Brooklyn, NY",
+  "acceptance_rate": 0.6594,
+  "has_research": false
+ },
+ {
+  "id": "university-of-delaware",
+  "name": "University of Delaware",
+  "location": "Newark, DE",
+  "acceptance_rate": 0.6599,
+  "has_research": false
+ },
+ {
+  "id": "new-jersey-institute-of-technology",
+  "name": "New Jersey Institute of Technology",
+  "location": "Newark, NJ",
+  "acceptance_rate": 0.6603,
+  "has_research": false
+ },
+ {
+  "id": "fisk-university",
+  "name": "Fisk University",
+  "location": "Nashville, TN",
+  "acceptance_rate": 0.6646,
+  "has_research": false
+ },
+ {
+  "id": "rutgers-university",
+  "name": "Rutgers University",
+  "location": "New Brunswick, NJ",
+  "acceptance_rate": 0.6693,
+  "has_research": false
+ },
+ {
+  "id": "university-at-buffalo-suny",
+  "name": "University at Buffalo (SUNY)",
+  "location": "Buffalo, NY",
+  "acceptance_rate": 0.6695,
+  "has_research": false
+ },
+ {
+  "id": "purdue-university",
+  "name": "Purdue University",
+  "location": "West Lafayette, IN",
+  "acceptance_rate": 0.6715,
+  "has_research": true
+ },
+ {
+  "id": "yeshiva-university",
+  "name": "Yeshiva University",
+  "location": "New York, NY",
+  "acceptance_rate": 0.6741,
+  "has_research": false
+ },
+ {
+  "id": "agnes-scott-college",
+  "name": "Agnes Scott College",
+  "location": "Decatur, GA",
+  "acceptance_rate": 0.6752,
+  "has_research": false
+ }
+]

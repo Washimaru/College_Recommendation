@@ -1,0 +1,198 @@
+[
+ {
+  "id": "california-state-university-fullerton",
+  "name": "California State University, Fullerton",
+  "location": "Fullerton, CA",
+  "acceptance_rate": 0.6762,
+  "has_research": false
+ },
+ {
+  "id": "drake-university",
+  "name": "Drake University",
+  "location": "Des Moines, IA",
+  "acceptance_rate": 0.6792,
+  "has_research": false
+ },
+ {
+  "id": "university-of-south-carolina",
+  "name": "University of South Carolina",
+  "location": "Columbia, SC",
+  "acceptance_rate": 0.6835,
+  "has_research": false
+ },
+ {
+  "id": "baylor-university",
+  "name": "Baylor University",
+  "location": "Waco, TX",
+  "acceptance_rate": 0.6847,
+  "has_research": false
+ },
+ {
+  "id": "ohio-state-university",
+  "name": "Ohio State University",
+  "location": "Columbus, OH",
+  "acceptance_rate": 0.6849,
+  "has_research": false
+ },
+ {
+  "id": "ringling-college-of-art-and-design",
+  "name": "Ringling College of Art and Design",
+  "location": "Sarasota, FL",
+  "acceptance_rate": 0.6851,
+  "has_research": false
+ },
+ {
+  "id": "syracuse-university",
+  "name": "Syracuse University",
+  "location": "Syracuse, NY",
+  "acceptance_rate": 0.6872,
+  "has_research": false
+ },
+ {
+  "id": "wayne-state-university",
+  "name": "Wayne State University",
+  "location": "Detroit, MI",
+  "acceptance_rate": 0.6901,
+  "has_research": false
+ },
+ {
+  "id": "the-new-school-parsons",
+  "name": "The New School (Parsons)",
+  "location": "New York, NY",
+  "acceptance_rate": 0.691,
+  "has_research": false
+ },
+ {
+  "id": "hofstra-university",
+  "name": "Hofstra University",
+  "location": "Hempstead, NY",
+  "acceptance_rate": 0.6911,
+  "has_research": false
+ },
+ {
+  "id": "university-of-minnesota",
+  "name": "University of Minnesota",
+  "location": "Minneapolis, MN",
+  "acceptance_rate": 0.6964,
+  "has_research": false
+ },
+ {
+  "id": "texas-tech-university",
+  "name": "Texas Tech University",
+  "location": "Lubbock, TX",
+  "acceptance_rate": 0.7003,
+  "has_research": false
+ },
+ {
+  "id": "depaul-university",
+  "name": "DePaul University",
+  "location": "Chicago, IL",
+  "acceptance_rate": 0.7024,
+  "has_research": false
+ },
+ {
+  "id": "loyola-university-chicago",
+  "name": "Loyola University Chicago",
+  "location": "Chicago, IL",
+  "acceptance_rate": 0.7054,
+  "has_research": false
+ },
+ {
+  "id": "university-of-vermont",
+  "name": "University of Vermont",
+  "location": "Burlington, VT",
+  "acceptance_rate": 0.7132,
+  "has_research": false
+ },
+ {
+  "id": "temple-university",
+  "name": "Temple University",
+  "location": "Philadelphia, PA",
+  "acceptance_rate": 0.7142,
+  "has_research": false
+ },
+ {
+  "id": "school-of-visual-arts",
+  "name": "School of Visual Arts",
+  "location": "New York, NY",
+  "acceptance_rate": 0.7153,
+  "has_research": false
+ },
+ {
+  "id": "elon-university",
+  "name": "Elon University",
+  "location": "Elon, NC",
+  "acceptance_rate": 0.717,
+  "has_research": false
+ },
+ {
+  "id": "centre-college",
+  "name": "Centre College",
+  "location": "Danville, KY",
+  "acceptance_rate": 0.7208,
+  "has_research": false
+ },
+ {
+  "id": "university-of-illinois-chicago",
+  "name": "University of Illinois Chicago",
+  "location": "Chicago, IL",
+  "acceptance_rate": 0.7263,
+  "has_research": false
+ },
+ {
+  "id": "gonzaga-university",
+  "name": "Gonzaga University",
+  "location": "Spokane, WA",
+  "acceptance_rate": 0.7289,
+  "has_research": false
+ },
+ {
+  "id": "louisiana-state-university",
+  "name": "Louisiana State University",
+  "location": "Baton Rouge, LA",
+  "acceptance_rate": 0.7338,
+  "has_research": false
+ },
+ {
+  "id": "morgan-state-university",
+  "name": "Morgan State University",
+  "location": "Baltimore, MD",
+  "acceptance_rate": 0.7359,
+  "has_research": false
+ },
+ {
+  "id": "rochester-institute-of-technology",
+  "name": "Rochester Institute of Technology",
+  "location": "Rochester, NY",
+  "acceptance_rate": 0.7386,
+  "has_research": false
+ },
+ {
+  "id": "university-of-massachusetts-lowell",
+  "name": "University of Massachusetts Lowell",
+  "location": "Lowell, MA",
+  "acceptance_rate": 0.752,
+  "has_research": false
+ },
+ {
+  "id": "ithaca-college",
+  "name": "Ithaca College",
+  "location": "Ithaca, NY",
+  "acceptance_rate": 0.7568,
+  "has_research": false
+ },
+ {
+  "id": "butler-university",
+  "name": "Butler University",
+  "location": "Indianapolis, IN",
+  "acceptance_rate": 0.7569,
+  "has_research": false
+ },
+ {
+  "id": "artcenter-college-of-design",
+  "name": "ArtCenter College of Design",
+  "location": "Pasadena, CA",
+  "acceptance_rate": 0.7609,
+  "has_research": false
+ }
+]
