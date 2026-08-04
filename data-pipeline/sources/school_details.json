@@ -3104,11 +3104,12 @@
   ]
  },
  "university-of-alabama": {
-  "src": {
-   "u": "https://scholarships.ua.edu/types/",
-   "t": "UA Scholarships (Afford)",
-   "y": "2024–25"
-  },
+  "src": [
+   "u",
+   "t",
+   "y",
+   "https://en.wikipedia.org/wiki/University_of_Alabama"
+  ],
   "admissions": {
    "acceptRate": "~80%",
    "testPolicy": "Test-optional for admission, but SAT/ACT scores unlock automatic merit scholarships."
@@ -3127,7 +3128,11 @@
    "athletics": "NCAA Division I (SEC) — national football powerhouse.",
    "housing": "On-campus housing common in the first year."
   },
-  "_source": "curated"
+  "_source": "curated",
+  "research": {
+   "level": "Carnegie R1 (very high research activity).",
+   "areas": "Research centers include the Alabama International Trade Center and the Center for Advanced Public Safety; no specific current named faculty with major national/international awards could be independently verified from available sources."
+  }
  },
  "boston-university": {
   "src": [
@@ -4025,8 +4030,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://morehouse.edu/aid/financial-aid/scholarships"
-  ]
+   "https://morehouse.edu/aid/financial-aid/scholarships",
+   "https://en.wikipedia.org/wiki/Morehouse_College"
+  ],
+  "research": {
+   "level": "Primarily undergraduate liberal-arts college (HBCU); teaching-focused rather than a research enterprise.",
+   "undergrad": "The college advertises research, study-abroad, dual-degree, and internship opportunities for undergraduates, though no named flagship research program could be independently verified from available sources."
+  }
  },
  "scripps-college": {
   "scholarships": {
@@ -4346,8 +4356,13 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.rose-hulman.edu/admissions-and-aid/financial-aid/scholarships-and-grants/rose-hulman-scholarships/index.html"
-  ]
+   "https://www.rose-hulman.edu/admissions-and-aid/financial-aid/scholarships-and-grants/rose-hulman-scholarships/index.html",
+   "https://en.wikipedia.org/wiki/Rose%E2%80%93Hulman_Institute_of_Technology"
+  ],
+  "research": {
+   "level": "Undergraduate-focused institute; small master's programs only, no doctoral programs — research is organized around teaching, not a graduate research enterprise.",
+   "undergrad": "Nearly all (99%) faculty hold a PhD and teach undergraduates directly. Students get hands-on project experience through teams like Rose Motorsports, Formula SAE (Grand Prix Engineering), the Human Powered Vehicle Challenge, Rose Rocketry, AIAA Design/Build/Fly, and Chem-E-Car, plus Rose-Hulman Ventures, an applied R&D and internship program launched with Lilly Endowment funding."
+  }
  },
  "syracuse-university": {
   "scholarships": {
@@ -4499,8 +4514,14 @@
   "_source": "web_verified",
   "_retrieved": "2026-07-28",
   "src": [
-   "https://www.xula.edu/financialaid/academic-scholarships/index.html"
-  ]
+   "https://www.xula.edu/financialaid/academic-scholarships/index.html",
+   "https://en.wikipedia.org/wiki/Xavier_University_of_Louisiana"
+  ],
+  "research": {
+   "level": "Primarily undergraduate HBCU; not a research-intensive Carnegie R1/R2 institution.",
+   "undergrad": "Xavier's dual-degree engineering partnerships (with Tulane, Georgia Tech, and Notre Dame, among others) let students earn two degrees in about five years, feeding its STEM pipeline.",
+   "areas": "Xavier is nationally noted for placing more African-American students into medical school and physical/biological-science bachelor's programs than any other US college or university, and its College of Pharmacy consistently ranks among the top three nationally for Pharm.D. degrees awarded to African Americans."
+  }
  },
  "rochester-institute-of-technology": {
   "scholarships": {
@@ -6083,6 +6104,228 @@
   },
   "src": [
    "https://www.tnstate.edu/research/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "michigan-state-university": {
+  "faculty": "Michigan State is an AAU member and Carnegie R1 institution. Physicist Albert Fert, who shared the 2007 Nobel Prize in Physics for the discovery of giant magnetoresistance, holds an adjunct professorship in MSU's Department of Physics and Astronomy alongside his primary post in France — a secondary, not resident, affiliation. (Faculty change and appointments — verify.)",
+  "research": {
+   "level": "Carnegie R1 (very high research activity); AAU member.",
+   "areas": "Home to the Facility for Rare Isotope Beams (FRIB), a $730M Department of Energy user facility for nuclear science and astrophysics, and the National Superconducting Cyclotron Laboratory. MSU's plant research and cancer-drug history (cisplatin/carboplatin were developed there) are also notable."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Michigan_State_University",
+   "https://msu.edu"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "prairie-view-a-m-university": {
+  "research": {
+   "level": "Carnegie R2 (high research activity) — one of only 11 HBCUs nationally with R2 status, and one of four Texas A&M System members at that level.",
+   "undergrad": "The Texas Undergraduate Medical Academy (UMA), established 2004, is a selective pre-health pipeline preparing undergraduates for medical, dental, pharmacy, and veterinary school; a university Honors Program also supports research-oriented students.",
+   "areas": "STEM output is a signature strength: PVAMU awards the second-most STEM degrees in the Texas A&M System and is a leading producer of African-American engineers and architects nationally."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Prairie_View_A%26M_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-cincinnati": {
+  "research": {
+   "level": "Carnegie R1 (very high research activity); roughly $480M+ in annual R&D expenditure.",
+   "undergrad": "UC pioneered cooperative education in 1906 (Herman Schneider, then Dean of Engineering); co-op is mandatory in engineering, architecture, design, and some IT programs, giving undergraduates a year or more of paid, relevant work/research experience before graduation.",
+   "areas": "The College of Medicine has a long research pedigree (a live polio vaccine and diphenhydramine were developed there); the Institute for Policy Research conducts regional survey research."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Cincinnati",
+   "http://research.uc.edu/"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "drexel-university": {
+  "research": {
+   "level": "Carnegie R1 (very high research activity).",
+   "undergrad": "The STAR Scholars Program (Students Tackling Advanced Research), run through the Pennoni Honors College, funds highly motivated first-year and transfer students for a paid, full-time faculty-mentored summer research or creative project. Drexel's co-op program — one of the largest and oldest in the US — separately gives most undergraduates up to 18 months of paid full-time work experience across their degree.",
+   "areas": "Ranked 51st nationally for US utility patents granted (National Academy of Inventors / IPO ranking, 2018 edition), reflecting an applied-research and commercialization focus."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Drexel_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "boise-state-university": {
+  "research": {
+   "level": "Carnegie R2 (high research activity); FY2024 research awards exceeded $83M with research expenditures over $70M.",
+   "areas": "The Micron Center for Materials Research (2020, $25M gift) anchors materials science and engineering research; a 2025 federal biochemistry grant to the Nagarajan Lab was the first of its kind awarded in Idaho, supporting molecular research and interdisciplinary science education."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Boise_State_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-arkansas": {
+  "faculty": "Peter Ungar, Distinguished Professor of Anthropology and director of the Environmental Dynamics doctoral program, became the first University of Arkansas faculty member ever elected to the National Academy of Sciences (2024), recognized for work on the evolution of human diet using dental microwear analysis. (Faculty change — verify.)",
+  "research": {
+   "level": "Carnegie R1 (very high research activity); ~$164M in research expenditure in FY2021.",
+   "areas": "Affiliated with Oak Ridge Associated Universities and the National Space Grant College and Fellowship Program."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Arkansas",
+   "https://news.uark.edu"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-nebraska-lincoln": {
+  "research": {
+   "level": "Carnegie R1 (very high research activity); ~$320M in R&D expenditure (2020), an all-time institutional high under former Chancellor Harvey Perlman.",
+   "areas": "Operates over one hundred classroom/research buildings across three campuses, including the Holland Computing Center and the Midwest Roadside Safety Facility. Alumni (not current faculty) include three Nobel laureates and a Turing Award winner."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Nebraska%E2%80%93Lincoln"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "school-of-the-art-institute-of-chicago": {
+  "faculty": "Nick Cave, the artist known for his wearable sculpture \"Soundsuits,\" has chaired SAIC's Fashion Design department since 1990 and holds the Stephanie and Bill Sick Professorship; his honors include Creative Capital, Joan Mitchell Foundation, and United States Artist Award grants. (Faculty change — verify.)",
+  "src": [
+   "https://www.saic.edu/profiles/faculty/nick-cave",
+   "https://en.wikipedia.org/wiki/School_of_the_Art_Institute_of_Chicago"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "hope-college": {
+  "research": {
+   "level": "Primarily undergraduate liberal-arts college; ranked #22 nationally for undergraduate research/creative projects by U.S. News (2025 edition).",
+   "undergrad": "The annual Celebration of Undergraduate Research and Creative Activity drew 254 students presenting 125 projects in 2024. Day1 Research Communities engage students in faculty-mentored research from their first term, and centers such as the Global Water Research Institute and the Frost Center for Social Science Research extend research beyond the sciences. Faculty secured over $9.8M in external research funding for 50+ projects in 2023–24."
+  },
+  "src": [
+   "https://hope.edu/research/",
+   "https://en.wikipedia.org/wiki/Hope_College"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "savannah-college-of-art-and-design": {
+  "research": {
+   "level": "Professional art and design college; \"research\" at SCAD is primarily creative/practice-based rather than laboratory science.",
+   "undergrad": "No specific named undergraduate research program could be verified from available sources."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Savannah_College_of_Art_and_Design"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "rowan-university": {
+  "research": {
+   "level": "Carnegie R2 (high research activity); also a sea-grant and space-grant institution.",
+   "areas": "The Henry M. Rowan College of Engineering, endowed by a $100M gift from industrialist Henry M. Rowan Jr. in 1992, was central to Rowan's rise to university status in 1997 and remains its research and program anchor."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Rowan_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-tennessee": {
+  "research": {
+   "level": "Carnegie R1 (very high research activity); $324.4M in research expenditure (FY2022); ranked 6th nationally in Department of Energy funding (FY2021).",
+   "areas": "UT Knoxville's defining research strength is its formal partnership with Oak Ridge National Laboratory (the UT–Battelle partnership), which operates some of the world's most powerful supercomputers and gives UTK faculty and students access to major DOE research infrastructure."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Tennessee"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "pennsylvania-state-university": {
+  "faculty": "Réka Albert, Evan Pugh University Professor of Physics and Biology, was elected to the National Academy of Sciences in 2025 for her work in network science modeling complex biological systems. Richard Alley, Evan Pugh University Professor of Geosciences and a leading glaciologist/climate scientist, received the 2025 National Medal of Science. Both are active on the University Park faculty as of this research. (Faculty change — verify.)",
+  "src": [
+   "https://science.psu.edu/physics/people/rza1",
+   "https://en.wikipedia.org/wiki/Pennsylvania_State_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "towson-university": {
+  "research": {
+   "level": "Comprehensive regional public university; maintains a College of Graduate Studies and Research and a Division of Innovation & Applied Research, but no Carnegie R1/R2 research-intensity classification could be verified from available sources."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Towson_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-texas-at-dallas": {
+  "research": {
+   "level": "Carnegie R1 (very high research activity); operates 50+ research centers and institutes.",
+   "areas": "Signature strengths include space science and plasma physics (William B. Hanson Center for Space Studies), nanotechnology (Alan G. MacDiarmid NanoTech Institute), cybersecurity, and brain science (Center for BrainHealth). Longtime NanoTech Institute director Ray Baughman, a National Academy of Engineering member known for carbon-nanotube artificial-muscle research, died in April 2025, ending a 23-year tenure there — noted here because a Nobel/Academy-affiliation search would otherwise surface him as current faculty."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_Texas_at_Dallas"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-utah": {
+  "faculty": "Mario Capecchi, Distinguished Professor of Human Genetics and Biology and a Howard Hughes Medical Institute investigator, shared the 2007 Nobel Prize in Physiology or Medicine for developing gene-targeting (\"knockout mouse\") technology. His University of Utah faculty and lab pages remain active (profile updated October 2025). (Faculty change — verify.)",
+  "src": [
+   "https://capecchi.genetics.utah.edu/",
+   "https://en.wikipedia.org/wiki/Mario_Capecchi"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-north-carolina-at-charlotte": {
+  "research": {
+   "level": "Carnegie R1 (very high research spending and doctorate production)."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/University_of_North_Carolina_at_Charlotte"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "washington-state-university": {
+  "research": {
+   "level": "Carnegie R1 (very high research activity); $360M in R&D spending (2018).",
+   "areas": "Agricultural sciences are WSU's historic strength: its plant sciences faculty rank No. 2 nationally, animal sciences 4th, and food science 6th. Other signature areas include the wheat breeding program, the Gates Foundation-funded School for Global Animal Health, clean-energy and grid research, and shock compression science."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Washington_State_University"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "otis-college-of-art-and-design": {
+  "research": {
+   "level": "Professional art and design college; research is practice/creative-based rather than laboratory science, and no notable current named faculty or signature research program could be independently verified."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Otis_College_of_Art_and_Design"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "indiana-university-bloomington": {
+  "research": {
+   "level": "Carnegie R1 (very high research spending and doctorate production); AAU member.",
+   "areas": "Elinor Ostrom won the 2009 Nobel Prize in Economics here — the first woman to do so — for her work on governing shared resources, and IU's Ostrom Workshop continues that tradition in political economy and institutional analysis. She died in 2012."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Indiana_University_Bloomington"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "university-of-alabama-at-birmingham": {
+  "faculty": "UAB had an unprecedented 2022 National Academies year: Casey Weaver (Professor of Pathology, T-cell immunology) became only the third UAB faculty member ever elected to the National Academy of Sciences, while Marie-Carmelle Elie (Chair, Emergency Medicine), James Markert (Chair, Neurosurgery; oncolytic-virus researcher), and Alan Tita (Professor and Associate Dean for Global and Women's Health, Ob/Gyn) were elected to the National Academy of Medicine. (Faculty change — verify.)",
+  "research": {
+   "level": "Carnegie R1 (very high research activity); $780M in research expenditures (2023); ranks in the top 4% of public universities for NIH funding.",
+   "areas": "Biomedical research is UAB's defining strength: the NCI-designated O'Neal Comprehensive Cancer Center, xenotransplantation/organ transplant research, and diabetes/metabolic and Alzheimer's research are signature programs."
+  },
+  "src": [
+   "https://www.uab.edu/medicine/news/latest-news/unprecedented-national-academies-recognition"
+  ],
+  "_retrieved": "2026-08-03"
+ },
+ "missouri-university-of-science-and-technology": {
+  "research": {
+   "level": "Carnegie R1, STEM-dominant (very high research spending and doctorate production).",
+   "undergrad": "The Student Design & Experiential Learning Center (SDELC), established 2000, coordinates roughly twenty student design/research teams involving about 1,200 undergraduates.",
+   "areas": "Operates a 200 kW nuclear reactor (since 1961) for education and research, and the Straumanis-James Hall Materials Research Center has generated patents and spinoff companies (e.g., Brewer Science, Mo-Sci) that account for the large majority of the campus's licensing revenue."
+  },
+  "src": [
+   "https://en.wikipedia.org/wiki/Missouri_University_of_Science_and_Technology"
   ],
   "_retrieved": "2026-08-03"
  }
