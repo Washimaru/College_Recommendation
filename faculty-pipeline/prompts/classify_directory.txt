@@ -1,9 +1,7 @@
-You are choosing the official faculty/people directory page(s) for a US
-university, from a list of candidate URLs. Every candidate already resolved
-(HTTP 200, HTML content, not an obvious "not found" page) on the
-university's own site or in a web search result — your job is deciding
-which of them are genuinely official faculty/people directories, not
-re-checking whether they load.
+You are choosing the official faculty directory page(s) for a US university,
+from a list of candidate URLs. Every candidate already resolved (HTTP 200,
+HTML, not an obvious "not found" page) — your job is deciding which are
+genuinely faculty directories, not re-checking whether they load.
 
 University: {school_name}
 Homepage: {homepage}
@@ -13,25 +11,59 @@ Candidate URLs:
 
 Call the `classify_directory` tool with your answer.
 
-Accept:
-- An official, on-domain, campus-wide faculty/people directory.
-- Official, on-domain department-level faculty directories, when no single
-  campus-wide directory exists among the candidates. Returning multiple
-  department directories in that case is the expected default, not a
-  fallback of last resort.
+## The decisive test
 
-Reject — always out of scope, no matter how highly it ranks or how
-authoritative it looks:
-- Third-party aggregators (RateMyProfessors and similar sites not on the
-  university's own domain).
-- Non-directory pages that superficially match: a Faculty Handbook, an HR
-  jobs/careers page, a Faculty Senate or other governance page, a news
-  article that mentions faculty, an alumni directory, or a directory of
-  students rather than faculty.
+The next stage of this pipeline visits the page you choose and follows links
+to individual professors' profile pages. So the question is not "does this
+page relate to faculty?" but:
 
-If nothing in the candidate list qualifies, return an empty directory_urls
-list and confidence 0 — that is a complete, correct answer. Never invent or
-guess a URL that is not in the candidate list above.
+  **Can you get from this page to individual named professors?**
 
-List directory_urls with the best, most authoritative candidate first, and
-use notes to briefly explain your reasoning, especially any rejections.
+Either by links listed directly on it, or by browsing (A-Z, by department,
+paginated). If a human landing here could not reach a specific professor's
+page without already knowing that professor's name, it does not qualify.
+
+## Accept
+
+- An official, on-domain faculty directory listing or browsable index of
+  individual academic staff.
+- Official department-level faculty directories, when no single campus-wide
+  one exists among the candidates. Returning several is the expected default
+  in that case, not a fallback of last resort.
+
+## Reject — regardless of how authoritative or well-named
+
+- **A directory of departments, offices or buildings.** These very often live
+  at exactly `/directory` and list org units with office phone numbers. They
+  contain no individual academics and are the single most common false
+  positive. A page whose entries are units rather than people is a reject.
+- **A search box with no browsable listing.** If the page requires you to
+  already know a name, the crawler cannot enumerate anyone.
+- **A general campus people-search covering students and staff.** Beyond being
+  the wrong data, these sweep in students, who are not public figures.
+- Third-party aggregators (RateMyProfessors and similar), anything off the
+  university's own domain.
+- Superficial matches: a Faculty Handbook, HR jobs/careers page, Faculty
+  Senate or governance page, a news article mentioning faculty, an alumni
+  directory, a student directory.
+
+## Confidence — calibrate against these anchors
+
+- **0.9–1.0** — unmistakably a faculty listing; individual academics visible
+  or one obvious click away.
+- **0.6–0.8** — a real faculty directory, but partial: one department only, or
+  browsable but awkward.
+- **0.3–0.5** — plausibly reaches faculty, but you are inferring it; a mixed
+  people-search, or a hub page that may or may not lead to profiles.
+- **0.0–0.2** — cannot get to individual professors from here.
+
+Do not report 0.8+ for a page you have not concluded actually lists people.
+A confident wrong answer sends a crawler at someone's server for nothing.
+
+If nothing qualifies, return an empty directory_urls list and confidence 0 —
+that is a complete, correct answer, and far better than a guess. Never invent
+a URL that is not in the candidate list.
+
+Order directory_urls best first. In notes, say specifically what you saw that
+made each page qualify or fail — "lists faculty names A-Z" or "entries are
+departments, not people".
