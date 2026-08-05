@@ -32,6 +32,12 @@ DEFAULT_RATE_LIMIT_SECONDS = 2.0
 @dataclass(frozen=True)
 class Config:
     input_path: Path
+    # Stage 1 (§6 Stage 1, adapted per the docs/FACULTY_PIPELINE.md banner):
+    # `input_path` is the catalog (country/homepage). `details_path` is
+    # `school_details.json`, left-joined by school id for the `source_fields`
+    # passthrough (§4.1). Not every school has an entry there — that's the
+    # common case, not an error.
+    details_path: Path = Path("../data-pipeline/sources/school_details.json")
     output_dir: Path = Path("output")
     data_dir: Path = Path("data")
     cache_dir: Path = Path("cache")
@@ -110,7 +116,15 @@ class Config:
         return dataclasses.replace(self, **kwargs)
 
 
-_PATH_FIELDS = {"input_path", "output_dir", "data_dir", "cache_dir", "checkpoint_dir", "log_dir"}
+_PATH_FIELDS = {
+    "input_path",
+    "details_path",
+    "output_dir",
+    "data_dir",
+    "cache_dir",
+    "checkpoint_dir",
+    "log_dir",
+}
 _FLOAT_FIELDS = {"rate_limit_per_host", "request_timeout"}
 _INT_FIELDS = {"max_concurrency", "max_retries", "llm_max_tokens", "max_profiles_per_school"}
 _BOOL_FIELDS = {"respect_robots"}

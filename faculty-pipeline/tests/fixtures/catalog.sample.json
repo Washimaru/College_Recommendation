@@ -1,0 +1,74 @@
+[
+  {
+    "id": "acme-state-university",
+    "name": "Acme State University",
+    "country": "USA",
+    "location": "Springfield, IL",
+    "type": "Public",
+    "url": "www.acmestate.edu/"
+  },
+  {
+    "id": "acme-tech",
+    "name": "Acme Institute of Technology",
+    "country": "USA",
+    "location": "Cambridge, MA",
+    "type": "Private",
+    "url": "https://web.acmetech.edu/"
+  },
+  {
+    "id": "acme-abroad-university",
+    "name": "Acme Abroad University",
+    "country": "France",
+    "location": "Paris",
+    "type": "Public",
+    "url": "www.acmeabroad.fr/"
+  },
+  {
+    "id": "acme-noncountry-state-college",
+    "name": "Acme No-Country State College",
+    "country": "",
+    "location": "Reno, NV",
+    "type": "Public",
+    "url": "www.acmenocountry.edu/"
+  },
+  {
+    "id": "acme-noncountry-edu-college",
+    "name": "Acme No-Country Edu College",
+    "country": "",
+    "location": "Nowhereville",
+    "type": "Private",
+    "url": "www.acmeeduonly.edu/"
+  },
+  {
+    "id": "acme-ambiguous-college",
+    "name": "Acme Ambiguous College",
+    "country": "",
+    "location": "Nowhereville",
+    "type": "Private",
+    "url": "www.acmeambiguous.com/"
+  },
+  {
+    "id": "acme-no-homepage-university",
+    "name": "Acme No Homepage University",
+    "country": "USA",
+    "location": "Austin, TX",
+    "type": "Public",
+    "url": null
+  },
+  {
+    "id": "acme-odd-location-college",
+    "name": "Acme Odd Location College",
+    "country": "USA",
+    "location": "Washington D.C.",
+    "type": "Private",
+    "url": "www.acmeodd.edu/"
+  },
+  {
+    "id": "acme-tech",
+    "name": "Acme Institute of Technology (duplicate)",
+    "country": "USA",
+    "location": "Cambridge, MA",
+    "type": "Private",
+    "url": "www.acmetech-duplicate.edu/"
+  }
+]

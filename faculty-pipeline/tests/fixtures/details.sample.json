@@ -1,0 +1,15 @@
+{
+  "acme-tech": {
+    "academics": {
+      "class_size": "small"
+    },
+    "faculty": {
+      "count": 400
+    }
+  },
+  "acme-not-in-catalog-university": {
+    "academics": {
+      "class_size": "large"
+    }
+  }
+}

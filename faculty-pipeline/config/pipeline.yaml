@@ -8,6 +8,11 @@
 # ../data-pipeline/out/universities.json, not school_details.json directly.
 input_path: ../data-pipeline/out/universities.json
 
+# Left-joined by school id for Stage 1's `source_fields` passthrough (§4.1).
+# Not every school has an entry here — see the banner for why this file, not
+# the catalog, is the passthrough source.
+details_path: ../data-pipeline/sources/school_details.json
+
 output_dir: output
 data_dir: data
 cache_dir: cache

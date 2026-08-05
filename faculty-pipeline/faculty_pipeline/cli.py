@@ -18,6 +18,7 @@ import click
 from .config import Config
 from .services.checkpoint import CheckpointStore
 from .services.logging_setup import configure_logging
+from .stages import load_filter
 
 CHECKPOINTED_STAGES = ("discover", "crawl", "extract")
 
@@ -73,7 +74,24 @@ def _not_implemented(stage: str, milestone: int) -> None:
 @click.pass_context
 def load(ctx: click.Context) -> None:
     """Stage 1: load & filter US schools."""
-    _not_implemented("load", 2)
+    config: Config = ctx.obj["config"]
+    logger = ctx.obj["logger"]
+    dry_run: bool = ctx.obj["dry_run"]
+
+    checkpoint = CheckpointStore(Path(config.checkpoint_dir) / f"{load_filter.STAGE_NAME}.json")
+    try:
+        summary = load_filter.run(config, checkpoint, logger, dry_run=dry_run)
+    except load_filter.LoadFilterError as exc:
+        click.echo(f"load failed: {exc}", err=True)
+        sys.exit(1)
+
+    prefix = "[dry-run] " if dry_run else ""
+    click.echo(
+        f"{prefix}load: {summary.processed} schools written, "
+        f"{summary.skipped} skipped, {summary.failed} failed"
+    )
+    for note in summary.notes:
+        click.echo(f"  note: {note}")
 
 
 @main.command()
