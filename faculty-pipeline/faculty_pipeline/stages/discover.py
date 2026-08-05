@@ -3,28 +3,391 @@
 For each school not already `done` in `checkpoints/discover.json`: try
 heuristic URLs, query `services.search`, classify candidates via
 `services.llm.classify_directory`, check `services.robots`, and append to
-`data/directories.jsonl`. Not yet implemented (Milestone 3); this is a typed
-stub so the CLI surface and stage signature are stable.
+`data/directories.jsonl`.
+
+Order, per §6 Stage 2 / the adaptation banner:
+
+1. **Heuristics.** `{homepage}/faculty`, `/people`, `/directory`,
+   `/academics/faculty`, and a couple of reasonable siblings. Each is
+   fetched through `services.http_client` (the single fetch path — this
+   stage never calls httpx directly) and kept only if it resolves: HTTP 200,
+   looks like HTML, and isn't a soft-404 (a "not found" page served with a
+   200 status, which is common and must be caught, not just checked for
+   200).
+2. **Search.** `services.search.SearchProvider.search(...)`; with no
+   `SEARCH_API_KEY` configured this returns no candidates (never raises,
+   never blocks the stage) — see `services/search.py`. Search results are
+   validated with the same resolves-and-not-soft-404 check as heuristics.
+3. **LLM classification.** Surviving candidates go to
+   `llm.classify_directory`, which picks/ranks official on-domain
+   directory URL(s) and rejects aggregators and non-directory pages. Its
+   output is UNTRUSTED (`services/llm.py`'s docstring) — this stage is the
+   trust boundary: any URL the model returns that wasn't in the candidate
+   list it was given is dropped, never accepted on the model's say-so alone.
+4. **Robots gate.** Each URL the LLM chose is checked again against
+   `services.robots` before being recorded; a disallowed URL is dropped
+   from `directory_urls` (a correct "we can't crawl this" outcome, not an
+   error) and `robots_allowed` is set to `False` to record that a URL was
+   removed this way.
+
+A school with no candidates at all (heuristics + search both empty) skips
+the LLM call entirely and is recorded with `directory_urls: []`,
+`confidence: 0`, `discovery_method: "none"` — "we looked and found nothing"
+is a finished result (marked `done`), not a failure to retry. A search or
+LLM *error*, by contrast, marks the school `failed` so the next run retries
+it (§9).
 """
 from __future__ import annotations
 
 import logging
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import Protocol
 
 from ..config import Config
-from ..models import StageSummary
+from ..models import Directory, School, StageSummary
 from ..services.checkpoint import CheckpointStore
+from ..services.http_client import FetchResult, RobotsCheckerLike
+from ..services.llm import DirectoryClassification
+from ..services.robots import RobotsDisallowedError
+from ..services.search import SearchProvider
 
 STAGE_NAME = "discover"
+
+# §6 Stage 2 step 1: "{homepage}/faculty", "/people", "/directory",
+# "/academics/faculty", and reasonable siblings.
+HEURISTIC_PATHS = (
+    "/faculty",
+    "/people",
+    "/directory",
+    "/academics/faculty",
+    "/faculty-staff",
+    "/staff-directory",
+)
+
+# Common soft-404 phrasing: a page that returns HTTP 200 but is actually a
+# "not found" page. Checked against the whole (lowercased) body, not just
+# the title, since many sites don't set a distinctive <title> on these.
+_SOFT_404_MARKERS = (
+    "page not found",
+    "404 not found",
+    "404 error",
+    "we couldn't find",
+    "we could not find",
+    "cannot be found",
+    "could not be found",
+    "doesn't exist",
+    "does not exist",
+    "sorry, this page",
+    "sorry, we couldn't",
+)
+
+
+class DiscoverError(RuntimeError):
+    """Fatal Stage 2 error (e.g. missing `data/schools.jsonl`) — not a
+    per-item failure."""
+
+
+class HttpFetcher(Protocol):
+    """The subset of `services.http_client.HttpClient` this stage needs. A
+    Protocol so tests can inject a fake client without a real network
+    stack."""
+
+    def fetch(self, url: str, *, method: str = "GET") -> FetchResult: ...
+
+
+class DirectoryClassifier(Protocol):
+    """The subset of `services.llm.LLM` this stage needs."""
+
+    def classify_directory(
+        self, candidates: list[str], school: School
+    ) -> DirectoryClassification: ...
 
 
 def run(
     config: Config,
     checkpoint: CheckpointStore,
     logger: logging.Logger,
+    http_client: HttpFetcher,
+    search_provider: SearchProvider,
+    llm: DirectoryClassifier,
+    robots: RobotsCheckerLike,
     *,
     limit: int | None = None,
     school_id: str | None = None,
+    dry_run: bool = False,
 ) -> StageSummary:
     """Resumable per school_id: skips schools already `done` in the
-    checkpoint unless `--force` is applied by the caller."""
-    raise NotImplementedError(f"stages.{STAGE_NAME} lands in Milestone 3")
+    checkpoint, unless `school_id` names one school explicitly (matching the
+    §12 "iterate on one school" working style: an explicit `--school` run
+    always attempts that school regardless of checkpoint state).
+
+    `dry_run=True` reports how many schools would be processed without
+    making any network or LLM calls and without writing anything — the
+    CLI's global `--dry-run` flag, honored here because this is the first
+    stage that touches the network.
+    """
+    started_at = datetime.now(UTC)
+    schools = _load_schools(config.data_dir)
+
+    targets = [s for s in schools if school_id is None or s.school_id == school_id]
+    if school_id is not None:
+        eligible = list(targets)
+    else:
+        eligible = [s for s in targets if not checkpoint.is_done(s.school_id)]
+    pending = eligible[:limit] if limit is not None else eligible
+    skipped = len(targets) - len(pending)
+
+    if dry_run:
+        return StageSummary(
+            stage=STAGE_NAME,
+            processed=0,
+            skipped=skipped,
+            failed=0,
+            started_at=started_at,
+            finished_at=datetime.now(UTC),
+            notes=[f"[dry-run] would process {len(pending)} school(s); no network calls made"],
+        )
+
+    output_path = Path(config.data_dir) / "directories.jsonl"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    processed = 0
+    failed = 0
+    found = 0
+    empty = 0
+
+    with output_path.open("a", encoding="utf-8") as out:
+        for school in pending:
+            try:
+                directory = _discover_for_school(
+                    config, http_client, search_provider, llm, robots, school, logger
+                )
+            except Exception as exc:  # noqa: BLE001 - per-school failure, not fatal to the run
+                failed += 1
+                checkpoint.mark_failed(school.school_id, str(exc))
+                logger.warning(
+                    "discover failed for %s: %s",
+                    school.school_id,
+                    exc,
+                    extra={"stage": STAGE_NAME, "school_id": school.school_id},
+                )
+                continue
+
+            out.write(directory.model_dump_json())
+            out.write("\n")
+            out.flush()
+            checkpoint.mark_done(
+                school.school_id, meta={"directory_urls": directory.directory_urls}
+            )
+            processed += 1
+            if directory.directory_urls:
+                found += 1
+            else:
+                empty += 1
+
+    notes = [f"{found} school(s) with directories found, {empty} with none"]
+
+    return StageSummary(
+        stage=STAGE_NAME,
+        processed=processed,
+        skipped=skipped,
+        failed=failed,
+        started_at=started_at,
+        finished_at=datetime.now(UTC),
+        notes=notes,
+    )
+
+
+# -- per-school discovery -------------------------------------------------
+
+
+def _discover_for_school(
+    config: Config,
+    http_client: HttpFetcher,
+    search_provider: SearchProvider,
+    llm: DirectoryClassifier,
+    robots: RobotsCheckerLike,
+    school: School,
+    logger: logging.Logger,
+) -> Directory:
+    candidates, used_heuristic, used_search = _discover_candidates(
+        http_client, search_provider, school, logger
+    )
+
+    if not candidates:
+        return Directory(
+            school_id=school.school_id,
+            directory_urls=[],
+            discovery_method=_method_label(used_heuristic, used_search),
+            robots_allowed=True,
+            confidence=0.0,
+            notes="no candidate directory URLs resolved via heuristics or search",
+        )
+
+    classification = llm.classify_directory(candidates, school)
+
+    # Trust boundary: never accept a URL the LLM invented outside the
+    # candidate set it was given (see services/llm.py's module docstring).
+    candidate_set = set(candidates)
+    raw_urls = classification.get("directory_urls", [])
+    trusted_urls = [u for u in raw_urls if isinstance(u, str) and u in candidate_set]
+    dropped_invented = len(raw_urls) - len(trusted_urls)
+
+    try:
+        confidence = float(classification.get("confidence", 0.0))
+    except (TypeError, ValueError):
+        confidence = 0.0
+    confidence = max(0.0, min(1.0, confidence))
+
+    allowed_urls, robots_allowed = _apply_robots_gate(
+        robots, trusted_urls, config.user_agent, logger, school.school_id
+    )
+
+    # Empty (or emptied-by-robots) result is a finished "found nothing", not
+    # a partial success — its confidence is always 0 (§4.2 / prompt).
+    if not allowed_urls:
+        confidence = 0.0
+
+    notes_parts: list[str] = []
+    raw_notes = classification.get("notes")
+    if isinstance(raw_notes, str) and raw_notes.strip():
+        notes_parts.append(raw_notes.strip())
+    if dropped_invented:
+        notes_parts.append(
+            f"dropped {dropped_invented} LLM-suggested URL(s) not in the candidate set"
+        )
+    if not robots_allowed:
+        notes_parts.append("one or more chosen URLs were dropped by robots.txt")
+
+    return Directory(
+        school_id=school.school_id,
+        directory_urls=allowed_urls,
+        discovery_method=_method_label(used_heuristic, used_search),
+        robots_allowed=robots_allowed,
+        confidence=confidence,
+        notes="; ".join(notes_parts) if notes_parts else None,
+    )
+
+
+def _discover_candidates(
+    http_client: HttpFetcher,
+    search_provider: SearchProvider,
+    school: School,
+    logger: logging.Logger,
+) -> tuple[list[str], bool, bool]:
+    """Returns `(candidate_urls, used_heuristic, used_search)`."""
+    seen: set[str] = set()
+    candidates: list[str] = []
+
+    used_heuristic = False
+    for url in _heuristic_urls(school.homepage):
+        if url in seen:
+            continue
+        if _resolves(http_client, url, logger, school.school_id):
+            seen.add(url)
+            candidates.append(url)
+            used_heuristic = True
+
+    used_search = False
+    query = f"{school.name} official faculty directory"
+    for result in search_provider.search(query):
+        url = result.url
+        if url in seen:
+            continue
+        if _resolves(http_client, url, logger, school.school_id):
+            seen.add(url)
+            candidates.append(url)
+            used_search = True
+
+    return candidates, used_heuristic, used_search
+
+
+def _heuristic_urls(homepage: str) -> list[str]:
+    base = homepage.rstrip("/")
+    return [base + path for path in HEURISTIC_PATHS]
+
+
+def _resolves(http_client: HttpFetcher, url: str, logger: logging.Logger, school_id: str) -> bool:
+    """A candidate "resolves" iff it fetches 200, looks like HTML, and
+    isn't a soft-404. Every fetch goes through `http_client`, so a URL
+    disallowed by robots.txt raises `RobotsDisallowedError` here rather than
+    ever reaching the network — that's a correct "no directory from this
+    URL" outcome, logged and excluded, not an error to work around."""
+    try:
+        result = http_client.fetch(url)
+    except RobotsDisallowedError:
+        logger.info(
+            "robots disallowed candidate url",
+            extra={"stage": STAGE_NAME, "school_id": school_id, "url": url},
+        )
+        return False
+    except Exception as exc:  # noqa: BLE001 - one candidate failing isn't fatal to the school
+        logger.debug(
+            "candidate fetch failed: %s",
+            exc,
+            extra={"stage": STAGE_NAME, "school_id": school_id, "url": url},
+        )
+        return False
+
+    if result.status != 200:
+        return False
+    if not _looks_like_html(result.body):
+        return False
+    if _looks_soft_404(result.body):
+        return False
+    return True
+
+
+def _looks_like_html(body: str) -> bool:
+    head = body[:2000].lower()
+    return "<html" in head or "<body" in head or "<!doctype html" in head
+
+
+def _looks_soft_404(body: str) -> bool:
+    lowered = body.lower()
+    return any(marker in lowered for marker in _SOFT_404_MARKERS)
+
+
+def _apply_robots_gate(
+    robots: RobotsCheckerLike,
+    directory_urls: list[str],
+    user_agent: str,
+    logger: logging.Logger,
+    school_id: str,
+) -> tuple[list[str], bool]:
+    allowed: list[str] = []
+    any_disallowed = False
+    for url in directory_urls:
+        if robots.is_allowed(url, user_agent):
+            allowed.append(url)
+        else:
+            any_disallowed = True
+            logger.info(
+                "robots disallowed chosen directory url",
+                extra={"stage": STAGE_NAME, "school_id": school_id, "url": url},
+            )
+    return allowed, not any_disallowed
+
+
+def _method_label(used_heuristic: bool, used_search: bool) -> str:
+    if used_heuristic and used_search:
+        return "heuristic+search"
+    if used_heuristic:
+        return "heuristic"
+    if used_search:
+        return "search"
+    return "none"
+
+
+def _load_schools(data_dir: str | Path) -> list[School]:
+    path = Path(data_dir) / "schools.jsonl"
+    if not path.exists():
+        raise DiscoverError(
+            f"schools not found at {path}. Run `python -m faculty_pipeline load` first."
+        )
+    schools: list[School] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            schools.append(School.model_validate_json(line))
+    return schools

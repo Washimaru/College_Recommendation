@@ -14,10 +14,16 @@ import sys
 from pathlib import Path
 
 import click
+import httpx
 
 from .config import Config
 from .services.checkpoint import CheckpointStore
+from .services.http_client import HttpClient
+from .services.llm import AnthropicLLM
 from .services.logging_setup import configure_logging
+from .services.robots import RobotsChecker
+from .services.search import build_search_provider
+from .stages import discover as discover_stage
 from .stages import load_filter
 
 CHECKPOINTED_STAGES = ("discover", "crawl", "extract")
@@ -100,7 +106,47 @@ def load(ctx: click.Context) -> None:
 @click.pass_context
 def discover(ctx: click.Context, limit: int | None, school_id: str | None) -> None:
     """Stage 2: find faculty directories."""
-    _not_implemented("discover", 3)
+    config: Config = ctx.obj["config"]
+    logger = ctx.obj["logger"]
+    dry_run: bool = ctx.obj["dry_run"]
+
+    checkpoint = CheckpointStore(Path(config.checkpoint_dir) / f"{discover_stage.STAGE_NAME}.json")
+
+    # follow_redirects: a heuristic/search candidate that 30x's to its real
+    # location (very common for university sites) must resolve to that final
+    # page, not be rejected for a non-200 redirect status.
+    transport = httpx.Client(follow_redirects=True)
+    try:
+        robots = RobotsChecker(transport)
+        http_client = HttpClient(config, robots, transport)
+        search_provider = build_search_provider(config)
+        llm = AnthropicLLM(config)
+        try:
+            summary = discover_stage.run(
+                config,
+                checkpoint,
+                logger,
+                http_client,
+                search_provider,
+                llm,
+                robots,
+                limit=limit,
+                school_id=school_id,
+                dry_run=dry_run,
+            )
+        except discover_stage.DiscoverError as exc:
+            click.echo(f"discover failed: {exc}", err=True)
+            sys.exit(1)
+    finally:
+        transport.close()
+
+    prefix = "[dry-run] " if dry_run else ""
+    click.echo(
+        f"{prefix}discover: {summary.processed} schools processed, "
+        f"{summary.skipped} skipped, {summary.failed} failed"
+    )
+    for note in summary.notes:
+        click.echo(f"  note: {note}")
 
 
 @main.command()
