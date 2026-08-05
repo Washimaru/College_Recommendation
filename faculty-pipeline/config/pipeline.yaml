@@ -1,0 +1,41 @@
+# Tunable defaults for faculty_pipeline. See docs/FACULTY_PIPELINE.md §5.1.
+# Overridable per-key with FACULTY_PIPELINE_<KEY> environment variables
+# (e.g. FACULTY_PIPELINE_MAX_RETRIES=5). Secrets (ANTHROPIC_API_KEY,
+# SEARCH_API_KEY) live in .env, not here — see .env.example.
+
+# Adapted for this repo (see the banner at the top of
+# docs/FACULTY_PIPELINE.md): the catalog carrying country/homepage lives at
+# ../data-pipeline/out/universities.json, not school_details.json directly.
+input_path: ../data-pipeline/out/universities.json
+
+output_dir: output
+data_dir: data
+cache_dir: cache
+checkpoint_dir: checkpoints
+log_dir: logs
+
+# Politeness. Do not raise rate_limit_per_host past its default: this
+# pipeline crawls hundreds of university sites and the default is the
+# difference between a legitimate tool and a nuisance (see CLAUDE.md).
+rate_limit_per_host: 2.0 # seconds between requests to the same host (1 req / 2s)
+max_concurrency: 4
+request_timeout: 15.0
+max_retries: 3
+user_agent: >-
+  UniMatchFacultyBot/0.1
+  (+https://github.com/unimatch/faculty-pipeline; contact: faculty-pipeline@unimatch.example)
+
+# LLM (services/llm.py, Milestones 3 and 5). No LLM_* provider switch here —
+# ANTHROPIC_API_KEY comes from the environment, same posture as
+# recommendation-service.
+llm_model: claude-sonnet-4-5
+llm_max_tokens: 1024
+
+# No search API key is configured for this project (see the adaptation
+# banner). Leave unset so services/search.py degrades to NullSearchProvider
+# instead of raising.
+search_provider: null
+
+# Safety caps.
+max_profiles_per_school: 500
+respect_robots: true

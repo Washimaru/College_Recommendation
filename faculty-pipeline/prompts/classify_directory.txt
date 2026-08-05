@@ -1,0 +1,4 @@
+Placeholder — authored in Milestone 3 alongside services/llm.py's
+classify_directory. See docs/FACULTY_PIPELINE.md §5.5 and §6 Stage 2 for the
+expected inputs (candidate URLs + school) and outputs (ranked official
+directory URL(s), rejecting aggregators).

@@ -1,0 +1,4 @@
+Placeholder — authored in Milestone 5 alongside services/llm.py's
+extract_professor. See docs/FACULTY_PIPELINE.md §5.5 and §6 Stage 4 for the
+expected inputs (cleaned profile text + deterministic hints) and outputs (a
+structured Professor record with a confidence score).
