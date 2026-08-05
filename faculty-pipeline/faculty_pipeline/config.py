@@ -62,6 +62,13 @@ class Config:
     llm_model: str = "claude-sonnet-5"
     llm_max_tokens: int = 1024
 
+    # Stage 2 (discover.py): cap on the plain-text excerpt of a candidate
+    # page's cached HTML that gets embedded in the classify_directory prompt
+    # as evidence. Bounds token cost alongside llm_max_tokens; a few thousand
+    # characters is enough to show whether a page lists people, departments,
+    # or just a search box.
+    directory_excerpt_max_chars: int = 4000
+
     # None => no provider configured; services/search.py degrades to
     # returning no candidates rather than raising (see its module docstring).
     search_provider: str | None = None
@@ -126,7 +133,13 @@ _PATH_FIELDS = {
     "log_dir",
 }
 _FLOAT_FIELDS = {"rate_limit_per_host", "request_timeout"}
-_INT_FIELDS = {"max_concurrency", "max_retries", "llm_max_tokens", "max_profiles_per_school"}
+_INT_FIELDS = {
+    "max_concurrency",
+    "max_retries",
+    "llm_max_tokens",
+    "max_profiles_per_school",
+    "directory_excerpt_max_chars",
+}
 _BOOL_FIELDS = {"respect_robots"}
 
 

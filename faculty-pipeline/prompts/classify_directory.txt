@@ -6,7 +6,17 @@ genuinely faculty directories, not re-checking whether they load.
 University: {school_name}
 Homepage: {homepage}
 
-Candidate URLs:
+For each candidate below you are given the URL and a plain-text excerpt of
+that page's actual content — headings and link text first (the strongest
+signal for "does this page list people"), then the page's visible text.
+Base your decision on what the excerpt shows, not on what the URL looks
+like. A URL containing "faculty" proves nothing on its own; a page you have
+not seen the content of should not earn a confident answer. If a candidate's
+excerpt says "(not retrieved; judge from the URL alone)", treat that one
+candidate as unverified and score it accordingly — do not let it anchor your
+read of the others.
+
+Candidates:
 {candidate_list}
 
 Call the `classify_directory` tool with your answer.
@@ -22,48 +32,62 @@ page relate to faculty?" but:
 Either by links listed directly on it, or by browsing (A-Z, by department,
 paginated). If a human landing here could not reach a specific professor's
 page without already knowing that professor's name, it does not qualify.
+Look at the excerpt's Links/Headings: do they read as a list of *person
+names* (or clearly link to individual profiles), or as something else
+entirely — department names, a handbook's table of contents, a login form?
 
 ## Accept
 
 - An official, on-domain faculty directory listing or browsable index of
-  individual academic staff.
+  individual academic staff — the excerpt's link text reads as personal
+  names, or the headings/text describe browsing by department/A-Z to reach
+  individual profiles.
 - Official department-level faculty directories, when no single campus-wide
   one exists among the candidates. Returning several is the expected default
   in that case, not a fallback of last resort.
 
-## Reject — regardless of how authoritative or well-named
+## Reject — regardless of how authoritative or well-named the URL is
 
 - **A directory of departments, offices or buildings.** These very often live
   at exactly `/directory` and list org units with office phone numbers. They
   contain no individual academics and are the single most common false
-  positive. A page whose entries are units rather than people is a reject.
-- **A search box with no browsable listing.** If the page requires you to
-  already know a name, the crawler cannot enumerate anyone.
+  positive. If the excerpt's links/headings read as department or building
+  names rather than people, reject it even if the URL says "directory" or
+  "faculty".
+- **A search box with no browsable listing.** If the excerpt shows a form
+  ("Search", "Enter a name") and little or no link/heading text, the crawler
+  cannot enumerate anyone from this page.
 - **A general campus people-search covering students and staff.** Beyond being
   the wrong data, these sweep in students, who are not public figures.
 - Third-party aggregators (RateMyProfessors and similar), anything off the
   university's own domain.
 - Superficial matches: a Faculty Handbook, HR jobs/careers page, Faculty
   Senate or governance page, a news article mentioning faculty, an alumni
-  directory, a student directory.
+  directory, a student directory. The excerpt's own headings/text usually
+  give these away even when the URL looks plausible.
 
 ## Confidence — calibrate against these anchors
 
-- **0.9–1.0** — unmistakably a faculty listing; individual academics visible
-  or one obvious click away.
-- **0.6–0.8** — a real faculty directory, but partial: one department only, or
-  browsable but awkward.
-- **0.3–0.5** — plausibly reaches faculty, but you are inferring it; a mixed
-  people-search, or a hub page that may or may not lead to profiles.
-- **0.0–0.2** — cannot get to individual professors from here.
+- **0.9–1.0** — the excerpt itself shows individual academics: multiple
+  personal names in the link text or body, or headings/text unambiguously
+  describing a browsable A-Z/department listing of people.
+- **0.6–0.8** — the excerpt supports a real faculty directory, but partial:
+  one department only, or browsable but awkward, or the person-name signal
+  is present but thin.
+- **0.3–0.5** — the excerpt is ambiguous or was not retrieved; you are
+  inferring from the URL/title rather than confirmed page content.
+- **0.0–0.2** — the excerpt shows this cannot reach individual professors
+  (departments/buildings list, search box only, unrelated content).
 
-Do not report 0.8+ for a page you have not concluded actually lists people.
-A confident wrong answer sends a crawler at someone's server for nothing.
+Do not report 0.8+ for a page whose excerpt you have not concluded actually
+lists people. A confident wrong answer sends a crawler at someone's server
+for nothing.
 
 If nothing qualifies, return an empty directory_urls list and confidence 0 —
 that is a complete, correct answer, and far better than a guess. Never invent
 a URL that is not in the candidate list.
 
-Order directory_urls best first. In notes, say specifically what you saw that
-made each page qualify or fail — "lists faculty names A-Z" or "entries are
-departments, not people".
+Order directory_urls best first. In notes, cite the specific evidence from
+each page's excerpt that made it qualify or fail — e.g. "excerpt lists 40+
+faculty names in the link text" or "excerpt's links are department names,
+not people" — not an inference about what the URL probably contains.

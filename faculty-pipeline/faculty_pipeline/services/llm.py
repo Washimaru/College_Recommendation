@@ -16,10 +16,20 @@ does structural validation (types, confidence clamped to [0, 1]); the
 domain-level trust boundary (never accept a URL the model invented outside
 the candidate list) is enforced by the caller, `stages/discover.py`, the
 same posture as recommendation-service's `sanitize_review`.
+
+`classify_directory` also takes an optional `excerpts` mapping (candidate URL
+-> a plain-text excerpt of that page's already-cached HTML, produced by
+`utils.extract_text_excerpt`). This is evidence, not another fetch: Stage 2
+already retrieved the page while resolve-checking the candidate, and passing
+its content in is what lets the model judge "does this page actually list
+people" instead of pattern-matching the URL. A candidate missing from the
+mapping (or mapping to an empty string) is judged from its URL alone rather
+than crashing.
 """
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -83,7 +93,10 @@ class DirectoryClassification(dict):
 
 class LLM(Protocol):
     def classify_directory(
-        self, candidates: list[str], school: School
+        self,
+        candidates: list[str],
+        school: School,
+        excerpts: Mapping[str, str] | None = None,
     ) -> DirectoryClassification: ...
 
     def extract_professor(self, text: str, url: str, school: School) -> Professor: ...
@@ -118,14 +131,17 @@ class AnthropicLLM:
         self._cache_dir = Path(config.cache_dir) / "llm"
 
     def classify_directory(
-        self, candidates: list[str], school: School
+        self,
+        candidates: list[str],
+        school: School,
+        excerpts: Mapping[str, str] | None = None,
     ) -> DirectoryClassification:
         if not candidates:
             return DirectoryClassification(
                 directory_urls=[], confidence=0.0, notes="no candidates provided"
             )
 
-        prompt = self._render_prompt(candidates, school)
+        prompt = self._render_prompt(candidates, school, excerpts)
         cache_key = sha256_hex(prompt)
         cached = self._read_cache(cache_key)
         if cached is not None:
@@ -155,14 +171,29 @@ class AnthropicLLM:
 
     # -- prompt rendering ---------------------------------------------------
 
-    def _render_prompt(self, candidates: list[str], school: School) -> str:
+    def _render_prompt(
+        self,
+        candidates: list[str],
+        school: School,
+        excerpts: Mapping[str, str] | None,
+    ) -> str:
         template = (self._prompts_dir / "classify_directory.txt").read_text(encoding="utf-8")
-        candidate_list = "\n".join(f"- {url}" for url in candidates)
+        excerpts = excerpts or {}
+        candidate_list = "\n\n".join(
+            self._render_candidate(url, excerpts.get(url)) for url in candidates
+        )
         return template.format(
             school_name=school.name,
             homepage=school.homepage,
             candidate_list=candidate_list,
         )
+
+    @staticmethod
+    def _render_candidate(url: str, excerpt: str | None) -> str:
+        excerpt = excerpt.strip() if isinstance(excerpt, str) else ""
+        if not excerpt:
+            return f'URL: {url}\nPage excerpt: (not retrieved; judge from the URL alone)'
+        return f'URL: {url}\nPage excerpt:\n"""\n{excerpt}\n"""'
 
     def _extract_tool_input(self, response: Any) -> dict[str, Any]:
         if getattr(response, "stop_reason", None) == "refusal":

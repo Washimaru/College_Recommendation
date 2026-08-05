@@ -87,9 +87,13 @@ class FakeLLM:
     response: dict | None = None
     error: Exception | None = None
     calls: list[tuple[tuple[str, ...], str]] = field(default_factory=list)
+    excerpts_seen: list[dict[str, str]] = field(default_factory=list)
 
-    def classify_directory(self, candidates: list[str], school: School) -> dict:
+    def classify_directory(
+        self, candidates: list[str], school: School, excerpts: dict[str, str] | None = None
+    ) -> dict:
         self.calls.append((tuple(candidates), school.school_id))
+        self.excerpts_seen.append(dict(excerpts or {}))
         if self.error is not None:
             raise self.error
         assert self.response is not None
@@ -431,6 +435,80 @@ def test_school_filter_forces_reprocessing_even_if_done(tmp_path: Path) -> None:
     )
 
     assert summary.processed == 1  # explicit --school reprocesses despite being done
+
+
+# -- dry run ------------------------------------------------------------------
+
+
+# -- page excerpts passed to the LLM as evidence (M3b) -----------------------
+
+
+def test_llm_is_given_a_text_excerpt_of_the_already_fetched_page(tmp_path: Path) -> None:
+    """The heuristic resolve-check already fetched and cached the page body;
+    that body (not a second fetch) must be what backs the excerpt handed to
+    classify_directory."""
+    config = _config(tmp_path)
+    school = _school()
+    _write_schools(config, [school])
+    url = "https://www.acmetech.edu/faculty"
+    body = (
+        "<html><body><main><h1>Faculty</h1>"
+        '<a href="/f/jane">Jane Doe, Professor</a>'
+        '<a href="/f/john">John Smith, Professor</a>'
+        "</main></body></html>"
+    )
+    http_client = FakeHttpClient(pages={url: _fetch_result(200, body, url)})
+    llm = FakeLLM(response={"directory_urls": [url], "confidence": 0.95, "notes": "has names"})
+
+    _run(config, _checkpoint(config), http_client, NullSearchProvider(), llm, AllowAllRobots())
+
+    assert len(llm.excerpts_seen) == 1
+    excerpt = llm.excerpts_seen[0][url]
+    assert "Jane Doe" in excerpt
+    assert "John Smith" in excerpt
+    # No second fetch: http_client was only ever asked for the heuristic URL.
+    assert http_client.calls.count(url) == 1
+
+
+def test_excerpt_max_chars_is_read_from_config(tmp_path: Path) -> None:
+    config = _config(tmp_path).with_overrides(directory_excerpt_max_chars=25)
+    school = _school()
+    _write_schools(config, [school])
+    url = "https://www.acmetech.edu/faculty"
+    body = "<html><body><main><h1>" + ("Faculty Directory " * 50) + "</h1></main></body></html>"
+    http_client = FakeHttpClient(pages={url: _fetch_result(200, body, url)})
+    llm = FakeLLM(response={"directory_urls": [], "confidence": 0.0, "notes": ""})
+
+    _run(config, _checkpoint(config), http_client, NullSearchProvider(), llm, AllowAllRobots())
+
+    excerpt = llm.excerpts_seen[0][url]
+    assert len(excerpt) <= 25
+
+
+def test_department_list_page_excerpt_does_not_contain_person_names(tmp_path: Path) -> None:
+    """Regression guard for the Auburn-style false positive: a departments
+    directory's excerpt must show department names, not people, so the LLM
+    (in a real run) has evidence to reject it rather than guessing from the
+    `/directory` URL shape."""
+    config = _config(tmp_path)
+    school = _school()
+    _write_schools(config, [school])
+    url = "https://www.acmetech.edu/directory"
+    body = (
+        "<html><body><main><h1>Campus Directory</h1>"
+        '<a href="/directory/chemistry">Chemistry</a>'
+        '<a href="/directory/physics">Physics</a>'
+        "</main></body></html>"
+    )
+    http_client = FakeHttpClient(pages={url: _fetch_result(200, body, url)})
+    llm = FakeLLM(response={"directory_urls": [], "confidence": 0.0, "notes": "departments only"})
+
+    _run(config, _checkpoint(config), http_client, NullSearchProvider(), llm, AllowAllRobots())
+
+    excerpt = llm.excerpts_seen[0][url]
+    assert "Chemistry" in excerpt
+    assert "Physics" in excerpt
+    assert "Jane Doe" not in excerpt
 
 
 # -- dry run ------------------------------------------------------------------

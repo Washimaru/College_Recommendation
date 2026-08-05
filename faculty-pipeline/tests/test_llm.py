@@ -181,3 +181,80 @@ def test_transport_error_is_wrapped_as_llm_error(tmp_path: Path) -> None:
 
     with pytest.raises(LLMError):
         llm.classify_directory(["https://x.edu/f"], _school())
+
+
+# -- page excerpts as evidence (M3b) ------------------------------------------
+
+
+def test_prompt_includes_the_page_excerpt_for_each_candidate(tmp_path: Path) -> None:
+    response = FakeResponse(
+        [FakeToolUseBlock(TOOL_NAME, {"directory_urls": [], "confidence": 0, "notes": ""})]
+    )
+    client = FakeClient(response)
+    llm = _llm(tmp_path, client)
+    url = "https://acmetech.edu/faculty"
+
+    llm.classify_directory([url], _school(), excerpts={url: "Jane Doe, Professor"})
+
+    prompt = client.messages.calls[0]["messages"][0]["content"]
+    assert "Jane Doe, Professor" in prompt
+    assert url in prompt
+
+
+def test_missing_excerpt_falls_back_to_url_only_without_crashing(tmp_path: Path) -> None:
+    response = FakeResponse(
+        [FakeToolUseBlock(TOOL_NAME, {"directory_urls": [], "confidence": 0, "notes": ""})]
+    )
+    client = FakeClient(response)
+    llm = _llm(tmp_path, client)
+    url = "https://acmetech.edu/faculty"
+
+    # No excerpts dict at all -- e.g. a search-provided candidate that never
+    # went through the resolve-check's fetch.
+    result = llm.classify_directory([url], _school())
+
+    assert result == {"directory_urls": [], "confidence": 0.0, "notes": None}
+    prompt = client.messages.calls[0]["messages"][0]["content"]
+    assert url in prompt
+    assert "judge from the URL alone" in prompt
+
+
+def test_empty_string_excerpt_also_falls_back_to_url_only(tmp_path: Path) -> None:
+    response = FakeResponse(
+        [FakeToolUseBlock(TOOL_NAME, {"directory_urls": [], "confidence": 0, "notes": ""})]
+    )
+    client = FakeClient(response)
+    llm = _llm(tmp_path, client)
+    url = "https://acmetech.edu/faculty"
+
+    llm.classify_directory([url], _school(), excerpts={url: "   "})
+
+    prompt = client.messages.calls[0]["messages"][0]["content"]
+    assert "judge from the URL alone" in prompt
+
+
+def test_different_excerpts_change_the_cache_key(tmp_path: Path) -> None:
+    """Response caching is by prompt hash (§5.5); since the excerpt is now
+    part of the prompt, two different excerpts for the same URL must not
+    collide in the cache."""
+    response_a = FakeResponse(
+        [FakeToolUseBlock(TOOL_NAME, {"directory_urls": [], "confidence": 0, "notes": "a"})]
+    )
+    url = "https://acmetech.edu/faculty"
+    prompts_dir = _prompts_dir(tmp_path)
+
+    client_a = FakeClient(response_a)
+    llm_a = AnthropicLLM(_config(tmp_path), client=client_a, prompts_dir=prompts_dir)
+    result_a = llm_a.classify_directory([url], _school(), excerpts={url: "excerpt one"})
+
+    response_b = FakeResponse(
+        [FakeToolUseBlock(TOOL_NAME, {"directory_urls": [], "confidence": 0, "notes": "b"})]
+    )
+    client_b = FakeClient(response_b)
+    llm_b = AnthropicLLM(_config(tmp_path), client=client_b, prompts_dir=prompts_dir)
+    result_b = llm_b.classify_directory([url], _school(), excerpts={url: "excerpt two"})
+
+    assert len(client_a.messages.calls) == 1
+    assert len(client_b.messages.calls) == 1
+    assert result_a["notes"] == "a"
+    assert result_b["notes"] == "b"

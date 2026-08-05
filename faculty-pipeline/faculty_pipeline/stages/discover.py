@@ -19,11 +19,15 @@ Order, per §6 Stage 2 / the adaptation banner:
    never blocks the stage) — see `services/search.py`. Search results are
    validated with the same resolves-and-not-soft-404 check as heuristics.
 3. **LLM classification.** Surviving candidates go to
-   `llm.classify_directory`, which picks/ranks official on-domain
-   directory URL(s) and rejects aggregators and non-directory pages. Its
-   output is UNTRUSTED (`services/llm.py`'s docstring) — this stage is the
-   trust boundary: any URL the model returns that wasn't in the candidate
-   list it was given is dropped, never accepted on the model's say-so alone.
+   `llm.classify_directory`, along with a plain-text excerpt of each
+   candidate's already-fetched page (`utils.extract_text_excerpt` over the
+   `FetchResult.body` step 1/2 already retrieved — never a second fetch),
+   which picks/ranks official on-domain directory URL(s) and rejects
+   aggregators and non-directory pages using that page content as evidence
+   rather than guessing from the URL shape. Its output is UNTRUSTED
+   (`services/llm.py`'s docstring) — this stage is the trust boundary: any
+   URL the model returns that wasn't in the candidate list it was given is
+   dropped, never accepted on the model's say-so alone.
 4. **Robots gate.** Each URL the LLM chose is checked again against
    `services.robots` before being recorded; a disallowed URL is dropped
    from `directory_urls` (a correct "we can't crawl this" outcome, not an
@@ -51,6 +55,7 @@ from ..services.http_client import FetchResult, RobotsCheckerLike
 from ..services.llm import DirectoryClassification
 from ..services.robots import RobotsDisallowedError
 from ..services.search import SearchProvider
+from ..utils import extract_text_excerpt
 
 STAGE_NAME = "discover"
 
@@ -100,7 +105,10 @@ class DirectoryClassifier(Protocol):
     """The subset of `services.llm.LLM` this stage needs."""
 
     def classify_directory(
-        self, candidates: list[str], school: School
+        self,
+        candidates: list[str],
+        school: School,
+        excerpts: dict[str, str] | None = None,
     ) -> DirectoryClassification: ...
 
 
@@ -211,8 +219,8 @@ def _discover_for_school(
     school: School,
     logger: logging.Logger,
 ) -> Directory:
-    candidates, used_heuristic, used_search = _discover_candidates(
-        http_client, search_provider, school, logger
+    candidates, excerpts, used_heuristic, used_search = _discover_candidates(
+        http_client, search_provider, school, logger, config.directory_excerpt_max_chars
     )
 
     if not candidates:
@@ -225,7 +233,7 @@ def _discover_for_school(
             notes="no candidate directory URLs resolved via heuristics or search",
         )
 
-    classification = llm.classify_directory(candidates, school)
+    classification = llm.classify_directory(candidates, school, excerpts=excerpts)
 
     # Trust boundary: never accept a URL the LLM invented outside the
     # candidate set it was given (see services/llm.py's module docstring).
@@ -275,32 +283,49 @@ def _discover_candidates(
     search_provider: SearchProvider,
     school: School,
     logger: logging.Logger,
-) -> tuple[list[str], bool, bool]:
-    """Returns `(candidate_urls, used_heuristic, used_search)`."""
+    excerpt_max_chars: int,
+) -> tuple[list[str], dict[str, str], bool, bool]:
+    """Returns `(candidate_urls, excerpts, used_heuristic, used_search)`.
+
+    `excerpts` maps each surviving candidate URL to a plain-text excerpt of
+    the same page body the resolve-check (`_try_fetch`) already fetched and
+    cached — no second fetch. A candidate whose resolve-check body was empty
+    simply has no entry; `llm.classify_directory` falls back to judging that
+    URL alone rather than crashing.
+    """
     seen: set[str] = set()
     candidates: list[str] = []
+    excerpts: dict[str, str] = {}
 
     used_heuristic = False
     for url in _heuristic_urls(school.homepage):
         if url in seen:
             continue
-        if _resolves(http_client, url, logger, school.school_id):
+        result = _try_fetch(http_client, url, logger, school.school_id)
+        if result is not None:
             seen.add(url)
             candidates.append(url)
+            excerpt = extract_text_excerpt(result.body, excerpt_max_chars)
+            if excerpt:
+                excerpts[url] = excerpt
             used_heuristic = True
 
     used_search = False
     query = f"{school.name} official faculty directory"
-    for result in search_provider.search(query):
-        url = result.url
+    for search_result in search_provider.search(query):
+        url = search_result.url
         if url in seen:
             continue
-        if _resolves(http_client, url, logger, school.school_id):
+        result = _try_fetch(http_client, url, logger, school.school_id)
+        if result is not None:
             seen.add(url)
             candidates.append(url)
+            excerpt = extract_text_excerpt(result.body, excerpt_max_chars)
+            if excerpt:
+                excerpts[url] = excerpt
             used_search = True
 
-    return candidates, used_heuristic, used_search
+    return candidates, excerpts, used_heuristic, used_search
 
 
 def _heuristic_urls(homepage: str) -> list[str]:
@@ -308,9 +333,15 @@ def _heuristic_urls(homepage: str) -> list[str]:
     return [base + path for path in HEURISTIC_PATHS]
 
 
-def _resolves(http_client: HttpFetcher, url: str, logger: logging.Logger, school_id: str) -> bool:
-    """A candidate "resolves" iff it fetches 200, looks like HTML, and
-    isn't a soft-404. Every fetch goes through `http_client`, so a URL
+def _try_fetch(
+    http_client: HttpFetcher, url: str, logger: logging.Logger, school_id: str
+) -> FetchResult | None:
+    """Fetches `url` through `http_client` (the single fetch path — this is
+    also where the page content later used as classify_directory evidence
+    comes from) and returns the `FetchResult` iff the candidate "resolves":
+    200, looks like HTML, and isn't a soft-404. Returns `None` rather than
+    raising for a dead/disallowed candidate — one candidate failing isn't
+    fatal to the school. Every fetch goes through `http_client`, so a URL
     disallowed by robots.txt raises `RobotsDisallowedError` here rather than
     ever reaching the network — that's a correct "no directory from this
     URL" outcome, logged and excluded, not an error to work around."""
@@ -321,22 +352,22 @@ def _resolves(http_client: HttpFetcher, url: str, logger: logging.Logger, school
             "robots disallowed candidate url",
             extra={"stage": STAGE_NAME, "school_id": school_id, "url": url},
         )
-        return False
+        return None
     except Exception as exc:  # noqa: BLE001 - one candidate failing isn't fatal to the school
         logger.debug(
             "candidate fetch failed: %s",
             exc,
             extra={"stage": STAGE_NAME, "school_id": school_id, "url": url},
         )
-        return False
+        return None
 
     if result.status != 200:
-        return False
+        return None
     if not _looks_like_html(result.body):
-        return False
+        return None
     if _looks_soft_404(result.body):
-        return False
-    return True
+        return None
+    return result
 
 
 def _looks_like_html(body: str) -> bool:
