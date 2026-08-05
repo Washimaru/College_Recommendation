@@ -49,14 +49,22 @@ class Config:
         "contact: faculty-pipeline@unimatch.example)"
     )
 
-    llm_model: str = "claude-sonnet-4-5"
+    # Current model id. `claude-sonnet-4-5` is a previous generation and may
+    # not resolve; extraction is structured-output work where reliability
+    # matters more than the token price, so Sonnet 5 is the default. For very
+    # large runs, `claude-haiku-4-5-20251001` trades some accuracy for cost.
+    llm_model: str = "claude-sonnet-5"
     llm_max_tokens: int = 1024
 
     # None => no provider configured; services/search.py degrades to
     # returning no candidates rather than raising (see its module docstring).
     search_provider: str | None = None
 
-    max_profiles_per_school: int = 500
+    # Deliberately conservative. 268 US schools x 500 profiles would be 134,000
+    # fetches, and at the 2s/host floor that is days of crawling other people's
+    # servers. Raise it per-run once a school's directory is known to be worth
+    # it, rather than defaulting to the ceiling.
+    max_profiles_per_school: int = 100
     respect_robots: bool = True
 
     @classmethod

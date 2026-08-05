@@ -28,7 +28,7 @@ user_agent: >-
 # LLM (services/llm.py, Milestones 3 and 5). No LLM_* provider switch here —
 # ANTHROPIC_API_KEY comes from the environment, same posture as
 # recommendation-service.
-llm_model: claude-sonnet-4-5
+llm_model: claude-sonnet-5
 llm_max_tokens: 1024
 
 # No search API key is configured for this project (see the adaptation
@@ -37,5 +37,5 @@ llm_max_tokens: 1024
 search_provider: null
 
 # Safety caps.
-max_profiles_per_school: 500
+max_profiles_per_school: 100
 respect_robots: true
