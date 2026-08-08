@@ -4,7 +4,9 @@ from __future__ import annotations
 import hashlib
 import re
 import unicodedata
+from urllib.parse import urlsplit, urlunsplit
 
+import tldextract
 from selectolax.parser import HTMLParser
 
 # Tags dropped outright before excerpting: pure boilerplate (nav/footer/
@@ -88,3 +90,43 @@ def _collect_text(nodes: list) -> list[str]:
 
 def _clean_whitespace(text: str) -> str:
     return " ".join(text.split())
+
+
+# --------------------------------------------------------------------------
+# URL helpers — Stage 3 (crawl.py) link enumeration.
+#
+# `suffix_list_urls=()` pins tldextract to its bundled public-suffix-list
+# snapshot instead of fetching a live one, which would be a second,
+# undeclared network path outside `services/http_client.py` and would make
+# domain classification non-deterministic across environments/offline runs.
+# --------------------------------------------------------------------------
+
+_TLD_EXTRACTOR = tldextract.TLDExtract(suffix_list_urls=())
+
+
+def normalize_url(url: str) -> str:
+    """Canonical form of `url` for de-duplication (§6 Stage 3): fragment
+    stripped, trailing-slash variants collapsed to one form, scheme/host
+    lowercased. Query strings are preserved (they can be load-bearing, e.g.
+    `?id=123`). Caller is responsible for resolving relative URLs against
+    their page's base URL first (`urllib.parse.urljoin`) — this function only
+    canonicalizes an already-absolute URL.
+    """
+    parsed = urlsplit(url)
+    scheme = parsed.scheme.lower()
+    netloc = parsed.netloc.lower()
+    path = parsed.path or "/"
+    if path != "/" and path.endswith("/"):
+        path = path.rstrip("/")
+    return urlunsplit((scheme, netloc, path, parsed.query, ""))
+
+
+def registrable_domain(url: str) -> str:
+    """The registrable ("eTLD+1") domain of `url`, e.g. both
+    `https://www.bard.edu/faculty` and `https://math.bard.edu/people` return
+    `bard.edu`. Used by Stage 3's same-domain check (§6 Stage 3 / the M4
+    same-domain requirement) so a link off to an aggregator or social network
+    (different registrable domain) is rejected while department subdomains of
+    the same university are not.
+    """
+    return _TLD_EXTRACTOR(url).top_domain_under_public_suffix.lower()

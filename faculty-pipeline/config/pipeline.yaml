@@ -44,3 +44,7 @@ search_provider: null
 # Safety caps.
 max_profiles_per_school: 100
 respect_robots: true
+
+# Stage 3 (crawl.py): stop enumerating a school's directory pagination after
+# this many pages, so a cyclical or malformed "next" link can't loop forever.
+max_directory_pages: 20

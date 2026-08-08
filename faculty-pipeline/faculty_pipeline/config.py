@@ -80,6 +80,13 @@ class Config:
     max_profiles_per_school: int = 100
     respect_robots: bool = True
 
+    # Stage 3 (crawl.py) §6: pagination can cycle (a malformed "next" link
+    # looping forever) or simply be very deep. This caps the number of
+    # directory-listing pages (not profile pages) visited per school before
+    # enumeration stops and moves on to fetching whatever profile links were
+    # found so far.
+    max_directory_pages: int = 20
+
     @classmethod
     def load(
         cls,
@@ -139,6 +146,7 @@ _INT_FIELDS = {
     "llm_max_tokens",
     "max_profiles_per_school",
     "directory_excerpt_max_chars",
+    "max_directory_pages",
 }
 _BOOL_FIELDS = {"respect_robots"}
 

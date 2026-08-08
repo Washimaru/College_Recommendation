@@ -23,6 +23,7 @@ from .services.llm import AnthropicLLM
 from .services.logging_setup import configure_logging
 from .services.robots import RobotsChecker
 from .services.search import build_search_provider
+from .stages import crawl as crawl_stage
 from .stages import discover as discover_stage
 from .stages import load_filter
 
@@ -150,13 +151,48 @@ def discover(ctx: click.Context, limit: int | None, school_id: str | None) -> No
 
 
 @main.command()
-@click.option("--limit", type=int, default=None)
-@click.option("--school", "school_id", default=None)
+@click.option("--limit", type=int, default=None, help="Process at most N schools")
+@click.option("--school", "school_id", default=None, help="Run a single school")
 @click.option("--dynamic", is_flag=True, default=False, help="Enable headless-browser fallback")
 @click.pass_context
 def crawl(ctx: click.Context, limit: int | None, school_id: str | None, dynamic: bool) -> None:
     """Stage 3: crawl professor profiles."""
-    _not_implemented("crawl", 4)
+    config: Config = ctx.obj["config"]
+    logger = ctx.obj["logger"]
+    dry_run: bool = ctx.obj["dry_run"]
+
+    checkpoint = CheckpointStore(Path(config.checkpoint_dir) / f"{crawl_stage.STAGE_NAME}.json")
+
+    # follow_redirects: a directory or profile URL that 30x's to its real
+    # location must resolve there, not be rejected for a non-200 status.
+    transport = httpx.Client(follow_redirects=True)
+    try:
+        robots = RobotsChecker(transport)
+        http_client = HttpClient(config, robots, transport)
+        try:
+            summary = crawl_stage.run(
+                config,
+                checkpoint,
+                logger,
+                http_client,
+                limit=limit,
+                school_id=school_id,
+                dynamic=dynamic,
+                dry_run=dry_run,
+            )
+        except crawl_stage.CrawlError as exc:
+            click.echo(f"crawl failed: {exc}", err=True)
+            sys.exit(1)
+    finally:
+        transport.close()
+
+    prefix = "[dry-run] " if dry_run else ""
+    click.echo(
+        f"{prefix}crawl: {summary.processed} profile(s) fetched, "
+        f"{summary.skipped} skipped, {summary.failed} failed"
+    )
+    for note in summary.notes:
+        click.echo(f"  note: {note}")
 
 
 @main.command()

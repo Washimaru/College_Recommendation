@@ -33,13 +33,13 @@ def test_help_lists_all_stage_commands() -> None:
 
 
 def test_unimplemented_stage_exits_nonzero_with_clear_message(tmp_path: Path) -> None:
-    # `discover` (Milestone 3) is implemented now; `crawl` (Milestone 4) is
+    # `discover` (M3) and `crawl` (M4) are implemented now; `extract` (M5) is
     # still a stub, so it's the current representative of this behavior.
-    result = CliRunner().invoke(main, [*_config_args(tmp_path), "crawl"])
+    result = CliRunner().invoke(main, [*_config_args(tmp_path), "extract"])
 
     assert result.exit_code != 0
     assert "not implemented" in result.output
-    assert "Milestone 4" in result.output
+    assert "Milestone 5" in result.output
 
 
 def test_load_missing_catalog_gives_actionable_error_and_nonzero_exit(tmp_path: Path) -> None:
