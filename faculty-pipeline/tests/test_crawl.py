@@ -596,3 +596,87 @@ def test_registrable_domain_distinguishes_different_sites() -> None:
     assert registrable_domain("https://www.ratemyprofessors.com/x") != registrable_domain(
         "https://www.bard.edu/faculty"
     )
+
+
+# ---------------------------------------------------------------------------
+# Defects found on the first live run (Bard College)
+# ---------------------------------------------------------------------------
+
+
+class TestAssetLinksAreNotProfiles:
+    """`?id=` is a real profile pattern, and also matches asset handlers.
+
+    The live run fetched `tools.bard.edu/files/pr/main_news_image.php?id=21490`
+    — a news JPEG — and stored it as a profile.
+    """
+
+    def test_the_real_jpeg_that_slipped_through(self):
+        href = "https://tools.bard.edu/files/pr/main_news_image.php?id=21490"
+
+        assert crawl._classify_link(href, "https://www.bard.edu/faculty/", "", None) == "ignore"
+
+    def test_image_extensions_are_ignored(self):
+        for href in (
+            "https://x.edu/people/photo.jpg",
+            "https://x.edu/profile/headshot.PNG",
+            "https://x.edu/faculty/cv.pdf",
+        ):
+            assert crawl._classify_link(href, "https://x.edu/faculty/", "", None) == "ignore", href
+
+    def test_a_genuine_profile_still_classifies(self):
+        href = "https://www.bard.edu/faculty/details/?id=2891"
+
+        assert crawl._classify_link(href, "https://www.bard.edu/faculty/", "", None) == "profile"
+
+
+class TestAlphabeticallyPartialCapture:
+    """A directory that server-renders only its 'A' section and loads B-Z by
+    script hands back real, valid links — nothing errors, nothing 404s, and the
+    run reports success having captured a fraction of the faculty."""
+
+    def test_the_real_bard_capture_is_flagged(self):
+        # Verbatim from the first live run: 17 profiles, every surname under A.
+        urls = [
+            f"https://www.bard.edu/faculty/{slug}"
+            for slug in (
+                "susan-aberth", "ziad-abu-rish", "kenyon-adams", "ross-exo-adams",
+                "folarin-ajibade", "jasmine-akiyama-kim", "kathryn-aldous",
+                "richard-aldous", "jaime-osterman-alves", "craig-anderson",
+                "sven-anderson", "victor-apryshchenko", "nathanael-aschenbrenner",
+                "ephraim-asili", "andrew-atwell", "erin-atwell", "jordan-ayala",
+            )
+        ]
+
+        assert crawl._looks_alphabetically_partial(urls) is True
+
+    def test_a_spread_of_surnames_is_not_flagged(self):
+        urls = [
+            f"https://x.edu/faculty/{slug}"
+            for slug in (
+                "susan-aberth", "john-brown", "amy-chen", "raj-desai", "li-evans",
+                "omar-farouk", "gita-ghosh", "hans-iqbal", "ines-jansen",
+            )
+        ]
+
+        assert crawl._looks_alphabetically_partial(urls) is False
+
+    def test_surname_first_slugs_are_caught_too(self):
+        # Some sites use `aberth-susan`; the concentration is on the other token.
+        urls = [
+            f"https://x.edu/people/{slug}"
+            for slug in (
+                "aberth-susan", "adams-kenyon", "ajibade-folarin", "aldous-kathryn",
+                "anderson-craig", "asili-ephraim", "atwell-andrew", "ayala-jordan",
+            )
+        ]
+
+        assert crawl._looks_alphabetically_partial(urls) is True
+
+    def test_a_genuinely_small_department_is_not_flagged(self):
+        """Four people sharing an initial is coincidence, not truncation."""
+        urls = [
+            f"https://x.edu/faculty/{slug}"
+            for slug in ("amy-adams", "alan-archer", "ada-avery", "ann-ash")
+        ]
+
+        assert crawl._looks_alphabetically_partial(urls) is False

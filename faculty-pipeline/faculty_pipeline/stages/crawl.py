@@ -38,7 +38,7 @@ from __future__ import annotations
 
 import logging
 import re
-from collections import deque
+from collections import Counter, deque
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -59,6 +59,20 @@ STAGE_NAME = "crawl"
 # §6 Stage 3 / M4: same-domain anchors matching these patterns are candidate
 # profile links. Checked against the full href (path + query), lowercased.
 _PROFILE_PATTERNS = ("/faculty/", "/people/", "/profile", "?id=", "/directory/")
+
+# Assets that the `?id=` pattern above otherwise sweeps in. A real case from the
+# first live run: `tools.bard.edu/files/pr/main_news_image.php?id=21490` is a
+# news JPEG, matched `?id=`, and was fetched and stored as if it were a person.
+# Extensions are checked against the path only, so `?id=` query strings do not
+# defeat them.
+_ASSET_EXTENSIONS = (
+    ".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".ico", ".bmp", ".tif", ".tiff",
+    ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx",
+    ".zip", ".gz", ".tar", ".mp3", ".mp4", ".mov", ".avi", ".css", ".js", ".rss", ".xml",
+)
+# Path segments that mean "static asset", regardless of extension — the Bard
+# case ends in `.php` and only serves an image.
+_ASSET_PATH_HINTS = ("/files/", "/uploads/", "/assets/", "/static/", "_image", "/media/")
 
 # Query keys that mean "this link re-renders the *same* listing" (an A-Z
 # index like `?letter=B`, or `?page=2`) rather than pointing at a person.
@@ -168,6 +182,10 @@ class _SchoolCrawlResult:
     robots_skipped: int = 0
     cap_skipped: int = 0
     failed: int = 0
+    # True when the directory yielded real profiles but visibly only a slice of
+    # them. The rows are still written; downstream must not read them as this
+    # school's complete faculty.
+    partial: bool = False
     notes: list[str] = field(default_factory=list)
 
 
@@ -200,14 +218,31 @@ def _crawl_school(
         result.notes.append(msg)
 
     if enum_result.needs_dynamic_render:
+        found = len(enum_result.profile_entries)
+        if found == 0:
+            msg = (
+                f"{school_id}: needs_dynamic_render — {enum_result.pages_visited} directory "
+                "page(s) fetched successfully but yielded no profile links "
+                "(likely a JS-rendered directory; Playwright fallback not implemented, §13)"
+            )
+            logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
+            result.notes.append(msg)
+            return result
+
+        # Partial capture: the links found are real, so they are still fetched
+        # — throwing away genuine professors helps nobody. What must not happen
+        # is this reaching a CSV looking complete, so the school is flagged and
+        # the count is stated. Stage 5 can then exclude or caveat it.
         msg = (
-            f"{school_id}: needs_dynamic_render — {enum_result.pages_visited} directory "
-            "page(s) fetched successfully but yielded no profile links "
-            "(likely a JS-rendered directory; Playwright fallback not implemented, §13)"
+            f"{school_id}: PARTIAL — {found} profile link(s) enumerated across "
+            f"{enum_result.pages_visited} directory page(s), but they all fall under one "
+            "letter of the alphabet. The directory almost certainly loads its remaining "
+            "sections by script (§13 Playwright fallback not implemented). Crawling what "
+            "was found; treat this school's coverage as incomplete."
         )
         logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
         result.notes.append(msg)
-        return result
+        result.partial = True
 
     cap = config.max_profiles_per_school
     attempted = 0
@@ -367,7 +402,12 @@ def _enumerate_directory(
                 profile_entries.append((norm_href, base_url))
 
     page_cap_hit = pages_visited >= config.max_directory_pages and len(queue) > 0
-    needs_dynamic_render = pages_visited > 0 and not profile_entries
+    # Zero links is the obvious JS-rendered case. A *narrow* result is the
+    # dangerous one: see _looks_alphabetically_partial.
+    needs_dynamic_render = pages_visited > 0 and (
+        not profile_entries
+        or _looks_alphabetically_partial([url for url, _ in profile_entries])
+    )
 
     return _EnumResult(
         profile_entries=profile_entries,
@@ -375,6 +415,53 @@ def _enumerate_directory(
         page_cap_hit=page_cap_hit,
         needs_dynamic_render=needs_dynamic_render,
     )
+
+
+# Below this many profiles, an initial-concentration reading is noise: a small
+# department genuinely can have four people whose names all start with A.
+_PARTIAL_MIN_PROFILES = 8
+_PARTIAL_CONCENTRATION = 0.9
+
+
+def _looks_alphabetically_partial(profile_urls: list[str]) -> bool:
+    """True when the captured profiles all sit under one letter of the alphabet.
+
+    The failure this catches is silent and expensive. An A-Z directory that
+    server-renders only its first section, loading B-Z by script on click, hands
+    the crawler a page full of real, valid profile links — so nothing errors,
+    nothing 404s, and the run reports success having collected perhaps 4% of the
+    faculty. Zero links trips the existing `needs_dynamic_render` check; 17 of
+    400 does not, and reads as a complete result all the way into the CSV.
+
+    Real faculty lists spread across the alphabet. A large set sharing a single
+    initial means the crawler saw one slice of a paginated directory, not a
+    small school. Both name orders are checked, since profile slugs appear as
+    `susan-aberth` and as `aberth-susan` depending on the site.
+    """
+    if len(profile_urls) < _PARTIAL_MIN_PROFILES:
+        return False
+
+    slugs = [urlsplit(u).path.rstrip("/").rsplit("/", 1)[-1].lower() for u in profile_urls]
+    tokenised = [[t for t in s.split("-") if t and t[0].isalpha()] for s in slugs]
+    tokenised = [t for t in tokenised if len(t) >= 2]
+    if len(tokenised) < _PARTIAL_MIN_PROFILES:
+        return False
+
+    # Surnames are compound often enough that a single token position is not
+    # enough: `ziad-abu-rish` ends in "rish" but is filed under A. So for each
+    # naming convention — given-name first, or surname first — take the set of
+    # initials across the *surname side* of each slug, and ask whether one
+    # letter appears in nearly all of them.
+    for drop in ("first", "last"):
+        per_slug_initials = [
+            {t[0] for t in (tokens[1:] if drop == "first" else tokens[:-1])} for tokens in tokenised
+        ]
+        counts = Counter(letter for initials in per_slug_initials for letter in initials)
+        if not counts:
+            continue
+        if max(counts.values()) / len(per_slug_initials) >= _PARTIAL_CONCENTRATION:
+            return True
+    return False
 
 
 def _extract_anchors(html: str, base_url: str) -> list[tuple[str, str, str | None]]:
@@ -427,11 +514,25 @@ def _classify_link(href: str, current_page_url: str, text: str, rel: str | None)
     if stripped_text and _PAGINATION_TEXT_RE.match(stripped_text):
         return "pagination"
 
+    if _is_asset_link(href):
+        return "ignore"
+
     lowered_href = href.lower()
     if any(pattern in lowered_href for pattern in _PROFILE_PATTERNS):
         return "profile"
 
     return "ignore"
+
+
+def _is_asset_link(href: str) -> bool:
+    """True for images, documents and other static files.
+
+    `?id=` is a legitimate profile pattern on many directories, but it also
+    matches asset handlers. Without this, a news photo is fetched, stored and
+    handed to Stage 4 as a professor.
+    """
+    path = urlsplit(href).path.lower()
+    return path.endswith(_ASSET_EXTENSIONS) or any(h in path for h in _ASSET_PATH_HINTS)
 
 
 # -- parse hint ---------------------------------------------------------
