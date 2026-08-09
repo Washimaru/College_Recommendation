@@ -6,7 +6,13 @@ import pytest
 
 from faculty_pipeline.config import Config
 from faculty_pipeline.models import School
-from faculty_pipeline.services.llm import TOOL_NAME, AnthropicLLM, LLMError
+from faculty_pipeline.services.llm import (
+    EXTRACT_TOOL_NAME,
+    TOOL_NAME,
+    AnthropicLLM,
+    ExtractionFailed,
+    LLMError,
+)
 
 
 def _school(**overrides: object) -> School:
@@ -30,6 +36,12 @@ def _prompts_dir(tmp_path: Path) -> Path:
     prompts.mkdir()
     (prompts / "classify_directory.txt").write_text(
         "school={school_name} home={homepage}\n{candidate_list}\n", encoding="utf-8"
+    )
+    (prompts / "extract_professor.txt").write_text(
+        "school={school_name} home={homepage} url={url}\n"
+        "hints:\n{hints_block}\n"
+        "text:\n{page_text}\n",
+        encoding="utf-8",
     )
     return prompts
 
@@ -56,22 +68,35 @@ class FakeResponse:
 
 
 class FakeMessages:
-    def __init__(self, response: FakeResponse | None = None, exc: Exception | None = None) -> None:
+    def __init__(
+        self,
+        response: FakeResponse | None = None,
+        exc: Exception | None = None,
+        responses: list[FakeResponse] | None = None,
+    ) -> None:
         self._response = response
         self._exc = exc
+        self._responses = list(responses) if responses is not None else None
         self.calls: list[dict] = []
 
     def create(self, **kwargs: object) -> FakeResponse:
         self.calls.append(kwargs)
         if self._exc is not None:
             raise self._exc
+        if self._responses is not None:
+            return self._responses.pop(0)
         assert self._response is not None
         return self._response
 
 
 class FakeClient:
-    def __init__(self, response: FakeResponse | None = None, exc: Exception | None = None) -> None:
-        self.messages = FakeMessages(response, exc)
+    def __init__(
+        self,
+        response: FakeResponse | None = None,
+        exc: Exception | None = None,
+        responses: list[FakeResponse] | None = None,
+    ) -> None:
+        self.messages = FakeMessages(response, exc, responses)
 
 
 def _llm(tmp_path: Path, client: FakeClient) -> AnthropicLLM:
@@ -258,3 +283,183 @@ def test_different_excerpts_change_the_cache_key(tmp_path: Path) -> None:
     assert len(client_b.messages.calls) == 1
     assert result_a["notes"] == "a"
     assert result_b["notes"] == "b"
+
+
+# -- extract_professor (M5) --------------------------------------------------
+
+
+def _valid_extraction_input(**overrides: object) -> dict:
+    defaults: dict[str, object] = dict(
+        is_profile=True,
+        professor_name="Jane Doe",
+        title="Professor of Biology",
+        department="Biology",
+        email="jane.doe@acmetech.edu",
+        phone=None,
+        research_interests="genomics; evolutionary biology",
+        confidence=0.9,
+        notes="clear individual profile",
+    )
+    defaults.update(overrides)
+    return defaults
+
+
+def test_extract_professor_returns_structured_result(tmp_path: Path) -> None:
+    response = FakeResponse(
+        [FakeToolUseBlock(EXTRACT_TOOL_NAME, _valid_extraction_input())]
+    )
+    client = FakeClient(response)
+    llm = _llm(tmp_path, client)
+
+    result = llm.extract_professor(
+        "Jane Doe, Professor of Biology", "https://x.edu/jane", _school()
+    )
+
+    assert result["is_profile"] is True
+    assert result["professor_name"] == "Jane Doe"
+    assert result["email"] == "jane.doe@acmetech.edu"
+    assert result["confidence"] == 0.9
+    assert len(client.messages.calls) == 1
+    call = client.messages.calls[0]
+    assert call["tool_choice"] == {"type": "tool", "name": EXTRACT_TOOL_NAME}
+    assert call["model"] == "claude-sonnet-5"
+
+
+def test_extract_professor_prompt_includes_hints_and_text(tmp_path: Path) -> None:
+    response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, _valid_extraction_input())])
+    client = FakeClient(response)
+    llm = _llm(tmp_path, client)
+
+    llm.extract_professor(
+        "Jane Doe is a professor.",
+        "https://x.edu/jane",
+        _school(),
+        hints={"email": "jane.doe@acmetech.edu", "title_hint": "Jane Doe | Acme Tech"},
+    )
+
+    prompt = client.messages.calls[0]["messages"][0]["content"]
+    assert "jane.doe@acmetech.edu" in prompt
+    assert "Jane Doe | Acme Tech" in prompt
+    assert "Jane Doe is a professor." in prompt
+
+
+def test_extract_professor_no_hints_renders_placeholder(tmp_path: Path) -> None:
+    response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, _valid_extraction_input())])
+    client = FakeClient(response)
+    llm = _llm(tmp_path, client)
+
+    llm.extract_professor("text", "https://x.edu/jane", _school())
+
+    prompt = client.messages.calls[0]["messages"][0]["content"]
+    assert "no deterministic hints" in prompt
+
+
+def test_extract_professor_is_profile_false_forces_null_fields(tmp_path: Path) -> None:
+    raw = dict(
+        is_profile=False,
+        professor_name="Directory Index",  # model should not do this, but coercion must win
+        title="whatever",
+        department="whatever",
+        email="fake@x.edu",
+        phone="555-0000",
+        research_interests="whatever",
+        confidence=0.7,
+        notes="this is a directory listing, not a person",
+    )
+    response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, raw)])
+    llm = _llm(tmp_path, FakeClient(response))
+
+    result = llm.extract_professor("text", "https://x.edu/dir", _school())
+
+    assert result["is_profile"] is False
+    assert result["professor_name"] is None
+    assert result["email"] is None
+    assert result["phone"] is None
+    assert result["confidence"] == 0.0
+
+
+def test_extract_professor_response_is_cached_by_prompt_hash(tmp_path: Path) -> None:
+    response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, _valid_extraction_input())])
+    client = FakeClient(response)
+    llm = _llm(tmp_path, client)
+
+    llm.extract_professor("text", "https://x.edu/jane", _school())
+    llm.extract_professor("text", "https://x.edu/jane", _school())
+
+    assert len(client.messages.calls) == 1
+
+
+def test_extract_professor_refusal_raises_llm_error(tmp_path: Path) -> None:
+    response = FakeResponse([], stop_reason="refusal")
+    llm = _llm(tmp_path, FakeClient(response))
+
+    with pytest.raises(LLMError):
+        llm.extract_professor("text", "https://x.edu/jane", _school())
+
+
+def test_extract_professor_transport_error_is_wrapped_as_llm_error(tmp_path: Path) -> None:
+    llm = _llm(tmp_path, FakeClient(exc=RuntimeError("connection reset")))
+
+    with pytest.raises(LLMError):
+        llm.extract_professor("text", "https://x.edu/jane", _school())
+
+
+def test_extract_professor_repairs_a_missing_field_then_succeeds(tmp_path: Path) -> None:
+    bad_raw = _valid_extraction_input()
+    del bad_raw["professor_name"]  # missing required field -> repairable
+    bad_response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, bad_raw)])
+    good_response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, _valid_extraction_input())])
+    client = FakeClient(responses=[bad_response, good_response])
+    llm = _llm(tmp_path, client)
+
+    result = llm.extract_professor("text", "https://x.edu/jane", _school())
+
+    assert result["professor_name"] == "Jane Doe"
+    assert len(client.messages.calls) == 2
+    # The repair call replays the assistant's bad tool call plus a
+    # corrective instruction, on top of the original user prompt.
+    second_messages = client.messages.calls[1]["messages"]
+    assert len(second_messages) == 3
+    assert second_messages[0]["role"] == "user"
+    assert second_messages[1]["role"] == "assistant"
+    assert second_messages[2]["role"] == "user"
+    assert "invalid" in second_messages[2]["content"].lower()
+
+
+def test_extract_professor_is_profile_true_without_name_is_repairable(tmp_path: Path) -> None:
+    bad_raw = _valid_extraction_input(professor_name=None)
+    bad_response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, bad_raw)])
+    good_response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, _valid_extraction_input())])
+    client = FakeClient(responses=[bad_response, good_response])
+    llm = _llm(tmp_path, client)
+
+    result = llm.extract_professor("text", "https://x.edu/jane", _school())
+
+    assert result["professor_name"] == "Jane Doe"
+    assert len(client.messages.calls) == 2
+
+
+def test_extract_professor_gives_up_after_one_repair_retry(tmp_path: Path) -> None:
+    bad_raw = _valid_extraction_input()
+    del bad_raw["professor_name"]
+    bad_response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, bad_raw)])
+    still_bad_response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, bad_raw)])
+    client = FakeClient(responses=[bad_response, still_bad_response])
+    llm = _llm(tmp_path, client)
+
+    with pytest.raises(ExtractionFailed):
+        llm.extract_professor("text", "https://x.edu/jane", _school())
+
+    assert len(client.messages.calls) == 2  # initial attempt + exactly one repair retry
+
+
+def test_extract_professor_no_tool_use_block_triggers_repair(tmp_path: Path) -> None:
+    no_tool_response = FakeResponse([FakeTextBlock("I refuse to call a tool")])
+    good_response = FakeResponse([FakeToolUseBlock(EXTRACT_TOOL_NAME, _valid_extraction_input())])
+    client = FakeClient(responses=[no_tool_response, good_response])
+    llm = _llm(tmp_path, client)
+
+    result = llm.extract_professor("text", "https://x.edu/jane", _school())
+
+    assert result["professor_name"] == "Jane Doe"
+    assert len(client.messages.calls) == 2

@@ -1,11 +1,12 @@
 """CLI entrypoint (§7): `python -m faculty_pipeline <command> [OPTS]`.
 
 Stage subcommands (`load`/`discover`/`crawl`/`extract`/`export`/`all`) are
-wired to their stage module's `run()` starting in Milestone 2 — the stage
-modules currently raise `NotImplementedError`, so each subcommand reports
-that clearly and exits non-zero rather than pretending to do work. `status`
-and `clean` are fully implemented now: they only touch `services.checkpoint`
-and the filesystem, not the (not-yet-built) stages.
+wired to their stage module's `run()` as each lands: `load` (M2), `discover`
+(M3), `crawl` (M4), `extract` (M5). `export`/`all` still raise
+`NotImplementedError` and report that clearly rather than pretending to do
+work — they land in Milestone 6. `status` and `clean` are fully implemented
+now: they only touch `services.checkpoint` and the filesystem, not the
+stages.
 """
 from __future__ import annotations
 
@@ -25,6 +26,7 @@ from .services.robots import RobotsChecker
 from .services.search import build_search_provider
 from .stages import crawl as crawl_stage
 from .stages import discover as discover_stage
+from .stages import extract as extract_stage
 from .stages import load_filter
 
 CHECKPOINTED_STAGES = ("discover", "crawl", "extract")
@@ -196,12 +198,41 @@ def crawl(ctx: click.Context, limit: int | None, school_id: str | None, dynamic:
 
 
 @main.command()
+@click.option("--limit", type=int, default=None, help="Process at most N profiles")
 @click.option("--school", "school_id", default=None)
 @click.option("--no-llm", is_flag=True, default=False, help="Deterministic pass only (debug)")
 @click.pass_context
-def extract(ctx: click.Context, school_id: str | None, no_llm: bool) -> None:
+def extract(ctx: click.Context, limit: int | None, school_id: str | None, no_llm: bool) -> None:
     """Stage 4: extract + LLM-normalize."""
-    _not_implemented("extract", 5)
+    config: Config = ctx.obj["config"]
+    logger = ctx.obj["logger"]
+    dry_run: bool = ctx.obj["dry_run"]
+
+    checkpoint = CheckpointStore(Path(config.checkpoint_dir) / f"{extract_stage.STAGE_NAME}.json")
+    llm = None if no_llm else AnthropicLLM(config)
+
+    try:
+        summary = extract_stage.run(
+            config,
+            checkpoint,
+            logger,
+            llm,
+            limit=limit,
+            school_id=school_id,
+            no_llm=no_llm,
+            dry_run=dry_run,
+        )
+    except extract_stage.ExtractError as exc:
+        click.echo(f"extract failed: {exc}", err=True)
+        sys.exit(1)
+
+    prefix = "[dry-run] " if dry_run else ""
+    click.echo(
+        f"{prefix}extract: {summary.processed} profile(s) extracted, "
+        f"{summary.skipped} skipped, {summary.failed} failed"
+    )
+    for note in summary.notes:
+        click.echo(f"  note: {note}")
 
 
 @main.command()

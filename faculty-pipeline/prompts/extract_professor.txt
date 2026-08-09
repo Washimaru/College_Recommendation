@@ -1,4 +1,74 @@
-Placeholder — authored in Milestone 5 alongside services/llm.py's
-extract_professor. See docs/FACULTY_PIPELINE.md §5.5 and §6 Stage 4 for the
-expected inputs (cleaned profile text + deterministic hints) and outputs (a
-structured Professor record with a confidence score).
+You are extracting a structured professor/staff record from ONE already-fetched
+university web page, or deciding that this page is not an individual's profile
+at all.
+
+University: {school_name}
+Homepage: {homepage}
+Page URL: {url}
+
+## Deterministic hints (a cross-check, not the source of truth)
+
+These were pulled from the page's raw HTML by code, not by you: `mailto:`
+links, `tel:` links, `<meta>` tags, JSON-LD `Person` blocks, and simple
+de-obfuscated email text ("name [at] school.edu"). They are often right, but
+they are hints. In particular `title_hint` comes from the page's `<title>` or
+first `<h1>`, which on many university CMSes is "Person Name | School Name" —
+the " | School Name" part is site boilerplate, not part of anyone's name, and
+must never end up in professor_name. Verify every hint against the page text
+below before using it; if a hint isn't confirmed by the visible text, treat it
+as unconfirmed, not as ground truth.
+
+{hints_block}
+
+## Page text (cleaned, HTML tags stripped)
+
+"""
+{page_text}
+"""
+
+## Step 1 — is this an individual's profile page?
+
+Call `extract_professor` with `is_profile: false` (and every person field
+null) for anything that is not one specific named person's profile:
+directory/listing indexes, A-Z or department browse pages, 404 / "page not
+found" pages, news or event articles, a department's landing page, a search
+page. A page that merely mentions a person's name in passing is not that
+person's profile. When in doubt because the page content is thin, ambiguous,
+or generic, prefer `is_profile: false` over guessing — inventing a person from
+a page title is the one mistake this pipeline cannot tolerate.
+
+## Step 2 — if it is a profile, extract only what the page actually states
+
+- `professor_name`: the person's name exactly as written on the page (title
+  case as shown). Never include a trailing site/department name — if the only
+  name-shaped text you have is "Jane Doe | Acme College", the name is "Jane
+  Doe", not the full string.
+- `title`: their academic/job title (e.g. "Associate Professor of Physics"),
+  if stated.
+- `department`: their department or program, if stated.
+- `email`: ONLY if an email address literally appears on the page (in the
+  text above or in the hints) — copy it exactly. Never construct one from the
+  person's name and a guessed domain, however obvious the pattern looks. If no
+  email appears anywhere, this is null.
+- `phone`: ONLY if a phone number literally appears on the page or in the
+  hints. Never invent one. Null if absent.
+- `research_interests`: a semicolon-separated list of their research/teaching
+  interests or areas of expertise, taken from the page's own wording. Null if
+  the page states none.
+- `confidence`: 0.0-1.0, calibrated below.
+- `notes`: one short sentence citing what on the page justified your
+  is_profile decision and any field you left null despite a hint suggesting a
+  value (e.g. "hint email did not appear on the page text, left null").
+
+## Confidence — calibrate against these anchors
+
+- **0.9-1.0** — a clear individual profile: a named person, a title or
+  department, and the page is unambiguously about them.
+- **0.6-0.8** — a real profile but thin: a name and little else, or some
+  expected fields are missing.
+- **0.3-0.5** — ambiguous; you extracted something but are not confident this
+  is truly an individual profile page.
+- **0.0** — `is_profile` is false, or no name could be found at all.
+
+Call the `extract_professor` tool with your answer. Do not invent data to fill
+a field — a field the page does not state is null, always.
