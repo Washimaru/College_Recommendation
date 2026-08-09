@@ -87,6 +87,14 @@ class Config:
     # found so far.
     max_directory_pages: int = 20
 
+    # Stage 2 (discover.py) sitemap candidate source, services/sitemap.py:
+    # some university sitemaps are enormous (sitemap indexes recursing into
+    # many leaf sitemaps, leaf sitemaps with tens of thousands of URLs) —
+    # these bound how much of a school's published sitemap gets pulled before
+    # discovery stops rather than pulling tens of megabytes.
+    max_sitemap_documents: int = 25
+    max_sitemap_urls: int = 50_000
+
     @classmethod
     def load(
         cls,
@@ -147,6 +155,8 @@ _INT_FIELDS = {
     "max_profiles_per_school",
     "directory_excerpt_max_chars",
     "max_directory_pages",
+    "max_sitemap_documents",
+    "max_sitemap_urls",
 }
 _BOOL_FIELDS = {"respect_robots"}
 

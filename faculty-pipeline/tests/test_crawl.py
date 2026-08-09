@@ -35,11 +35,16 @@ def _config(tmp_path: Path, **overrides: object) -> Config:
     )
 
 
-def _directory(school_id: str = "acme-college", urls: list[str] | None = None) -> Directory:
+def _directory(
+    school_id: str = "acme-college",
+    urls: list[str] | None = None,
+    profile_urls: list[str] | None = None,
+) -> Directory:
     return Directory(
         school_id=school_id,
         directory_urls=urls if urls is not None else [f"{BASE}/faculty"],
-        discovery_method="heuristic",
+        profile_urls=profile_urls,
+        discovery_method="sitemap" if profile_urls else "heuristic",
         robots_allowed=True,
         confidence=0.9,
     )
@@ -680,3 +685,180 @@ class TestAlphabeticallyPartialCapture:
         ]
 
         assert crawl._looks_alphabetically_partial(urls) is False
+
+
+# ---------------------------------------------------------------------------
+# Sitemap profiles (the discovery-recall fix): crawl what discover.py already
+# found in the sitemap instead of enumerating the directory page's links.
+# ---------------------------------------------------------------------------
+
+
+def test_school_with_only_profile_urls_and_no_directory_urls_is_still_a_target(
+    tmp_path: Path,
+) -> None:
+    """discover.py can produce a Directory with directory_urls: [] and a
+    populated profile_urls (no directory-index candidate resolved, but the
+    sitemap profile cluster is self-evident on its own — e.g. the live
+    Auburn/ASU runs). Such a school must still be crawled, not silently
+    dropped by the directory_urls-only "has anything to crawl" filter."""
+    config = _config(tmp_path)
+    profile_urls = [f"{BASE}/directory/faculty/prof-{i}.html" for i in range(5)]
+    _write_directories(config, [_directory(urls=[], profile_urls=profile_urls)])
+    http_client = FakeHttpClient(
+        pages={url: _fetch_result(200, _html("profile_minimal.html"), url) for url in profile_urls}
+    )
+
+    summary = _run(config, _checkpoint(config), http_client)
+
+    rows = _read_profiles(config)
+    assert {r["profile_url"] for r in rows} == set(profile_urls)
+    assert summary.processed == 5
+    assert summary.skipped == 0
+
+
+def test_crawl_uses_sitemap_profiles_instead_of_enumerating(tmp_path: Path) -> None:
+    """Agnes Scott-style: discover.py found 124 (here, 6) profile urls
+    directly in the sitemap. Crawl must fetch exactly those, and must never
+    fetch/enumerate the directory page at all — enumeration is what produced
+    the 17-of-several-hundred partial capture this feature replaces."""
+    config = _config(tmp_path)
+    profile_urls = [f"{BASE}/directory/faculty/prof-{i}.html" for i in range(6)]
+    _write_directories(
+        config,
+        [_directory(urls=[f"{BASE}/directory/faculty/index.html"], profile_urls=profile_urls)],
+    )
+    http_client = FakeHttpClient(
+        pages={url: _fetch_result(200, _html("profile_minimal.html"), url) for url in profile_urls}
+    )
+
+    summary = _run(config, _checkpoint(config), http_client)
+
+    rows = _read_profiles(config)
+    assert {r["profile_url"] for r in rows} == set(profile_urls)
+    assert summary.processed == 6
+    assert summary.failed == 0
+    # The directory index page itself was never fetched: no enumeration.
+    assert f"{BASE}/directory/faculty/index.html" not in http_client.calls
+    assert set(http_client.calls) == set(profile_urls)
+
+
+def test_sitemap_profiles_use_the_directory_index_as_directory_url(tmp_path: Path) -> None:
+    config = _config(tmp_path)
+    profile_urls = [f"{BASE}/directory/faculty/prof-{i}.html" for i in range(5)]
+    index_url = f"{BASE}/directory/faculty/index.html"
+    _write_directories(config, [_directory(urls=[index_url], profile_urls=profile_urls)])
+    http_client = FakeHttpClient(
+        pages={url: _fetch_result(200, _html("profile_minimal.html"), url) for url in profile_urls}
+    )
+
+    _run(config, _checkpoint(config), http_client)
+
+    rows = _read_profiles(config)
+    assert all(r["directory_url"] == index_url for r in rows)
+
+
+def test_sitemap_profiles_with_no_directory_url_use_sentinel(tmp_path: Path) -> None:
+    """A cluster found with no directory-index candidate at all
+    (discover.py's "no candidates but has profile_urls" case) still needs
+    some non-empty directory_url for the RawProfile schema."""
+    config = _config(tmp_path)
+    profile_urls = [f"{BASE}/directory/faculty/prof-{i}.html" for i in range(5)]
+    _write_directories(config, [_directory(urls=[], profile_urls=profile_urls)])
+    http_client = FakeHttpClient(
+        pages={url: _fetch_result(200, _html("profile_minimal.html"), url) for url in profile_urls}
+    )
+
+    _run(config, _checkpoint(config), http_client)
+
+    rows = _read_profiles(config)
+    assert all(r["directory_url"] == "sitemap" for r in rows)
+
+
+def test_sitemap_profiles_respect_max_profiles_per_school_cap(tmp_path: Path) -> None:
+    config = _config(tmp_path, max_profiles_per_school=2)
+    profile_urls = [f"{BASE}/directory/faculty/prof-{i}.html" for i in range(5)]
+    _write_directories(config, [_directory(profile_urls=profile_urls)])
+    http_client = FakeHttpClient(
+        pages={url: _fetch_result(200, _html("profile_minimal.html"), url) for url in profile_urls}
+    )
+
+    summary = _run(config, _checkpoint(config), http_client)
+
+    rows = _read_profiles(config)
+    assert len(rows) == 2
+    assert summary.processed == 2
+    assert any("truncated at max_profiles_per_school=2" in note for note in summary.notes)
+
+
+def test_sitemap_profiles_respect_robots_gate(tmp_path: Path) -> None:
+    config = _config(tmp_path)
+    profile_urls = [f"{BASE}/directory/faculty/prof-{i}.html" for i in range(5)]
+    disallowed = profile_urls[0]
+    _write_directories(config, [_directory(profile_urls=profile_urls)])
+    http_client = FakeHttpClient(
+        pages={url: _fetch_result(200, _html("profile_minimal.html"), url) for url in profile_urls},
+        disallowed={disallowed},
+    )
+
+    summary = _run(config, _checkpoint(config), http_client)
+
+    rows = _read_profiles(config)
+    assert disallowed not in {r["profile_url"] for r in rows}
+    assert summary.failed == 0
+
+
+def test_sitemap_profiles_checkpoint_per_url_same_as_enumeration(tmp_path: Path) -> None:
+    config = _config(tmp_path)
+    profile_urls = [f"{BASE}/directory/faculty/prof-{i}.html" for i in range(5)]
+    _write_directories(config, [_directory(profile_urls=profile_urls)])
+    checkpoint = _checkpoint(config)
+    checkpoint.mark_done(profile_urls[0])
+    http_client = FakeHttpClient(
+        pages={url: _fetch_result(200, _html("profile_minimal.html"), url) for url in profile_urls}
+    )
+
+    summary = _run(config, checkpoint, http_client)
+
+    assert profile_urls[0] not in http_client.calls
+    assert summary.processed == 4
+    assert summary.skipped >= 1
+
+
+def test_sitemap_profiles_alphabetic_partial_is_still_a_safety_net(tmp_path: Path) -> None:
+    """Should now rarely fire, per the plan — but stays wired: if a
+    sitemap-derived cluster is somehow all one letter, it is still flagged
+    PARTIAL, not silently treated as complete."""
+    config = _config(tmp_path)
+    profile_urls = [
+        f"{BASE}/directory/faculty/{slug}"
+        for slug in (
+            "susan-aberth", "ziad-abu-rish", "kenyon-adams", "ross-exo-adams",
+            "folarin-ajibade", "jasmine-akiyama-kim", "kathryn-aldous",
+            "richard-aldous", "jaime-osterman-alves", "craig-anderson",
+        )
+    ]
+    _write_directories(config, [_directory(profile_urls=profile_urls)])
+    http_client = FakeHttpClient(
+        pages={url: _fetch_result(200, _html("profile_minimal.html"), url) for url in profile_urls}
+    )
+
+    summary = _run(config, _checkpoint(config), http_client)
+
+    assert summary.processed == len(profile_urls)  # still crawled, not discarded
+    assert any("PARTIAL" in note for note in summary.notes)
+
+
+def test_sitemap_profiles_skip_needs_dynamic_render_path(tmp_path: Path) -> None:
+    """Sitemap profiles never go through _enumerate_directory, so the
+    JS-rendering-detection note must not appear for this path."""
+    config = _config(tmp_path)
+    profile_urls = [f"{BASE}/directory/faculty/prof-{i}.html" for i in range(5)]
+    _write_directories(config, [_directory(profile_urls=profile_urls)])
+    http_client = FakeHttpClient(
+        pages={url: _fetch_result(200, _html("profile_minimal.html"), url) for url in profile_urls}
+    )
+
+    summary = _run(config, _checkpoint(config), http_client)
+
+    assert not any("needs_dynamic_render" in note for note in summary.notes)
+    assert any("taken directly from the sitemap" in note for note in summary.notes)

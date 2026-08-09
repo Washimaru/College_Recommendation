@@ -44,6 +44,13 @@ class Directory(BaseModel):
 
     school_id: str
     directory_urls: list[str] = Field(default_factory=list)
+    # Individual profile URLs found directly in a published sitemap (see
+    # services/sitemap.py), e.g. 124 `/directory/faculty/<name>.html` entries
+    # discovered alongside the directory index. `None` means "no sitemap
+    # profile cluster was found" (heuristics/search-only discovery); an empty
+    # list is not the same thing. When present, stages/crawl.py crawls these
+    # directly instead of enumerating links from directory_urls.
+    profile_urls: list[str] | None = None
     discovery_method: str
     robots_allowed: bool
     confidence: float = Field(ge=0, le=1)

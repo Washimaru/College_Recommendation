@@ -50,12 +50,21 @@ from typing import Protocol
 
 from ..config import Config
 from ..models import Directory, School, StageSummary
+from ..services import sitemap as sitemap_service
 from ..services.checkpoint import CheckpointStore
 from ..services.http_client import FetchResult, RobotsCheckerLike
 from ..services.llm import DirectoryClassification
 from ..services.robots import RobotsDisallowedError
 from ..services.search import SearchProvider
 from ..utils import extract_text_excerpt
+
+# Sitemap-derived profile clusters are self-evident (a URL sitting under
+# /directory/faculty/ alongside 123 siblings doesn't need an LLM's opinion),
+# so they get a fixed confidence rather than one derived from
+# classify_directory. Used only when no directory-page candidate resolved at
+# all — the ordinary case where a directory index also resolved runs the
+# normal LLM-derived confidence path and simply carries profile_urls along.
+SITEMAP_PROFILE_ONLY_CONFIDENCE = 0.9
 
 STAGE_NAME = "discover"
 
@@ -219,15 +228,45 @@ def _discover_for_school(
     school: School,
     logger: logging.Logger,
 ) -> Directory:
-    candidates, excerpts, used_heuristic, used_search = _discover_candidates(
-        http_client, search_provider, school, logger, config.directory_excerpt_max_chars
+    sitemap_result = sitemap_service.discover_sitemap_urls(
+        config, http_client, robots, school.homepage, logger, school_id=school.school_id
+    )
+    sitemap_directory_pages = sitemap_service.find_directory_pages(sitemap_result.urls)
+    sitemap_clusters = sitemap_service.find_profile_clusters(
+        sitemap_result.urls, exclude=set(sitemap_directory_pages)
+    )
+    profile_urls = sitemap_service.largest_profile_cluster(sitemap_clusters)
+
+    candidates, excerpts, used_sitemap, used_heuristic, used_search = _discover_candidates(
+        http_client,
+        search_provider,
+        school,
+        logger,
+        config.directory_excerpt_max_chars,
+        sitemap_directory_pages,
     )
 
     if not candidates:
+        if profile_urls:
+            # Self-evident: a cluster of sibling profile URLs from the
+            # sitemap needs no LLM judgment even though no directory-index
+            # candidate resolved (or resolved but was rejected/dead).
+            return Directory(
+                school_id=school.school_id,
+                directory_urls=[],
+                profile_urls=profile_urls,
+                discovery_method="sitemap",
+                robots_allowed=True,
+                confidence=SITEMAP_PROFILE_ONLY_CONFIDENCE,
+                notes=(
+                    f"{len(profile_urls)} profile url(s) found directly in the sitemap; "
+                    "no directory index page candidate resolved"
+                ),
+            )
         return Directory(
             school_id=school.school_id,
             directory_urls=[],
-            discovery_method=_method_label(used_heuristic, used_search),
+            discovery_method=_method_label(used_sitemap, used_heuristic, used_search),
             robots_allowed=True,
             confidence=0.0,
             notes="no candidate directory URLs resolved via heuristics or search",
@@ -271,7 +310,8 @@ def _discover_for_school(
     return Directory(
         school_id=school.school_id,
         directory_urls=allowed_urls,
-        discovery_method=_method_label(used_heuristic, used_search),
+        profile_urls=profile_urls,
+        discovery_method=_method_label(used_sitemap, used_heuristic, used_search),
         robots_allowed=robots_allowed,
         confidence=confidence,
         notes="; ".join(notes_parts) if notes_parts else None,
@@ -284,18 +324,39 @@ def _discover_candidates(
     school: School,
     logger: logging.Logger,
     excerpt_max_chars: int,
-) -> tuple[list[str], dict[str, str], bool, bool]:
-    """Returns `(candidate_urls, excerpts, used_heuristic, used_search)`.
+    sitemap_directory_pages: list[str],
+) -> tuple[list[str], dict[str, str], bool, bool, bool]:
+    """Returns `(candidate_urls, excerpts, used_sitemap, used_heuristic, used_search)`.
 
     `excerpts` maps each surviving candidate URL to a plain-text excerpt of
     the same page body the resolve-check (`_try_fetch`) already fetched and
     cached — no second fetch. A candidate whose resolve-check body was empty
     simply has no entry; `llm.classify_directory` falls back to judging that
     URL alone rather than crashing.
+
+    Sitemap-derived directory-index pages are tried first (a candidate
+    source ahead of the heuristics, per the sitemap-recall fix), then
+    heuristics, then search — all through the same `_try_fetch` resolve
+    check and the same `llm.classify_directory` call below, so the sitemap
+    doesn't weaken the existing content-based classification, only feeds it
+    a better candidate.
     """
     seen: set[str] = set()
     candidates: list[str] = []
     excerpts: dict[str, str] = {}
+
+    used_sitemap = False
+    for url in sitemap_directory_pages:
+        if url in seen:
+            continue
+        result = _try_fetch(http_client, url, logger, school.school_id)
+        if result is not None:
+            seen.add(url)
+            candidates.append(url)
+            excerpt = extract_text_excerpt(result.body, excerpt_max_chars)
+            if excerpt:
+                excerpts[url] = excerpt
+            used_sitemap = True
 
     used_heuristic = False
     for url in _heuristic_urls(school.homepage):
@@ -325,7 +386,7 @@ def _discover_candidates(
                 excerpts[url] = excerpt
             used_search = True
 
-    return candidates, excerpts, used_heuristic, used_search
+    return candidates, excerpts, used_sitemap, used_heuristic, used_search
 
 
 def _heuristic_urls(homepage: str) -> list[str]:
@@ -401,14 +462,14 @@ def _apply_robots_gate(
     return allowed, not any_disallowed
 
 
-def _method_label(used_heuristic: bool, used_search: bool) -> str:
-    if used_heuristic and used_search:
-        return "heuristic+search"
-    if used_heuristic:
-        return "heuristic"
-    if used_search:
-        return "search"
-    return "none"
+def _method_label(used_sitemap: bool, used_heuristic: bool, used_search: bool) -> str:
+    sources = (
+        (used_sitemap, "sitemap"),
+        (used_heuristic, "heuristic"),
+        (used_search, "search"),
+    )
+    parts = [label for used, label in sources if used]
+    return "+".join(parts) if parts else "none"
 
 
 def _load_schools(data_dir: str | Path) -> list[School]:

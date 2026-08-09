@@ -48,3 +48,8 @@ respect_robots: true
 # Stage 3 (crawl.py): stop enumerating a school's directory pagination after
 # this many pages, so a cyclical or malformed "next" link can't loop forever.
 max_directory_pages: 20
+
+# Stage 2 (discover.py) sitemap candidate source (services/sitemap.py). Some
+# university sitemaps are enormous; stop rather than pull tens of megabytes.
+max_sitemap_documents: 25
+max_sitemap_urls: 50000

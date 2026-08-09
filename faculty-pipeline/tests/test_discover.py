@@ -5,6 +5,8 @@ import logging
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import pytest
+
 from faculty_pipeline.config import Config
 from faculty_pipeline.models import School
 from faculty_pipeline.services.checkpoint import CheckpointStore
@@ -100,23 +102,36 @@ class FakeLLM:
         return self.response
 
 
+@dataclass
 class AllowAllRobots:
+    # homepage -> Sitemap: directives it "advertises"; empty/unset means
+    # services.sitemap falls back to {homepage}/sitemap.xml (the FakeHttpClient
+    # then 404s/raises for it unless a test maps that URL too).
+    sitemap_urls: dict[str, list[str]] = field(default_factory=dict)
+
     def is_allowed(self, url: str, user_agent: str) -> bool:
         return True
 
     def crawl_delay(self, url: str) -> float | None:
         return None
 
+    def sitemaps(self, url: str) -> list[str]:
+        return list(self.sitemap_urls.get(url, []))
+
 
 @dataclass
 class SelectiveRobots:
     disallowed: set[str] = field(default_factory=set)
+    sitemap_urls: dict[str, list[str]] = field(default_factory=dict)
 
     def is_allowed(self, url: str, user_agent: str) -> bool:
         return url not in self.disallowed
 
     def crawl_delay(self, url: str) -> float | None:
         return None
+
+    def sitemaps(self, url: str) -> list[str]:
+        return list(self.sitemap_urls.get(url, []))
 
 
 def _run(
@@ -537,3 +552,122 @@ def test_dry_run_makes_no_network_or_llm_calls_and_writes_nothing(tmp_path: Path
     assert _checkpoint(config).is_done(school.school_id) is False
     assert summary.processed == 0
     assert "would process 1 school" in summary.notes[0]
+
+
+# -- sitemap candidate source (the recall fix) --------------------------------
+
+
+def _sitemap_xml(urls: list[str]) -> str:
+    entries = "".join(f"<url><loc>{u}</loc></url>" for u in urls)
+    return (
+        "<?xml version='1.0'?>"
+        "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>" + entries + "</urlset>"
+    )
+
+
+def test_sitemap_directory_page_is_added_as_a_candidate(tmp_path: Path) -> None:
+    """A sitemap-discovered directory index page goes through the *same*
+    fetch + LLM classification path as a heuristic/search candidate — it
+    doesn't bypass content-based classification, it just gives it a better
+    candidate to look at."""
+    config = _config(tmp_path)
+    school = _school()
+    _write_schools(config, [school])
+    sitemap_url = "https://www.acmetech.edu/sitemap.xml"
+    directory_url = "https://www.acmetech.edu/directory/faculty/index.html"
+    http_client = FakeHttpClient(
+        pages={
+            sitemap_url: _fetch_result(200, _sitemap_xml([directory_url]), sitemap_url),
+            directory_url: _fetch_result(200, HTML_OK, directory_url),
+        }
+    )
+    robots = AllowAllRobots(sitemap_urls={school.homepage: [sitemap_url]})
+    llm = FakeLLM(
+        response={"directory_urls": [directory_url], "confidence": 0.95, "notes": "sitemap hit"}
+    )
+
+    _run(config, _checkpoint(config), http_client, NullSearchProvider(), llm, robots)
+
+    rows = _read_output(config)
+    assert rows[0]["directory_urls"] == [directory_url]
+    assert rows[0]["discovery_method"] == "sitemap"
+    # The LLM was shown the sitemap-derived candidate, same as any other.
+    (candidates_seen, _school_id) = llm.calls[0]
+    assert directory_url in candidates_seen
+
+
+def test_sitemap_profile_cluster_attaches_without_llm_when_no_directory_candidate(
+    tmp_path: Path,
+) -> None:
+    """A cluster of sibling profile URLs from the sitemap is self-evident —
+    it never reaches classify_directory — even when no directory-index
+    candidate resolved from any source."""
+    config = _config(tmp_path)
+    school = _school()
+    _write_schools(config, [school])
+    sitemap_url = "https://www.acmetech.edu/sitemap.xml"
+    profile_urls = [f"https://www.acmetech.edu/directory/faculty/prof-{i}.html" for i in range(6)]
+    http_client = FakeHttpClient(
+        pages={sitemap_url: _fetch_result(200, _sitemap_xml(profile_urls), sitemap_url)}
+    )
+    robots = AllowAllRobots(sitemap_urls={school.homepage: [sitemap_url]})
+    llm = FakeLLM()
+
+    summary = _run(config, _checkpoint(config), http_client, NullSearchProvider(), llm, robots)
+
+    rows = _read_output(config)
+    assert rows[0]["directory_urls"] == []
+    assert set(rows[0]["profile_urls"]) == set(profile_urls)
+    assert rows[0]["discovery_method"] == "sitemap"
+    assert rows[0]["confidence"] == pytest.approx(0.9)
+    assert llm.calls == []  # self-evident cluster, never handed to the LLM
+    assert summary.failed == 0
+
+
+def test_sitemap_profile_cluster_attaches_alongside_llm_chosen_directory(tmp_path: Path) -> None:
+    """The common case (Agnes Scott): the sitemap has both the directory
+    index (classified normally) and a profile cluster, and both end up on
+    the same Directory record."""
+    config = _config(tmp_path)
+    school = _school()
+    _write_schools(config, [school])
+    sitemap_url = "https://www.acmetech.edu/sitemap.xml"
+    directory_url = "https://www.acmetech.edu/directory/faculty/index.html"
+    profile_urls = [f"https://www.acmetech.edu/directory/faculty/prof-{i}.html" for i in range(6)]
+    http_client = FakeHttpClient(
+        pages={
+            sitemap_url: _fetch_result(
+                200, _sitemap_xml([directory_url, *profile_urls]), sitemap_url
+            ),
+            directory_url: _fetch_result(200, HTML_OK, directory_url),
+        }
+    )
+    robots = AllowAllRobots(sitemap_urls={school.homepage: [sitemap_url]})
+    llm = FakeLLM(
+        response={"directory_urls": [directory_url], "confidence": 0.9, "notes": "looks official"}
+    )
+
+    _run(config, _checkpoint(config), http_client, NullSearchProvider(), llm, robots)
+
+    rows = _read_output(config)
+    assert rows[0]["directory_urls"] == [directory_url]
+    assert set(rows[0]["profile_urls"]) == set(profile_urls)
+    assert rows[0]["discovery_method"] == "sitemap"
+
+
+def test_no_sitemap_leaves_profile_urls_unset(tmp_path: Path) -> None:
+    """A school with no sitemap at all (the pre-fix baseline) gets
+    `profile_urls: null`, not an empty list — the two are not the same
+    thing per the Directory model."""
+    config = _config(tmp_path)
+    school = _school()
+    _write_schools(config, [school])
+    url = "https://www.acmetech.edu/faculty"
+    http_client = FakeHttpClient(pages={url: _fetch_result(200, HTML_OK, url)})
+    llm = FakeLLM(response={"directory_urls": [url], "confidence": 0.9, "notes": ""})
+
+    _run(config, _checkpoint(config), http_client, NullSearchProvider(), llm, AllowAllRobots())
+
+    rows = _read_output(config)
+    assert rows[0]["profile_urls"] is None
+    assert rows[0]["discovery_method"] == "heuristic"

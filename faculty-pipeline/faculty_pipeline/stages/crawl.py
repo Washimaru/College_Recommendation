@@ -1,7 +1,15 @@
 """Stage 3 — Crawl Profiles (§6 Stage 3).
 
 For each school's discovered directory URL(s) (`data/directories.jsonl`,
-Stage 2 output; schools with `directory_urls: []` are not crawl targets):
+Stage 2 output; schools with both `directory_urls: []` and no `profile_urls`
+are not crawl targets):
+
+**Sitemap profiles first.** When a `Directory` carries `profile_urls`
+(services/sitemap.py's cluster, attached by discover.py), those are crawled
+directly — enumeration below is skipped entirely for that school. This is
+the fix for partial-capture directories (e.g. Bard's A-Z listing that
+server-renders only its "A" section): a sitemap cluster is complete by
+construction, where enumeration hits exactly that kind of truncation.
 
 1. **Enumerate.** Fetch each directory URL through `services.http_client`
    (the single fetch path — this stage never calls httpx directly, never
@@ -128,7 +136,12 @@ def run(
 
     started_at = datetime.now(UTC)
     directories = _load_directories(config.data_dir)
-    with_urls = [d for d in directories if d.directory_urls]
+    # A crawl target is a school with *something* to crawl: either an
+    # enumerable directory_urls entrypoint or a sitemap-derived profile_urls
+    # cluster (services/sitemap.py) — discover.py can produce the latter with
+    # directory_urls left empty (no directory-index candidate resolved, but
+    # the profile cluster is self-evident on its own).
+    with_urls = [d for d in directories if d.directory_urls or d.profile_urls]
 
     targets = [d for d in with_urls if school_id is None or d.school_id == school_id]
     pending = targets[:limit] if limit is not None else targets
@@ -200,45 +213,75 @@ def _crawl_school(
     school_id = directory.school_id
     result = _SchoolCrawlResult()
 
-    enum_result = _enumerate_directory(
-        config, http_client, directory.directory_urls, school_id, logger
-    )
-
-    result.notes.append(
-        f"{school_id}: {len(enum_result.profile_entries)} profile url(s) enumerated "
-        f"across {enum_result.pages_visited} directory page(s)"
-    )
-
-    if enum_result.page_cap_hit:
-        msg = (
-            f"{school_id}: hit max_directory_pages={config.max_directory_pages}; "
-            "pagination stopped early, some directory pages were not visited"
+    if directory.profile_urls:
+        # Sitemap-derived profiles (services/sitemap.py, discover.py):
+        # complete by construction (one fetch of a file the site itself
+        # publishes), so enumeration — with its pagination page cap and its
+        # A-Z-truncation risk — is skipped entirely rather than re-deriving
+        # what the sitemap already gave us directly.
+        enum_result = _enum_result_from_sitemap_profiles(directory)
+        result.notes.append(
+            f"{school_id}: {len(enum_result.profile_entries)} profile url(s) taken directly "
+            "from the sitemap (discovery_method=sitemap); enumeration skipped"
         )
-        logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
-        result.notes.append(msg)
+    else:
+        enum_result = _enumerate_directory(
+            config, http_client, directory.directory_urls, school_id, logger
+        )
+        result.notes.append(
+            f"{school_id}: {len(enum_result.profile_entries)} profile url(s) enumerated "
+            f"across {enum_result.pages_visited} directory page(s)"
+        )
 
-    if enum_result.needs_dynamic_render:
-        found = len(enum_result.profile_entries)
-        if found == 0:
+        if enum_result.page_cap_hit:
             msg = (
-                f"{school_id}: needs_dynamic_render — {enum_result.pages_visited} directory "
-                "page(s) fetched successfully but yielded no profile links "
-                "(likely a JS-rendered directory; Playwright fallback not implemented, §13)"
+                f"{school_id}: hit max_directory_pages={config.max_directory_pages}; "
+                "pagination stopped early, some directory pages were not visited"
             )
             logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
             result.notes.append(msg)
-            return result
 
-        # Partial capture: the links found are real, so they are still fetched
-        # — throwing away genuine professors helps nobody. What must not happen
-        # is this reaching a CSV looking complete, so the school is flagged and
-        # the count is stated. Stage 5 can then exclude or caveat it.
+        if enum_result.needs_dynamic_render:
+            found = len(enum_result.profile_entries)
+            if found == 0:
+                msg = (
+                    f"{school_id}: needs_dynamic_render — {enum_result.pages_visited} directory "
+                    "page(s) fetched successfully but yielded no profile links "
+                    "(likely a JS-rendered directory; Playwright fallback not implemented, §13)"
+                )
+                logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
+                result.notes.append(msg)
+                return result
+
+            # Partial capture: the links found are real, so they are still fetched
+            # — throwing away genuine professors helps nobody. What must not happen
+            # is this reaching a CSV looking complete, so the school is flagged and
+            # the count is stated. Stage 5 can then exclude or caveat it.
+            msg = (
+                f"{school_id}: PARTIAL — {found} profile link(s) enumerated across "
+                f"{enum_result.pages_visited} directory page(s), but they all fall under one "
+                "letter of the alphabet. The directory almost certainly loads its remaining "
+                "sections by script (§13 Playwright fallback not implemented). Crawling what "
+                "was found; treat this school's coverage as incomplete."
+            )
+            logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
+            result.notes.append(msg)
+            result.partial = True
+
+    # Safety net for the sitemap path (§13 / the sitemap-recall fix): the
+    # enumerated path already ran this same check above, inside
+    # needs_dynamic_render. A cluster this concentrated on one letter almost
+    # never happens for a sitemap (it isn't a JS-rendering artifact), but if
+    # it ever does, it gets the same PARTIAL flag an enumerated directory
+    # would.
+    if directory.profile_urls and _looks_alphabetically_partial(
+        [url for url, _ in enum_result.profile_entries]
+    ):
+        found = len(enum_result.profile_entries)
         msg = (
-            f"{school_id}: PARTIAL — {found} profile link(s) enumerated across "
-            f"{enum_result.pages_visited} directory page(s), but they all fall under one "
-            "letter of the alphabet. The directory almost certainly loads its remaining "
-            "sections by script (§13 Playwright fallback not implemented). Crawling what "
-            "was found; treat this school's coverage as incomplete."
+            f"{school_id}: PARTIAL — {found} sitemap-derived profile url(s) all fall under "
+            "one letter of the alphabet, despite coming directly from the sitemap. Crawling "
+            "what was found; treat this school's coverage as incomplete."
         )
         logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
         result.notes.append(msg)
@@ -319,6 +362,28 @@ class _EnumResult:
     pages_visited: int
     page_cap_hit: bool
     needs_dynamic_render: bool
+
+
+def _enum_result_from_sitemap_profiles(directory: Directory) -> _EnumResult:
+    """Builds an `_EnumResult` straight from `directory.profile_urls`
+    (services/sitemap.py's cluster, attached by discover.py), bypassing
+    `_enumerate_directory` entirely: no pagination to walk, no directory
+    pages fetched, no A-Z-slice risk from a JS-rendered listing.
+
+    `directory_url` for each entry (the "page it was found on") is the
+    first discovered directory index page when one exists — usually the
+    same sitemap URL that clustered these profiles — or the literal string
+    "sitemap" when discovery found the profile cluster but no directory
+    index candidate resolved at all.
+    """
+    directory_url = directory.directory_urls[0] if directory.directory_urls else "sitemap"
+    profile_entries = [(normalize_url(u), directory_url) for u in (directory.profile_urls or [])]
+    return _EnumResult(
+        profile_entries=profile_entries,
+        pages_visited=0,
+        page_cap_hit=False,
+        needs_dynamic_render=False,
+    )
 
 
 def _enumerate_directory(

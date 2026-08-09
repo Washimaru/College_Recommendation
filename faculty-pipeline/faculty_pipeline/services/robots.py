@@ -68,6 +68,22 @@ class RobotsChecker:
         rules = self._get_rules(url)
         return rules.crawl_delay if rules is not None else None
 
+    def sitemaps(self, url: str) -> list[str]:
+        """`Sitemap:` directives advertised by the host's robots.txt.
+
+        Reuses the same cached `_HostRules.parser` as `is_allowed`/
+        `crawl_delay` (`RobotFileParser.site_maps()`, populated by `.parse()`
+        with no extra work) — services/sitemap.py's primary source, so a
+        host's robots.txt is fetched at most once total, never once for the
+        allow-check and again for sitemap discovery. Empty (never raises) when
+        there's no robots.txt, it couldn't be fetched, or it advertises no
+        sitemaps.
+        """
+        rules = self._get_rules(url)
+        if rules is None:
+            return []
+        return list(rules.parser.site_maps() or [])
+
     def _get_rules(self, url: str) -> _HostRules | None:
         parsed = urlparse(url)
         host_key = f"{parsed.scheme}://{parsed.netloc}"
