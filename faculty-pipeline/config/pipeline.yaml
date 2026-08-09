@@ -53,3 +53,8 @@ max_directory_pages: 20
 # university sitemaps are enormous; stop rather than pull tens of megabytes.
 max_sitemap_documents: 25
 max_sitemap_urls: 50000
+
+# Stage 5 (export.py) §13: a professor row with extraction_confidence below
+# this is left out of the CSVs (it stays in data/profiles_clean.jsonl for
+# audit). Default 0.5 per §13 Open Decisions.
+min_confidence: 0.5

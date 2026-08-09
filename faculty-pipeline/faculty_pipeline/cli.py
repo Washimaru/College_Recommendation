@@ -1,15 +1,17 @@
 """CLI entrypoint (§7): `python -m faculty_pipeline <command> [OPTS]`.
 
 Stage subcommands (`load`/`discover`/`crawl`/`extract`/`export`/`all`) are
-wired to their stage module's `run()` as each lands: `load` (M2), `discover`
-(M3), `crawl` (M4), `extract` (M5). `export`/`all` still raise
-`NotImplementedError` and report that clearly rather than pretending to do
-work — they land in Milestone 6. `status` and `clean` are fully implemented
-now: they only touch `services.checkpoint` and the filesystem, not the
-stages.
+wired to their stage module's `run()` as each landed: `load` (M2), `discover`
+(M3), `crawl` (M4), `extract` (M5), `export` and `all` (M6, this build).
+`status` and `clean` were implemented ahead of their milestone (they only
+touch `services.checkpoint` and the filesystem, not the stages); `status` is
+reshaped here into a genuinely readable per-stage progress report (§9) now
+that all five stages have real checkpoints/artifacts to report against,
+rather than the raw counts dict it printed before.
 """
 from __future__ import annotations
 
+import csv
 import shutil
 import sys
 from pathlib import Path
@@ -26,6 +28,7 @@ from .services.robots import RobotsChecker
 from .services.search import build_search_provider
 from .stages import crawl as crawl_stage
 from .stages import discover as discover_stage
+from .stages import export as export_stage
 from .stages import extract as extract_stage
 from .stages import load_filter
 
@@ -69,14 +72,6 @@ def main(
         cfg = cfg.with_overrides(input_path=Path(input_override))
     logger = configure_logging(cfg.log_dir, level=log_level)
     ctx.obj = {"config": cfg, "logger": logger, "dry_run": dry_run}
-
-
-def _not_implemented(stage: str, milestone: int) -> None:
-    click.echo(
-        f"stage {stage!r} is not implemented yet (lands in Milestone {milestone}).",
-        err=True,
-    )
-    sys.exit(1)
 
 
 @main.command()
@@ -239,7 +234,24 @@ def extract(ctx: click.Context, limit: int | None, school_id: str | None, no_llm
 @click.pass_context
 def export(ctx: click.Context) -> None:
     """Stage 5: write per-school + master CSVs."""
-    _not_implemented("export", 6)
+    config: Config = ctx.obj["config"]
+    logger = ctx.obj["logger"]
+    dry_run: bool = ctx.obj["dry_run"]
+
+    checkpoint = CheckpointStore(Path(config.checkpoint_dir) / f"{export_stage.STAGE_NAME}.json")
+    try:
+        summary = export_stage.run(config, checkpoint, logger, dry_run=dry_run)
+    except export_stage.ExportError as exc:
+        click.echo(f"export failed: {exc}", err=True)
+        sys.exit(1)
+
+    prefix = "[dry-run] " if dry_run else ""
+    click.echo(
+        f"{prefix}export: {summary.processed} professor(s) written, "
+        f"{summary.skipped} skipped, {summary.failed} failed"
+    )
+    for note in summary.notes:
+        click.echo(f"  note: {note}")
 
 
 @main.command(name="all")
@@ -247,37 +259,288 @@ def export(ctx: click.Context) -> None:
 @click.option("--force", is_flag=True, default=False, help="Ignore checkpoints and reprocess")
 @click.pass_context
 def run_all(ctx: click.Context, resume: bool, force: bool) -> None:
-    """Run stages 1 through 5 in order."""
-    _not_implemented("all", 6)
+    """Run stages 1 through 5 in order (§7).
+
+    `--resume`/`--no-resume` and `--force` name the same lever the doc's two
+    bullets describe separately: whether a checkpointed stage (discover/
+    crawl/extract) picks up where it left off. Here `--force` and
+    `--no-resume` do the same thing — delete that stage's checkpoint file
+    before running it, so every item is retried from scratch — because nothing
+    in §7 distinguishes a "skip resuming for this run" mode from "erase and
+    start over"; inventing two different mechanisms for an underspecified
+    pair of flags would be undocumented behavior no one asked for. This *is*
+    destructive to checkpoint history (unlike `clean`, it does not require
+    `--yes`, since `--force` is itself the explicit ask) and is called out
+    plainly before it runs. It also does not touch the append-only
+    `data/*.jsonl` files those checkpoints gate, so reprocessing an
+    already-`done` item appends a duplicate row rather than replacing one —
+    there is no compaction pass (§9 names one as aspirational, not
+    implemented); that risk is stated up front rather than silently eaten.
+
+    In `--dry-run`, a stage whose required upstream artifact doesn't exist
+    yet (e.g. `discover` needs `data/schools.jsonl`, which plain `load
+    --dry-run` never writes — dry runs don't write anything, by design)
+    stops the chain with a clear note and exit code 0 instead of a stack
+    trace, so `--dry-run all` can plan from a completely empty environment
+    (§11's smoke test) as well as from a partially-run one.
+    """
+    config: Config = ctx.obj["config"]
+    logger = ctx.obj["logger"]
+    dry_run: bool = ctx.obj["dry_run"]
+    prefix = "[dry-run] " if dry_run else ""
+
+    checkpoint_dir = Path(config.checkpoint_dir)
+    if force or not resume:
+        removed = []
+        for stage_name in CHECKPOINTED_STAGES:
+            path = checkpoint_dir / f"{stage_name}.json"
+            if path.exists():
+                path.unlink()
+                removed.append(str(path))
+        if removed:
+            click.echo(f"--force: cleared checkpoint(s): {', '.join(removed)}")
+        click.echo(
+            "note: discover/crawl/extract append to their data/*.jsonl files; forcing a "
+            "reprocess of already-done items can append duplicate rows (no compaction pass "
+            "exists yet)."
+        )
+
+    # -- Stage 1: load ----------------------------------------------------
+    checkpoint = CheckpointStore(checkpoint_dir / f"{load_filter.STAGE_NAME}.json")
+    try:
+        summary = load_filter.run(config, checkpoint, logger, dry_run=dry_run)
+    except load_filter.LoadFilterError as exc:
+        click.echo(f"all: load failed: {exc}", err=True)
+        sys.exit(1)
+    click.echo(
+        f"{prefix}load: {summary.processed} schools written, {summary.skipped} skipped, "
+        f"{summary.failed} failed"
+    )
+    for note in summary.notes:
+        click.echo(f"  note: {note}")
+
+    # -- Stages 2-3: discover, crawl (share one HTTP transport) -----------
+    # llm/search_provider are only constructed for real when not dry_run:
+    # both stages' dry_run branch returns before touching either, and
+    # constructing a real AnthropicLLM would require ANTHROPIC_API_KEY even
+    # though a planning-only run makes no LLM calls.
+    transport = httpx.Client(follow_redirects=True)
+    try:
+        robots = RobotsChecker(transport)
+        http_client = HttpClient(config, robots, transport)
+        search_provider = build_search_provider(config)
+        llm = None if dry_run else AnthropicLLM(config)
+
+        checkpoint = CheckpointStore(checkpoint_dir / f"{discover_stage.STAGE_NAME}.json")
+        try:
+            summary = discover_stage.run(
+                config,
+                checkpoint,
+                logger,
+                http_client,
+                search_provider,
+                llm,  # type: ignore[arg-type]
+                robots,
+                dry_run=dry_run,
+            )
+        except discover_stage.DiscoverError as exc:
+            if dry_run:
+                click.echo(f"{prefix}discover: cannot plan yet — {exc}")
+                return
+            click.echo(f"all: discover failed: {exc}", err=True)
+            sys.exit(1)
+        click.echo(
+            f"{prefix}discover: {summary.processed} schools processed, {summary.skipped} "
+            f"skipped, {summary.failed} failed"
+        )
+        for note in summary.notes:
+            click.echo(f"  note: {note}")
+
+        checkpoint = CheckpointStore(checkpoint_dir / f"{crawl_stage.STAGE_NAME}.json")
+        try:
+            summary = crawl_stage.run(config, checkpoint, logger, http_client, dry_run=dry_run)
+        except crawl_stage.CrawlError as exc:
+            if dry_run:
+                click.echo(f"{prefix}crawl: cannot plan yet — {exc}")
+                return
+            click.echo(f"all: crawl failed: {exc}", err=True)
+            sys.exit(1)
+        click.echo(
+            f"{prefix}crawl: {summary.processed} profile(s) fetched, {summary.skipped} "
+            f"skipped, {summary.failed} failed"
+        )
+        for note in summary.notes:
+            click.echo(f"  note: {note}")
+    finally:
+        transport.close()
+
+    # -- Stage 4: extract --------------------------------------------------
+    checkpoint = CheckpointStore(checkpoint_dir / f"{extract_stage.STAGE_NAME}.json")
+    try:
+        summary = extract_stage.run(
+            config,
+            checkpoint,
+            logger,
+            None if dry_run else AnthropicLLM(config),
+            no_llm=dry_run,  # dry_run's early return never branches on this; it only
+            # avoids extract's `llm is None` guard without needing a real API key.
+            dry_run=dry_run,
+        )
+    except extract_stage.ExtractError as exc:
+        if dry_run:
+            click.echo(f"{prefix}extract: cannot plan yet — {exc}")
+            return
+        click.echo(f"all: extract failed: {exc}", err=True)
+        sys.exit(1)
+    click.echo(
+        f"{prefix}extract: {summary.processed} profile(s) extracted, {summary.skipped} "
+        f"skipped, {summary.failed} failed"
+    )
+    for note in summary.notes:
+        click.echo(f"  note: {note}")
+
+    # -- Stage 5: export ----------------------------------------------------
+    checkpoint = CheckpointStore(checkpoint_dir / f"{export_stage.STAGE_NAME}.json")
+    try:
+        summary = export_stage.run(config, checkpoint, logger, dry_run=dry_run)
+    except export_stage.ExportError as exc:
+        if dry_run:
+            click.echo(f"{prefix}export: cannot plan yet — {exc}")
+            return
+        click.echo(f"all: export failed: {exc}", err=True)
+        sys.exit(1)
+    click.echo(
+        f"{prefix}export: {summary.processed} professor(s) written, {summary.skipped} "
+        f"skipped, {summary.failed} failed"
+    )
+    for note in summary.notes:
+        click.echo(f"  note: {note}")
 
 
 @main.command()
 @click.pass_context
 def status(ctx: click.Context) -> None:
-    """Print checkpoint/progress summary."""
+    """Print a per-stage progress report (§9): done/failed/pending for the
+    three checkpointed stages (discover/crawl/extract), plus artifact-based
+    status for the two that aren't (load overwrites `data/schools.jsonl`
+    wholesale each run; export overwrites `output/*.csv` the same way — §9
+    lists only discover/crawl/extract as checkpointed)."""
     config: Config = ctx.obj["config"]
+    data_dir = Path(config.data_dir)
     checkpoint_dir = Path(config.checkpoint_dir)
-    if not checkpoint_dir.exists():
-        click.echo("no checkpoints yet")
-        return
-    for stage in CHECKPOINTED_STAGES:
-        store = CheckpointStore(checkpoint_dir / f"{stage}.json")
-        counts = store.summary()
-        click.echo(f"{stage}: {counts if counts else 'no entries'}")
+
+    click.echo("== faculty-pipeline status ==")
+    click.echo(_load_status_line(data_dir))
+    click.echo(
+        _checkpoint_status_line(
+            checkpoint_dir,
+            discover_stage.STAGE_NAME,
+            pool=_count_jsonl_lines(data_dir / "schools.jsonl"),
+            pool_label="school(s) in data/schools.jsonl",
+        )
+    )
+    click.echo(
+        _checkpoint_status_line(
+            checkpoint_dir,
+            crawl_stage.STAGE_NAME,
+            # Unlike discover/extract, crawl's item pool (enumerated profile
+            # URLs) isn't fixed in advance — it's rediscovered by
+            # re-enumerating each school's directory on every run, so there
+            # is no "of N" total to report a meaningful `pending` against.
+            pool=None,
+            pool_label="profile url(s); pool is re-enumerated each run, not fixed",
+        )
+    )
+    click.echo(
+        _checkpoint_status_line(
+            checkpoint_dir,
+            extract_stage.STAGE_NAME,
+            pool=_count_jsonl_lines(data_dir / "profiles_raw.jsonl"),
+            pool_label="raw profile(s) in data/profiles_raw.jsonl",
+        )
+    )
+    click.echo(_export_status_line(Path(config.output_dir)))
+
+
+def _count_jsonl_lines(path: Path) -> int | None:
+    """`None` (not `0`) when the file doesn't exist, so callers can tell
+    "not run yet" apart from "ran, produced nothing"."""
+    if not path.exists():
+        return None
+    return sum(1 for line in path.read_text(encoding="utf-8").splitlines() if line.strip())
+
+
+def _load_status_line(data_dir: Path) -> str:
+    count = _count_jsonl_lines(data_dir / "schools.jsonl")
+    if count is None:
+        return "load     : not run yet (no data/schools.jsonl)"
+    return (
+        f"load     : {count} school(s) in data/schools.jsonl "
+        "(not checkpointed; overwritten each run)"
+    )
+
+
+def _checkpoint_status_line(
+    checkpoint_dir: Path, stage: str, *, pool: int | None, pool_label: str
+) -> str:
+    path = checkpoint_dir / f"{stage}.json"
+    if not path.exists():
+        return f"{stage:9s}: not run yet (no checkpoints/{stage}.json)"
+    counts = CheckpointStore(path).summary()
+    done = counts.get("done", 0)
+    failed = counts.get("failed", 0)
+    if pool is None:
+        return f"{stage:9s}: done {done}, failed {failed}  ({pool_label})"
+    pending = max(pool - done - failed, 0)
+    return f"{stage:9s}: done {done}, failed {failed}, pending {pending}  (of {pool} {pool_label})"
+
+
+def _export_status_line(output_dir: Path) -> str:
+    master_path = output_dir / "master.csv"
+    if not master_path.exists():
+        return "export   : not run yet (no output/master.csv)"
+    with master_path.open(newline="", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    schools = {row["school_id"] for row in rows}
+    line = (
+        f"export   : {len(rows)} professor(s) across {len(schools)} school(s) "
+        "in output/master.csv"
+    )
+    coverage_path = output_dir / "coverage.csv"
+    if coverage_path.exists():
+        with coverage_path.open(newline="", encoding="utf-8") as f:
+            coverage_rows = list(csv.DictReader(f))
+        incomplete = sum(1 for row in coverage_rows if row.get("incomplete") == "true")
+        line += (
+            f"; {incomplete} of {len(coverage_rows)} school(s) with clean data incomplete "
+            "— see output/coverage.csv"
+        )
+    return line
 
 
 @main.command()
 @click.option("--yes", is_flag=True, default=False, help="Confirm deletion")
 @click.pass_context
 def clean(ctx: click.Context, yes: bool) -> None:
-    """Clear cache/ and checkpoints/."""
-    if not yes:
-        click.echo("pass --yes to confirm deleting cache/ and checkpoints/", err=True)
-        sys.exit(1)
+    """Clear cache/ and checkpoints/ (§7). Destructive and irreversible —
+    refuses without `--yes`, and states exactly which directories it will
+    remove before doing anything."""
     config: Config = ctx.obj["config"]
-    for directory in (config.cache_dir, config.checkpoint_dir):
+    cache_dir = Path(config.cache_dir)
+    checkpoint_dir = Path(config.checkpoint_dir)
+
+    if not yes:
+        click.echo(
+            f"this will permanently delete {cache_dir}/ and {checkpoint_dir}/ "
+            "(HTML/search/LLM cache and all stage checkpoints). "
+            "Re-run with --yes to confirm.",
+            err=True,
+        )
+        sys.exit(1)
+
+    for directory in (cache_dir, checkpoint_dir):
         shutil.rmtree(directory, ignore_errors=True)
-    click.echo("cleared cache/ and checkpoints/")
+    click.echo(f"cleared {cache_dir}/ and {checkpoint_dir}/")
 
 
 if __name__ == "__main__":

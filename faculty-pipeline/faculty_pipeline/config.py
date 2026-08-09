@@ -95,6 +95,14 @@ class Config:
     max_sitemap_documents: int = 25
     max_sitemap_urls: int = 50_000
 
+    # Stage 5 (export.py) §13 Open Decisions: "Confidence threshold for
+    # including a professor row in the CSV. Default: 0.5, tunable in
+    # config." A `Professor.extraction_confidence` strictly below this is
+    # excluded from both the per-school and master CSVs (still present in
+    # `data/profiles_clean.jsonl` for audit — this is an export-time filter,
+    # not a Stage 4 validation rule).
+    min_confidence: float = 0.5
+
     @classmethod
     def load(
         cls,
@@ -147,7 +155,7 @@ _PATH_FIELDS = {
     "checkpoint_dir",
     "log_dir",
 }
-_FLOAT_FIELDS = {"rate_limit_per_host", "request_timeout"}
+_FLOAT_FIELDS = {"rate_limit_per_host", "request_timeout", "min_confidence"}
 _INT_FIELDS = {
     "max_concurrency",
     "max_retries",
