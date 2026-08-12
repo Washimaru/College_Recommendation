@@ -91,10 +91,20 @@ class TestPersonalityFit:
         assert personality_fit(Personality(), _uni(acceptance_rate=0.3, enrollment=9000)) == 0.5
 
     def test_missing_school_data_does_not_crash_or_invent(self):
-        """Most non-US schools have no acceptance rate; that axis is skipped."""
-        driven = Personality(intensity=1.0, scale=0.5)
+        """Most non-US schools have no acceptance rate; that axis is skipped.
 
-        assert 0.0 <= personality_fit(driven, _uni(acceptance_rate=None, enrollment=None)) <= 1.0
+        With no school data at all there is nothing to agree or disagree with,
+        so the answer is the same neutral 0.5 the no-preference case gives —
+        and, crucially, the same whichever way the student answered. A guessed
+        acceptance rate would make these three diverge.
+        """
+        driven = Personality(intensity=1.0, scale=0.5)
+        relaxed = Personality(intensity=0.0, scale=0.5)
+        blank = _uni(acceptance_rate=None, enrollment=None)
+
+        assert personality_fit(driven, blank) == 0.5
+        assert personality_fit(relaxed, blank) == 0.5
+        assert personality_fit(Personality(), blank) == 0.5
 
 
 class TestProfileShape:

@@ -1,5 +1,5 @@
 /**
- * Mirrors docs/contracts/{profile,recommendation}.schema.json v5.0.0.
+ * Mirrors docs/contracts/{profile,recommendation}.schema.json v6.0.0.
  *
  * The gateway is the validating authority; these types keep the client honest
  * at compile time. Two fields are deliberately absent: `mbti`, removed in
@@ -11,6 +11,12 @@
  * v5.0.0 adds `Profile.gpa_weighted` (displayed only, never scored — see
  * docs/superpowers/specs/2026-08-03-gpa-scales-tiers-and-profiles-design.md)
  * and the `extreme_reach` member of `AdmitTier`.
+ *
+ * v6.0.0 caps each `profile.weights` override at 1.0 and enforces the
+ * `weight_feedback` clamp in scoring-service's own schema. Nothing changes
+ * here: this client has never sent either field, and `Profile` below
+ * deliberately still omits `weights` rather than mirroring a field the UI
+ * has no control for.
  */
 
 export const CULTURE_AXES = [
@@ -126,10 +132,12 @@ export interface UniversitySummary {
 }
 
 /**
- * Curated profile sections. 151 of the 358 schools have at least one, and
- * coverage varies sharply by section (scholarships 101, admissions 67,
- * academics 66, campus 61, outcomes 60, programs 59). Absent sections are
- * simply not rendered — never filled with a placeholder or a guess.
+ * Curated profile sections. Coverage varies sharply by section (as of the
+ * current catalog: research 253, scholarships 101, faculty 81, admissions 67,
+ * academics 66, campus 61, outcomes 60, programs 59) — see
+ * `WITH_DETAILS_COUNT` in `catalogStats.ts` for how many schools have any of
+ * them, which is generated rather than typed in. Absent sections are simply
+ * not rendered — never filled with a placeholder or a guess.
  */
 export interface SchoolDetails {
   scholarships?: { policy?: string; named?: string[] };

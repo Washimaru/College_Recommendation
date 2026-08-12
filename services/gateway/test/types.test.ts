@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import { AdmitTierSchema, CONTRACT_VERSION, ProfileSchema } from "../src/types.js";
 
-describe("contract v5.0.0", () => {
-  it("reports version 5.0.0", () => {
-    expect(CONTRACT_VERSION).toBe("5.0.0");
+describe("contract v6.0.0", () => {
+  it("reports version 6.0.0", () => {
+    expect(CONTRACT_VERSION).toBe("6.0.0");
   });
 
   it("accepts a profile with no gpa_weighted", () => {
@@ -43,5 +43,31 @@ describe("contract v5.0.0", () => {
     for (const tier of ["extreme_reach", "reach", "target", "safety"]) {
       expect(AdmitTierSchema.safeParse(tier).success).toBe(true);
     }
+  });
+
+  describe("weight overrides are bounded", () => {
+    const profile = { gpa: 3.8, intended_major: "Computer Science" };
+
+    it("accepts a weight of 1.0, the whole share of the rubric", () => {
+      const result = ProfileSchema.safeParse({ ...profile, weights: { cost: 1 } });
+      expect(result.success).toBe(true);
+    });
+
+    it("rejects a weight above 1.0 at the edge of the system", () => {
+      const result = ProfileSchema.safeParse({ ...profile, weights: { cost: 999999 } });
+      expect(result.success).toBe(false);
+    });
+
+    it("bounds every dimension, not just cost", () => {
+      for (const key of ["academic", "cost", "fit", "culture", "activities", "personality"]) {
+        const result = ProfileSchema.safeParse({ ...profile, weights: { [key]: 2 } });
+        expect(result.success, `${key} is unbounded`).toBe(false);
+      }
+    });
+
+    it("still rejects a negative weight", () => {
+      const result = ProfileSchema.safeParse({ ...profile, weights: { cost: -0.1 } });
+      expect(result.success).toBe(false);
+    });
   });
 });

@@ -6,11 +6,16 @@ version bump. Diverging is contract drift (H3).
 """
 from __future__ import annotations
 
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "5.0.0"
+CONTRACT_VERSION = "6.0.0"
+
+# One multiplicative adjustment to a weight. The recommendation loop clamps
+# these to [0.5, 1.5] before sending them; the same range is enforced here
+# because this service is deployed on its own port and answers whoever calls it.
+WeightFactor = Annotated[float, Field(ge=0.5, le=1.5)]
 
 Size = Literal["small", "medium", "large"]
 # Country scope. A hard filter on which schools are considered at all.
@@ -108,12 +113,15 @@ class Preferences(BaseModel):
 class Weights(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    academic: float | None = Field(default=None, ge=0)
-    cost: float | None = Field(default=None, ge=0)
-    fit: float | None = Field(default=None, ge=0)
-    culture: float | None = Field(default=None, ge=0)
-    activities: float | None = Field(default=None, ge=0)
-    personality: float | None = Field(default=None, ge=0)
+    # A weight is a share of the rubric, so 1.0 is the ceiling. Scoring
+    # normalises by the sum of the weights, so an unbounded value here would
+    # make one dimension the entire score - {"cost": 999999} did exactly that.
+    academic: float | None = Field(default=None, ge=0, le=1.0)
+    cost: float | None = Field(default=None, ge=0, le=1.0)
+    fit: float | None = Field(default=None, ge=0, le=1.0)
+    culture: float | None = Field(default=None, ge=0, le=1.0)
+    activities: float | None = Field(default=None, ge=0, le=1.0)
+    personality: float | None = Field(default=None, ge=0, le=1.0)
 
 
 class Profile(BaseModel):
@@ -167,7 +175,10 @@ class RankRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     profile: Profile
-    weight_feedback: dict[str, float] = Field(default_factory=dict)
+    # Clamped by the recommendation loop, and enforced again here: this
+    # service is deployed on its own port, so the clamp cannot rely on the
+    # caller having applied it.
+    weight_feedback: dict[str, WeightFactor] = Field(default_factory=dict)
     universities: list[University] = Field(default_factory=list)
 
 

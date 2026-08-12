@@ -6,6 +6,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { GraduationCap, Moon, Sun, UserRound, Search, Compass, ListChecks } from "lucide-react";
 
 import { CompareTray } from "@/components/CompareTray";
+import { CATALOG_SIZE } from "@/lib/catalogStats";
 import { useProfileStore } from "@/lib/profileStore";
 
 const ROUTES: [string, string, ReactNode][] = [
@@ -57,7 +58,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </p>
         <div className="hero-stats">
           <div>
-            <b>358</b>
+            <b>{CATALOG_SIZE}</b>
             <span>universities · 26 countries</span>
           </div>
           <div>

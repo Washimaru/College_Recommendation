@@ -49,3 +49,35 @@ describe("SchoolDetailSections - Notable faculty", () => {
     expect(matches).toHaveLength(1);
   });
 });
+
+describe("SchoolDetailSections - the provenance line", () => {
+  const details: Details = { research: { level: "R1" } };
+
+  it("names published sources when the profile was web-verified", () => {
+    render(<SchoolDetailSections details={details} provenance="web_verified" />);
+
+    expect(screen.getByText(/researched from published sources/)).toBeTruthy();
+  });
+
+  it("says estimated for an editorial profile", () => {
+    render(<SchoolDetailSections details={details} provenance="editorial" />);
+
+    expect(screen.getByText(/estimated/)).toBeTruthy();
+  });
+
+  it("claims nothing when provenance is missing", () => {
+    render(<SchoolDetailSections details={details} provenance={undefined} />);
+
+    expect(screen.getByText(/School profile/)).toBeTruthy();
+    expect(screen.queryByText(/verified|researched|estimated/i)).toBeNull();
+  });
+
+  it.each(["absent", "not_applicable", "observed"] as const)(
+    "claims nothing for %s provenance",
+    (provenance) => {
+      render(<SchoolDetailSections details={details} provenance={provenance} />);
+
+      expect(screen.queryByText(/verified|researched|estimated/i)).toBeNull();
+    },
+  );
+});

@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "5.0.0";
+export const CONTRACT_VERSION = "6.0.0";
 
 export const RegionSchema = z.enum([
   "Northeast",
@@ -82,14 +82,17 @@ export const PreferencesSchema = z
   })
   .strict();
 
+/** Each weight is a share of the rubric, so 1.0 is the ceiling. Scoring
+ *  normalises by the sum, so an unbounded value would make one dimension the
+ *  whole score. */
 export const WeightsSchema = z
   .object({
-    academic: z.number().min(0).optional(),
-    cost: z.number().min(0).optional(),
-    fit: z.number().min(0).optional(),
-    culture: z.number().min(0).optional(),
-    activities: z.number().min(0).optional(),
-    personality: z.number().min(0).optional(),
+    academic: z.number().min(0).max(1).optional(),
+    cost: z.number().min(0).max(1).optional(),
+    fit: z.number().min(0).max(1).optional(),
+    culture: z.number().min(0).max(1).optional(),
+    activities: z.number().min(0).max(1).optional(),
+    personality: z.number().min(0).max(1).optional(),
   })
   .strict();
 

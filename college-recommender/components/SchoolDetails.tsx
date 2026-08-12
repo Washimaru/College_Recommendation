@@ -17,6 +17,11 @@ function Section({
   );
 }
 
+const PROVENANCE_LABELS: Partial<Record<Provenance, string>> = {
+  web_verified: "researched from published sources",
+  editorial: "estimated",
+};
+
 function asList(value: unknown): string[] {
   if (Array.isArray(value)) return value.map(String);
   if (typeof value === "string") return [value];
@@ -32,12 +37,11 @@ export function SchoolDetailSections({
 }) {
   if (!details) return null;
 
-  const label =
-    provenance === "web_verified"
-      ? "researched from published sources"
-      : provenance === "editorial"
-        ? "estimated"
-        : "verified profile";
+  // Only the two provenances that were actually earned carry a claim. Anything
+  // else - "absent", "not_applicable", or a value this build has never seen -
+  // says nothing at all, rather than falling through to the strongest label on
+  // offer and telling a student an unsourced profile was verified.
+  const label = PROVENANCE_LABELS[provenance ?? "absent"] ?? null;
 
   const { scholarships, research, outcomes, gradSchools, proSchools, programs, faculty, src } =
     details;
@@ -53,7 +57,7 @@ export function SchoolDetailSections({
         className="muted"
         style={{ fontSize: 11.5, marginTop: 24, textTransform: "uppercase", letterSpacing: 0.5 }}
       >
-        School profile · {label}
+        School profile{label ? ` · ${label}` : ""}
       </p>
 
       {scholarships && (

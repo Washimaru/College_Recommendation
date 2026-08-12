@@ -34,8 +34,9 @@ def universities() -> dict[str, list[University]]:
     """The whole catalog, for the browse view.
 
     Returned in one response so the client can search instantly rather than
-    issuing a request per keystroke; at 364 records that is cheaper than
-    paginating. Read-only - no scoring, no loop, no writes.
+    issuing a request per keystroke; at a few hundred records that is cheaper
+    than paginating. Read-only - no scoring, no loop, no writes. The exact
+    count is a build artifact, so it is deliberately not quoted here.
     """
     catalog = sorted(load_universities(), key=lambda u: u.id)
     return {"universities": catalog}

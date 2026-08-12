@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { CATALOG_SIZE } from "@/lib/catalogStats";
+
 const REPO = "https://github.com/Washimaru/College_Recommendation";
 
 /**
@@ -26,7 +28,7 @@ export function StaticDemoNotice() {
             <p className="fld" style={{ marginBottom: 8 }}>Working here, in full</p>
             <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, lineHeight: 1.7 }}>
               <li>
-                <Link href="/browse">Browse</Link> — search all 358 universities, filter by
+                <Link href="/browse">Browse</Link> — search all {CATALOG_SIZE} universities, filter by
                 region, setting and cost, compare three side by side
               </li>
               <li>
@@ -70,7 +72,8 @@ docker compose up -d
 cd college-recommender && npm install && npm run dev`}
         </pre>
         <p className="muted" style={{ fontSize: 13, marginTop: 10, marginBottom: 0 }}>
-          Then open <code>localhost:3000</code> — every page works, against 358 real universities.{" "}
+          Then open <code>localhost:3000</code> — every page works, against {CATALOG_SIZE} real
+          universities.{" "}
           <a href={REPO} target="_blank" rel="noreferrer noopener">
             Source on GitHub ↗
           </a>

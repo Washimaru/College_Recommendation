@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/score.schema.json",
   "title": "RankRequest",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["profile", "universities"],
@@ -10,8 +10,8 @@
     "profile": { "$ref": "profile.schema.json" },
     "weight_feedback": {
       "type": "object",
-      "description": "Multiplicative adjustments to weights, pre-clamped by the recommendation loop to [0.5, 1.5].",
-      "additionalProperties": { "type": "number" },
+      "description": "Multiplicative adjustments to weights, clamped by the recommendation loop to [0.5, 1.5] and enforced again here - scoring-service is deployed on its own port, so the clamp cannot rely on the caller.",
+      "additionalProperties": { "type": "number", "minimum": 0.5, "maximum": 1.5 },
       "default": {}
     },
     "universities": {

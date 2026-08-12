@@ -55,6 +55,13 @@ jobs:
           print(f\"  research: {sum(1 for r in us if (r.get('details') or {}).get('research'))}\")
           "
 
+      # build_catalog.py regenerates college-recommender/lib/catalogStats.ts,
+      # which IS committed — the hero and the static-demo notice render before
+      # any fetch, so they quote it. If the rebuild changed those counts, the
+      # site would ship a number the catalog contradicts.
+      - name: Fail if the committed catalog counts are stale
+        run: git diff --exit-code -- college-recommender/lib/catalogStats.ts
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -68,8 +75,8 @@ jobs:
       - name: Test and typecheck
         working-directory: college-recommender
         run: |
-          npx vitest run
-          npx tsc --noEmit
+          npm run coverage
+          npm run typecheck
 
       # A static export cannot contain POST route handlers. This checkout is
       # disposable, so removing them here is safe and leaves local dev — where

@@ -17,6 +17,11 @@ Legend: `DONE` · `TODO` · `BLOCKED`
 | Sub-project A Real university catalog | DONE |
 | Sub-project B Next.js UI rebuild | DONE |
 | Spec A Explore & Decide (contract v4.0.0) | DONE |
+| Faculty pipeline M0–M6 (five stages + `all`) | DONE |
+| Improvement plan Phase 1 Correctness (contract v6.0.0) | DONE |
+| Improvement plan Phase 2 Accessibility and trust | TODO |
+| Improvement plan Phase 3 Finish the faculty pipeline | TODO |
+| Improvement plan Phase 4 Product features (specs B, C) | TODO |
 
 ## Changelog
 
@@ -101,6 +106,51 @@ Notable because none were caught by the passing test suites that preceded them:
    expensive operation in the system.
 6. **The hero understated the model** — "4 scored dimensions" where there are 6,
    stale since v3.0.0.
+
+## Verification (2026-08-12) — improvement plan Phase 1, contract v6.0.0
+
+Six correctness items from `~/.claude/plans/ignore-the-press-of-wild-reef.md`.
+
+- **T2** `PYBIN=.venv/bin/python ./scripts/verify.sh` → `VERIFY: GREEN`.
+- **T3** scoring 100.00% (94 tests), recommendation 95.98% (64), data-pipeline
+  78 tests, gateway 96.31% statements (30), `college-recommender` 137 tests
+  with coverage tooling now installed: 75.43% statements / 63.18% branches /
+  61.18% functions / 76.93% lines, floors set at 70/70/60/60.
+- **T4** `./scripts/smoke.sh` → `SMOKE OK: R1_converged 5 results`, 358
+  universities loaded.
+- Lint: `ruff check` clean in all three Python projects, `eslint` 0 errors
+  0 warnings in both TypeScript projects.
+
+### What changed
+
+1. **An empty catalog was cached forever.** `load_universities()` fell back to
+   the seed only on an *exception*, but an unseeded table returns `[]` — cached
+   for the life of the process, serving zero schools with no error and no log
+   line. Verified end to end on a fresh volume: before `load.py` the gateway now
+   serves the 12-school seed and logs *"catalog query returned 0 universities"*;
+   after `load.py`, with no restart, the same containers serve all 358.
+2. **A test that could not fail.** `assert a != b or a == b` in
+   `test_nullable_fields.py` stood guard over the honest-nulls behaviour while
+   asserting nothing. Both replacements were confirmed to fail against a scorer
+   that invents a missing SAT. `personality_fit`'s "does not invent" test was
+   only checking a range; it now pins the neutral 0.5.
+3. **Unknown provenance rendered as "verified profile"** — the *strongest*
+   label, reached by fallthrough. Now only `web_verified` and `editorial` make
+   a claim; anything else says nothing.
+4. **The weight override was unbounded** (contract **v6.0.0**, all five
+   mirrors). `{"weights": {"cost": 999999}}` made cost ~100% of every score;
+   each weight is now `[0, 1]`, so the largest legal override takes 55% while
+   the other five keep their defaults. `weight_feedback` is validated to
+   `[0.5, 1.5]` in scoring-service's own schema, not just clamped by the loop.
+5. **`358` was typed into five frontend files** and `364` survived in two
+   others, while the catalog it describes is a regenerated artifact.
+   `build_catalog.py` now generates `college-recommender/lib/catalogStats.ts`;
+   `lib/catalogStats.test.ts` fails if it disagrees with the catalog on disk,
+   and CI fails if a rebuild leaves the committed module stale.
+6. **vitest could not see `app/`** — four routes and three API proxies, holding
+   every 400/502/503 branch, had no tests and a test placed there would not have
+   run. Glob widened (verified: the new files are not collected without it),
+   27 tests added across the proxies and pages.
 
 ### Known gaps, deliberately not built
 

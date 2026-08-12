@@ -192,7 +192,7 @@ these runtime conditions live solely in code.
 ## Contracts are law
 
 `docs/contracts/{profile,score,recommendation}.schema.json` (all `version`
-**`4.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
+**`6.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
 **Four** mirrors must move with them, in the same change:
 
 - `services/scoring-service/app/schemas.py`
@@ -204,7 +204,19 @@ these runtime conditions live solely in code.
 Changing a shape without a version bump and all four mirrors is contract drift
 (H3) — stop and surface it.
 
-What v4.0.0 changed, since it is the most recent and the most load-bearing:
+What the recent versions changed:
+
+**v6.0.0** bounded the public weight override. Each `profile.weights` field is
+now `[0, 1]` — a weight is a share of the rubric, and scoring normalises by
+their sum, so the old unbounded `{"cost": 999999}` made cost ~100% of every
+score. `weight_feedback` is validated to `[0.5, 1.5]` in scoring-service's own
+schema as well as clamped by the loop, because that service answers on its own
+port and cannot rely on the caller having clamped.
+
+**v5.0.0** added `Profile.gpa_weighted` (displayed only, never scored) and the
+`extreme_reach` admit tier.
+
+**v4.0.0**, still the most load-bearing:
 `University` gained `region`, `setting`, `type`, `population`, `url` and
 `net_price_calculator_url`; `Preferences` swapped `locations` for `regions`,
 `settings` and `institution_type`; `Activity` gained `description`.

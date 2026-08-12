@@ -7,6 +7,7 @@ import { ActivitiesInput } from "@/components/ActivitiesInput";
 import { MatchResults } from "@/components/MatchResults";
 import { PlacePicker } from "@/components/PlacePicker";
 import { Questionnaire } from "@/components/Questionnaire";
+import { CATALOG_SIZE, RURAL_COUNT } from "@/lib/catalogStats";
 import type { InstitutionType, RecommendationResponse, Region, Scope, Setting } from "@/lib/contract";
 import { useProfileStore } from "@/lib/profileStore";
 import { foldAnswers } from "@/lib/questionnaire";
@@ -197,7 +198,7 @@ export function ProfileForm() {
         <div style={{ marginTop: 20 }}>
           <PlacePicker
             legend="Campus setting"
-            hint="Also a preference. Only 28 of 358 schools are rural, so this nudges rather than excludes."
+            hint={`Also a preference. Only ${RURAL_COUNT} of ${CATALOG_SIZE} schools are rural, so this nudges rather than excludes.`}
             options={SETTINGS}
             selected={form.settings}
             onChange={(settings) => setForm({ ...form, settings })}

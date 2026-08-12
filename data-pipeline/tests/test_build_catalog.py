@@ -175,8 +175,9 @@ class TestCache:
 
 class TestDetails:
     """Curated per-school profiles (scholarships, research, outcomes, grad and
-    professional schools). Only 67 of 364 schools have them; the rest carry
-    nothing rather than generated filler."""
+    professional schools). Coverage is partial and uneven - the schools without
+    one carry nothing rather than generated filler. The live count is generated
+    into `catalogStats.ts`, not quoted here, because it moves with the catalog."""
 
     def test_curated_details_are_attached_and_marked(self):
         record = enrich({**NON_US, "country": "USA"}, US_ROW)

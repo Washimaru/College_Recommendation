@@ -12,11 +12,13 @@ from pydantic import ValidationError
 from app.schemas import CONTRACT_VERSION, CulturePrefs, Profile, University
 
 
-def test_contract_version_is_5():
+def test_contract_version_is_6():
     """v3.0.0 added activities and personality; v3.1.0 added country scope;
     v4.0.0 adds place and population fields and removes preferences.locations;
-    v5.0.0 adds Profile.gpa_weighted and the extreme_reach admit tier."""
-    assert CONTRACT_VERSION == "5.0.0"
+    v5.0.0 adds Profile.gpa_weighted and the extreme_reach admit tier;
+    v6.0.0 caps each profile.weights override at 1.0 and enforces the
+    weight_feedback clamp here rather than trusting the caller."""
+    assert CONTRACT_VERSION == "6.0.0"
 
 
 def test_profile_needs_no_mbti():

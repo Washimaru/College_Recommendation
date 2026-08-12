@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/profile.schema.json",
   "title": "StudentProfile",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["gpa", "intended_major"],
@@ -67,14 +67,14 @@
     "weights": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Optional per-request overrides of the default scoring weights.",
+      "description": "Optional per-request overrides of the default scoring weights. Each is a share of the rubric, so 1.0 is the ceiling: scoring normalises by the sum, and an unbounded value would make one dimension the whole score.",
       "properties": {
-        "academic": { "type": "number", "minimum": 0 },
-        "cost": { "type": "number", "minimum": 0 },
-        "fit": { "type": "number", "minimum": 0 },
-        "culture": { "type": "number", "minimum": 0 },
-        "activities": { "type": "number", "minimum": 0 },
-        "personality": { "type": "number", "minimum": 0 }
+        "academic": { "type": "number", "minimum": 0, "maximum": 1 },
+        "cost": { "type": "number", "minimum": 0, "maximum": 1 },
+        "fit": { "type": "number", "minimum": 0, "maximum": 1 },
+        "culture": { "type": "number", "minimum": 0, "maximum": 1 },
+        "activities": { "type": "number", "minimum": 0, "maximum": 1 },
+        "personality": { "type": "number", "minimum": 0, "maximum": 1 }
       }
     }
   }

@@ -1,7 +1,7 @@
 # Data Model
 
 Contracts in `docs/contracts/*.json` are the wire source of truth, currently at
-**v4.0.0**. This file describes the domain entities behind them.
+**v6.0.0**. This file describes the domain entities behind them.
 
 The governing rule, everywhere below: **a missing value is `null`.** It is never
 derived, inferred, estimated, or defaulted to zero. `provenance` records where

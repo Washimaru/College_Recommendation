@@ -25,14 +25,30 @@ def test_null_avg_sat_falls_back_to_gpa_only():
     """Mirrors how a missing profile.sat is already handled."""
     profile = Profile(gpa=3.7, sat=1400, intended_major="Computer Science")
 
-    with_sat = _academic_fit(profile, _uni(avg_sat=1400))
     without_sat = _academic_fit(profile, _uni(avg_sat=None))
 
+    # GPA matches the school exactly, so a GPA-only score is 1.0. Anything else
+    # means the SAT term was included with some invented school value.
+    assert without_sat == 1.0
     assert without_sat == _academic_fit(
         Profile(gpa=3.7, intended_major="Computer Science"), _uni(avg_sat=None)
     )
-    assert 0.0 <= without_sat <= 1.0
-    assert with_sat != without_sat or with_sat == without_sat  # both must compute
+
+
+def test_a_null_avg_sat_scores_differently_from_a_known_one():
+    """The fallback must be a real branch, not a value that happens to agree.
+
+    A 1400 against a school averaging 1200 is an overmatch and costs half the
+    dimension; drop the school's SAT and only the GPA term survives.
+    """
+    profile = Profile(gpa=3.7, sat=1400, intended_major="Computer Science")
+
+    known = _academic_fit(profile, _uni(avg_sat=1200))
+    unknown = _academic_fit(profile, _uni(avg_sat=None))
+
+    assert known == 0.673113
+    assert unknown == 1.0
+    assert known < unknown
 
 
 def test_null_net_price_is_neutral_not_free():

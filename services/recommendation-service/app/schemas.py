@@ -10,7 +10,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "5.0.0"
+CONTRACT_VERSION = "6.0.0"
 
 Size = Literal["small", "medium", "large"]
 Scope = Literal["usa", "international", "both"]
@@ -90,12 +90,15 @@ class Preferences(BaseModel):
 
 class Weights(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    academic: float | None = Field(default=None, ge=0)
-    cost: float | None = Field(default=None, ge=0)
-    fit: float | None = Field(default=None, ge=0)
-    culture: float | None = Field(default=None, ge=0)
-    activities: float | None = Field(default=None, ge=0)
-    personality: float | None = Field(default=None, ge=0)
+    # A weight is a share of the rubric, so 1.0 is the ceiling. Scoring
+    # normalises by the sum of the weights, so an unbounded value here would
+    # make one dimension the entire score - {"cost": 999999} did exactly that.
+    academic: float | None = Field(default=None, ge=0, le=1.0)
+    cost: float | None = Field(default=None, ge=0, le=1.0)
+    fit: float | None = Field(default=None, ge=0, le=1.0)
+    culture: float | None = Field(default=None, ge=0, le=1.0)
+    activities: float | None = Field(default=None, ge=0, le=1.0)
+    personality: float | None = Field(default=None, ge=0, le=1.0)
 
 
 class Profile(BaseModel):
