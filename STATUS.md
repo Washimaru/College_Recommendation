@@ -19,7 +19,7 @@ Legend: `DONE` · `TODO` · `BLOCKED`
 | Spec A Explore & Decide (contract v4.0.0) | DONE |
 | Faculty pipeline M0–M6 (five stages + `all`) | DONE |
 | Improvement plan Phase 1 Correctness (contract v6.0.0) | DONE |
-| Improvement plan Phase 2 Accessibility and trust | TODO |
+| Improvement plan Phase 2 Accessibility and trust | DONE |
 | Improvement plan Phase 3 Finish the faculty pipeline | TODO |
 | Improvement plan Phase 4 Product features (specs B, C) | TODO |
 
@@ -154,10 +154,46 @@ Six correctness items from `~/.claude/plans/ignore-the-press-of-wild-reef.md`.
 
 ### Known gaps, deliberately not built
 
-- **`region` has no SQL `CHECK` constraint** while `setting` and `type` do.
-  Pydantic's `Literal` guards it and the loader is the only writer; adding one
-  needs a `docker compose down -v`.
-- **A listed school leaving the catalog** renders from its stored snapshot
-  rather than being marked unavailable.
-- **Corrupt `localStorage`** falls back to empty state, as specified and tested,
-  but shows no notice.
+All three gaps recorded here — `region` having no SQL `CHECK`, a delisted school
+rendering from its snapshot unmarked, and corrupt `localStorage` recovering
+silently — were closed in Phase 2 below.
+
+## Verification (2026-08-12) — improvement plan Phase 2, accessibility and trust
+
+- **T2** `PYBIN=.venv/bin/python ./scripts/verify.sh` → `VERIFY: GREEN`.
+- **T3** scoring 100.00% (100 tests), recommendation 95.98% (64),
+  data-pipeline 78, gateway 96.31% (30), `college-recommender` 191 tests at
+  80.32% statements / 68.67% branches / 66.37% functions / 82.21% lines.
+- **T4** `./scripts/smoke.sh` → `SMOKE OK: R1_converged 5 results` against a
+  volume recreated from the amended schema.
+- Lint: ruff clean in all three Python projects; eslint clean in both
+  TypeScript projects.
+
+### What changed
+
+1. **`aria-modal="true"` was a claim neither modal honoured.** `useFocusTrap`
+   moves focus in, wraps Tab and Shift+Tab at the edges, handles Escape, and
+   returns focus to whatever opened the dialog. `UniversityModal` and the
+   compare dialog both use it; removing the ref from either one fails a test.
+2. **Results rendered silently for a screen-reader user.** The form now carries
+   a polite live region — mounted before submit, since a region added at the
+   same moment as its text is not reliably announced — saying how many schools
+   matched, or that none did. The error branch keeps its `role="alert"` and the
+   region stays empty there, so a failure is announced once, not twice.
+3. **Three stated rubric shares contradicted the code** (culture "20%" in the
+   contract and a test docstring, academic "0.35" in another). All corrected to
+   18% and 0.28, and `test_documented_weights.py` now fails on any share quoted
+   in a contract that no dimension carries.
+4. **Two Pages workflows deployed to the same environment** — `nextjs.yml`, the
+   stock starter, is deleted. **Two lockfiles** — `pnpm-lock.yaml` is deleted,
+   `package.json` declares `packageManager`, and the README says which.
+5. **`tsc` needed a manual `find .next -name "* 2.*" -delete`** before it would
+   pass, because file-sync copies in `.next/` duplicate every declaration.
+   `tsconfig.json` excludes them; verified `tsc` still catches a real error.
+6. **A school leaving the catalog** is now marked on the list, with its stored
+   figures labelled a snapshot. An unreachable catalog deliberately marks
+   nothing — the Phase 1 failure mode inverted.
+7. **Corrupt `localStorage`** sets a session-only `storageRecovered` flag, and
+   the shell explains the empty session on every route, dismissibly.
+8. **`region` has a SQL `CHECK`** matching the Pydantic `Literal`. Verified: a
+   bad region is rejected by Postgres, and all 358 rows load under it.

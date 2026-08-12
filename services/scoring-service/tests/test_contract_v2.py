@@ -86,7 +86,7 @@ def test_university_allows_null_admissions_fields():
 
 
 def test_university_requires_culture():
-    """Culture drives 20% of the score, so a school without it cannot be ranked."""
+    """Culture drives 18% of the score, so a school without it cannot be ranked."""
     with pytest.raises(ValidationError):
         University(
             id="x", name="No Culture U", country="USA", location="CA",

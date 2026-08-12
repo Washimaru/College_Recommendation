@@ -1,5 +1,5 @@
-import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { act, cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { AdmitTier, UniversitySummary } from "@/lib/contract";
 import { ProfileProvider, type ListedSchool } from "@/lib/profileStore";
@@ -14,6 +14,7 @@ import ListPage from "./page";
 afterEach(() => {
   cleanup();
   window.localStorage.clear();
+  vi.unstubAllGlobals();
 });
 
 const UNIVERSITY: UniversitySummary = {
@@ -76,5 +77,78 @@ describe("ListPage", () => {
 
     expect(screen.queryByText(/rule of thumb/)).toBeNull();
     expect(screen.getByText(/inside the/)).toBeTruthy();
+  });
+});
+
+/**
+ * A school can leave the catalog between the day it was listed and the day the
+ * list is opened. Until now it rendered from its stored snapshot as if nothing
+ * had happened. The one thing that must not happen is the Phase 1 failure mode
+ * in reverse: an unreachable catalog is not evidence that a school is gone.
+ */
+describe("ListPage — schools that have left the catalog", () => {
+  const CATALOG_ENTRY = {
+    id: "a", name: "School a", country: "USA", location: "Boston, MA",
+    region: "Northeast", setting: "urban", type: "Private",
+    avg_gpa: 3.5, size: "medium", majors: ["Biology"],
+    culture: { collab: 0.5, quirky: 0.5, idealist: 0.5, research: 0.5, spirit: 0.5, seminar: 0.5 },
+    provenance: {},
+  };
+
+  /** The catalog cache is module-scoped, so each case needs a fresh graph. */
+  async function renderWithCatalog(
+    schools: ListedSchool[],
+    catalog: unknown[] | "unreachable",
+  ) {
+    vi.resetModules();
+    if (catalog === "unreachable") {
+      vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("fetch failed")));
+    } else {
+      vi.stubGlobal(
+        "fetch",
+        vi.fn().mockResolvedValue({ ok: true, json: async () => ({ universities: catalog }) }),
+      );
+    }
+    window.localStorage.setItem("unimatch.v1", JSON.stringify({ list: schools }));
+
+    const [{ default: Page }, { ProfileProvider }] = await Promise.all([
+      import("./page"),
+      import("@/lib/profileStore"),
+    ]);
+    const result = render(
+      <ProfileProvider>
+        <Page />
+      </ProfileProvider>,
+    );
+    await act(async () => {
+      await Promise.resolve();
+    });
+    return result;
+  }
+
+  it("marks a listed school that is no longer in the catalog", async () => {
+    await renderWithCatalog([listed("a", "target")], []);
+
+    expect(screen.getByText(/no longer in the catalog/i)).toBeTruthy();
+  });
+
+  it("says nothing when the school is still there", async () => {
+    await renderWithCatalog([listed("a", "target")], [CATALOG_ENTRY]);
+
+    expect(screen.queryByText(/no longer in the catalog/i)).toBeNull();
+  });
+
+  it("does not call a school delisted just because the catalog is unreachable", async () => {
+    await renderWithCatalog([listed("a", "target")], "unreachable");
+
+    expect(screen.queryByText(/no longer in the catalog/i)).toBeNull();
+    expect(screen.getByText("School a")).toBeTruthy();
+  });
+
+  it("keeps showing the stored figures, labelled as a snapshot", async () => {
+    await renderWithCatalog([listed("a", "target")], []);
+
+    expect(screen.getByText("School a")).toBeTruthy();
+    expect(screen.getByText(/from when you added it/i)).toBeTruthy();
   });
 });

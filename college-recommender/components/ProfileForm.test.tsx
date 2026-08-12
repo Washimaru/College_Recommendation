@@ -169,3 +169,74 @@ describe("ProfileForm", () => {
     expect(screen.getByText("Remembered University")).toBeTruthy();
   });
 });
+
+describe("ProfileForm announcements", () => {
+  const RESULT = {
+    university_id: "mit",
+    name: "MIT",
+    score: 0.9,
+    rationale: "Strong on fit.",
+    admit_tier: "target",
+    university: {
+      country: "USA", location: "Cambridge, MA", region: "Northeast", setting: "urban",
+      type: "Private", avg_gpa: 3.95, size: "small", majors: ["Computer Science"],
+      culture: { collab: 0.5, quirky: 0.5, idealist: 0.5, research: 0.5, spirit: 0.5, seminar: 0.5 },
+      provenance: {},
+    },
+  };
+
+  function stubRecommend(results: unknown[]) {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ results, confidence: 0.9, stop_reason: "R2_confident", trace: [] }),
+      }),
+    );
+  }
+
+  it("has a live region before anything happens, so a later change is announced", () => {
+    mount();
+
+    expect(screen.getByRole("status")).toBeTruthy();
+  });
+
+  it("announces how many schools matched", async () => {
+    stubRecommend([RESULT, { ...RESULT, university_id: "caltech", name: "Caltech" }]);
+    mount();
+
+    fireEvent.click(screen.getByRole("button", { name: /show my matches/i }));
+
+    expect(await screen.findByText(/2 schools matched/i)).toBeTruthy();
+    expect(screen.getByRole("status").textContent).toMatch(/2 schools matched/i);
+  });
+
+  it("says so when nothing matched, rather than announcing silence", async () => {
+    stubRecommend([]);
+    mount();
+
+    fireEvent.click(screen.getByRole("button", { name: /show my matches/i }));
+
+    expect((await screen.findByRole("status")).textContent).toMatch(/no schools matched/i);
+  });
+
+  it("announces that the search is running", () => {
+    stubRecommend([RESULT]);
+    mount();
+
+    fireEvent.click(screen.getByRole("button", { name: /show my matches/i }));
+
+    expect(screen.getByRole("status").textContent).toMatch(/finding|matching/i);
+  });
+
+  it("leaves the error branch to role=alert, so a failure is not announced twice", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("fetch failed")));
+    mount();
+
+    fireEvent.click(screen.getByRole("button", { name: /show my matches/i }));
+
+    const alert = await screen.findByRole("alert");
+    expect(alert.textContent).toBeTruthy();
+    expect(screen.getByRole("status").textContent).toBe("");
+  });
+});

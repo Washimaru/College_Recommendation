@@ -2,7 +2,7 @@
 
 Regression: a linear ramp (0.5 + gap/4) rewards overmatching without limit, so
 for a 3.8 GPA student a school averaging 3.2 scored 0.650 while MIT at 3.95
-scored 0.462. Academic carries the heaviest weight (0.35), so that inverted the
+scored 0.462. Academic carries the heaviest weight (0.28), so that inverted the
 whole ranking toward safety schools.
 """
 from __future__ import annotations

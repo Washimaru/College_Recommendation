@@ -5,11 +5,17 @@ import Link from "next/link";
 import { formatStat, tierLabel } from "@/lib/format";
 import { analyseList, SAFETY_MAX, SAFETY_MIN, suggestGaps } from "@/lib/listAnalysis";
 import { useProfileStore } from "@/lib/profileStore";
+import { useCatalog } from "@/lib/useCatalog";
 import { useSchoolModal } from "@/lib/useSchoolModal";
 
 export default function ListPage() {
   const { list, removeFromList, addToList, results } = useProfileStore();
+  const { catalog } = useCatalog();
   const { open, modal } = useSchoolModal();
+  // Null until the catalog has actually loaded. An unreachable catalog must
+  // never read as "every school on your list has closed" - the same mistake,
+  // inverted, as an empty catalog being served as a real answer.
+  const catalogIds = catalog ? new Set(catalog.map((uni) => uni.id)) : null;
   const analysis = analyseList(list);
   const matches = results?.results ?? [];
   const suggestions = suggestGaps(list, matches);
@@ -128,6 +134,7 @@ export default function ListPage() {
               school.university.provenance.net_price,
               "money",
             );
+            const delisted = catalogIds !== null && !catalogIds.has(school.id);
             return (
               <div key={school.id} className="card" role="group">
                 <div className="card-head">
@@ -142,6 +149,13 @@ export default function ListPage() {
                     <span className={`tier ${school.tier}`}>{tierLabel(school.tier)}</span>
                   )}
                 </div>
+
+                {delisted && (
+                  <p className="notice error" style={{ marginTop: 12, fontSize: 13 }}>
+                    <b>No longer in the catalog.</b> These figures are from when you added it,
+                    so treat them as a snapshot and check the school&rsquo;s own site.
+                  </p>
+                )}
 
                 <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
                   <button

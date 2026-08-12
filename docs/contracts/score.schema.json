@@ -57,7 +57,7 @@
         "culture": {
           "type": "object",
           "additionalProperties": false,
-          "description": "Six bipolar axes, aligned with Profile.culture_prefs. Required: it drives 20% of the score.",
+          "description": "Six bipolar axes, aligned with Profile.culture_prefs. Required: it drives 18% of the score.",
           "required": ["collab", "quirky", "idealist", "research", "spirit", "seminar"],
           "properties": {
             "collab": { "type": "number", "minimum": 0, "maximum": 1 },

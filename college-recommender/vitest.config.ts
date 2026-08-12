@@ -31,7 +31,7 @@ export default defineConfig({
       // Floors set just under what the suite achieves today, so this ratchets
       // rather than blocks. Deliberately lower than the gateway's 70% across
       // the board: most of what is uncovered here is presentational JSX.
-      thresholds: { statements: 70, lines: 70, functions: 60, branches: 60 },
+      thresholds: { statements: 78, lines: 80, functions: 64, branches: 66 },
     },
   },
 });

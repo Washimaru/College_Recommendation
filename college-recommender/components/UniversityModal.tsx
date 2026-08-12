@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
-
 import { AXIS_LABELS, CULTURE_AXES, type AdmitTier, type UniversitySummary } from "@/lib/contract";
 import { formatStat, tierLabel, type StatKind } from "@/lib/format";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 import { SchoolDetailSections } from "./SchoolDetails";
 
 function Stat({
@@ -48,13 +47,8 @@ export function UniversityModal({
   admitTier?: AdmitTier | null;
   onClose: () => void;
 }) {
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  // Owns Escape as well as the trap, so both modals close identically.
+  const dialogRef = useFocusTrap<HTMLDivElement>(onClose);
 
   const uni = university;
   const tier = tierLabel(admitTier);
@@ -67,7 +61,7 @@ export function UniversityModal({
       aria-label={name}
       onClick={onClose}
     >
-      <div className="modal" onClick={(event) => event.stopPropagation()}>
+      <div className="modal" ref={dialogRef} onClick={(event) => event.stopPropagation()}>
         <div className="card-head">
           <div>
             <h2 style={{ marginBottom: 2 }}>{name}</h2>

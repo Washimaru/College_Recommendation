@@ -146,3 +146,32 @@ describe("profile store", () => {
     expect(store.results).toBeNull();
   });
 });
+
+/**
+ * Corrupt stored data recovers to an empty profile, which is right — but it
+ * used to happen in silence, so a student whose saved list vanished had no way
+ * to tell a bug from a browser wiping their storage.
+ */
+describe("recovery from unreadable storage", () => {
+  it("reports that it recovered when the stored value is not JSON", () => {
+    localStorage.setItem("unimatch.v1", "{not json");
+    mount();
+
+    expect(store.storageRecovered).toBe(true);
+    expect(store.list).toEqual([]);
+  });
+
+  it("reports nothing when there was no stored value at all", () => {
+    mount();
+
+    expect(store.storageRecovered).toBe(false);
+  });
+
+  it("reports nothing when the stored value reads cleanly", () => {
+    localStorage.setItem("unimatch.v1", JSON.stringify({ list: [school("a")] }));
+    mount();
+
+    expect(store.storageRecovered).toBe(false);
+    expect(store.isListed("a")).toBe(true);
+  });
+});

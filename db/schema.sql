@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS universities (
     name            TEXT        NOT NULL,
     country         TEXT        NOT NULL,
     location        TEXT        NOT NULL,
-    region          TEXT        NOT NULL,
+    region          TEXT        NOT NULL CHECK (region IN ('Northeast','South','West','Midwest','International')),
     setting         TEXT        NOT NULL CHECK (setting IN ('urban','suburban','rural')),
     type            TEXT        NOT NULL CHECK (type IN ('Public','Private')),
     avg_gpa         NUMERIC(3,2) NOT NULL CHECK (avg_gpa >= 0 AND avg_gpa <= 4.0),

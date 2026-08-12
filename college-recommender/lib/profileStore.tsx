@@ -70,21 +70,27 @@ interface Persisted {
 
 const EMPTY: Persisted = { form: EMPTY_FORM, answers: {}, activities: [], list: [] };
 
-/** A malformed stored value must not white-screen the app. */
-function readStored(): Persisted {
-  if (typeof window === "undefined") return EMPTY;
+/** A malformed stored value must not white-screen the app - but recovering
+ *  from one must not be silent either, or a student whose list vanished cannot
+ *  tell a bug from a browser that wiped its storage. `recovered` says which
+ *  happened; it is session-only, since the next write repairs the value. */
+function readStored(): { state: Persisted; recovered: boolean } {
+  if (typeof window === "undefined") return { state: EMPTY, recovered: false };
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return EMPTY;
+    if (!raw) return { state: EMPTY, recovered: false };
     const parsed = JSON.parse(raw) as Partial<Persisted>;
     return {
-      form: { ...EMPTY_FORM, ...(parsed.form ?? {}) },
-      answers: parsed.answers ?? {},
-      activities: parsed.activities ?? [],
-      list: parsed.list ?? [],
+      state: {
+        form: { ...EMPTY_FORM, ...(parsed.form ?? {}) },
+        answers: parsed.answers ?? {},
+        activities: parsed.activities ?? [],
+        list: parsed.list ?? [],
+      },
+      recovered: false,
     };
   } catch {
-    return EMPTY;
+    return { state: EMPTY, recovered: true };
   }
 }
 
@@ -103,11 +109,14 @@ function readStored(): Persisted {
 function createLocalStore() {
   let current = EMPTY;
   let hydrated = false;
+  let recovered = false;
   const listeners = new Set<() => void>();
 
   function ensureHydrated() {
     if (!hydrated && typeof window !== "undefined") {
-      current = readStored();
+      const read = readStored();
+      current = read.state;
+      recovered = read.recovered;
       hydrated = true;
     }
   }
@@ -118,6 +127,9 @@ function createLocalStore() {
       return current;
     },
     getServerSnapshot: (): Persisted => EMPTY,
+    /** Whether hydration had to discard an unreadable stored value. Read after
+     *  getSnapshot, which is what performs the hydration. */
+    wasRecovered: (): boolean => recovered,
     subscribe: (onStoreChange: () => void): (() => void) => {
       listeners.add(onStoreChange);
       return () => listeners.delete(onStoreChange);
@@ -152,6 +164,9 @@ interface Store extends Persisted {
   results: RecommendationResponse | null;
   setResults: (next: RecommendationResponse | null) => void;
   reset: () => void;
+  /** True when a saved profile existed but could not be read, so this session
+   *  started empty. Session-only: the next write repairs the stored value. */
+  storageRecovered: boolean;
 }
 
 const Ctx = createContext<Store | null>(null);
@@ -168,6 +183,8 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     localStore.getSnapshot,
     localStore.getServerSnapshot,
   );
+  // Read after useSyncExternalStore above, which is what triggers hydration.
+  const storageRecovered = localStore.wasRecovered();
   const [compare, setCompare] = useState<ListedSchool[]>([]);
   const [results, setResultsState] = useState<RecommendationResponse | null>(null);
 
@@ -238,9 +255,10 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       results,
       setResults,
       reset,
+      storageRecovered,
     }),
-    [state, compare, results, setForm, setAnswers, setActivities, addToList, removeFromList,
-     addToCompare, removeFromCompare, setResults, reset],
+    [state, compare, results, storageRecovered, setForm, setAnswers, setActivities, addToList,
+     removeFromList, addToCompare, removeFromCompare, setResults, reset],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

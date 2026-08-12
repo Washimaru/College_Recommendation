@@ -30,5 +30,15 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    // Byte-identical "cache-life.d 2.ts" copies keep appearing next to the
+    // generated files in .next/ (a file-sync artifact of this checkout's
+    // location, not something the build writes). tsc counts them as a second
+    // declaration of every identifier and fails with TS6200/TS2300, so the
+    // typecheck used to need a manual `find .next -name "* 2.*" -delete`
+    // before it would pass.
+    "**/* ?.ts",
+    "**/* ?.tsx"
+  ]
 }

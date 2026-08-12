@@ -4,6 +4,27 @@ import { useState } from "react";
 
 import { CompareTable } from "@/components/CompareTable";
 import { COMPARE_LIMIT, useProfileStore } from "@/lib/profileStore";
+import { useFocusTrap } from "@/lib/useFocusTrap";
+
+/** Split out so the trap mounts and unmounts with the dialog itself: a hook
+ *  inside CompareTray would run whether or not the dialog is open. */
+function CompareDialog({ onClose, children }: { onClose: () => void; children: React.ReactNode }) {
+  const dialogRef = useFocusTrap<HTMLDivElement>(onClose);
+
+  return (
+    <div className="modal-back" role="dialog" aria-modal="true" aria-label="Compare schools"
+         onClick={onClose}>
+      <div className="modal" ref={dialogRef} style={{ maxWidth: 980 }}
+           onClick={(e) => e.stopPropagation()}>
+        <div className="card-head">
+          <h2 style={{ marginBottom: 2 }}>Side by side</h2>
+          <button className="icon-btn" onClick={onClose} aria-label="Close">✕</button>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export function CompareTray() {
   const { compare, removeFromCompare } = useProfileStore();
@@ -28,16 +49,9 @@ export function CompareTray() {
       </div>
 
       {open && (
-        <div className="modal-back" role="dialog" aria-modal="true" aria-label="Compare schools"
-             onClick={() => setOpen(false)}>
-          <div className="modal" style={{ maxWidth: 980 }} onClick={(e) => e.stopPropagation()}>
-            <div className="card-head">
-              <h2 style={{ marginBottom: 2 }}>Side by side</h2>
-              <button className="icon-btn" onClick={() => setOpen(false)} aria-label="Close">✕</button>
-            </div>
-            <CompareTable schools={compare} />
-          </div>
-        </div>
+        <CompareDialog onClose={() => setOpen(false)}>
+          <CompareTable schools={compare} />
+        </CompareDialog>
       )}
     </>
   );

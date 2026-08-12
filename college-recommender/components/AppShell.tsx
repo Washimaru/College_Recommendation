@@ -19,7 +19,8 @@ const ROUTES: [string, string, ReactNode][] = [
 export function AppShell({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<"dark" | "light">("light");
   const pathname = usePathname();
-  const { list } = useProfileStore();
+  const { list, storageRecovered } = useProfileStore();
+  const [recoveryDismissed, setRecoveryDismissed] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -90,6 +91,23 @@ export function AppShell({ children }: { children: ReactNode }) {
           ))}
         </nav>
       </div>
+
+      {/* Recovering from unreadable storage is correct behaviour; doing it in
+          silence is not. Shown on every route because the store is global, and
+          dismissible because it is about a session, not a task. */}
+      {storageRecovered && !recoveryDismissed && (
+        <div className="wrap">
+          <p className="notice error" role="status" style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
+            <span style={{ flex: 1 }}>
+              We couldn&rsquo;t read your saved profile and college list, so this session
+              started empty. Nothing you do now is affected — the next change saves normally.
+            </span>
+            <button type="button" className="chip" onClick={() => setRecoveryDismissed(true)}>
+              Dismiss
+            </button>
+          </p>
+        </div>
+      )}
 
       {children}
       <CompareTray />

@@ -800,3 +800,19 @@ footer {
   padding: 10px 15px;
   box-shadow: var(--shadow);
 }
+
+/* Announced, not shown. The results region below the form is obvious to a
+   sighted student and was silent to everyone else; this carries the text for
+   assistive technology without changing the layout. Not `display: none`,
+   which screen readers skip entirely. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -19,6 +19,17 @@ type Status =
   | { kind: "ok" }
   | { kind: "error"; message: string };
 
+/** What the live region says. Empty for `error`, which has its own alert, and
+ *  for `idle` - including the idle a returning student lands on with results
+ *  already restored, which they did not just ask for. */
+function announcement(status: Status, results: RecommendationResponse | null): string {
+  if (status.kind === "loading") return "Finding your matches…";
+  if (status.kind !== "ok" || !results) return "";
+  const count = results.results.length;
+  if (count === 0) return "No schools matched. The suggestions are below the form.";
+  return `${count} school${count === 1 ? "" : "s"} matched. Results are below the form.`;
+}
+
 const REGIONS: readonly { value: Region; label: string }[] = [
   { value: "Northeast", label: "Northeast" },
   { value: "South", label: "South" },
@@ -246,6 +257,17 @@ export function ProfileForm() {
           </button>
         </div>
       </form>
+
+      {/*
+        Submitting replaces the page below the form with results, which a
+        sighted student sees at once and a screen-reader user was told nothing
+        about. The region is always mounted (a live region added at the same
+        moment as its text is not reliably announced) and is empty for the
+        error case, which `role="alert"` below already announces.
+      */}
+      <p role="status" aria-live="polite" className="sr-only">
+        {announcement(status, results)}
+      </p>
 
       {status.kind === "error" && (
         <p role="alert" className="notice error" style={{ marginTop: 22 }}>

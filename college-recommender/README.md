@@ -6,13 +6,13 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+
+**npm, not pnpm or yarn.** `package-lock.json` is the one lockfile this project
+keeps; CI installs with `npm ci` from it, and `package.json` declares
+`packageManager` so a different manager does not quietly produce a second one.
+A `pnpm-lock.yaml` lived here for a while alongside it — two lockfiles drift the
+moment two people use different managers.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
