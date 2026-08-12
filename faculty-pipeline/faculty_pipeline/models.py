@@ -93,6 +93,11 @@ class Professor(BaseModel):
     school_name: str
     professor_name: str
     title: str | None = None
+    # Does this title describe teaching faculty? True/False when the title
+    # says so clearly, None when it says neither (see utils.classify_role).
+    # Stage 5 leaves False rows out of the CSVs; None rows are kept, since
+    # dropping a real professor is worse than an unlabelled row.
+    is_faculty: bool | None = None
     department: str | None = None
     email: str | None = None
     phone: str | None = None

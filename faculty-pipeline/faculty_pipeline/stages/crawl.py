@@ -36,11 +36,14 @@ construction, where enumeration hits exactly that kind of truncation.
    connection error after `http_client`'s own retries) is checkpointed
    `failed` for the next run to retry (§8).
 4. **No profile links at all** from a school's directory page(s), despite a
-   successful (200) fetch, is the JS-rendered case §6 names: the school is
-   flagged `needs_dynamic_render` in the run's notes/log (visible, not
-   silent) and skipped — no profiles are fetched for it. The opt-in
-   Playwright fallback (§13) is deliberately not implemented here; passing
-   `--dynamic` fails loudly rather than pretending to honor it.
+   successful (200) fetch, is the JS-rendered case §6 names, and a result
+   that all falls under one letter is the same problem showing up as a
+   partial capture. Both set `needs_dynamic_render`, both are flagged in the
+   run's notes/log, and with `--dynamic` (§13, opt-in, off by default) the
+   same directory pages are re-read through headless Chromium
+   (`services/dynamic.py`) and enumerated again by this same link logic. The
+   two sets of profile links are merged, so rendering can only add. A render
+   that fails leaves the static result exactly as it was.
 """
 from __future__ import annotations
 
@@ -58,6 +61,7 @@ from selectolax.parser import HTMLParser
 from ..config import Config
 from ..models import Directory, RawProfile, StageSummary
 from ..services.checkpoint import CheckpointStore
+from ..services.dynamic import Renderer
 from ..services.http_client import FetchResult
 from ..services.robots import RobotsDisallowedError
 from ..utils import looks_alphabetically_partial as _looks_alphabetically_partial
@@ -119,20 +123,20 @@ def run(
     limit: int | None = None,
     school_id: str | None = None,
     dynamic: bool = False,
+    renderer: Renderer | None = None,
     dry_run: bool = False,
 ) -> StageSummary:
-    """Resumable per profile URL. `dynamic=True` would enable the
-    headless-browser fallback for JS-rendered directories, but that fallback
-    isn't implemented (§13 keeps it opt-in and off by default) — passing it
-    raises `CrawlError` rather than silently ignoring the flag.
+    """Resumable per profile URL. `dynamic=True` enables the headless-browser
+    fallback for JS-rendered directories (§13, opt-in) and requires a
+    `renderer`; the CLI builds a `services.dynamic.PlaywrightRenderer`.
 
     `dry_run=True` reports how many schools would be crawled without making
     any network calls or writing anything.
     """
-    if dynamic:
+    if dynamic and renderer is None:
         raise CrawlError(
-            "the Playwright headless-render fallback (--dynamic) is not implemented "
-            "(§13 keeps it opt-in and off by default); rerun without --dynamic"
+            "--dynamic needs a renderer (services.dynamic.PlaywrightRenderer). "
+            "Install it with: pip install '.[dynamic]' && playwright install chromium"
         )
 
     started_at = datetime.now(UTC)
@@ -169,7 +173,9 @@ def run(
 
     with output_path.open("a", encoding="utf-8") as out:
         for directory in pending:
-            result = _crawl_school(config, http_client, checkpoint, directory, out, logger)
+            result = _crawl_school(
+                config, http_client, checkpoint, directory, out, logger, renderer
+            )
             processed += result.fetched
             skipped += result.already_done + result.robots_skipped + result.cap_skipped
             failed += result.failed
@@ -210,6 +216,7 @@ def _crawl_school(
     directory: Directory,
     out: IO[str],
     logger: logging.Logger,
+    renderer: Renderer | None = None,
 ) -> _SchoolCrawlResult:
     school_id = directory.school_id
     result = _SchoolCrawlResult()
@@ -229,6 +236,10 @@ def _crawl_school(
         enum_result = _enumerate_directory(
             config, http_client, directory.directory_urls, school_id, logger
         )
+        if renderer is not None and enum_result.needs_dynamic_render:
+            enum_result = _render_and_merge(
+                config, renderer, enum_result, directory.directory_urls, school_id, logger, result
+            )
         result.notes.append(
             f"{school_id}: {len(enum_result.profile_entries)} profile url(s) enumerated "
             f"across {enum_result.pages_visited} directory page(s)"
@@ -248,7 +259,8 @@ def _crawl_school(
                 msg = (
                     f"{school_id}: needs_dynamic_render — {enum_result.pages_visited} directory "
                     "page(s) fetched successfully but yielded no profile links "
-                    "(likely a JS-rendered directory; Playwright fallback not implemented, §13)"
+                    "(likely a JS-rendered directory; re-run with --dynamic to read it "
+                    "through headless Chromium)"
                 )
                 logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
                 result.notes.append(msg)
@@ -262,19 +274,56 @@ def _crawl_school(
                 f"{school_id}: PARTIAL — {found} profile link(s) enumerated across "
                 f"{enum_result.pages_visited} directory page(s), but they all fall under one "
                 "letter of the alphabet. The directory almost certainly loads its remaining "
-                "sections by script (§13 Playwright fallback not implemented). Crawling what "
-                "was found; treat this school's coverage as incomplete."
+                "sections by script; re-run with --dynamic to read it through headless "
+                "Chromium. Crawling what was found; treat this school's coverage as incomplete."
             )
             logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
             result.notes.append(msg)
             result.partial = True
 
-    # Safety net for the sitemap path (§13 / the sitemap-recall fix): the
-    # enumerated path already ran this same check above, inside
-    # needs_dynamic_render. A cluster this concentrated on one letter almost
-    # never happens for a sitemap (it isn't a JS-rendering artifact), but if
-    # it ever does, it gets the same PARTIAL flag an enumerated directory
-    # would.
+    # Safety net for the sitemap path. A cluster this concentrated on one
+    # letter is not supposed to happen — a sitemap is a file the site
+    # publishes, not a rendering artifact — but Bard does exactly this: its
+    # sitemap lists only the A-surnames its directory page server-renders, so
+    # "complete by construction" silently caps the school at 8 people. With a
+    # renderer available, the directory pages are enumerated and rendered
+    # after all and the two sets merged; the sitemap cluster is never
+    # discarded, only added to.
+    if (
+        directory.profile_urls
+        and directory.directory_urls
+        and renderer is not None
+        and _looks_alphabetically_partial([url for url, _ in enum_result.profile_entries])
+    ):
+        logger.info(
+            "%s: sitemap cluster looks alphabetically partial; enumerating and rendering "
+            "its directory page(s) as well",
+            school_id,
+            extra={"stage": STAGE_NAME, "school_id": school_id},
+        )
+        enumerated = _enumerate_directory(
+            config, http_client, directory.directory_urls, school_id, logger
+        )
+        enumerated = _render_and_merge(
+            config, renderer, enumerated, directory.directory_urls, school_id, logger, result
+        )
+        merged = list(enum_result.profile_entries)
+        seen = {url for url, _ in merged}
+        for url, page in enumerated.profile_entries:
+            if url not in seen:
+                seen.add(url)
+                merged.append((url, page))
+        result.notes.append(
+            f"{school_id}: sitemap cluster ({len(enum_result.profile_entries)}) extended to "
+            f"{len(merged)} profile url(s) by enumerating and rendering the directory page(s)"
+        )
+        enum_result = _EnumResult(
+            profile_entries=merged,
+            pages_visited=enumerated.pages_visited,
+            page_cap_hit=enumerated.page_cap_hit,
+            needs_dynamic_render=False,
+        )
+
     if directory.profile_urls and _looks_alphabetically_partial(
         [url for url, _ in enum_result.profile_entries]
     ):
@@ -385,6 +434,83 @@ def _enum_result_from_sitemap_profiles(directory: Directory) -> _EnumResult:
         page_cap_hit=False,
         needs_dynamic_render=False,
     )
+
+
+def _render_and_merge(
+    config: Config,
+    renderer: Renderer,
+    static_result: _EnumResult,
+    directory_urls: list[str],
+    school_id: str,
+    logger: logging.Logger,
+    result: _SchoolCrawlResult,
+) -> _EnumResult:
+    """Re-enumerate the directory from browser-rendered HTML and merge.
+
+    Merge, not replace: the statically-found links are real professors, and a
+    render that returns less (a page that needs a click, a bot wall) must not
+    be able to lose them. `needs_dynamic_render` is recomputed over the union,
+    so a school whose remaining sections appear only after rendering stops
+    being flagged partial — and one that is still short stays flagged.
+    """
+    try:
+        rendered = _enumerate_directory(
+            config,
+            _RenderingFetcher(renderer),
+            directory_urls,
+            school_id,
+            logger,
+        )
+    except Exception as exc:  # noqa: BLE001 - a failed render is not a failed crawl
+        msg = f"{school_id}: dynamic render failed ({exc}); keeping the static result"
+        logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
+        result.notes.append(msg)
+        return static_result
+
+    merged: list[tuple[str, str]] = list(static_result.profile_entries)
+    seen = {url for url, _ in merged}
+    for url, page in rendered.profile_entries:
+        if url not in seen:
+            seen.add(url)
+            merged.append((url, page))
+
+    gained = len(merged) - len(static_result.profile_entries)
+    msg = (
+        f"{school_id}: dynamic render added {gained} profile url(s) "
+        f"({len(static_result.profile_entries)} -> {len(merged)})"
+    )
+    logger.info(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
+    result.notes.append(msg)
+
+    return _EnumResult(
+        profile_entries=merged,
+        pages_visited=max(static_result.pages_visited, rendered.pages_visited),
+        page_cap_hit=static_result.page_cap_hit or rendered.page_cap_hit,
+        needs_dynamic_render=not merged
+        or _looks_alphabetically_partial([url for url, _ in merged]),
+    )
+
+
+@dataclass
+class _RenderingFetcher:
+    """Adapts a `Renderer` to the `HttpFetcher` shape `_enumerate_directory`
+    expects, so link enumeration, pagination and the same-domain rule are the
+    one implementation for both static and rendered HTML."""
+
+    renderer: Renderer
+
+    def fetch(self, url: str, *, method: str = "GET") -> FetchResult:
+        html = self.renderer.render(url)
+        return FetchResult(
+            status=200,
+            final_url=url,
+            body=html,
+            from_cache=False,
+            # Rendered HTML is not written to the fetch cache: the cache is
+            # keyed by URL, and a rendered page would then be served to the
+            # static path as if it had come from a plain GET.
+            cache_path=None,
+        )
 
 
 def _enumerate_directory(

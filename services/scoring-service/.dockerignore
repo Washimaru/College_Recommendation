@@ -1,0 +1,15 @@
+# The build context is this directory, and the host venv alone is ~80 MB of
+# macOS-linux-incompatible binaries that the image never uses (the Dockerfile
+# copies pyproject.toml and app/ and installs fresh). Everything here is
+# either rebuilt in the image or irrelevant to it.
+.venv
+build
+dist
+*.egg-info
+__pycache__
+**/__pycache__
+.pytest_cache
+.ruff_cache
+.coverage
+htmlcov
+tests

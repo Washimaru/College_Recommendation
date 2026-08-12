@@ -31,13 +31,14 @@ def _school(school_id: str = "acme-tech", homepage: str = "https://www.acmetech.
     )
 
 
-def _config(tmp_path: Path) -> Config:
+def _config(tmp_path: Path, **overrides: object) -> Config:
     return Config(
         input_path=tmp_path / "schools.json",
         data_dir=tmp_path / "data",
         cache_dir=tmp_path / "cache",
         checkpoint_dir=tmp_path / "checkpoints",
         log_dir=tmp_path / "logs",
+        **overrides,
     )
 
 
@@ -671,3 +672,139 @@ def test_no_sitemap_leaves_profile_urls_unset(tmp_path: Path) -> None:
     rows = _read_output(config)
     assert rows[0]["profile_urls"] is None
     assert rows[0]["discovery_method"] == "heuristic"
+
+
+# -- department-level second hop ----------------------------------------
+
+
+ACADEMICS_INDEX = """
+<html><body>
+  <h1>Academics</h1>
+  <ul>
+    <li><a href="/academics/mathematics">Mathematics</a></li>
+    <li><a href="/academics/biology">Biology</a></li>
+    <li><a href="/admissions">Apply now</a></li>
+    <li><a href="https://elsewhere.example.com/math">Partner site</a></li>
+  </ul>
+</body></html>
+"""
+
+MATH_DEPARTMENT = """
+<html><body>
+  <h1>Department of Mathematics</h1>
+  <a href="/academics/mathematics/faculty">Our Faculty</a>
+  <a href="/academics/mathematics/courses">Courses</a>
+</body></html>
+"""
+
+
+class TestDepartmentLevelDiscovery:
+    """Campus-level `/faculty` is often HR or marketing; the real directories
+    live under each department. When the campus-level pass finds nothing, a
+    second hop follows the academics index into departments and looks for
+    their people pages — the case that made recall 1-in-8 before sitemaps."""
+
+    def _pages(self) -> dict[str, FetchResult]:
+        return {
+            "https://www.acmetech.edu/academics": _fetch_result(
+                200, ACADEMICS_INDEX, "https://www.acmetech.edu/academics"
+            ),
+            "https://www.acmetech.edu/academics/mathematics": _fetch_result(
+                200, MATH_DEPARTMENT, "https://www.acmetech.edu/academics/mathematics"
+            ),
+            "https://www.acmetech.edu/academics/mathematics/faculty": _fetch_result(
+                200, HTML_OK, "https://www.acmetech.edu/academics/mathematics/faculty"
+            ),
+        }
+
+    def test_finds_a_department_directory_when_the_campus_level_pass_fails(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_schools(config, [_school()])
+        http = FakeHttpClient(pages=self._pages())
+        llm = FakeLLM(
+            response={
+                "directory_urls": ["https://www.acmetech.edu/academics/mathematics/faculty"],
+                "confidence": 0.9,
+                "notes": "department faculty listing",
+            }
+        )
+
+        _run(config, _checkpoint(config), http, NullSearchProvider(), llm, AllowAllRobots())
+
+        record = _read_output(config)[0]
+        assert record["directory_urls"] == [
+            "https://www.acmetech.edu/academics/mathematics/faculty"
+        ]
+        assert "department" in record["discovery_method"]
+
+    def test_the_department_page_is_offered_to_the_classifier(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_schools(config, [_school()])
+        http = FakeHttpClient(pages=self._pages())
+        llm = FakeLLM(response={"directory_urls": [], "confidence": 0.0, "notes": "none"})
+
+        _run(config, _checkpoint(config), http, NullSearchProvider(), llm, AllowAllRobots())
+
+        offered = llm.calls[0][0]
+        assert "https://www.acmetech.edu/academics/mathematics/faculty" in offered
+
+    def test_it_stays_on_the_school_domain(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_schools(config, [_school()])
+        http = FakeHttpClient(pages=self._pages())
+        llm = FakeLLM(response={"directory_urls": [], "confidence": 0.0, "notes": "none"})
+
+        _run(config, _checkpoint(config), http, NullSearchProvider(), llm, AllowAllRobots())
+
+        assert not any("elsewhere.example.com" in url for url in http.calls)
+
+    def test_it_does_not_run_when_the_campus_level_pass_already_found_something(
+        self, tmp_path: Path
+    ):
+        """The hop costs one fetch per department, so it is a fallback, not a
+        routine extra pass."""
+        config = _config(tmp_path)
+        _write_schools(config, [_school()])
+        pages = self._pages()
+        pages["https://www.acmetech.edu/faculty"] = _fetch_result(
+            200, HTML_OK, "https://www.acmetech.edu/faculty"
+        )
+        http = FakeHttpClient(pages=pages)
+        llm = FakeLLM(
+            response={
+                "directory_urls": ["https://www.acmetech.edu/faculty"],
+                "confidence": 0.9,
+                "notes": "campus directory",
+            }
+        )
+
+        _run(config, _checkpoint(config), http, NullSearchProvider(), llm, AllowAllRobots())
+
+        assert "https://www.acmetech.edu/academics" not in http.calls
+
+    def test_it_stops_at_the_configured_department_budget(self, tmp_path: Path):
+        config = _config(tmp_path, max_departments_per_school=1)
+        _write_schools(config, [_school()])
+        pages = self._pages()
+        pages["https://www.acmetech.edu/academics/biology"] = _fetch_result(
+            200, MATH_DEPARTMENT, "https://www.acmetech.edu/academics/biology"
+        )
+        http = FakeHttpClient(pages=pages)
+        llm = FakeLLM(response={"directory_urls": [], "confidence": 0.0, "notes": "none"})
+
+        _run(config, _checkpoint(config), http, NullSearchProvider(), llm, AllowAllRobots())
+
+        # One department page plus its people page, and no further, even
+        # though the index lists two departments. `/academics/faculty` is a
+        # campus-level heuristic, not part of the hop, so it is excluded.
+        hop_calls = [
+            u
+            for u in http.calls
+            if u.startswith("https://www.acmetech.edu/academics/")
+            and u != "https://www.acmetech.edu/academics/faculty"
+        ]
+        assert hop_calls == [
+            "https://www.acmetech.edu/academics/mathematics",
+            "https://www.acmetech.edu/academics/mathematics/faculty",
+        ]
+        assert "https://www.acmetech.edu/academics/biology" not in http.calls

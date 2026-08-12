@@ -862,3 +862,214 @@ def test_sitemap_profiles_skip_needs_dynamic_render_path(tmp_path: Path) -> None
 
     assert not any("needs_dynamic_render" in note for note in summary.notes)
     assert any("taken directly from the sitemap" in note for note in summary.notes)
+
+
+# -- the Playwright fallback (--dynamic) --------------------------------
+
+
+STATIC_A_ONLY = """
+<html><body><h1>Faculty</h1>
+  <a href="/faculty/adams-ann">Adams, Ann</a>
+  <a href="/faculty/allen-amy">Allen, Amy</a>
+  <a href="/faculty/atkins-alan">Atkins, Alan</a>
+  <a href="/faculty/archer-ada">Archer, Ada</a>
+  <a href="/faculty/ames-abe">Ames, Abe</a>
+  <a href="/faculty/ashby-ada">Ashby, Ada</a>
+  <a href="/faculty/avery-ann">Avery, Ann</a>
+  <a href="/faculty/abbot-ann">Abbot, Ann</a>
+</body></html>
+"""
+
+RENDERED_FULL = """
+<html><body><h1>Faculty</h1>
+  <a href="/faculty/adams-ann">Adams, Ann</a>
+  <a href="/faculty/allen-amy">Allen, Amy</a>
+  <a href="/faculty/atkins-alan">Atkins, Alan</a>
+  <a href="/faculty/archer-ada">Archer, Ada</a>
+  <a href="/faculty/ames-abe">Ames, Abe</a>
+  <a href="/faculty/ashby-ada">Ashby, Ada</a>
+  <a href="/faculty/avery-ann">Avery, Ann</a>
+  <a href="/faculty/abbot-ann">Abbot, Ann</a>
+  <a href="/faculty/brown-bea">Brown, Bea</a>
+  <a href="/faculty/chen-cy">Chen, Cy</a>
+  <a href="/faculty/diaz-dee">Diaz, Dee</a>
+</body></html>
+"""
+
+EMPTY_SHELL = '<html><body><div id="app"></div></body></html>'
+
+
+@dataclass
+class FakeRenderer:
+    """Stands in for a headless browser: url -> rendered HTML."""
+
+    pages: dict[str, str] = field(default_factory=dict)
+    calls: list[str] = field(default_factory=list)
+    error: Exception | None = None
+
+    def render(self, url: str) -> str:
+        self.calls.append(url)
+        if self.error is not None:
+            raise self.error
+        return self.pages[url]
+
+
+class TestDynamicFallback:
+    def _profile_pages(self) -> dict[str, FetchResult]:
+        names = ("adams-ann", "allen-amy", "atkins-alan", "archer-ada", "ames-abe",
+                 "ashby-ada", "avery-ann", "abbot-ann", "brown-bea", "chen-cy", "diaz-dee")
+        return {
+            f"{BASE}/faculty/{n}": _fetch_result(
+                200, f"<html><body><h1>{n.title()}</h1></body></html>", f"{BASE}/faculty/{n}"
+            )
+            for n in names
+        }
+
+    def test_without_the_flag_a_partial_directory_stays_partial(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_directories(config, [_directory()])
+        pages = {f"{BASE}/faculty": _fetch_result(200, STATIC_A_ONLY, f"{BASE}/faculty")}
+        pages.update(self._profile_pages())
+        http = FakeHttpClient(pages=pages)
+
+        summary = _run(config, _checkpoint(config), http)
+
+        assert any("PARTIAL" in note for note in summary.notes)
+        assert len(_read_profiles(config)) == 8
+
+    def test_rendering_recovers_the_rest_of_the_alphabet(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_directories(config, [_directory()])
+        pages = {f"{BASE}/faculty": _fetch_result(200, STATIC_A_ONLY, f"{BASE}/faculty")}
+        pages.update(self._profile_pages())
+        http = FakeHttpClient(pages=pages)
+        renderer = FakeRenderer(pages={f"{BASE}/faculty": RENDERED_FULL})
+
+        summary = _run(config, _checkpoint(config), http, dynamic=True, renderer=renderer)
+
+        urls = {p["profile_url"] for p in _read_profiles(config)}
+        assert f"{BASE}/faculty/brown-bea" in urls
+        assert len(urls) == 11
+        assert not any("PARTIAL" in note for note in summary.notes)
+
+    def test_an_empty_shell_yields_profiles_once_rendered(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_directories(config, [_directory()])
+        pages = {f"{BASE}/faculty": _fetch_result(200, EMPTY_SHELL, f"{BASE}/faculty")}
+        pages.update(self._profile_pages())
+        http = FakeHttpClient(pages=pages)
+        renderer = FakeRenderer(pages={f"{BASE}/faculty": RENDERED_FULL})
+
+        _run(config, _checkpoint(config), http, dynamic=True, renderer=renderer)
+
+        assert len(_read_profiles(config)) == 11
+
+    def test_a_healthy_directory_is_never_rendered(self, tmp_path: Path):
+        """A render costs a browser page load; it is a fallback, not a step."""
+        config = _config(tmp_path)
+        _write_directories(config, [_directory()])
+        pages = {f"{BASE}/faculty": _fetch_result(200, RENDERED_FULL, f"{BASE}/faculty")}
+        pages.update(self._profile_pages())
+        http = FakeHttpClient(pages=pages)
+        renderer = FakeRenderer(pages={f"{BASE}/faculty": RENDERED_FULL})
+
+        _run(config, _checkpoint(config), http, dynamic=True, renderer=renderer)
+
+        assert renderer.calls == []
+
+    def test_a_render_failure_leaves_the_static_result_intact(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_directories(config, [_directory()])
+        pages = {f"{BASE}/faculty": _fetch_result(200, STATIC_A_ONLY, f"{BASE}/faculty")}
+        pages.update(self._profile_pages())
+        http = FakeHttpClient(pages=pages)
+        renderer = FakeRenderer(error=RuntimeError("browser crashed"))
+
+        summary = _run(config, _checkpoint(config), http, dynamic=True, renderer=renderer)
+
+        assert len(_read_profiles(config)) == 8
+        assert any("PARTIAL" in note for note in summary.notes)
+
+    def test_the_flag_without_a_renderer_is_a_clear_error(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_directories(config, [_directory()])
+        http = FakeHttpClient(pages={})
+
+        with pytest.raises(crawl.CrawlError, match="renderer"):
+            _run(config, _checkpoint(config), http, dynamic=True)
+
+
+class TestSitemapClusterThatIsItselfPartial:
+    """A sitemap cluster is normally complete by construction, which is why
+    enumeration is skipped for it. Bard is the exception: its sitemap lists
+    only the A-surnames its directory page server-renders, so the "complete
+    by construction" assumption quietly caps the school at 8 people. When the
+    cluster looks partial and a renderer is available, the directory pages are
+    enumerated and rendered as well, and the two sets are merged."""
+
+    def _pages(self) -> dict[str, FetchResult]:
+        names = ("adams-ann", "allen-amy", "atkins-alan", "archer-ada", "ames-abe",
+                 "ashby-ada", "avery-ann", "abbot-ann", "brown-bea", "chen-cy", "diaz-dee")
+        pages = {
+            f"{BASE}/faculty/{n}": _fetch_result(
+                200, "<html><body>x</body></html>", f"{BASE}/faculty/{n}"
+            )
+            for n in names
+        }
+        pages[f"{BASE}/faculty"] = _fetch_result(200, STATIC_A_ONLY, f"{BASE}/faculty")
+        return pages
+
+    def _partial_cluster(self) -> list[str]:
+        return [
+            f"{BASE}/faculty/{n}"
+            for n in ("adams-ann", "allen-amy", "atkins-alan", "archer-ada",
+                      "ames-abe", "ashby-ada", "avery-ann", "abbot-ann")
+        ]
+
+    def test_without_a_renderer_it_stays_partial(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_directories(
+            config,
+            [_directory(urls=[f"{BASE}/faculty"], profile_urls=self._partial_cluster())],
+        )
+        http = FakeHttpClient(pages=self._pages())
+
+        summary = _run(config, _checkpoint(config), http)
+
+        assert len(_read_profiles(config)) == 8
+        assert any("PARTIAL" in note for note in summary.notes)
+
+    def test_rendering_rescues_a_partial_sitemap_cluster(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_directories(
+            config,
+            [_directory(urls=[f"{BASE}/faculty"], profile_urls=self._partial_cluster())],
+        )
+        http = FakeHttpClient(pages=self._pages())
+        renderer = FakeRenderer(pages={f"{BASE}/faculty": RENDERED_FULL})
+
+        summary = _run(config, _checkpoint(config), http, dynamic=True, renderer=renderer)
+
+        urls = {p["profile_url"] for p in _read_profiles(config)}
+        assert f"{BASE}/faculty/diaz-dee" in urls
+        assert len(urls) == 11
+        assert not any("PARTIAL" in note for note in summary.notes)
+
+    def test_a_healthy_cluster_still_skips_enumeration(self, tmp_path: Path):
+        """The fallback must not turn every sitemap school into a crawl of
+        its directory pages — that is the cost the sitemap path exists to
+        avoid."""
+        config = _config(tmp_path)
+        full = self._partial_cluster() + [
+            f"{BASE}/faculty/{n}" for n in ("brown-bea", "chen-cy", "diaz-dee")
+        ]
+        _write_directories(
+            config, [_directory(urls=[f"{BASE}/faculty"], profile_urls=full)]
+        )
+        http = FakeHttpClient(pages=self._pages())
+        renderer = FakeRenderer(pages={f"{BASE}/faculty": RENDERED_FULL})
+
+        _run(config, _checkpoint(config), http, dynamic=True, renderer=renderer)
+
+        assert renderer.calls == []
+        assert f"{BASE}/faculty" not in http.calls

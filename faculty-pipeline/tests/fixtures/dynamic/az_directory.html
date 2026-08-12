@@ -1,0 +1,31 @@
+<!doctype html>
+<html><body>
+  <h1>Faculty</h1>
+  <p class="bodytext">
+    <a class="letter" href="#a">A</a>
+    <a class="letter" href="#b">B</a>
+    <a class="letter" href="#c">C</a>
+  </p>
+  <div id="list">
+    <a href="/faculty/adams-ann">Adams, Ann</a>
+    <a href="/faculty/archer-ada">Archer, Ada</a>
+  </div>
+  <script>
+    const people = {
+      a: ['adams-ann', 'archer-ada'],
+      b: ['brown-bea', 'baker-bo'],
+      c: ['chen-cy', 'cruz-caz'],
+    };
+    document.querySelectorAll('a.letter').forEach((tab) => {
+      tab.addEventListener('click', (event) => {
+        event.preventDefault();
+        const letter = tab.getAttribute('href').slice(1);
+        // Replaces the list, exactly as Bard's does — the reason the renderer
+        // has to keep every snapshot rather than only the last.
+        document.getElementById('list').innerHTML = people[letter]
+          .map((slug) => `<a href="/faculty/${slug}">${slug}</a>`)
+          .join('');
+      });
+    });
+  </script>
+</body></html>

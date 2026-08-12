@@ -47,6 +47,9 @@ import logging
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Protocol
+from urllib.parse import urljoin, urlsplit
+
+from selectolax.parser import HTMLParser
 
 from ..config import Config
 from ..models import Directory, School, StageSummary
@@ -56,7 +59,7 @@ from ..services.http_client import FetchResult, RobotsCheckerLike
 from ..services.llm import DirectoryClassification
 from ..services.robots import RobotsDisallowedError
 from ..services.search import SearchProvider
-from ..utils import extract_text_excerpt
+from ..utils import extract_text_excerpt, registrable_domain
 
 # Sitemap-derived profile clusters are self-evident (a URL sitting under
 # /directory/faculty/ alongside 123 siblings doesn't need an LLM's opinion),
@@ -78,6 +81,30 @@ HEURISTIC_PATHS = (
     "/faculty-staff",
     "/staff-directory",
 )
+
+# Where a school lists its departments. Only fetched when the campus-level
+# pass above found nothing at all — the second hop costs up to two fetches
+# per department at the 2s/host floor.
+DEPARTMENT_INDEX_PATHS = (
+    "/academics",
+    "/academics/departments",
+    "/departments",
+    "/schools-and-departments",
+    "/colleges-and-schools",
+)
+
+# A link worth following from a department index (its departments) or from a
+# department page (its people listing). Matched against the href path and the
+# anchor text, never the URL shape alone — the same reason classification
+# reads page content rather than guessing from the path.
+_DEPARTMENT_LINK_HINTS = (
+    "department",
+    "academics",
+    "school-of",
+    "college-of",
+    "program",
+)
+_PEOPLE_LINK_HINTS = ("faculty", "people", "directory", "staff", "our-team", "instructors")
 
 # Common soft-404 phrasing: a page that returns HTTP 200 but is actually a
 # "not found" page. Checked against the whole (lowercased) body, not just
@@ -237,13 +264,15 @@ def _discover_for_school(
     )
     profile_urls = sitemap_service.largest_profile_cluster(sitemap_clusters)
 
-    candidates, excerpts, used_sitemap, used_heuristic, used_search = _discover_candidates(
-        http_client,
-        search_provider,
-        school,
-        logger,
-        config.directory_excerpt_max_chars,
-        sitemap_directory_pages,
+    candidates, excerpts, used_sitemap, used_heuristic, used_search, used_department = (
+        _discover_candidates(
+            http_client,
+            search_provider,
+            school,
+            logger,
+            config,
+            sitemap_directory_pages,
+        )
     )
 
     if not candidates:
@@ -266,7 +295,9 @@ def _discover_for_school(
         return Directory(
             school_id=school.school_id,
             directory_urls=[],
-            discovery_method=_method_label(used_sitemap, used_heuristic, used_search),
+            discovery_method=_method_label(
+                used_sitemap, used_heuristic, used_search, used_department
+            ),
             robots_allowed=True,
             confidence=0.0,
             notes="no candidate directory URLs resolved via heuristics or search",
@@ -311,7 +342,9 @@ def _discover_for_school(
         school_id=school.school_id,
         directory_urls=allowed_urls,
         profile_urls=profile_urls,
-        discovery_method=_method_label(used_sitemap, used_heuristic, used_search),
+        discovery_method=_method_label(
+                used_sitemap, used_heuristic, used_search, used_department
+            ),
         robots_allowed=robots_allowed,
         confidence=confidence,
         notes="; ".join(notes_parts) if notes_parts else None,
@@ -323,10 +356,11 @@ def _discover_candidates(
     search_provider: SearchProvider,
     school: School,
     logger: logging.Logger,
-    excerpt_max_chars: int,
+    config: Config,
     sitemap_directory_pages: list[str],
-) -> tuple[list[str], dict[str, str], bool, bool, bool]:
-    """Returns `(candidate_urls, excerpts, used_sitemap, used_heuristic, used_search)`.
+) -> tuple[list[str], dict[str, str], bool, bool, bool, bool]:
+    """Returns `(candidate_urls, excerpts, used_sitemap, used_heuristic,
+    used_search, used_department)`.
 
     `excerpts` maps each surviving candidate URL to a plain-text excerpt of
     the same page body the resolve-check (`_try_fetch`) already fetched and
@@ -341,6 +375,7 @@ def _discover_candidates(
     doesn't weaken the existing content-based classification, only feeds it
     a better candidate.
     """
+    excerpt_max_chars = config.directory_excerpt_max_chars
     seen: set[str] = set()
     candidates: list[str] = []
     excerpts: dict[str, str] = {}
@@ -386,7 +421,104 @@ def _discover_candidates(
                 excerpts[url] = excerpt
             used_search = True
 
-    return candidates, excerpts, used_sitemap, used_heuristic, used_search
+    # Second hop, only when everything above came back empty: campus-level
+    # `/faculty` is frequently HR or marketing, and the real listing lives
+    # under each department.
+    used_department = False
+    if not candidates:
+        for url in _department_directory_urls(http_client, school, config, logger):
+            if url in seen:
+                continue
+            result = _try_fetch(http_client, url, logger, school.school_id)
+            if result is not None:
+                seen.add(url)
+                candidates.append(url)
+                excerpt = extract_text_excerpt(result.body, excerpt_max_chars)
+                if excerpt:
+                    excerpts[url] = excerpt
+                used_department = True
+
+    return candidates, excerpts, used_sitemap, used_heuristic, used_search, used_department
+
+
+def _department_directory_urls(
+    http_client: HttpFetcher,
+    school: School,
+    config: Config,
+    logger: logging.Logger,
+) -> list[str]:
+    """People pages found by walking the school's academics index into its
+    departments.
+
+    Two hops, both bounded by `config.max_departments_per_school`: fetch a
+    department index, follow its department links, and from each department
+    page take the links that look like a people listing. Everything goes
+    through `_try_fetch`, so robots, rate limiting and caching are unchanged,
+    and every URL found here is still classified by content downstream — this
+    only produces better candidates, it does not decide anything.
+    """
+    budget = config.max_departments_per_school
+    if budget <= 0:
+        return []
+
+    base = school.homepage.rstrip("/")
+    department_urls: list[str] = []
+    for path in DEPARTMENT_INDEX_PATHS:
+        index = _try_fetch(http_client, base + path, logger, school.school_id)
+        if index is None:
+            continue
+        department_urls = _links_matching(
+            index.body, index.final_url, school.homepage, _DEPARTMENT_LINK_HINTS
+        )
+        if department_urls:
+            logger.info(
+                "discover: %d department link(s) from %s",
+                len(department_urls),
+                index.final_url,
+                extra={"stage": STAGE_NAME, "school_id": school.school_id},
+            )
+            break
+
+    people_urls: list[str] = []
+    for department_url in department_urls[:budget]:
+        page = _try_fetch(http_client, department_url, logger, school.school_id)
+        if page is None:
+            continue
+        people_urls.extend(
+            _links_matching(page.body, page.final_url, school.homepage, _PEOPLE_LINK_HINTS)
+        )
+
+    deduped: list[str] = []
+    for url in people_urls:
+        if url not in deduped:
+            deduped.append(url)
+    return deduped[:budget]
+
+
+def _links_matching(
+    html: str, page_url: str, homepage: str, hints: tuple[str, ...]
+) -> list[str]:
+    """On-domain links from `html` whose path or anchor text mentions one of
+    `hints`. Off-domain links are dropped outright: a school's own directory
+    is on the school's own domain, and following a partner site would take
+    the crawler somewhere its robots check never covered."""
+    found: list[str] = []
+    tree = HTMLParser(html)
+    for node in tree.css("a[href]"):
+        href = (node.attributes.get("href") or "").strip()
+        if not href or href.startswith(("#", "mailto:", "tel:", "javascript:")):
+            continue
+        absolute = urljoin(page_url, href)
+        if urlsplit(absolute).scheme not in ("http", "https"):
+            continue
+        if registrable_domain(absolute) != registrable_domain(homepage):
+            continue
+        haystack = f"{urlsplit(absolute).path.lower()} {(node.text() or '').lower()}"
+        if any(hint in haystack for hint in hints):
+            absolute = absolute.split("#")[0]
+            if absolute not in found and absolute.rstrip("/") != page_url.rstrip("/"):
+                found.append(absolute)
+    return found
 
 
 def _heuristic_urls(homepage: str) -> list[str]:
@@ -462,9 +594,12 @@ def _apply_robots_gate(
     return allowed, not any_disallowed
 
 
-def _method_label(used_sitemap: bool, used_heuristic: bool, used_search: bool) -> str:
+def _method_label(
+    used_sitemap: bool, used_heuristic: bool, used_search: bool, used_department: bool = False
+) -> str:
     sources = (
         (used_sitemap, "sitemap"),
+        (used_department, "department"),
         (used_heuristic, "heuristic"),
         (used_search, "search"),
     )

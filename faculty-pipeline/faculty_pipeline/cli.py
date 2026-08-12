@@ -14,6 +14,8 @@ from __future__ import annotations
 import csv
 import shutil
 import sys
+from contextlib import ExitStack
+from dataclasses import replace
 from pathlib import Path
 
 import click
@@ -21,6 +23,7 @@ import httpx
 
 from .config import Config
 from .services.checkpoint import CheckpointStore
+from .services.dynamic import PlaywrightRenderer, RendererUnavailableError
 from .services.http_client import HttpClient
 from .services.llm import AnthropicLLM
 from .services.logging_setup import configure_logging
@@ -150,11 +153,34 @@ def discover(ctx: click.Context, limit: int | None, school_id: str | None) -> No
 @main.command()
 @click.option("--limit", type=int, default=None, help="Process at most N schools")
 @click.option("--school", "school_id", default=None, help="Run a single school")
-@click.option("--dynamic", is_flag=True, default=False, help="Enable headless-browser fallback")
+@click.option(
+    "--dynamic",
+    is_flag=True,
+    default=False,
+    help="Re-read JS-rendered directories through headless Chromium (needs .[dynamic])",
+)
+@click.option(
+    "--max-profiles",
+    type=int,
+    default=None,
+    help="Override max_profiles_per_school for this run only (the 2s/host floor is unchanged)",
+)
 @click.pass_context
-def crawl(ctx: click.Context, limit: int | None, school_id: str | None, dynamic: bool) -> None:
+def crawl(
+    ctx: click.Context,
+    limit: int | None,
+    school_id: str | None,
+    dynamic: bool,
+    max_profiles: int | None,
+) -> None:
     """Stage 3: crawl professor profiles."""
     config: Config = ctx.obj["config"]
+    if max_profiles is not None:
+        # Per run, deliberately: the default is conservative because 268
+        # schools x a high cap is days of someone else's bandwidth. Raising it
+        # for one school whose directory is known to be worth it is a decision
+        # someone makes at the command line, not a new default.
+        config = replace(config, max_profiles_per_school=max_profiles)
     logger = ctx.obj["logger"]
     dry_run: bool = ctx.obj["dry_run"]
 
@@ -166,20 +192,39 @@ def crawl(ctx: click.Context, limit: int | None, school_id: str | None, dynamic:
     try:
         robots = RobotsChecker(transport)
         http_client = HttpClient(config, robots, transport)
-        try:
-            summary = crawl_stage.run(
-                config,
-                checkpoint,
-                logger,
-                http_client,
-                limit=limit,
-                school_id=school_id,
-                dynamic=dynamic,
-                dry_run=dry_run,
-            )
-        except crawl_stage.CrawlError as exc:
-            click.echo(f"crawl failed: {exc}", err=True)
-            sys.exit(1)
+        # The browser is started once for the whole run and only when asked
+        # for: launching Chromium costs seconds, and most schools never need
+        # it. ExitStack keeps the non-dynamic path free of a dummy context.
+        with ExitStack() as stack:
+            renderer = None
+            if dynamic:
+                try:
+                    renderer = stack.enter_context(
+                        PlaywrightRenderer(
+                            user_agent=config.user_agent,
+                            timeout_seconds=config.request_timeout * 2,
+                            delay_seconds=config.rate_limit_per_host,
+                            logger=logger,
+                        )
+                    )
+                except RendererUnavailableError as exc:
+                    click.echo(f"crawl failed: {exc}", err=True)
+                    sys.exit(1)
+            try:
+                summary = crawl_stage.run(
+                    config,
+                    checkpoint,
+                    logger,
+                    http_client,
+                    limit=limit,
+                    school_id=school_id,
+                    dynamic=dynamic,
+                    renderer=renderer,
+                    dry_run=dry_run,
+                )
+            except crawl_stage.CrawlError as exc:
+                click.echo(f"crawl failed: {exc}", err=True)
+                sys.exit(1)
     finally:
         transport.close()
 

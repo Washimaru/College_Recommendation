@@ -30,8 +30,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      # Every image defines a HEALTHCHECK; wait for it rather than for the
+      # container merely existing, or `compose up -d` returns while requests
+      # through the chain still 502.
       scoring-service:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "8002:8002"
 
@@ -41,7 +44,7 @@ services:
       RECS_SERVICE_URL: http://recommendation-service:8002
     depends_on:
       recommendation-service:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "8000:8000"
 

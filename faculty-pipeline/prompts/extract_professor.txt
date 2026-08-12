@@ -45,6 +45,16 @@ a page title is the one mistake this pipeline cannot tolerate.
   Doe", not the full string.
 - `title`: their academic/job title (e.g. "Associate Professor of Physics"),
   if stated.
+- `is_faculty`: does this person teach or hold an academic appointment?
+  `true` for professors, lecturers, instructors, adjuncts, artists/writers in
+  residence, postdocs and emeritus faculty — including those who also hold an
+  administrative post ("Dean of the Faculty and Professor of Biology").
+  `false` for administrators and support staff with no teaching role: vice
+  presidents, admissions and communications officers, HR, facilities, coaches.
+  `null` when the page does not say enough to tell. Some university sites list
+  staff and faculty in the same `/people/` directory, so this cannot be
+  inferred from the URL — read the title and the page. Do not guess: `null` is
+  the right answer for a page that never says what the person does.
 - `department`: their department or program, if stated.
 - `email`: ONLY if an email address literally appears on the page (in the
   text above or in the hints) — copy it exactly. Never construct one from the

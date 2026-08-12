@@ -6,6 +6,7 @@ import pytest
 
 from faculty_pipeline.config import Config
 from faculty_pipeline.models import School
+from faculty_pipeline.services import llm
 from faculty_pipeline.services.llm import (
     EXTRACT_TOOL_NAME,
     TOOL_NAME,
@@ -463,3 +464,59 @@ def test_extract_professor_no_tool_use_block_triggers_repair(tmp_path: Path) -> 
 
     assert result["professor_name"] == "Jane Doe"
     assert len(client.messages.calls) == 2
+
+
+class TestIsFacultyCoercion:
+    """`is_faculty` is three-valued on purpose: true, false, and "the page
+    doesn't say". Coercing an unknown to `false` would quietly drop real
+    professors, which is the one direction this pipeline must not fail in."""
+
+    def test_true_survives(self):
+        raw = _extract_payload(is_faculty=True)
+
+        assert llm._coerce_extraction(raw)["is_faculty"] is True
+
+    def test_false_survives(self):
+        raw = _extract_payload(is_faculty=False)
+
+        assert llm._coerce_extraction(raw)["is_faculty"] is False
+
+    def test_null_stays_null(self):
+        raw = _extract_payload(is_faculty=None)
+
+        assert llm._coerce_extraction(raw)["is_faculty"] is None
+
+    def test_a_missing_key_is_unknown_not_false(self):
+        """Extractions cached before this field existed have no key at all."""
+        raw = _extract_payload()
+        raw.pop("is_faculty", None)
+
+        assert llm._coerce_extraction(raw)["is_faculty"] is None
+
+    def test_a_non_boolean_is_unknown_not_false(self):
+        raw = _extract_payload(is_faculty="yes")
+
+        assert llm._coerce_extraction(raw)["is_faculty"] is None
+
+    def test_a_non_profile_carries_no_judgment(self):
+        raw = _extract_payload(is_faculty=True)
+        raw["is_profile"] = False
+
+        assert llm._coerce_extraction(raw)["is_faculty"] is None
+
+
+def _extract_payload(**overrides: object) -> dict:
+    payload = {
+        "is_profile": True,
+        "professor_name": "Jane Doe",
+        "title": "Professor of Biology",
+        "is_faculty": True,
+        "department": "Biology",
+        "email": None,
+        "phone": None,
+        "research_interests": None,
+        "confidence": 0.9,
+        "notes": "clear profile",
+    }
+    payload.update(overrides)
+    return payload

@@ -20,7 +20,7 @@ Legend: `DONE` · `TODO` · `BLOCKED`
 | Faculty pipeline M0–M6 (five stages + `all`) | DONE |
 | Improvement plan Phase 1 Correctness (contract v6.0.0) | DONE |
 | Improvement plan Phase 2 Accessibility and trust | DONE |
-| Improvement plan Phase 3 Finish the faculty pipeline | TODO |
+| Improvement plan Phase 3 Finish the faculty pipeline | DONE |
 | Improvement plan Phase 4 Product features (specs B, C) | TODO |
 
 ## Changelog
@@ -157,6 +157,61 @@ Six correctness items from `~/.claude/plans/ignore-the-press-of-wild-reef.md`.
 All three gaps recorded here — `region` having no SQL `CHECK`, a delisted school
 rendering from its snapshot unmarked, and corrupt `localStorage` recovering
 silently — were closed in Phase 2 below.
+
+## Verification (2026-08-12) — improvement plan Phase 3, faculty pipeline + Docker
+
+- `faculty-pipeline`: 301 tests, ruff clean. `VERIFY: GREEN`, `SMOKE OK`.
+- The pipeline changes were run against live sites, not only fixtures.
+
+### Docker
+
+`docker compose up -d` returned while the chain was still starting, because
+`depends_on` used `service_started` even though every image defines a
+HEALTHCHECK. Now `service_healthy`, and both `smoke.sh` and RUN.md use
+`--wait` so the gateway is answering when the command returns (verified: a
+request immediately after `up -d --wait` returns 200 where it previously
+failed to connect). Added `.dockerignore` to both Python services — each build
+was uploading an 80 MB host `.venv` the image never uses — and a Docker-daemon
+preflight to `smoke.sh`, which now also fails loudly with `compose ps`/logs if
+the gateway never becomes healthy instead of carrying on to a confusing curl
+error. RUN.md's full-stack recipe was broken twice over: it seeded synthetic
+data from `generate.py` rather than the real catalog, and its sample request
+sent `"mbti"`, removed in contract v2.0.0 and rejected by `additionalProperties:
+false`.
+
+### Faculty pipeline
+
+1. **The extractor could not tell a professor from a vice-president.**
+   ArtCenter publishes trustees, alumni and executives in the same `/people/`
+   tree as its faculty, so the first live run exported its Provost, its
+   President and eleven trustees as professors. `utils.classify_role` reads the
+   title (academic rank wins outright; only a clear administrative title is
+   staff; anything else stays unknown and is kept), the CSV carries
+   `is_faculty`, and Stage 5 leaves staff out and counts them in
+   `coverage.csv`. On the live data: 33 of 155 rows excluded, every one
+   checked by hand.
+2. **Department-level discovery.** Campus-level `/faculty` is often HR or
+   marketing. When the campus pass finds nothing, discovery now follows the
+   academics index into departments and takes their people pages. Live:
+   Bowdoin, where every campus-level candidate had been rejected, yields 8
+   department-level candidates.
+3. **The Playwright fallback is built** (`--dynamic`, off by default). It is
+   not just a render: directories of this shape hide the alphabet behind
+   `<a href="#b">` tabs, so the renderer clicks each expander and keeps a
+   snapshot per click. Live on Bard: 19 profile links → 256, no longer
+   alphabetically partial.
+4. **A partial sitemap cluster no longer caps a school.** Bard's sitemap lists
+   only the A-surnames, and the sitemap path skips enumeration as "complete by
+   construction" — so `--dynamic` never fired and the school was capped at 8.
+   A cluster that looks alphabetically partial now enumerates and renders its
+   directory pages too, merging. Live: Bard 8 → 623 profile URLs.
+5. **Caps and staleness.** `crawl --max-profiles N` raises the cap per run
+   rather than by editing the default. Measured on Bard: the 2s/host floor
+   dominates (40 profiles = 77s inside a 3m10s run), so 268 schools at 300
+   profiles each is ~45 hours of crawling; extraction is ~1,300 input tokens
+   per profile. `coverage.csv` now reports `source_urls_fetched` /
+   `source_urls_dead`, and ≥15% dead earns a STALE SOURCE line — Agnes Scott
+   is 15 of 100, ArtCenter 12 of 69.
 
 ## Verification (2026-08-12) — improvement plan Phase 2, accessibility and trust
 

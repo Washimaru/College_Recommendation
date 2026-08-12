@@ -44,7 +44,12 @@ class FetchResult:
     final_url: str
     body: str
     from_cache: bool
-    cache_path: Path
+    # None for a body that was never written to the fetch cache — currently
+    # only headless-rendered directory pages (stages/crawl.py's
+    # _RenderingFetcher), which must not be served back to the static path as
+    # though a plain GET had returned them. Every profile fetch, the only
+    # place this path is read, comes from the real client and always has one.
+    cache_path: Path | None
 
 
 class HttpResponse(Protocol):

@@ -71,7 +71,7 @@ from pathlib import Path
 from ..config import Config
 from ..models import Professor, StageSummary
 from ..services.checkpoint import CheckpointStore
-from ..utils import looks_alphabetically_partial, slugify
+from ..utils import classify_role, looks_alphabetically_partial, slugify
 
 STAGE_NAME = "export"
 
@@ -82,6 +82,7 @@ CSV_COLUMNS = [
     "school_name",
     "professor_name",
     "title",
+    "is_faculty",
     "department",
     "email",
     "phone",
@@ -97,10 +98,27 @@ _COVERAGE_COLUMNS = [
     "school_name",
     "professors_in_csv",
     "professors_below_confidence",
+    "professors_excluded_as_non_faculty",
+    "source_urls_fetched",
+    "source_urls_dead",
     "partial_coverage",
     "capped_at_limit",
     "incomplete",
 ]
+
+
+def resolved_role(professor: Professor) -> bool | None:
+    """The faculty judgment for a row, deriving it from the title when the
+    row does not carry one.
+
+    Rows extracted before `is_faculty` existed have it as `None`, and
+    re-running extract on them would cost an LLM call each for a question the
+    title already answers. Deriving here means the fix applies to data
+    already on disk.
+    """
+    if professor.is_faculty is not None:
+        return professor.is_faculty
+    return classify_role(professor.title)
 
 
 class ExportError(RuntimeError):
@@ -132,11 +150,19 @@ def run(
 
     kept_by_school: dict[str, list[Professor]] = {}
     below_confidence = 0
+    # A named administrator on a `/people/` page is a real person correctly
+    # extracted from a real page — just not a professor. Excluded from the
+    # CSVs, kept in the JSONL, and counted here so the loss is visible.
+    non_faculty_by_school: dict[str, int] = {}
     for school_id, rows in by_school.items():
-        kept = [r for r in rows if r.extraction_confidence >= config.min_confidence]
-        below_confidence += len(rows) - len(kept)
+        faculty = [r for r in rows if resolved_role(r) is not False]
+        non_faculty_by_school[school_id] = len(rows) - len(faculty)
+        kept = [r for r in faculty if r.extraction_confidence >= config.min_confidence]
+        below_confidence += len(faculty) - len(kept)
         if kept:
             kept_by_school[school_id] = kept
+
+    non_faculty = sum(non_faculty_by_school.values())
 
     partial_school_ids = {
         school_id
@@ -145,6 +171,7 @@ def run(
     }
 
     raw_counts = _load_raw_profile_counts(config.data_dir)
+    dead_counts = _load_dead_source_counts(config.data_dir)
     capped_school_ids = {
         school_id
         for school_id in by_school
@@ -173,6 +200,21 @@ def run(
         logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
         notes.append(msg)
 
+    for school_id in sorted(by_school):
+        entry = (dead_counts or {}).get(school_id)
+        if not entry:
+            continue
+        fetched, dead = entry
+        if fetched and dead / fetched >= _STALE_SOURCE_SHARE:
+            msg = (
+                f"{school_id}: STALE SOURCE — {dead} of {fetched} listed profile url(s) "
+                f"({dead / fetched:.0%}) no longer resolve. The rows that made the CSV are "
+                "real; the directory this school publishes is out of date, so treat its "
+                "count as a floor."
+            )
+            logger.warning(msg, extra={"stage": STAGE_NAME, "school_id": school_id})
+            notes.append(msg)
+
     total_rows = sum(len(rows) for rows in kept_by_school.values())
     total_schools = len(by_school)
 
@@ -186,7 +228,7 @@ def run(
             0,
             f"[dry-run] would write {len(kept_by_school)} school CSV(s), {total_rows} row(s) "
             f"total; {below_confidence} row(s) below min_confidence={config.min_confidence}; "
-            "no files written",
+            f"{non_faculty} row(s) excluded as non-faculty; no files written",
         )
         return StageSummary(
             stage=STAGE_NAME,
@@ -218,6 +260,8 @@ def run(
         partial_school_ids,
         capped_school_ids,
         raw_counts,
+        non_faculty_by_school,
+        dead_counts,
     )
 
     notes.insert(0, incomplete_note)
@@ -225,7 +269,8 @@ def run(
         0,
         f"{len(kept_by_school)} school(s), {total_rows} professor(s) written to "
         f"output/master.csv; {below_confidence} row(s) skipped below "
-        f"min_confidence={config.min_confidence}",
+        f"min_confidence={config.min_confidence}; "
+        f"{non_faculty} row(s) excluded as non-faculty (administrators and staff)",
     )
 
     return StageSummary(
@@ -293,6 +338,39 @@ def _load_clean_profiles(
     return professors, malformed
 
 
+def _load_dead_source_counts(data_dir: str | Path) -> dict[str, tuple[int, int]] | None:
+    """`(fetched, dead)` per school from `data/profiles_raw.jsonl`.
+
+    A directory that still lists people the site has deleted is ordinary — 15%
+    of Agnes Scott's sitemap-listed profiles 404, and 17% of ArtCenter's. The
+    crawler already refuses to turn a 404 into a row; this is what says so, so
+    a school whose source listing is a third dead is visibly different from a
+    current one. `None` when the file is absent, for the same reason as
+    `_load_raw_profile_counts`: no evidence is not evidence of zero.
+    """
+    path = Path(data_dir) / "profiles_raw.jsonl"
+    if not path.exists():
+        return None
+    seen: dict[str, dict[str, int]] = defaultdict(dict)
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            record = json.loads(line)
+            school_id = record["school_id"]
+            profile_url = record["profile_url"]
+            status = int(record["http_status"])
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError):
+            continue
+        # Last status wins: a URL refetched after a transient failure is
+        # judged on what it returned most recently.
+        seen[school_id][profile_url] = status
+    return {
+        school_id: (len(statuses), sum(1 for s in statuses.values() if s != 200))
+        for school_id, statuses in seen.items()
+    }
+
+
 def _load_raw_profile_counts(data_dir: str | Path) -> dict[str, int] | None:
     """Distinct `profile_url` count per `school_id` from
     `data/profiles_raw.jsonl`, the durable signal Stage 5 uses to infer
@@ -350,6 +428,32 @@ def _write_csv(path: Path, rows: list[Professor]) -> None:
             writer.writerow(_professor_row(row))
 
 
+# A directory this stale is worth a line in the summary, not just a column.
+_STALE_SOURCE_SHARE = 0.15
+
+
+def _dead_cells(
+    dead_counts: dict[str, tuple[int, int]] | None, school_id: str
+) -> tuple[str, str]:
+    """`(fetched, dead)` as CSV cells, both "unknown" when there is no raw
+    data to read — never "0", which would assert a directory is current on
+    the strength of a missing file."""
+    if dead_counts is None:
+        return "unknown", "unknown"
+    entry = dead_counts.get(school_id)
+    if entry is None:
+        return "unknown", "unknown"
+    fetched, dead = entry
+    return str(fetched), str(dead)
+
+
+def _bool_cell(value: bool | None) -> str:
+    """"true"/"false"/"" — never "None", and never a bare empty string
+    standing in for false. Unknown and not-faculty must stay distinguishable
+    in the CSV, the same way `n/a` and an em dash are in the UI."""
+    return "" if value is None else ("true" if value else "false")
+
+
 def _professor_row(p: Professor) -> list[str]:
     """§4.4 column order. A `None` field becomes an empty CSV cell — never
     the string "None"/"null"/"nan" (the easiest way this dataset could
@@ -359,6 +463,7 @@ def _professor_row(p: Professor) -> list[str]:
         p.school_name,
         p.professor_name,
         _cell(p.title),
+        _bool_cell(resolved_role(p)),
         _cell(p.department),
         _cell(p.email),
         _cell(p.phone),
@@ -381,10 +486,13 @@ def _write_coverage_report(
     partial_school_ids: set[str],
     capped_school_ids: set[str],
     raw_counts: dict[str, int] | None,
+    non_faculty_by_school: dict[str, int],
+    dead_counts: dict[str, tuple[int, int]] | None,
 ) -> None:
     """A sibling report, not a §4.4 column: per-school row counts (both what
     made the CSV and what min_confidence excluded), the partial-coverage
-    flag, and the max_profiles_per_school-truncation flag, so a 17-of-400
+    flag, the count excluded as administrators/staff, and the
+    max_profiles_per_school-truncation flag, so a 17-of-400
     school (or a 100-of-several-hundred school) is visibly different from a
     complete one without lying about it inside the per-professor schema.
     `capped_at_limit` is `"unknown"` (never `"false"`) when `raw_counts` is
@@ -405,7 +513,9 @@ def _write_coverage_report(
                     school_id,
                     school_name,
                     len(kept_rows),
-                    len(all_rows) - len(kept_rows),
+                    len(all_rows) - len(kept_rows) - non_faculty_by_school.get(school_id, 0),
+                    non_faculty_by_school.get(school_id, 0),
+                    *_dead_cells(dead_counts, school_id),
                     "true" if is_partial else "false",
                     capped_cell,
                     "true" if (is_partial or is_capped) else "false",

@@ -52,6 +52,7 @@ from ..config import Config
 from ..models import Professor, RawProfile, School, StageSummary
 from ..services.checkpoint import CheckpointStore
 from ..services.llm import ExtractionFailed, ProfessorExtraction
+from ..utils import classify_role
 
 STAGE_NAME = "extract"
 
@@ -249,6 +250,8 @@ def _extract_one(
             school_name=school.name,
             professor_name=name,
             title=None,
+            # No title to classify from, so the question stays open.
+            is_faculty=None,
             department=hints.get("jsonld_department"),
             email=hints.get("email"),
             phone=hints.get("phone"),
@@ -272,6 +275,7 @@ def _extract_one(
         school_name=school.name,
         professor_name=_strip_boilerplate(name, school.name) or name,
         title=extraction.get("title"),
+        is_faculty=_faculty_judgment(extraction.get("title"), extraction.get("is_faculty")),
         department=extraction.get("department"),
         email=_grounded_email(extraction.get("email"), text, hints),
         phone=_grounded_phone(extraction.get("phone"), text, hints),
@@ -282,6 +286,24 @@ def _extract_one(
         extracted_at=datetime.now(UTC),
     )
     return _ExtractOutcome(professor, "extracted")
+
+
+def _faculty_judgment(title: str | None, llm_says: Any) -> bool | None:
+    """Is this person teaching faculty?
+
+    The title is read deterministically first and wins where it is explicit,
+    for the same reason `email` is grounded against the page: an academic
+    rank written on the page is evidence, and the model's opinion is not. The
+    model's answer is used only where the title says neither — which is also
+    what happens for extractions cached before this field existed, since they
+    simply have no `is_faculty` key.
+    """
+    from_title = classify_role(title)
+    if from_title is not None:
+        return from_title
+    if isinstance(llm_says, bool):
+        return llm_says
+    return None
 
 
 def _clamp01(value: Any) -> float:

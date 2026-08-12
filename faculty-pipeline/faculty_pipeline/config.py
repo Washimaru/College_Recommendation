@@ -87,6 +87,16 @@ class Config:
     # found so far.
     max_directory_pages: int = 20
 
+    # Stage 2 (discover.py) department-level second hop. Campus-level
+    # `/faculty` is often HR or marketing, while the real listing lives under
+    # each department — the plan's own example, `math.mit.edu/directory/
+    # faculty/`, is department-level. When the campus-level pass finds no
+    # candidate at all, discovery follows the academics index into
+    # departments and looks for their people pages. Each department costs up
+    # to two fetches at the 2s/host floor, so the budget is small by default
+    # and the hop only runs when the cheap pass has already failed.
+    max_departments_per_school: int = 8
+
     # Stage 2 (discover.py) sitemap candidate source, services/sitemap.py:
     # some university sitemaps are enormous (sitemap indexes recursing into
     # many leaf sitemaps, leaf sitemaps with tens of thousands of URLs) —
@@ -163,6 +173,7 @@ _INT_FIELDS = {
     "max_profiles_per_school",
     "directory_excerpt_max_chars",
     "max_directory_pages",
+    "max_departments_per_school",
     "max_sitemap_documents",
     "max_sitemap_urls",
 }

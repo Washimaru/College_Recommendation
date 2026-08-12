@@ -22,15 +22,35 @@ cd services/gateway && npm run dev
 ```
 
 ## Full stack
+
+Needs a running Docker daemon (`open -a Docker` on macOS). Each service defines
+a healthcheck and `depends_on` waits for it, so the chain starts in order;
+`--wait` additionally holds until the gateway itself is answering, which plain
+`up -d` does not (nothing depends on the gateway, so compose returns while it
+is still starting and the first request fails to connect).
+
 ```bash
-docker compose up -d --build
-python3 data-pipeline/generate.py --count 100 --seed 42 --out /tmp/unis.json
+docker compose up -d --build --wait
+
+# Build the real 358-school catalog from the committed sources and load it.
+# `out/` is gitignored, so this step is what fills an empty database.
+cd data-pipeline
+.venv/bin/python build_catalog.py
 DATABASE_URL=postgresql://unimatch:unimatch@localhost:5432/unimatch \
-  python3 data-pipeline/load.py --file /tmp/unis.json
+  .venv/bin/python load.py
+cd ..
+
 curl -s -X POST http://localhost:8000/v1/recommendations \
   -H 'content-type: application/json' \
-  -d '{"profile":{"gpa":3.8,"sat":1400,"mbti":"ENFP","intended_major":"Computer Science"},"top_k":5}'
+  -d '{"profile":{"gpa":3.8,"sat":1400,"intended_major":"Computer Science",
+       "culture_prefs":{"research":0.9,"collab":0.8}},"top_k":5}'
 ```
+
+Until `load.py` has run, the recommendation service serves the bundled
+12-school seed and logs that it is doing so — an unseeded database is treated
+as a failed load, never as a catalog of zero schools.
+
+`./scripts/smoke.sh` does all of the above in one command.
 
 ## Tests / gates
 ```bash

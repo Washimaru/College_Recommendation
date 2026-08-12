@@ -190,3 +190,70 @@ def looks_alphabetically_partial(profile_urls: list[str]) -> bool:
         if max(counts.values()) / len(per_slug_initials) >= PARTIAL_CONCENTRATION:
             return True
     return False
+
+
+# --------------------------------------------------------------------------
+# Faculty vs staff
+# --------------------------------------------------------------------------
+
+# The first live run exported ArtCenter's vice-presidents as professors: the
+# crawl found them because that school's sitemap mixes staff into `/people/`,
+# and nothing downstream ever asked whether the person teaches. The title is
+# the only evidence available for that question on a profile page.
+#
+# Ordered deliberately: an academic rank wins outright, because plenty of real
+# professors also hold an administrative post ("Dean of the Faculty and
+# Professor of Biology"). Only a clear administrative title with no academic
+# rank in it is called staff, and anything unrecognised stays unknown rather
+# than being guessed — dropping a real professor is the worse error.
+_ACADEMIC_TITLE_RE = re.compile(
+    r"\b("
+    r"professor|prof\.|lecturer|instructor|faculty|preceptor|"
+    r"artist[- ]in[- ]residence|writer[- ]in[- ]residence|scholar[- ]in[- ]residence|"
+    r"postdoc(?:toral)?|research (?:scientist|professor)|teaching (?:fellow|associate)"
+    r")\b",
+    re.IGNORECASE,
+)
+
+# "Emeritus" on its own is an honour, not an appointment: the first version of
+# this classifier read "Philanthropist; ArtCenter Trustee Emeritus" and called
+# her faculty. It only counts attached to an academic word, which the pattern
+# above already matches on its own ("Professor Emeritus", "Emeritus Faculty").
+
+_ADMIN_TITLE_RE = re.compile(
+    r"\b("
+    r"president|provost|chancellor|registrar|bursar|treasurer|trustee|"
+    r"chief \w+ officer|vice[- ]chancellor|"
+    r"director of (?:admissions?|communications?|marketing|development|advancement|"
+    r"human resources|finance|operations|athletics|facilities|alumni relations)|"
+    r"(?:head |assistant |associate )?coach|"
+    r"administrative (?:assistant|coordinator)|"
+    r"admissions (?:counselor|officer)|"
+    r"human resources|"
+    # ArtCenter publishes trustees, alumni and corporate advisers in the same
+    # /people/ tree as its faculty, so these titles are what a crawl of that
+    # school actually returns. An academic rank still wins over all of them.
+    r"board (?:of trustees|chair|member)|member, board|"
+    r"alumn(?:us|a|i|ae)|philanthropist|"
+    r"chief|founder|executive director|"
+    r"(?:design |managing )?principal, "
+    r")\b",
+    re.IGNORECASE,
+)
+
+
+def classify_role(title: str | None) -> bool | None:
+    """Does this title describe teaching faculty?
+
+    `True` for an academic appointment, `False` for a clear administrative or
+    support role, and `None` when the title says neither — including when
+    there is no title at all. `None` means "keep it, unclassified"; only
+    `False` is treated as grounds to leave a row out of the CSVs.
+    """
+    if not title or not title.strip():
+        return None
+    if _ACADEMIC_TITLE_RE.search(title):
+        return True
+    if _ADMIN_TITLE_RE.search(title):
+        return False
+    return None

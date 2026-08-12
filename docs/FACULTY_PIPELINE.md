@@ -241,6 +241,7 @@ and easy to resume. Final artifacts are CSV.
 | `school_name` | str | denormalized for the CSV |
 | `professor_name` | str | required; row dropped if missing |
 | `title` | str | e.g., "Associate Professor" |
+| `is_faculty` | bool \| null | does this title describe teaching faculty? `true`/`false` when the title says so, empty when it says neither |
 | `department` | str | normalized department name |
 | `email` | str | validated / de-obfuscated where possible |
 | `phone` | str | E.164-ish normalized when present |
@@ -251,6 +252,17 @@ and easy to resume. Final artifacts are CSV.
 | `extracted_at` | ISO8601 | timestamp |
 
 The master CSV is the union of all per-school rows with identical columns.
+
+**Faculty vs staff.** Some schools publish administrators, trustees and alumni
+in the same `/people/` tree as their faculty — ArtCenter's first live run put
+its Provost, its President and eleven trustees into `master.csv` as professors,
+each one a correct extraction from a real page. `utils.classify_role` reads the
+title: an academic rank wins outright (a professor who is also a dean is still
+a professor), a clear administrative title means staff, and anything else stays
+unknown. Stage 5 leaves `false` rows out of every CSV, keeps them in the JSONL
+for audit, and reports the count per school in `coverage.csv`
+(`professors_excluded_as_non_faculty`). Unknown rows are kept and labelled,
+because dropping a real professor is the worse error.
 
 ---
 
@@ -352,9 +364,19 @@ next run). Resumable per school.
 3. `mark_done(profile_url)` after each successful fetch.
 
 **Failure modes:** 404/dead links (log + skip), infinite pagination (page cap),
-JS-rendered directories where static HTML yields no links (flag school as
-`needs_dynamic_render`; optionally fall back to a headless-browser fetch behind a
-config flag). Resumable per profile URL.
+JS-rendered directories where static HTML yields no links — or, more
+dangerously, only its first A-Z section — flag the school
+`needs_dynamic_render`. With `--dynamic` those directory pages are re-read
+through headless Chromium (`services/dynamic.py`) and enumerated again by the
+same link logic; the two sets are merged, so rendering can only add, and a
+failed render leaves the static result untouched. Resumable per profile URL.
+
+The render is not a plain page load: directories of this shape hide the rest of
+the alphabet behind `<a href="#b">` tabs that swap the list by script, so the
+renderer clicks each expander and keeps a snapshot after *every* click (a
+single final snapshot would hold only the last letter). Bard, the case this was
+built for, goes from **19 profile links to 256** and stops reading as
+alphabetically partial.
 
 ### Stage 4 — Extract & Normalize (`extract.py`)
 
@@ -568,11 +590,29 @@ in milestones; commit after each. Suggested prompts to Claude Code, in order:
 
 ## 13. Open Decisions
 
-- **Directory granularity:** campus-wide vs. per-department directories. Default:
-  accept multiple department directories when no single campus page exists.
-- **Dynamic rendering:** enable Playwright fallback globally or per-flagged
-  school. Default: off, opt-in via `--dynamic`.
+- **Directory granularity:** campus-wide vs. per-department directories.
+  *Settled:* when the campus-level pass finds no candidate at all, discovery
+  follows the school's academics index into its departments and takes their
+  people pages (`max_departments_per_school`, default 8). Campus-level `/faculty`
+  is often HR or marketing; Bowdoin, where every campus-level candidate was
+  rejected, yields 8 department-level candidates this way.
+- **Dynamic rendering:** *settled:* off by default, opt-in via `--dynamic`, and
+  applied only to schools whose static crawl came back empty or alphabetically
+  partial. Needs the `dynamic` extra plus `playwright install chromium`.
 - **Confidence threshold** for including a professor row in the CSV. Default:
   0.5, tunable in config.
+- **Crawl caps.** `max_profiles_per_school` stays at 100 by default and is
+  raised per run with `crawl --max-profiles N`, never by editing the default.
+  Measured on Bard (2026-08-12): the 2s/host floor dominates everything —
+  40 profiles took 77s of fetching inside a 3m10s run whose remainder was the
+  headless render of four directory pages. At ~2s per profile, one 600-person
+  school is ~20 minutes, and 268 schools at 300 profiles each would be roughly
+  45 hours of someone else's bandwidth. Extraction adds ~1,300 input tokens
+  per profile (measured: 2,526 chars of cleaned page text on average, plus
+  ~700 of prompt) against `claude-sonnet-5`.
+- **Stale source listings.** Reported, not fixed: `coverage.csv` carries
+  `source_urls_fetched` / `source_urls_dead`, and any school where ≥15% of the
+  listed profiles no longer resolve gets a STALE SOURCE line in the summary.
+  Agnes Scott is 15 of 100, ArtCenter 12 of 69.
 - **Search provider** choice and quota. Default: pluggable adapter, configured in
   `pipeline.yaml`.

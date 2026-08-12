@@ -89,6 +89,17 @@ EXTRACT_PROFESSOR_TOOL: dict[str, Any] = {
                 "description": "Academic/job title stated on the page, e.g. "
                 "'Associate Professor of Physics'. Null if not stated.",
             },
+            "is_faculty": {
+                "type": ["boolean", "null"],
+                "description": (
+                    "True if the person teaches or holds an academic appointment "
+                    "(professor, lecturer, instructor, adjunct, artist in residence, "
+                    "postdoc, emeritus) — including when they also hold an "
+                    "administrative post. False for administrators and support staff "
+                    "with no teaching role (vice presidents, admissions, HR, "
+                    "facilities, coaches). Null when the page does not say."
+                ),
+            },
             "department": {
                 "type": ["string", "null"],
                 "description": "Department or program stated on the page. Null if not stated.",
@@ -131,6 +142,7 @@ EXTRACT_PROFESSOR_TOOL: dict[str, Any] = {
             "is_profile",
             "professor_name",
             "title",
+            "is_faculty",
             "department",
             "email",
             "phone",
@@ -207,7 +219,7 @@ class DirectoryClassification(dict):
 
 class ProfessorExtraction(dict):
     """Raw, UNTRUSTED LLM output for `extract_professor`. Expected keys:
-    `is_profile`, `professor_name`, `title`, `department`, `email`, `phone`,
+    `is_profile`, `professor_name`, `title`, `is_faculty`, `department`, `email`, `phone`,
     `research_interests`, `confidence`, `notes`. Callers (`stages/extract.py`)
     must validate before use — in particular, cross-check `email`/`phone`
     against the actual page text before trusting them; this module only does
@@ -538,6 +550,7 @@ def _coerce_extraction(raw: dict[str, Any]) -> ProfessorExtraction:
             is_profile=False,
             professor_name=None,
             title=None,
+            is_faculty=None,
             department=None,
             email=None,
             phone=None,
@@ -556,6 +569,12 @@ def _coerce_extraction(raw: dict[str, Any]) -> ProfessorExtraction:
         is_profile=True,
         professor_name=name,
         title=_clean_opt_str(raw.get("title")),
+        # Three-valued deliberately. A missing key (an extraction cached
+        # before this field existed) or a non-boolean is "the page doesn't
+        # say", never "not faculty" — coercing unknown to false would drop
+        # real professors, and stages/extract.py reads the title itself
+        # before it ever consults this.
+        is_faculty=_opt_bool(raw.get("is_faculty")),
         department=_clean_opt_str(raw.get("department")),
         email=_clean_opt_str(raw.get("email")),
         phone=_clean_opt_str(raw.get("phone")),
@@ -563,6 +582,10 @@ def _coerce_extraction(raw: dict[str, Any]) -> ProfessorExtraction:
         confidence=confidence,
         notes=_clean_opt_str(raw.get("notes")) or "",
     )
+
+
+def _opt_bool(value: Any) -> bool | None:
+    return value if isinstance(value, bool) else None
 
 
 def _clean_opt_str(value: Any) -> str | None:

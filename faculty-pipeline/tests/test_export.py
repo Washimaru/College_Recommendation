@@ -127,6 +127,9 @@ def test_csv_columns_are_in_exact_section_4_4_order(tmp_path: Path) -> None:
         "school_name",
         "professor_name",
         "title",
+        # Added when the exporter learned to tell faculty from administrators;
+        # docs/FACULTY_PIPELINE.md §4.4 moved with it.
+        "is_faculty",
         "department",
         "email",
         "phone",
@@ -476,14 +479,193 @@ def test_golden_master_csv(tmp_path: Path) -> None:
     # csv.writer's logical rows, not its raw \r\n bytes.
     actual = (Path(config.output_dir) / "master.csv").read_text(encoding="utf-8")
     expected = (
-        "school_id,school_name,professor_name,title,department,email,phone,"
+        "school_id,school_name,professor_name,title,is_faculty,department,email,phone,"
         "research_interests,profile_url,directory_url,extraction_confidence,extracted_at\n"
         "agnes-scott-college,Agnes Scott College,Charlotte Artese,Professor of English,"
-        "English,cartese@agnesscott.edu,,Shakespeare; early modern drama,"
+        "true,English,cartese@agnesscott.edu,,Shakespeare; early modern drama,"
         "https://www.agnesscott.edu/english/artese.html,"
         "https://www.agnesscott.edu/english/,0.98,2026-08-04T18:22:10+00:00\n"
-        "agnes-scott-college,Agnes Scott College,Thalita Abrahao,,,,,,"
+        "agnes-scott-college,Agnes Scott College,Thalita Abrahao,,,,,,,"
         "https://www.agnesscott.edu/faculty/abrahao.html,"
         "https://www.agnesscott.edu/faculty/,0.95,2026-08-04T18:22:10+00:00\n"
     )
     assert actual == expected
+
+
+# -- faculty vs staff ---------------------------------------------------
+
+
+class TestNonFacultyRows:
+    """A named administrator on a `/people/` page is a real extraction and a
+    real person — but not a professor. Rows classified as staff stay in the
+    JSONL for audit and are left out of the CSVs, counted rather than
+    silently dropped."""
+
+    def test_an_administrator_is_left_out_of_the_csv(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_clean(
+            config,
+            [
+                _professor(professor_name="Jane Doe", title="Associate Professor of Biology"),
+                _professor(
+                    professor_name="Rich Admin",
+                    title="Senior Vice President of Advancement",
+                    profile_url="https://www.acme.edu/people/rich-admin",
+                ),
+            ],
+        )
+
+        export.run(config, _checkpoint(config), logger)
+
+        rows = list(csv.DictReader((Path(config.output_dir) / "master.csv").open()))
+        assert [r["professor_name"] for r in rows] == ["Jane Doe"]
+
+    def test_the_excluded_count_is_reported(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_clean(
+            config,
+            [
+                _professor(professor_name="Jane Doe", title="Professor of Biology"),
+                _professor(
+                    professor_name="Rich Admin",
+                    title="Vice President of Student Affairs",
+                    profile_url="https://www.acme.edu/people/rich-admin",
+                ),
+            ],
+        )
+
+        summary = export.run(config, _checkpoint(config), logger)
+
+        assert any("1 row(s) excluded as non-faculty" in note for note in summary.notes)
+
+    def test_an_unclassifiable_title_is_kept(self, tmp_path: Path):
+        """Only a clear administrative title is grounds for exclusion; an
+        unrecognised one is kept and labelled, never guessed away."""
+        config = _config(tmp_path)
+        _write_clean(config, [_professor(professor_name="Pat Curator", title="Curator")])
+
+        export.run(config, _checkpoint(config), logger)
+
+        rows = list(csv.DictReader((Path(config.output_dir) / "master.csv").open()))
+        assert [r["professor_name"] for r in rows] == ["Pat Curator"]
+        assert rows[0]["is_faculty"] == ""
+
+    def test_the_csv_records_the_judgment(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_clean(config, [_professor(title="Professor of Biology")])
+
+        export.run(config, _checkpoint(config), logger)
+
+        rows = list(csv.DictReader((Path(config.output_dir) / "master.csv").open()))
+        assert rows[0]["is_faculty"] == "true"
+
+    def test_coverage_counts_the_excluded_rows_per_school(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_clean(
+            config,
+            [
+                _professor(professor_name="Jane Doe", title="Professor of Biology"),
+                _professor(
+                    professor_name="Rich Admin",
+                    title="Chief Financial Officer",
+                    profile_url="https://www.acme.edu/people/rich-admin",
+                ),
+            ],
+        )
+
+        export.run(config, _checkpoint(config), logger)
+
+        coverage = list(csv.DictReader((Path(config.output_dir) / "coverage.csv").open()))
+        assert coverage[0]["professors_excluded_as_non_faculty"] == "1"
+
+    def test_a_school_of_nothing_but_administrators_writes_no_csv(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_clean(config, [_professor(professor_name="Rich Admin", title="Registrar")])
+
+        export.run(config, _checkpoint(config), logger)
+
+        assert not (Path(config.output_dir) / "by_school" / "acme-college.csv").exists()
+
+
+class TestStaleSourceEntries:
+    """A sitemap that still lists profiles the site has deleted is normal —
+    15% of Agnes Scott's listed profiles 404. The crawler already handles it
+    (a non-200 is recorded and never becomes a row); what was missing was
+    saying so, so a school whose directory is a third dead reads the same as
+    one that is current."""
+
+    def _write_raw(self, config: Config, rows: list[tuple[str, str, int]]) -> None:
+        path = Path(config.data_dir) / "profiles_raw.jsonl"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            "\n".join(
+                json.dumps(
+                    {
+                        "school_id": school_id,
+                        "profile_url": url,
+                        "directory_url": "https://www.acme.edu/faculty",
+                        "http_status": status,
+                        "html_cache_path": "/dev/null",
+                        "fetched_at": "2026-08-04T18:22:10+00:00",
+                        "parse_hint": {},
+                    }
+                )
+                for school_id, url, status in rows
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+
+    def test_coverage_reports_dead_source_urls(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_clean(config, [_professor(title="Professor of Biology")])
+        self._write_raw(
+            config,
+            [
+                ("acme-college", "https://www.acme.edu/faculty/jane-doe", 200),
+                ("acme-college", "https://www.acme.edu/faculty/gone", 404),
+                ("acme-college", "https://www.acme.edu/faculty/also-gone", 404),
+            ],
+        )
+
+        export.run(config, _checkpoint(config), logger)
+
+        coverage = list(csv.DictReader((Path(config.output_dir) / "coverage.csv").open()))
+        assert coverage[0]["source_urls_dead"] == "2"
+        assert coverage[0]["source_urls_fetched"] == "3"
+
+    def test_a_current_directory_reports_zero(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_clean(config, [_professor(title="Professor of Biology")])
+        self._write_raw(
+            config, [("acme-college", "https://www.acme.edu/faculty/jane-doe", 200)]
+        )
+
+        export.run(config, _checkpoint(config), logger)
+
+        coverage = list(csv.DictReader((Path(config.output_dir) / "coverage.csv").open()))
+        assert coverage[0]["source_urls_dead"] == "0"
+
+    def test_unknown_when_the_raw_file_is_missing(self, tmp_path: Path):
+        """Same rule as capped_at_limit: never report "0 dead" from an
+        absence of evidence."""
+        config = _config(tmp_path)
+        _write_clean(config, [_professor(title="Professor of Biology")])
+
+        export.run(config, _checkpoint(config), logger)
+
+        coverage = list(csv.DictReader((Path(config.output_dir) / "coverage.csv").open()))
+        assert coverage[0]["source_urls_dead"] == "unknown"
+
+    def test_a_heavily_stale_directory_is_called_out_in_the_summary(self, tmp_path: Path):
+        config = _config(tmp_path)
+        _write_clean(config, [_professor(title="Professor of Biology")])
+        self._write_raw(
+            config,
+            [("acme-college", f"https://www.acme.edu/faculty/p{i}", 200 if i < 8 else 404)
+             for i in range(20)],
+        )
+
+        summary = export.run(config, _checkpoint(config), logger)
+
+        assert any("STALE" in note and "60%" in note for note in summary.notes)
