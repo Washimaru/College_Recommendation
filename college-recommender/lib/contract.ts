@@ -1,5 +1,5 @@
 /**
- * Mirrors docs/contracts/{profile,recommendation}.schema.json v6.0.0.
+ * Mirrors docs/contracts/{profile,recommendation}.schema.json v7.0.0.
  *
  * The gateway is the validating authority; these types keep the client honest
  * at compile time. Two fields are deliberately absent: `mbti`, removed in
@@ -17,6 +17,13 @@
  * here: this client has never sent either field, and `Profile` below
  * deliberately still omits `weights` rather than mirroring a field the UI
  * has no control for.
+ *
+ * v7.0.0 adds `tuition_in_state` and `programs` to the university shape.
+ * `programs` is federal PCIP data — the share of degrees a school actually
+ * awards — and is the only field here that can support "this school does not
+ * offer X". `majors` cannot: it names strengths, so absence from it means
+ * nothing. `null` programs is "unmeasured"; `[]` is "measured, awards none of
+ * these".
  */
 
 export const CULTURE_AXES = [
@@ -109,6 +116,11 @@ export interface Profile {
   };
 }
 
+export interface Program {
+  name: string;
+  share: number;
+}
+
 export interface UniversitySummary {
   country: string;
   location: string;
@@ -119,6 +131,12 @@ export interface UniversitySummary {
   avg_sat?: number | null;
   acceptance_rate?: number | null;
   net_price?: number | null;
+  /** Out-of-state, which is simply the price at a private school. */
+  sticker_tuition?: number | null;
+  /** In-state; US only, and less than half of sticker_tuition at most publics. */
+  tuition_in_state?: number | null;
+  /** null = unmeasured; [] = measured and awards none of these families. */
+  programs?: Program[] | null;
   enrollment?: number | null;
   size: "small" | "medium" | "large";
   majors: string[];
@@ -178,5 +196,4 @@ export interface University extends UniversitySummary {
   id: string;
   unitid?: string | null;
   name: string;
-  sticker_tuition?: number | null;
 }

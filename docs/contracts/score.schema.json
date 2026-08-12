@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/score.schema.json",
   "title": "RankRequest",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["profile", "universities"],
@@ -50,7 +50,21 @@
         "avg_sat": { "type": ["integer", "null"], "minimum": 400, "maximum": 1600, "description": "Observed only. Never derived from GPA." },
         "acceptance_rate": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
         "net_price": { "type": ["number", "null"], "minimum": 0, "description": "Average annual cost after aid. Renamed from `tuition` in v2.0.0, which conflated net cost with sticker price." },
-        "sticker_tuition": { "type": ["number", "null"], "minimum": 0 },
+        "sticker_tuition": { "type": ["number", "null"], "minimum": 0, "description": "Out-of-state tuition and fees, which is simply the price at a private school. See tuition_in_state." },
+        "tuition_in_state": { "type": ["number", "null"], "minimum": 0, "description": "In-state tuition and fees. US only - null and provenance not_applicable elsewhere. Identical to sticker_tuition at a private school, and less than half of it at most publics." },
+        "programs": {
+          "type": ["array", "null"],
+          "description": "Share of degrees the school actually awards, by 2-digit CIP family, largest first. Zero shares are omitted. Null means unmeasured; an empty array means measured and awarding nothing in these families - the difference is what makes 'this school does not offer X' sayable. Never derived from the editorial `majors` list, which names strengths rather than the full catalogue.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "share"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "share": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        },
         "enrollment": { "type": ["integer", "null"], "minimum": 0, "description": "Undergraduate only, to stay comparable across sources." },
         "size": { "type": "string", "enum": ["small", "medium", "large"] },
         "majors": { "type": "array", "items": { "type": "string" } },

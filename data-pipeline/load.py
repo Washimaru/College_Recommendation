@@ -41,12 +41,13 @@ def load_universities(rows: list[dict], url: str) -> int:
                     INSERT INTO universities (
                         id, unitid, name, country, location, region, setting,
                         type, avg_gpa, avg_sat, acceptance_rate, net_price,
-                        sticker_tuition, enrollment, size, majors, culture,
+                        sticker_tuition, tuition_in_state, programs,
+                        enrollment, size, majors, culture,
                         population, url, net_price_calculator_url, details,
                         provenance
                     )
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                            %s, %s, %s, %s, %s, %s, %s)
+                            %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (id) DO UPDATE SET
                         unitid = EXCLUDED.unitid,
                         name = EXCLUDED.name,
@@ -60,6 +61,8 @@ def load_universities(rows: list[dict], url: str) -> int:
                         acceptance_rate = EXCLUDED.acceptance_rate,
                         net_price = EXCLUDED.net_price,
                         sticker_tuition = EXCLUDED.sticker_tuition,
+                        tuition_in_state = EXCLUDED.tuition_in_state,
+                        programs = EXCLUDED.programs,
                         enrollment = EXCLUDED.enrollment,
                         size = EXCLUDED.size,
                         majors = EXCLUDED.majors,
@@ -73,7 +76,13 @@ def load_universities(rows: list[dict], url: str) -> int:
                     (r["id"], r.get("unitid"), r["name"], r["country"], r["location"],
                      r["region"], r["setting"], r["type"],
                      r["avg_gpa"], r.get("avg_sat"), r.get("acceptance_rate"),
-                     r.get("net_price"), r.get("sticker_tuition"), r.get("enrollment"),
+                     r.get("net_price"), r.get("sticker_tuition"),
+                     r.get("tuition_in_state"),
+                     # Json(None) would write SQL NULL anyway, but an explicit
+                     # None keeps "unmeasured" distinct from the empty list a
+                     # measured school with no matching families gets.
+                     Json(r["programs"]) if r.get("programs") is not None else None,
+                     r.get("enrollment"),
                      r["size"], Json(r["majors"]), Json(r["culture"]),
                      Json(r["population"]) if r.get("population") else None,
                      r.get("url"), r.get("net_price_calculator_url"),

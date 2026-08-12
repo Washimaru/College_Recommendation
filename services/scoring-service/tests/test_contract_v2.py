@@ -12,13 +12,14 @@ from pydantic import ValidationError
 from app.schemas import CONTRACT_VERSION, CulturePrefs, Profile, University
 
 
-def test_contract_version_is_6():
+def test_contract_version_is_7():
     """v3.0.0 added activities and personality; v3.1.0 added country scope;
     v4.0.0 adds place and population fields and removes preferences.locations;
     v5.0.0 adds Profile.gpa_weighted and the extreme_reach admit tier;
     v6.0.0 caps each profile.weights override at 1.0 and enforces the
-    weight_feedback clamp here rather than trusting the caller."""
-    assert CONTRACT_VERSION == "6.0.0"
+    weight_feedback clamp here rather than trusting the caller;
+    v7.0.0 adds University.tuition_in_state and University.programs."""
+    assert CONTRACT_VERSION == "7.0.0"
 
 
 def test_profile_needs_no_mbti():
@@ -122,3 +123,51 @@ def test_population_may_be_absent():
     )
 
     assert uni.population is None
+
+
+class TestContractV7:
+    """v7.0.0 adds the two Phase 4 fields. Both are optional and default to
+    None, so the bundled seed and every existing caller keep working."""
+
+    def _uni(self, **overrides):
+        base = dict(
+            id="um", name="Michigan", country="USA", location="Ann Arbor, MI",
+            region="Midwest", setting="suburban", type="Public",
+            avg_gpa=3.8, size="large", majors=["Engineering"],
+            culture={"collab": 0.5, "quirky": 0.5, "idealist": 0.5,
+                     "research": 0.5, "spirit": 0.5, "seminar": 0.5},
+        )
+        return University(**{**base, **overrides})
+
+    def test_in_state_tuition_is_carried(self):
+        uni = self._uni(tuition_in_state=17736, sticker_tuition=60946)
+
+        assert uni.tuition_in_state == 17736
+        assert uni.sticker_tuition == 60946
+
+    def test_in_state_tuition_defaults_to_unknown(self):
+        assert self._uni().tuition_in_state is None
+
+    def test_a_negative_tuition_is_rejected(self):
+        with pytest.raises(ValidationError):
+            self._uni(tuition_in_state=-1)
+
+    def test_programs_carry_a_name_and_a_share(self):
+        uni = self._uni(programs=[{"name": "Engineering", "share": 0.27}])
+
+        assert uni.programs[0].name == "Engineering"
+        assert uni.programs[0].share == 0.27
+
+    def test_an_empty_program_list_is_not_the_same_as_unmeasured(self):
+        """[] is "we looked and this school awards none of these"; None is
+        "nobody measured". Only the first can support "does not offer X"."""
+        assert self._uni(programs=[]).programs == []
+        assert self._uni().programs is None
+
+    def test_a_share_above_one_is_rejected(self):
+        with pytest.raises(ValidationError):
+            self._uni(programs=[{"name": "Engineering", "share": 1.5}])
+
+    def test_a_program_needs_a_name(self):
+        with pytest.raises(ValidationError):
+            self._uni(programs=[{"share": 0.5}])

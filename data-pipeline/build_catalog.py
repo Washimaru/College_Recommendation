@@ -88,7 +88,7 @@ def enrich(record: dict, row: dict | None) -> dict:
         "type": "editorial",
     }
 
-    avg_sat = acceptance_rate = enrollment = sticker = None
+    avg_sat = acceptance_rate = enrollment = sticker = tuition_in_state = None
     net_price = record.get("net_price")
     provenance["net_price"] = "editorial" if net_price is not None else "absent"
 
@@ -97,6 +97,7 @@ def enrich(record: dict, row: dict | None) -> dict:
         acceptance_rate = parse_number(row.get("ADM_RATE"))
         enrollment = parse_number(row.get("UGDS"))
         sticker = parse_number(row.get("TUITIONFEE_OUT"))
+        tuition_in_state = parse_number(row.get("TUITIONFEE_IN"))
         observed_net = coalesce_net_price(row)
         if observed_net is not None:
             net_price = observed_net
@@ -110,6 +111,19 @@ def enrich(record: dict, row: dict | None) -> dict:
     provenance["acceptance_rate"] = "observed" if acceptance_rate is not None else "absent"
     provenance["enrollment"] = "observed" if enrollment is not None else "absent"
     provenance["sticker_tuition"] = "observed" if sticker is not None else "absent"
+    # "In state" is a US concept, and at a private school it is simply the same
+    # price as everyone else pays - which the data confirms: all 154 private
+    # schools here report identical in- and out-of-state figures.
+    if tuition_in_state is not None:
+        provenance["tuition_in_state"] = "observed"
+    else:
+        provenance["tuition_in_state"] = "absent" if is_us else "not_applicable"
+
+    programs = awarded_programs(row)
+    if programs is not None:
+        provenance["programs"] = "observed"
+    else:
+        provenance["programs"] = "absent" if is_us else "not_applicable"
 
     outcomes = extract_outcomes(row)
     provenance["outcomes"] = "observed" if outcomes else "absent"
@@ -134,6 +148,8 @@ def enrich(record: dict, row: dict | None) -> dict:
         "acceptance_rate": acceptance_rate,
         "net_price": net_price,
         "sticker_tuition": sticker,
+        "tuition_in_state": tuition_in_state,
+        "programs": programs,
         "enrollment": int(enrollment) if enrollment is not None else None,
         "size": size_band(fallback_size),
         "majors": record["majors"],
@@ -146,19 +162,90 @@ def enrich(record: dict, row: dict | None) -> dict:
     }
 
 
+# 2-digit CIP family names, as the Scorecard data dictionary defines them.
+# Kept here rather than in the frontend so one list serves the catalog, the
+# services and the UI.
+CIP_FAMILIES = {
+    "PCIP01": "Agriculture",
+    "PCIP03": "Natural Resources & Conservation",
+    "PCIP04": "Architecture",
+    "PCIP05": "Area, Ethnic & Gender Studies",
+    "PCIP09": "Communication & Journalism",
+    "PCIP10": "Communications Technologies",
+    "PCIP11": "Computer & Information Sciences",
+    "PCIP12": "Personal & Culinary Services",
+    "PCIP13": "Education",
+    "PCIP14": "Engineering",
+    "PCIP15": "Engineering Technologies",
+    "PCIP16": "Foreign Languages & Linguistics",
+    "PCIP19": "Family & Consumer Sciences",
+    "PCIP22": "Legal Studies",
+    "PCIP23": "English Language & Literature",
+    "PCIP24": "Liberal Arts & Humanities",
+    "PCIP25": "Library Science",
+    "PCIP26": "Biological & Biomedical Sciences",
+    "PCIP27": "Mathematics & Statistics",
+    "PCIP29": "Military Technologies",
+    "PCIP30": "Interdisciplinary Studies",
+    "PCIP31": "Parks, Recreation & Fitness",
+    "PCIP38": "Philosophy & Religious Studies",
+    "PCIP39": "Theology & Religious Vocations",
+    "PCIP40": "Physical Sciences",
+    "PCIP41": "Science Technologies",
+    "PCIP42": "Psychology",
+    "PCIP43": "Homeland Security & Law Enforcement",
+    "PCIP44": "Public Administration & Social Service",
+    "PCIP45": "Social Sciences",
+    "PCIP46": "Construction Trades",
+    "PCIP47": "Mechanic & Repair Technologies",
+    "PCIP48": "Precision Production",
+    "PCIP49": "Transportation & Materials Moving",
+    "PCIP50": "Visual & Performing Arts",
+    "PCIP51": "Health Professions",
+    "PCIP52": "Business, Management & Marketing",
+    "PCIP54": "History",
+}
+
+
+def awarded_programs(row: dict | None) -> list[dict] | None:
+    """Degree families a school actually awards, largest share first.
+
+    `None` means nobody measured; `[]` means measured and awarding nothing in
+    these families. The distinction is the whole point: only a measured list
+    can support "this school does not offer X", and the editorial `majors`
+    list cannot, because it names strengths rather than the full catalogue.
+    A zero share is omitted rather than listed as 0.0 - "not awarded" is the
+    absence of an entry, so a reader cannot mistake it for a tiny programme.
+    """
+    if row is None:
+        return None
+    programs = []
+    for column, name in CIP_FAMILIES.items():
+        share = parse_number(row.get(column))
+        if share:
+            programs.append({"name": name, "share": round(share, 4)})
+    programs.sort(key=lambda p: (-p["share"], p["name"]))
+    return programs
+
+
 # Only these columns are read. The committed cache keeps just these, so it stays
 # small enough to review in a diff instead of being a 95 MB blob.
 CACHED_COLUMNS = (
     "UNITID", "INSTNM", "CITY", "STABBR",
     "ADM_RATE", "SAT_AVG", "UGDS",
-    "NPT4_PUB", "NPT4_PRIV", "TUITIONFEE_OUT",
+    # Both tuition figures. For 110 of the 113 public schools in this catalog
+    # the in-state price is less than half the out-of-state one, so carrying
+    # only one of them misstates the cost of a public university by tens of
+    # thousands of dollars. They are identical at every private school here,
+    # which is why one column looked sufficient for so long.
+    "NPT4_PUB", "NPT4_PRIV", "TUITIONFEE_OUT", "TUITIONFEE_IN",
     # Outcomes: what happens after graduation. Federal, and available for
     # 97-99% of matched schools - far better coverage than curated prose.
     "C150_4", "MD_EARN_WNE_P10", "MD_EARN_WNE_P6",
     "GRAD_DEBT_MDN", "PCTPELL", "PCTFLOAN",
     # Student-body composition and the school's own links.
     "UGDS_NRA", "UGDS_WOMEN", "FIRST_GEN", "INSTURL", "NPCURL",
-)
+) + tuple(CIP_FAMILIES)
 
 _OUTCOME_COLUMNS = {
     "graduation_rate": "C150_4",

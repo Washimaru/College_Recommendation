@@ -21,7 +21,7 @@ Legend: `DONE` · `TODO` · `BLOCKED`
 | Improvement plan Phase 1 Correctness (contract v6.0.0) | DONE |
 | Improvement plan Phase 2 Accessibility and trust | DONE |
 | Improvement plan Phase 3 Finish the faculty pipeline | DONE |
-| Improvement plan Phase 4 Product features (specs B, C) | TODO |
+| Improvement plan Phase 4 Product features (specs B, C) | DONE |
 
 ## Changelog
 
@@ -157,6 +157,61 @@ Six correctness items from `~/.claude/plans/ignore-the-press-of-wild-reef.md`.
 All three gaps recorded here — `region` having no SQL `CHECK`, a delisted school
 rendering from its snapshot unmarked, and corrupt `localStorage` recovering
 silently — were closed in Phase 2 below.
+
+## Verification (2026-08-12) — improvement plan Phase 4, contract v7.0.0
+
+- **T2** `VERIFY: GREEN`. **T4** `SMOKE OK: R1_converged 5 results` against a
+  volume recreated from the amended schema.
+- **T3** scoring 100.00% (114 tests), recommendation 96.07% (65), data-pipeline
+  87, gateway 96.31% (30), `college-recommender` 190 at 80.38% statements.
+  Lint clean in all five projects.
+- In Postgres: 265 of 268 US schools carry `tuition_in_state`, 268 carry
+  `programs`, and **0** non-US schools carry either.
+
+### The plan's premise for spec B was wrong
+
+It said in-state cost "needs an IPEDS join that Scorecard alone does not
+provide". `TUITIONFEE_IN` is in the same Scorecard file the catalog already
+reads — the cache simply never kept the column. So are all 38 `PCIP*` columns
+spec C needs. No new source was required; the fix was to widen
+`CACHED_COLUMNS` and refresh.
+
+### What changed
+
+1. **Both tuition figures** (`tuition_in_state`, contract v7.0.0 across all
+   five mirrors, the DB, and the UI). For 111 of 113 public schools the
+   in-state price is less than half the out-of-state one — Michigan is $17,736
+   against $60,946 — and the catalog had been showing only the larger number.
+   Every one of the 154 private US schools reports the two as identical, which
+   is why one column looked sufficient; the modal shows a single "Tuition" row
+   in that case rather than inventing a distinction the school does not make.
+2. **What a school actually awards** (`programs`), from the federal `PCIP*`
+   shares: `{name, share}` per 2-digit CIP family, largest first. `null` means
+   unmeasured, `[]` means measured and awarding none of them. This is the only
+   field in the data model where absence carries information, and the reason
+   spec C insisted on it: `majors` lists strengths, so reading absence from it
+   would claim MIT has no philosophy department — it awards 1.6% of its degrees
+   there.
+3. **The Scorecard cache was refreshed** to the 2026-06-10 release while adding
+   the columns. Every school's figures moved, some substantially (Spelman:
+   acceptance rate 52.6% → 24.9%, enrolment 2,206 → 3,414, mean SAT 1,129 →
+   1,220). This is a newer vintage of the whole dataset, not just two new
+   columns.
+4. **A third rename of the same school.** UNITID 196060 is "University at
+   Albany" again, having been "SUNY at Albany" in the previous release; the
+   alias was stale and the school had silently dropped out of the refreshed
+   cache. `aliases.json` now records that INSTNM is not stable across releases
+   and that an unmatched school is usually a rename rather than a closure.
+
+### Not built, and why
+
+The plan's third Phase 4 item — surfacing faculty `partial_coverage` in the UI —
+is blocked by a deliberate constraint rather than by effort. The faculty CSVs
+stay gitignored because this repo is public and `master.csv` aggregates hundreds
+of named academics' contact details; shipping that dataset to a browser is the
+one thing the pipeline's own rules forbid. It also currently covers 3 schools.
+Serving it needs an authenticated endpoint, which is a product decision, not a
+UI task.
 
 ## Verification (2026-08-12) — improvement plan Phase 3, faculty pipeline + Docker
 

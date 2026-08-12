@@ -10,7 +10,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "6.0.0"
+CONTRACT_VERSION = "7.0.0"
 
 Size = Literal["small", "medium", "large"]
 Scope = Literal["usa", "international", "both"]
@@ -20,6 +20,21 @@ Provenance = Literal["observed", "web_verified", "editorial", "not_applicable", 
 Region = Literal["Northeast", "South", "West", "Midwest", "International"]
 Setting = Literal["urban", "suburban", "rural"]
 InstitutionType = Literal["Public", "Private"]
+
+
+class Program(BaseModel):
+    """One 2-digit CIP family and the share of degrees awarded in it.
+
+    Derived only from the federal PCIP columns, never from the editorial
+    `majors` list: that list names a school's strengths, so absence from it is
+    not evidence of anything. This is what lets a client say "awards no degrees
+    in X" without inventing the claim.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(min_length=1)
+    share: float = Field(ge=0, le=1)
 
 
 class Population(BaseModel):
@@ -131,7 +146,13 @@ class University(BaseModel):
     avg_sat: int | None = Field(default=None, ge=400, le=1600)
     acceptance_rate: float | None = Field(default=None, ge=0, le=1)
     net_price: float | None = Field(default=None, ge=0)
+    # Out-of-state, which is simply the price at a private school.
     sticker_tuition: float | None = Field(default=None, ge=0)
+    # US only; not_applicable elsewhere. At most public schools this is
+    # less than half of sticker_tuition.
+    tuition_in_state: float | None = Field(default=None, ge=0)
+    # None = unmeasured, [] = measured and awards none of these families.
+    programs: list[Program] | None = None
     enrollment: int | None = Field(default=None, ge=0)
     size: Size
     majors: list[str] = Field(default_factory=list)
@@ -171,6 +192,12 @@ class UniversitySummary(BaseModel):
     avg_sat: int | None = None
     acceptance_rate: float | None = None
     net_price: float | None = None
+    # Both tuition figures travel with the summary: a match card shows what a
+    # school costs, and for a public university the out-of-state price alone
+    # is off by tens of thousands.
+    sticker_tuition: float | None = None
+    tuition_in_state: float | None = None
+    programs: list[Program] | None = None
     enrollment: int | None = None
     size: Size
     majors: list[str] = Field(default_factory=list)

@@ -1,5 +1,5 @@
 {
-  "_comment": "Hand-curated tier-1 name -> College Scorecard INSTNM. Normalization alone matches 233/274 US schools (85%); these close the remainder. Flagship/main campus is chosen where a system has several. Fuzzy matching is deliberately not used: at this scale a wrong automatic match is worse than a manual entry. Schools absent from Scorecard entirely are listed in _unmatched below and stay null rather than being force-matched.",
+  "_comment": "Hand-curated tier-1 name -> College Scorecard INSTNM. Normalization alone matches 233/274 US schools (85%); these close the remainder. Flagship/main campus is chosen where a system has several. Fuzzy matching is deliberately not used: at this scale a wrong automatic match is worse than a manual entry. Schools absent from Scorecard entirely are listed in _unmatched below and stay null rather than being force-matched. Note that INSTNM is not stable across releases: UNITID 196060 has been 'University at Albany', then 'SUNY at Albany', and is 'University at Albany' again in the 2026-06-10 file. A refresh that reports a school unmatched is usually a rename, not a closure - check the new file for the UNITID before assuming the school is gone.",
 
   "Arizona State University": "Arizona State University Campus Immersion",
   "Binghamton University (SUNY)": "Binghamton University",
@@ -23,7 +23,7 @@
   "The New School (Parsons)": "The New School",
   "Tulane University": "Tulane University of Louisiana",
   "United States Military Academy (West Point)": "United States Military Academy",
-  "University at Albany (SUNY)": "SUNY at Albany",
+  "University at Albany (SUNY)": "University at Albany",
   "University at Buffalo (SUNY)": "University at Buffalo",
   "University of Maryland": "University of Maryland-College Park",
   "University of Michigan": "University of Michigan-Ann Arbor",

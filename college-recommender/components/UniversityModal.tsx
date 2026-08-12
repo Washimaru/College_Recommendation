@@ -52,6 +52,10 @@ export function UniversityModal({
 
   const uni = university;
   const tier = tierLabel(admitTier);
+  const sameTuition =
+    uni.tuition_in_state != null &&
+    uni.sticker_tuition != null &&
+    uni.tuition_in_state === uni.sticker_tuition;
 
   return (
     <div
@@ -101,7 +105,68 @@ export function UniversityModal({
             provenance={uni.provenance.enrollment}
             kind="number"
           />
+          {/*
+            Two prices only where there genuinely are two. Every private school
+            in the catalog reports the same figure for both, so showing an
+            "in state" row there would invent a distinction the school does not
+            make — while showing only the out-of-state price at a public one
+            overstates the cost to a resident by tens of thousands.
+          */}
+          {sameTuition ? (
+            <Stat
+              label="Tuition"
+              value={uni.sticker_tuition}
+              provenance={uni.provenance.sticker_tuition}
+              kind="money"
+            />
+          ) : (
+            <>
+              {uni.tuition_in_state != null && (
+                <Stat
+                  label="Tuition (in state)"
+                  value={uni.tuition_in_state}
+                  provenance={uni.provenance.tuition_in_state}
+                  kind="money"
+                />
+              )}
+              <Stat
+                label={
+                  uni.tuition_in_state != null ? "Tuition (out of state)" : "Tuition"
+                }
+                value={uni.sticker_tuition}
+                provenance={uni.provenance.sticker_tuition}
+                kind="money"
+              />
+            </>
+          )}
         </dl>
+
+        {uni.programs !== null && uni.programs !== undefined && (
+          <>
+            <h3 style={{ marginTop: 24, fontSize: 14, letterSpacing: 0.3 }}>
+              Degrees awarded
+            </h3>
+            <p className="muted" style={{ fontSize: 12.5, margin: "0 0 12px" }}>
+              Federal data on the degrees this school actually awards, by share.
+              Unlike the strengths listed above, this is complete — so a field
+              that is missing here is one the school does not award degrees in.
+            </p>
+            {uni.programs.length === 0 ? (
+              <p style={{ fontSize: 13.5, margin: 0 }}>
+                This school awards no degrees in any of the fields the federal
+                data covers.
+              </p>
+            ) : (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {uni.programs.slice(0, 12).map((program) => (
+                  <span key={program.name} className="chip">
+                    {program.name} · {Math.round(program.share * 100)}%
+                  </span>
+                ))}
+              </div>
+            )}
+          </>
+        )}
 
         <h3 style={{ marginTop: 24, fontSize: 14, letterSpacing: 0.3 }}>Campus culture</h3>
         <p className="muted" style={{ fontSize: 12.5, margin: "0 0 12px" }}>

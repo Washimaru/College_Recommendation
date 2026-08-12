@@ -318,3 +318,87 @@ class TestPopulation:
 
         assert record["url"] == "web.mit.edu/"
         assert record["net_price_calculator_url"].endswith("/app/mit")
+
+
+class TestTuitionInState:
+    """Spec B. The out-of-state figure alone misstates a public university by
+    tens of thousands of dollars: Alabama is $12,180 in state and $34,172 out.
+    Both come from the same Scorecard row the catalog already reads — no IPEDS
+    join, contrary to the plan that asked for this."""
+
+    def test_both_tuition_figures_are_carried(self):
+        record = enrich(
+            {**NON_US, "country": "USA"},
+            {**US_ROW, "TUITIONFEE_IN": "12180", "TUITIONFEE_OUT": "34172"},
+        )
+
+        assert record["tuition_in_state"] == 12180
+        assert record["sticker_tuition"] == 34172
+
+    def test_an_absent_in_state_price_is_null_not_the_out_of_state_one(self):
+        record = enrich(
+            {**NON_US, "country": "USA"},
+            {**US_ROW, "TUITIONFEE_IN": "NULL", "TUITIONFEE_OUT": "34172"},
+        )
+
+        assert record["tuition_in_state"] is None
+        assert record["provenance"]["tuition_in_state"] == "absent"
+
+    def test_it_is_observed_when_present(self):
+        record = enrich(
+            {**NON_US, "country": "USA"}, {**US_ROW, "TUITIONFEE_IN": "12180"}
+        )
+
+        assert record["provenance"]["tuition_in_state"] == "observed"
+
+    def test_a_non_us_school_has_no_in_state_price_to_report(self):
+        """"In-state" is a US concept; abroad it does not apply, which must
+        read differently from a missing US figure."""
+        record = enrich(NON_US, None)
+
+        assert record["tuition_in_state"] is None
+        assert record["provenance"]["tuition_in_state"] == "not_applicable"
+
+
+class TestProgramsAwarded:
+    """Spec C. The editorial `majors` list names a school's strengths, so
+    absence from it proves nothing — reading it that way would have the catalog
+    claim MIT has no philosophy department. Scorecard's PCIP columns are the
+    share of degrees a school actually awards, so they can carry that claim."""
+
+    def test_awarded_programs_are_named_and_shared(self):
+        record = enrich(
+            {**NON_US, "country": "USA"},
+            {**US_ROW, "PCIP11": "0.25", "PCIP14": "0.5", "PCIP38": "0"},
+        )
+
+        assert record["programs"] == [
+            {"name": "Engineering", "share": 0.5},
+            {"name": "Computer & Information Sciences", "share": 0.25},
+        ]
+
+    def test_a_zero_share_is_omitted_rather_than_listed_as_zero(self):
+        record = enrich({**NON_US, "country": "USA"}, {**US_ROW, "PCIP38": "0"})
+
+        assert all(p["name"] != "Philosophy & Religious Studies" for p in record["programs"])
+
+    def test_an_empty_list_means_awards_none_of_these(self):
+        """Distinct from null: an empty list is a school Scorecard measured
+        and found awarding nothing in these families, which is what makes
+        "does not offer X" sayable at all."""
+        record = enrich({**NON_US, "country": "USA"}, {**US_ROW, "PCIP11": "0"})
+
+        assert record["programs"] == []
+        assert record["provenance"]["programs"] == "observed"
+
+    def test_no_scorecard_row_means_unknown_not_empty(self):
+        record = enrich({**NON_US, "country": "USA"}, None)
+
+        assert record["programs"] is None
+        assert record["provenance"]["programs"] == "absent"
+
+    def test_a_non_us_school_is_not_applicable(self):
+        record = enrich(NON_US, None)
+
+        assert record["programs"] is None
+        assert record["provenance"]["programs"] == "not_applicable"

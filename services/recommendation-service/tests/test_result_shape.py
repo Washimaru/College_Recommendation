@@ -83,3 +83,27 @@ def test_summary_carries_majors_and_culture_for_the_detail_view(profile):
 
     assert alpha.university.majors == ["Computer Science"]
     assert alpha.university.culture.research == 0.5
+
+
+def test_the_summary_carries_the_v7_cost_and_program_fields():
+    """A match card shows what a school costs and what it teaches, so the
+    summary has to carry both — an omission here is invisible until the UI
+    silently renders an em dash for a school that has the data."""
+    from app.loop import _summarize
+    from app.schemas import University
+
+    uni = University(
+        id="um", name="Michigan", country="USA", location="Ann Arbor, MI",
+        region="Midwest", setting="suburban", type="Public",
+        avg_gpa=3.8, size="large", majors=["Engineering"],
+        culture={"collab": 0.5, "quirky": 0.5, "idealist": 0.5,
+                 "research": 0.5, "spirit": 0.5, "seminar": 0.5},
+        sticker_tuition=60946, tuition_in_state=17736,
+        programs=[{"name": "Engineering", "share": 0.14}],
+    )
+
+    summary = _summarize(uni)
+
+    assert summary.tuition_in_state == 17736
+    assert summary.sticker_tuition == 60946
+    assert summary.programs[0].name == "Engineering"

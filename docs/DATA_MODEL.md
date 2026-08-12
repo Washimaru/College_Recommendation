@@ -1,7 +1,7 @@
 # Data Model
 
 Contracts in `docs/contracts/*.json` are the wire source of truth, currently at
-**v6.0.0**. This file describes the domain entities behind them.
+**v7.0.0**. This file describes the domain entities behind them.
 
 The governing rule, everywhere below: **a missing value is `null`.** It is never
 derived, inferred, estimated, or defaulted to zero. `provenance` records where
@@ -43,9 +43,9 @@ never fire in practice).
 
 `id`, `unitid`, `name`, `country`, `location`, `region`, `setting`, `type`,
 `avg_gpa`, `avg_sat`, `acceptance_rate` (0–1), `net_price`, `sticker_tuition`,
-`enrollment`, `size`, `majors[]`, `culture`, `population`, `url`,
-`net_price_calculator_url`, `details`, `provenance`. Persisted in the
-`universities` table (`db/schema.sql`).
+`tuition_in_state`, `programs[]`, `enrollment`, `size`, `majors[]`, `culture`,
+`population`, `url`, `net_price_calculator_url`, `details`, `provenance`.
+Persisted in the `universities` table (`db/schema.sql`).
 
 Notes that matter:
 
@@ -58,10 +58,23 @@ Notes that matter:
   `provenance.population = "not_applicable"`, because the federal dataset does
   not cover them. Individual shares can also be null where the source said
   `PrivacySuppressed`.
+- `sticker_tuition` is the **out-of-state** price, which at a private school is
+  simply the price. `tuition_in_state` is its US-only counterpart: `null` with
+  `provenance.tuition_in_state = "not_applicable"` for every non-US school, and
+  identical to `sticker_tuition` at all 154 private US schools here. For 111 of
+  113 publics it is less than half — Michigan is $17,736 against $60,946 — so a
+  UI that shows one figure alone misstates a public university badly.
 - `majors[]` holds a median of ~6 editorial **strengths**, not a course catalog.
   Absence from this list does **not** mean a school lacks the subject — deriving
   "what a school doesn't offer" from it would wrongly claim MIT has no
-  Philosophy department. Scorecard's `PCIP*` columns are the honest route.
+  Philosophy department (it awards 1.6% of its degrees there).
+- `programs[]` is that honest route, added in v7.0.0: `{name, share}` per
+  2-digit CIP family from Scorecard's `PCIP*` columns, largest share first,
+  zero shares omitted. `null` means unmeasured (every non-US school, where
+  provenance reads `not_applicable`); `[]` means measured and awarding nothing
+  in these families. Because it is complete rather than curated, a family
+  missing from a non-null list **is** a claim the school does not award degrees
+  there — the one place in this data model where absence carries information.
 - `provenance` maps a field to `observed` | `web_verified` | `editorial` |
   `not_applicable` | `absent`.
 

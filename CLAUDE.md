@@ -192,7 +192,7 @@ these runtime conditions live solely in code.
 ## Contracts are law
 
 `docs/contracts/{profile,score,recommendation}.schema.json` (all `version`
-**`6.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
+**`7.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
 **Four** mirrors must move with them, in the same change:
 
 - `services/scoring-service/app/schemas.py`
@@ -205,6 +205,17 @@ Changing a shape without a version bump and all four mirrors is contract drift
 (H3) — stop and surface it.
 
 What the recent versions changed:
+
+**v7.0.0** added `University.tuition_in_state` and `University.programs`.
+`sticker_tuition` is the *out-of-state* price (and simply the price at a
+private school); for 111 of 113 public schools the in-state figure is less than
+half of it, so showing one number alone misstated a public university by tens
+of thousands. `programs` is the federal PCIP share of degrees a school actually
+awards: `null` means unmeasured, `[]` means measured and awarding none of these
+families. **It is the only field that can support "this school does not offer
+X."** `majors` cannot — it lists strengths, so absence from it would have the
+catalog claim MIT has no philosophy department (it awards 1.6% of its degrees
+there).
 
 **v6.0.0** bounded the public weight override. Each `profile.weights` field is
 now `[0, 1]` — a weight is a share of the rubric, and scoring normalises by

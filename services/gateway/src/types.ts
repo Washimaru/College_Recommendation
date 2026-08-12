@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "6.0.0";
+export const CONTRACT_VERSION = "7.0.0";
 
 export const RegionSchema = z.enum([
   "Northeast",
@@ -144,6 +144,18 @@ export const ProvenanceSchema = z.enum([
  * deliberate: `provenance` says whether a null means "does not apply here"
  * or "we don't know". Neither may render as a zero.
  */
+/**
+ * One 2-digit CIP family and the share of degrees awarded in it. Federal
+ * PCIP data only — never the editorial `majors` list, which names strengths,
+ * so absence from it proves nothing.
+ */
+export const ProgramSchema = z
+  .object({
+    name: z.string().min(1),
+    share: z.number().min(0).max(1),
+  })
+  .strict();
+
 export const UniversitySummarySchema = z
   .object({
     country: z.string(),
@@ -158,6 +170,12 @@ export const UniversitySummarySchema = z
     avg_sat: z.number().int().min(400).max(1600).nullable().optional(),
     acceptance_rate: z.number().min(0).max(1).nullable().optional(),
     net_price: z.number().min(0).nullable().optional(),
+    /** Out-of-state, which is simply the price at a private school. */
+    sticker_tuition: z.number().min(0).nullable().optional(),
+    /** In-state; US only, and less than half of sticker_tuition at most publics. */
+    tuition_in_state: z.number().min(0).nullable().optional(),
+    /** null = unmeasured; [] = measured and awards none of these families. */
+    programs: z.array(ProgramSchema).nullable().optional(),
     enrollment: z.number().int().min(0).nullable().optional(),
     size: z.enum(["small", "medium", "large"]),
     majors: z.array(z.string()).default([]),
@@ -225,6 +243,8 @@ export const UniversitySchema = z
     acceptance_rate: z.number().min(0).max(1).nullable().optional(),
     net_price: z.number().min(0).nullable().optional(),
     sticker_tuition: z.number().min(0).nullable().optional(),
+    tuition_in_state: z.number().min(0).nullable().optional(),
+    programs: z.array(ProgramSchema).nullable().optional(),
     enrollment: z.number().int().nullable().optional(),
     size: z.enum(["small", "medium", "large"]),
     majors: z.array(z.string()).default([]),

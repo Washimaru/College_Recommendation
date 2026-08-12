@@ -19,7 +19,12 @@ CREATE TABLE IF NOT EXISTS universities (
     avg_sat         INTEGER     CHECK (avg_sat BETWEEN 400 AND 1600),
     acceptance_rate NUMERIC(4,3) CHECK (acceptance_rate >= 0 AND acceptance_rate <= 1),
     net_price       NUMERIC(9,2) CHECK (net_price >= 0),   -- cost after aid
-    sticker_tuition NUMERIC(9,2) CHECK (sticker_tuition >= 0),
+    sticker_tuition NUMERIC(9,2) CHECK (sticker_tuition >= 0),   -- out-of-state
+    tuition_in_state NUMERIC(9,2) CHECK (tuition_in_state >= 0),  -- US only; NULL elsewhere
+    -- Share of degrees actually awarded, by 2-digit CIP family. NULL means
+    -- unmeasured; '[]' means measured and awarding none of them, which is the
+    -- only basis on which "this school does not offer X" can be said.
+    programs        JSONB,
     enrollment      INTEGER     CHECK (enrollment >= 0),   -- undergraduate only
     size            TEXT        NOT NULL CHECK (size IN ('small','medium','large')),
     majors          JSONB       NOT NULL DEFAULT '[]'::jsonb,

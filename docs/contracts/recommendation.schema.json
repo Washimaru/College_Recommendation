@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/recommendation.schema.json",
   "title": "RecommendationResponse",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["results", "confidence", "stop_reason", "trace"],
@@ -73,6 +73,20 @@
         "avg_sat": { "type": ["integer", "null"], "minimum": 400, "maximum": 1600 },
         "acceptance_rate": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
         "net_price": { "type": ["number", "null"], "minimum": 0 },
+        "tuition_in_state": { "type": ["number", "null"], "minimum": 0, "description": "In-state tuition and fees. US only; null and provenance not_applicable elsewhere." },
+        "programs": {
+          "type": ["array", "null"],
+          "description": "Share of degrees actually awarded by 2-digit CIP family, largest first. Null means unmeasured; [] means measured and awarding none of these.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "share"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "share": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        },
         "enrollment": { "type": ["integer", "null"], "minimum": 0 },
         "size": { "type": "string", "enum": ["small", "medium", "large"] },
         "majors": { "type": "array", "items": { "type": "string" } },
