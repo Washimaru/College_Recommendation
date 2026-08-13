@@ -1,0 +1,5664 @@
+{
+ "agnes-scott-college": {
+  "school_id": "agnes-scott-college",
+  "school_name": "Agnes Scott College",
+  "notable_faculty": [
+   {
+    "name": "May Kaftan-Kassim",
+    "known_for": "Iraqi radio astronomer",
+    "status": "historical",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/May_Kaftan-Kassim",
+    "fields": [
+     "astronomer"
+    ]
+   },
+   {
+    "name": "Mary Stuart MacDougall",
+    "known_for": "American biologist",
+    "status": "historical",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mary_Stuart_MacDougall",
+    "fields": [
+     "zoologist",
+     "microbiologist"
+    ]
+   },
+   {
+    "name": "Alma Willis Sydenstricker",
+    "known_for": "American college professor",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Alma_Willis_Sydenstricker",
+    "fields": [
+     "writer"
+    ]
+   },
+   {
+    "name": "Nan Bagby Stephens",
+    "known_for": "American writer",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Nan_Bagby_Stephens",
+    "fields": [
+     "composer",
+     "librettist",
+     "writer"
+    ]
+   },
+   {
+    "name": "Lara Denis",
+    "known_for": "American philosopher",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Lara_Denis",
+    "fields": [
+     "philosopher"
+    ]
+   },
+   {
+    "name": "Mary deGarmo Bryan",
+    "known_for": "American dietitian and academic",
+    "status": "historical",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mary_deGarmo_Bryan",
+    "fields": [
+     "dietitian",
+     "home economist"
+    ]
+   },
+   {
+    "name": "Rosemary Lévy Zumwalt",
+    "known_for": "American historian of anthropology",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Rosemary_Lévy_Zumwalt",
+    "fields": [
+     "historian of science",
+     "anthropologist"
+    ]
+   },
+   {
+    "name": "Brittney Boykin",
+    "known_for": "American composer (b. 1989)",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Brittney_Boykin",
+    "fields": [
+     "composer",
+     "pianist",
+     "conductor",
+     "music educator"
+    ]
+   },
+   {
+    "name": "Carolyn J. Stefanco",
+    "known_for": null,
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Carolyn_J._Stefanco",
+    "fields": []
+   },
+   {
+    "name": "Dennis McCann",
+    "known_for": "American theologian",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Dennis_McCann",
+    "fields": [
+     "theologian",
+     "biblical scholar",
+     "religious studies scholar"
+    ]
+   },
+   {
+    "name": "Emma May Laney",
+    "known_for": "American college professor who taught English",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Emma_May_Laney",
+    "fields": []
+   },
+   {
+    "name": "Margaret W. Pepperdene",
+    "known_for": "American academic of English literature (1919-2009)",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Margaret_W._Pepperdene",
+    "fields": [
+     "medievalist",
+     "literary scholar"
+    ]
+   },
+   {
+    "name": "Marvin Banks Perry Jr.",
+    "known_for": "American college administrator",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Marvin_Banks_Perry_Jr.",
+    "fields": []
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "american-academy-of-dramatic-arts": {
+  "school_id": "american-academy-of-dramatic-arts",
+  "school_name": "American Academy of Dramatic Arts",
+  "notable_faculty": [],
+  "retrieved_at": "2026-08-13"
+ },
+ "amherst-college": {
+  "school_id": "amherst-college",
+  "school_name": "Amherst College",
+  "notable_faculty": [
+   {
+    "name": "Robert Frost",
+    "known_for": "American poet (1874–1963)",
+    "status": "historical",
+    "prominence": 127,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_Frost",
+    "fields": [
+     "poet",
+     "writer",
+     "pedagogue",
+     "playwright"
+    ]
+   },
+   {
+    "name": "James Baldwin",
+    "known_for": "American writer (1924–1987)",
+    "status": "historical",
+    "prominence": 79,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/James_Baldwin",
+    "fields": [
+     "poet",
+     "novelist",
+     "playwright",
+     "civil rights advocate"
+    ]
+   },
+   {
+    "name": "Hermann Joseph Muller",
+    "known_for": "American biologist (1890–1967)",
+    "status": "historical",
+    "prominence": 61,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Hermann_Joseph_Muller",
+    "fields": [
+     "biologist",
+     "geneticist",
+     "biophysicist",
+     "physician"
+    ]
+   },
+   {
+    "name": "Archibald MacLeish",
+    "known_for": "American poet and Librarian of Congress (1892-1982)",
+    "status": "historical",
+    "prominence": 38,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Archibald_MacLeish",
+    "fields": [
+     "librarian",
+     "poet",
+     "playwright",
+     "writer"
+    ]
+   },
+   {
+    "name": "John Bates Clark",
+    "known_for": "American neoclassical economist (1847–1938)",
+    "status": "historical",
+    "prominence": 35,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_Bates_Clark",
+    "fields": [
+     "economist",
+     "writer"
+    ]
+   },
+   {
+    "name": "Sigrid Nunez",
+    "known_for": "American writer (1951-)",
+    "status": "current",
+    "prominence": 21,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Sigrid_Nunez",
+    "fields": [
+     "writer",
+     "novelist"
+    ]
+   },
+   {
+    "name": "Robert Thurman",
+    "known_for": "American Buddhist writer and academic (1941–2026)",
+    "status": "historical",
+    "prominence": 20,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_Thurman",
+    "fields": [
+     "writer",
+     "translator",
+     "exhibition curator",
+     "curator"
+    ]
+   },
+   {
+    "name": "Anthony Lake",
+    "known_for": "American academic and diplomat",
+    "status": "current",
+    "prominence": 19,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Anthony_Lake",
+    "fields": [
+     "political scientist",
+     "diplomat",
+     "politician",
+     "political adviser"
+    ]
+   },
+   {
+    "name": "Paul Douglas (Illinois politician)",
+    "known_for": "American politician and economist (1892–1976)",
+    "status": "historical",
+    "prominence": 18,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Paul_Douglas_(Illinois_politician)",
+    "fields": [
+     "politician",
+     "military officer",
+     "economist",
+     "author"
+    ]
+   },
+   {
+    "name": "Tillie Olsen",
+    "known_for": "American writer (1912–2007)",
+    "status": "historical",
+    "prominence": 18,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Tillie_Olsen",
+    "fields": [
+     "writer",
+     "women's rights activist",
+     "poet",
+     "trade unionist"
+    ]
+   },
+   {
+    "name": "Edward Hitchcock",
+    "known_for": "United States geologist and Congregationalist clergyman (1793-1864)",
+    "status": "historical",
+    "prominence": 16,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Edward_Hitchcock",
+    "fields": [
+     "botanist",
+     "paleontologist",
+     "geologist",
+     "mycologist"
+    ]
+   },
+   {
+    "name": "Anita Shreve",
+    "known_for": "American writer (1946–2018)",
+    "status": "historical",
+    "prominence": 15,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Anita_Shreve",
+    "fields": [
+     "novelist",
+     "writer",
+     "screenwriter",
+     "journalist"
+    ]
+   },
+   {
+    "name": "Edward Tuckerman",
+    "known_for": "American botanist (1817–1886)",
+    "status": "historical",
+    "prominence": 15,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Edward_Tuckerman",
+    "fields": [
+     "botanist",
+     "lichenologist",
+     "pteridologist",
+     "mycologist"
+    ]
+   },
+   {
+    "name": "William Taubman",
+    "known_for": "American political scientist",
+    "status": "current",
+    "prominence": 15,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_Taubman",
+    "fields": [
+     "historian",
+     "political scientist",
+     "writer",
+     "biographer"
+    ]
+   },
+   {
+    "name": "John Maurice Clark",
+    "known_for": "American economist (1884–1963)",
+    "status": "historical",
+    "prominence": 14,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_Maurice_Clark",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "John Erskine (educator)",
+    "known_for": "American educator and novelist (1879–1951)",
+    "status": "historical",
+    "prominence": 13,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_Erskine_(educator)",
+    "fields": [
+     "composer",
+     "pianist",
+     "novelist",
+     "writer"
+    ]
+   },
+   {
+    "name": "Charles Baker Adams",
+    "known_for": "United States educator and naturalist (1814-1853)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Charles_Baker_Adams",
+    "fields": [
+     "geologist",
+     "naturalist",
+     "educator",
+     "chemist"
+    ]
+   },
+   {
+    "name": "David Peck Todd",
+    "known_for": "American astronomer (1855–1939)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/David_Peck_Todd",
+    "fields": [
+     "astronomer",
+     "poet",
+     "writer",
+     "director"
+    ]
+   },
+   {
+    "name": "Henry Steele Commager",
+    "known_for": "American historian (1902–1998)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Henry_Steele_Commager",
+    "fields": [
+     "historian of Modern Age",
+     "historian",
+     "writer",
+     "teacher"
+    ]
+   },
+   {
+    "name": "Herbert Friedmann",
+    "known_for": "American ornithologist (1900-1987)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Herbert_Friedmann",
+    "fields": [
+     "zoologist",
+     "ornithologist",
+     "entomologist"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "arizona-state-university": {
+  "school_id": "arizona-state-university",
+  "school_name": "Arizona State University",
+  "notable_faculty": [
+   {
+    "name": "Edward C. Prescott",
+    "known_for": "American economist (1940-2022)",
+    "status": "historical",
+    "prominence": 52,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Edward_C._Prescott",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Leland H. Hartwell",
+    "known_for": "American biologist",
+    "status": "current",
+    "prominence": 50,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Leland_H._Hartwell",
+    "fields": [
+     "geneticist",
+     "biologist",
+     "biochemist"
+    ]
+   },
+   {
+    "name": "Omar M. Yaghi",
+    "known_for": "American chemist of Arabic descent (born 1965)",
+    "status": "current",
+    "prominence": 47,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Omar_M._Yaghi",
+    "fields": [
+     "chemist"
+    ]
+   },
+   {
+    "name": "Lawrence Krauss",
+    "known_for": "American particle physicist and cosmologist",
+    "status": "current",
+    "prominence": 43,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Lawrence_Krauss",
+    "fields": [
+     "astronomer",
+     "physicist",
+     "astrophysicist",
+     "non-fiction writer"
+    ]
+   },
+   {
+    "name": "Kyrsten Sinema",
+    "known_for": "American politician (born 1976)",
+    "status": "current",
+    "prominence": 40,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kyrsten_Sinema",
+    "fields": [
+     "politician",
+     "social worker",
+     "lawyer",
+     "adjunct professor"
+    ]
+   },
+   {
+    "name": "Diana Gabaldon",
+    "known_for": "American author (born 1952)",
+    "status": "current",
+    "prominence": 35,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Diana_Gabaldon",
+    "fields": [
+     "writer",
+     "novelist",
+     "science fiction writer"
+    ]
+   },
+   {
+    "name": "Paolo Soleri",
+    "known_for": "Italian architect (1919-2013)",
+    "status": "historical",
+    "prominence": 30,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Paolo_Soleri",
+    "fields": [
+     "architect",
+     "writer",
+     "sculptor",
+     "urban planner"
+    ]
+   },
+   {
+    "name": "George Crumb",
+    "known_for": "American composer (1929-2022)",
+    "status": "historical",
+    "prominence": 29,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/George_Crumb",
+    "fields": [
+     "composer"
+    ]
+   },
+   {
+    "name": "Donald Johanson",
+    "known_for": "American anthropologist",
+    "status": "current",
+    "prominence": 26,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Donald_Johanson",
+    "fields": [
+     "anthropologist",
+     "archaeologist",
+     "prehistorian",
+     "paleoanthropologist"
+    ]
+   },
+   {
+    "name": "Robert Cialdini",
+    "known_for": "American psychologist",
+    "status": "current",
+    "prominence": 21,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_Cialdini",
+    "fields": [
+     "psychologist",
+     "writer"
+    ]
+   },
+   {
+    "name": "Michael Harner",
+    "known_for": "American anthropologist (1929–2018)",
+    "status": "historical",
+    "prominence": 19,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Michael_Harner",
+    "fields": [
+     "anthropologist",
+     "non-fiction writer",
+     "archaeologist"
+    ]
+   },
+   {
+    "name": "Doc Severinsen",
+    "known_for": "American jazz trumpeter",
+    "status": "current",
+    "prominence": 14,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Doc_Severinsen",
+    "fields": [
+     "bandleader",
+     "conductor",
+     "jazz musician",
+     "trumpeter"
+    ]
+   },
+   {
+    "name": "Bert Hölldobler",
+    "known_for": "German biologist",
+    "status": "current",
+    "prominence": 13,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Bert_Hölldobler",
+    "fields": [
+     "entomologist",
+     "zoologist",
+     "myrmecologist",
+     "biologist"
+    ]
+   },
+   {
+    "name": "Jonathan Weiner",
+    "known_for": "American nonfiction writer, Professor of Journalism",
+    "status": "current",
+    "prominence": 13,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jonathan_Weiner",
+    "fields": [
+     "non-fiction writer",
+     "journalist",
+     "writer"
+    ]
+   },
+   {
+    "name": "Robert S. Dietz",
+    "known_for": "American scientist (1914–1995)",
+    "status": "historical",
+    "prominence": 13,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_S._Dietz",
+    "fields": [
+     "geologist",
+     "oceanographer",
+     "geophysicist"
+    ]
+   },
+   {
+    "name": "Randolph M. Nesse",
+    "known_for": "American psychiatrist",
+    "status": "current",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Randolph_M._Nesse",
+    "fields": [
+     "biologist",
+     "psychologist",
+     "psychiatrist",
+     "physician"
+    ]
+   },
+   {
+    "name": "Alexandra Navrotsky",
+    "known_for": "American physical chemist in the field of nanogeoscience",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Alexandra_Navrotsky",
+    "fields": [
+     "chemist",
+     "geochemist"
+    ]
+   },
+   {
+    "name": "Barbara Keyfitz",
+    "known_for": "Canadian-American mathematician",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Barbara_Keyfitz",
+    "fields": [
+     "mathematician"
+    ]
+   },
+   {
+    "name": "Lee Breuer",
+    "known_for": "American theatre director (1937–2021)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Lee_Breuer",
+    "fields": [
+     "theatre director",
+     "film director",
+     "librettist",
+     "writer"
+    ]
+   },
+   {
+    "name": "David Theo Goldberg",
+    "known_for": "South African Social scientist",
+    "status": "current",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/David_Theo_Goldberg",
+    "fields": [
+     "criminologist"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "artcenter-college-of-design": {
+  "school_id": "artcenter-college-of-design",
+  "school_name": "ArtCenter College of Design",
+  "notable_faculty": [
+   {
+    "name": "Ansel Adams",
+    "known_for": "American photographer and environmentalist (1902–1984)",
+    "status": "historical",
+    "prominence": 68,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ansel_Adams",
+    "fields": [
+     "photographer",
+     "pianist",
+     "writer",
+     "mountaineer"
+    ]
+   },
+   {
+    "name": "Affonso Beato",
+    "known_for": "Brazilian cinematographer",
+    "status": "current",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Affonso_Beato",
+    "fields": [
+     "cinematographer",
+     "painter",
+     "actor"
+    ]
+   },
+   {
+    "name": "Gordon Buehrig",
+    "known_for": "American designer (1904–1990)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Gordon_Buehrig",
+    "fields": [
+     "designer",
+     "engineer",
+     "car designer",
+     "writer"
+    ]
+   },
+   {
+    "name": "Amelia Jones",
+    "known_for": "American art historian",
+    "status": "current",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Amelia_Jones",
+    "fields": [
+     "art historian",
+     "exhibition curator"
+    ]
+   },
+   {
+    "name": "Steven Poster",
+    "known_for": "American cinematographer",
+    "status": "current",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Steven_Poster",
+    "fields": [
+     "cinematographer"
+    ]
+   },
+   {
+    "name": "Kent Williams (artist)",
+    "known_for": "painter and graphic novel artist",
+    "status": "current",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kent_Williams_(artist)",
+    "fields": [
+     "illustrator",
+     "comics artist",
+     "painter",
+     "photographer"
+    ]
+   },
+   {
+    "name": "Michael Gottlieb (director)",
+    "known_for": "American film director and screenwriter",
+    "status": "historical",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Michael_Gottlieb_(director)",
+    "fields": [
+     "film director",
+     "screenwriter",
+     "video game producer"
+    ]
+   },
+   {
+    "name": "JR Davidson",
+    "known_for": "American architect (1889-1977)",
+    "status": "historical",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/JR_Davidson",
+    "fields": [
+     "architect"
+    ]
+   },
+   {
+    "name": "Laida Lertxundi",
+    "known_for": "Spanish filmmaker",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Laida_Lertxundi",
+    "fields": [
+     "artist",
+     "film director",
+     "video artist"
+    ]
+   },
+   {
+    "name": "Lynda Weinman",
+    "known_for": "American writer",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Lynda_Weinman",
+    "fields": [
+     "writer",
+     "film producer"
+    ]
+   },
+   {
+    "name": "Edward Biberman",
+    "known_for": "American artist (1904-1986)",
+    "status": "historical",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Edward_Biberman",
+    "fields": [
+     "painter"
+    ]
+   },
+   {
+    "name": "Dorothea Holt Redmond",
+    "known_for": "American artist (1910-2009)",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Dorothea_Holt_Redmond",
+    "fields": [
+     "architect",
+     "illustrator",
+     "art director"
+    ]
+   },
+   {
+    "name": "Margo Chase",
+    "known_for": "American graphic designer best known for her custom typography and identity work",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Margo_Chase",
+    "fields": [
+     "graphic designer"
+    ]
+   },
+   {
+    "name": "Shirley Burden",
+    "known_for": "American photojournalist (1908–1989)",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Shirley_Burden",
+    "fields": [
+     "photojournalist",
+     "photographer",
+     "journalist",
+     "film producer"
+    ]
+   },
+   {
+    "name": "Doyald Young",
+    "known_for": "American graphic designer",
+    "status": "historical",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Doyald_Young",
+    "fields": [
+     "type designer",
+     "graphic designer"
+    ]
+   },
+   {
+    "name": "Jacki Apple",
+    "known_for": "American artist, writer, composer, producer and educator (1941–2022)",
+    "status": "historical",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jacki_Apple",
+    "fields": [
+     "installation artist",
+     "artist"
+    ]
+   },
+   {
+    "name": "Judith Hall (poet)",
+    "known_for": "American poet",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Judith_Hall_(poet)",
+    "fields": [
+     "poet",
+     "writer"
+    ]
+   },
+   {
+    "name": "Norman Mauskopf",
+    "known_for": "American photographer (born 1949)",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Norman_Mauskopf",
+    "fields": [
+     "photographer"
+    ]
+   },
+   {
+    "name": "Yoshio Ikezaki",
+    "known_for": "Japanese washi and sumi-e artist (born 1953)",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Yoshio_Ikezaki",
+    "fields": [
+     "painter",
+     "book artist",
+     "paper artist"
+    ]
+   },
+   {
+    "name": "Bruce Hainley",
+    "known_for": "American poet",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Bruce_Hainley",
+    "fields": [
+     "journalist",
+     "dramaturge",
+     "author",
+     "critic"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "auburn-university": {
+  "school_id": "auburn-university",
+  "school_name": "Auburn University",
+  "notable_faculty": [
+   {
+    "name": "Krystyna Kuperberg",
+    "known_for": "Polish-American mathematician",
+    "status": "current",
+    "prominence": 18,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Krystyna_Kuperberg",
+    "fields": [
+     "mathematician",
+     "topologist"
+    ]
+   },
+   {
+    "name": "Bennie G. Adkins",
+    "known_for": "United States Army Medal of Honor recipient (1934-2020)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Bennie_G._Adkins",
+    "fields": [
+     "military personnel"
+    ]
+   },
+   {
+    "name": "Lucien Marcus Underwood",
+    "known_for": "U.S. botanist (1853–1907)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Lucien_Marcus_Underwood",
+    "fields": [
+     "botanist",
+     "pteridologist",
+     "mycologist",
+     "ornithologist"
+    ]
+   },
+   {
+    "name": "Padilla affair",
+    "known_for": "Cuban poet (1932–2000)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Padilla_affair",
+    "fields": [
+     "poet",
+     "writer"
+    ]
+   },
+   {
+    "name": "Fred Allison",
+    "known_for": "American physicist (1882-1974)",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Fred_Allison",
+    "fields": [
+     "chemist",
+     "physicist"
+    ]
+   },
+   {
+    "name": "Gabriel Guevrekian",
+    "known_for": "Armenian-Iranian architect",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Gabriel_Guevrekian",
+    "fields": [
+     "architect",
+     "urban planner",
+     "landscape architect"
+    ]
+   },
+   {
+    "name": "A. H. de Oliveira Marques",
+    "known_for": "historian (1933–2007)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/A._H._de_Oliveira_Marques",
+    "fields": [
+     "librarian",
+     "historian",
+     "writer"
+    ]
+   },
+   {
+    "name": "James Henry Lane (Confederate general)",
+    "known_for": "Confederate Army general (1833-1907)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/James_Henry_Lane_(Confederate_general)",
+    "fields": [
+     "military personnel",
+     "army officer"
+    ]
+   },
+   {
+    "name": "Jason Bond",
+    "known_for": "American biologist",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jason_Bond",
+    "fields": [
+     "biologist",
+     "arachnologist",
+     "zoologist"
+    ]
+   },
+   {
+    "name": "Richard M. Weaver",
+    "known_for": "American scholar (1910–1963)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Richard_M._Weaver",
+    "fields": [
+     "historian",
+     "philosopher",
+     "literary critic",
+     "journalist"
+    ]
+   },
+   {
+    "name": "Roger Garrison",
+    "known_for": "American economist",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Roger_Garrison",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Tibor Machan",
+    "known_for": "Hungarian-American philosopher",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Tibor_Machan",
+    "fields": [
+     "philosopher"
+    ]
+   },
+   {
+    "name": "Francis Ernest Lloyd",
+    "known_for": "American botanist (1868-1947)",
+    "status": "historical",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Francis_Ernest_Lloyd",
+    "fields": [
+     "botanist",
+     "writer",
+     "cell biologist"
+    ]
+   },
+   {
+    "name": "Mark Thornton",
+    "known_for": "economist",
+    "status": "current",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mark_Thornton",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "John M. Darby",
+    "known_for": "American botanist, chemist & academic (1804-1877)",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_M._Darby",
+    "fields": [
+     "botanist",
+     "chemist",
+     "meteorological observer"
+    ]
+   },
+   {
+    "name": "Leland B. Yeager",
+    "known_for": "American economist (1924-2018)",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Leland_B._Yeager",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Samuel Mockbee",
+    "known_for": "American architect (1944–2001)",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Samuel_Mockbee",
+    "fields": [
+     "architect"
+    ]
+   },
+   {
+    "name": "James R. Hansen",
+    "known_for": "American historian",
+    "status": "current",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/James_R._Hansen",
+    "fields": [
+     "historian",
+     "writer"
+    ]
+   },
+   {
+    "name": "George Tsontakis",
+    "known_for": "American composer and conductor",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/George_Tsontakis",
+    "fields": [
+     "composer",
+     "conductor"
+    ]
+   },
+   {
+    "name": "M. Norton Wise",
+    "known_for": "Distinguished Professor of History, University of California, Los Angeles",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/M._Norton_Wise",
+    "fields": [
+     "historian",
+     "historian of science"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "babson-college": {
+  "school_id": "babson-college",
+  "school_name": "Babson College",
+  "notable_faculty": [
+   {
+    "name": "Craig Benson",
+    "known_for": "politician",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Craig_Benson",
+    "fields": [
+     "politician",
+     "businessperson",
+     "governor"
+    ]
+   },
+   {
+    "name": "Thomas H. Davenport",
+    "known_for": "American academic and writer",
+    "status": "current",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Thomas_H._Davenport",
+    "fields": [
+     "business theorist"
+    ]
+   },
+   {
+    "name": "David Akiba",
+    "known_for": "photographer",
+    "status": "historical",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/David_Akiba",
+    "fields": [
+     "photographer"
+    ]
+   },
+   {
+    "name": "Daniel Isenberg",
+    "known_for": "Professor of Entrepreneurship Practice",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Daniel_Isenberg",
+    "fields": []
+   },
+   {
+    "name": "John C. Edmunds",
+    "known_for": "American academic",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_C._Edmunds",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Mary O'Donoghue",
+    "known_for": "Irish poet",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mary_O'Donoghue",
+    "fields": [
+     "poet",
+     "writer"
+    ]
+   },
+   {
+    "name": "I. Elaine Allen",
+    "known_for": "American survey statistician and biostatistician",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/I._Elaine_Allen",
+    "fields": [
+     "statistician",
+     "biostatistician"
+    ]
+   },
+   {
+    "name": "Leonard Schlesinger",
+    "known_for": "American author, educator, and business leade",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Leonard_Schlesinger",
+    "fields": [
+     "economist",
+     "academic administrator",
+     "business executive"
+    ]
+   },
+   {
+    "name": "Peter Cohan",
+    "known_for": "American businessman",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Peter_Cohan",
+    "fields": [
+     "businessperson",
+     "manager",
+     "entrepreneur"
+    ]
+   },
+   {
+    "name": "Robert M. Rosenberg",
+    "known_for": "American businessman, professor, and author",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_M._Rosenberg",
+    "fields": [
+     "businessperson",
+     "writer"
+    ]
+   },
+   {
+    "name": "Shaker Zahra",
+    "known_for": "American academic",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Shaker_Zahra",
+    "fields": []
+   },
+   {
+    "name": "Victoria Crittenden",
+    "known_for": "researcher",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Victoria_Crittenden",
+    "fields": [
+     "entrepreneur",
+     "business manager"
+    ]
+   },
+   {
+    "name": "Candida Brush",
+    "known_for": "American economist, business teacher, and academic administrator",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Candida_Brush",
+    "fields": [
+     "economist",
+     "business teacher",
+     "academic administrator"
+    ]
+   },
+   {
+    "name": "Darcy C. Coyle",
+    "known_for": "American professor and academic administrator (1918–2002)",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Darcy_C._Coyle",
+    "fields": [
+     "engineer",
+     "teacher",
+     "military personnel"
+    ]
+   },
+   {
+    "name": "Dennis M. Hanno",
+    "known_for": "American college president",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Dennis_M._Hanno",
+    "fields": []
+   },
+   {
+    "name": "Dick Eckaus",
+    "known_for": "American economist",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Dick_Eckaus",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Gary T. DiCamillo",
+    "known_for": "Business; CEO of Polaroid, 1995-2002",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Gary_T._DiCamillo",
+    "fields": [
+     "business executive"
+    ]
+   },
+   {
+    "name": "James Lam",
+    "known_for": "American writer",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/James_Lam",
+    "fields": [
+     "writer"
+    ]
+   },
+   {
+    "name": "Jason Bahbak Mohaghegh",
+    "known_for": "(born 1979)",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jason_Bahbak_Mohaghegh",
+    "fields": [
+     "literary scholar"
+    ]
+   },
+   {
+    "name": "Jeffry Timmons",
+    "known_for": "American business theorist",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jeffry_Timmons",
+    "fields": [
+     "business theorist"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "bard-college": {
+  "school_id": "bard-college",
+  "school_name": "Bard College",
+  "notable_faculty": [
+   {
+    "name": "Orhan Pamuk",
+    "known_for": "Turkish novelist, academic and Nobel laureate (born 1952)",
+    "status": "current",
+    "prominence": 137,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Orhan_Pamuk",
+    "fields": [
+     "writer",
+     "novelist",
+     "screenwriter",
+     "essayist"
+    ]
+   },
+   {
+    "name": "Toni Morrison",
+    "known_for": "African American novelist, essayist, and academic (1931–2019)",
+    "status": "historical",
+    "prominence": 132,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Toni_Morrison",
+    "fields": [
+     "writer",
+     "novelist",
+     "librettist",
+     "poet"
+    ]
+   },
+   {
+    "name": "Hannah Arendt",
+    "known_for": "German-American political theorist and philosopher (1906–1975)",
+    "status": "historical",
+    "prominence": 125,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Hannah_Arendt",
+    "fields": [
+     "philosopher",
+     "historian",
+     "writer",
+     "political scientist"
+    ]
+   },
+   {
+    "name": "Saul Bellow",
+    "known_for": "Canadian-American writer (1915–2005)",
+    "status": "historical",
+    "prominence": 120,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Saul_Bellow",
+    "fields": [
+     "writer",
+     "novelist",
+     "essayist",
+     "author"
+    ]
+   },
+   {
+    "name": "Isaac Bashevis Singer",
+    "known_for": "Polish-American writer (1904–1991)",
+    "status": "historical",
+    "prominence": 113,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Isaac_Bashevis_Singer",
+    "fields": [
+     "translator",
+     "novelist",
+     "Esperantist",
+     "autobiographer"
+    ]
+   },
+   {
+    "name": "Chinua Achebe",
+    "known_for": "Nigerian novelist, poet, professor, and critic (1930-2013)",
+    "status": "historical",
+    "prominence": 105,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Chinua_Achebe",
+    "fields": [
+     "novelist",
+     "poet",
+     "literary critic",
+     "essayist"
+    ]
+   },
+   {
+    "name": "Philip Roth",
+    "known_for": "American novelist (1933–2018)",
+    "status": "historical",
+    "prominence": 91,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Philip_Roth",
+    "fields": [
+     "novelist",
+     "screenwriter",
+     "essayist",
+     "science fiction writer"
+    ]
+   },
+   {
+    "name": "Neil Gaiman",
+    "known_for": "English writer (born 1960)",
+    "status": "current",
+    "prominence": 82,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Neil_Gaiman",
+    "fields": [
+     "beekeeper",
+     "comics writer",
+     "novelist",
+     "journalist"
+    ]
+   },
+   {
+    "name": "Gore Vidal",
+    "known_for": "American writer (1925–2012)",
+    "status": "historical",
+    "prominence": 81,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Gore_Vidal",
+    "fields": [
+     "playwright",
+     "actor",
+     "screenwriter",
+     "novelist"
+    ]
+   },
+   {
+    "name": "Franco Modigliani",
+    "known_for": "Italian-American economist (1918–2003)",
+    "status": "historical",
+    "prominence": 60,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Franco_Modigliani",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "A. J. Ayer",
+    "known_for": "English philosopher",
+    "status": "historical",
+    "prominence": 57,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/A._J._Ayer",
+    "fields": [
+     "philosopher of science",
+     "pedagogue",
+     "philosopher",
+     "writer"
+    ]
+   },
+   {
+    "name": "Ralph Ellison",
+    "known_for": "American novelist, literary critic, scholar and writer (1914-1994)",
+    "status": "historical",
+    "prominence": 51,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ralph_Ellison",
+    "fields": [
+     "writer",
+     "essayist",
+     "novelist",
+     "autobiographer"
+    ]
+   },
+   {
+    "name": "Arthur Penn",
+    "known_for": "American producer and director (1922–2010)",
+    "status": "historical",
+    "prominence": 46,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Arthur_Penn",
+    "fields": [
+     "film director",
+     "film producer",
+     "screenwriter",
+     "theatre director"
+    ]
+   },
+   {
+    "name": "John Ashbery",
+    "known_for": "poet from the United States of America (1927–2017)",
+    "status": "historical",
+    "prominence": 39,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_Ashbery",
+    "fields": [
+     "poet",
+     "writer",
+     "journalist",
+     "art critic"
+    ]
+   },
+   {
+    "name": "Mary McCarthy (American writer)",
+    "known_for": "American writer (1912–1989)",
+    "status": "historical",
+    "prominence": 38,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mary_McCarthy_(American_writer)",
+    "fields": [
+     "journalist",
+     "novelist",
+     "writer",
+     "screenwriter"
+    ]
+   },
+   {
+    "name": "William Gaddis",
+    "known_for": "American novelist (1922–1998)",
+    "status": "historical",
+    "prominence": 28,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_Gaddis",
+    "fields": [
+     "writer",
+     "novelist"
+    ]
+   },
+   {
+    "name": "André Aciman",
+    "known_for": "Italian-American writer and professor",
+    "status": "current",
+    "prominence": 27,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/André_Aciman",
+    "fields": [
+     "writer",
+     "literary critic",
+     "journalist",
+     "romanist"
+    ]
+   },
+   {
+    "name": "Paul de Man",
+    "known_for": "Belgian literary theorist (1919–1983)",
+    "status": "historical",
+    "prominence": 27,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Paul_de_Man",
+    "fields": [
+     "philosopher",
+     "literary critic",
+     "journalist",
+     "literary scholar"
+    ]
+   },
+   {
+    "name": "Kelly Reichardt",
+    "known_for": "American film director and screenwriter (born 1964)",
+    "status": "current",
+    "prominence": 26,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kelly_Reichardt",
+    "fields": [
+     "film director",
+     "screenwriter",
+     "film editor",
+     "director"
+    ]
+   },
+   {
+    "name": "Ian Buruma",
+    "known_for": "Dutch writer and academic",
+    "status": "current",
+    "prominence": 25,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ian_Buruma",
+    "fields": [
+     "journalist",
+     "writer",
+     "historian",
+     "columnist"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "barnard-college": {
+  "school_id": "barnard-college",
+  "school_name": "Barnard College",
+  "notable_faculty": [
+   {
+    "name": "Kate Millett",
+    "known_for": "American writer, educator, artist, and activist (1934–2017)",
+    "status": "historical",
+    "prominence": 50,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kate_Millett",
+    "fields": [
+     "writer",
+     "film director",
+     "sculptor",
+     "feminist"
+    ]
+   },
+   {
+    "name": "Dusa McDuff",
+    "known_for": "English American mathematician",
+    "status": "current",
+    "prominence": 23,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Dusa_McDuff",
+    "fields": [
+     "mathematician"
+    ]
+   },
+   {
+    "name": "Harriet Brooks",
+    "known_for": "Canadian nuclear physicist (1876–1933)",
+    "status": "historical",
+    "prominence": 22,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Harriet_Brooks",
+    "fields": [
+     "physicist",
+     "nuclear physicist"
+    ]
+   },
+   {
+    "name": "Rebecca Goldstein",
+    "known_for": "American novelist, short story writer, biographer, philosopher (b. 1950)",
+    "status": "current",
+    "prominence": 20,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Rebecca_Goldstein",
+    "fields": [
+     "philosopher",
+     "writer",
+     "biographer",
+     "novelist"
+    ]
+   },
+   {
+    "name": "Annie Baker",
+    "known_for": "American author and playwright",
+    "status": "current",
+    "prominence": 16,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Annie_Baker",
+    "fields": [
+     "playwright",
+     "teacher",
+     "pedagogue",
+     "film director"
+    ]
+   },
+   {
+    "name": "Margaret Eliza Maltby",
+    "known_for": "American physicist (1860–1944)",
+    "status": "historical",
+    "prominence": 16,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Margaret_Eliza_Maltby",
+    "fields": [
+     "physicist",
+     "chemist",
+     "women's rights activist"
+    ]
+   },
+   {
+    "name": "Anne Anastasi",
+    "known_for": "American psychologist (1908-2001)",
+    "status": "historical",
+    "prominence": 15,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Anne_Anastasi",
+    "fields": [
+     "psychologist"
+    ]
+   },
+   {
+    "name": "Cynthia Rosenzweig",
+    "known_for": "American climatologist",
+    "status": "current",
+    "prominence": 15,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Cynthia_Rosenzweig",
+    "fields": [
+     "climatologist",
+     "environmentalist",
+     "science writer",
+     "docent"
+    ]
+   },
+   {
+    "name": "Patricia Bosworth",
+    "known_for": "American journalist and actor (1933-2020)",
+    "status": "historical",
+    "prominence": 14,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Patricia_Bosworth",
+    "fields": [
+     "actor",
+     "journalist",
+     "stage actor",
+     "biographer"
+    ]
+   },
+   {
+    "name": "Janna Levin",
+    "known_for": "American theoretical cosmologist",
+    "status": "current",
+    "prominence": 13,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Janna_Levin",
+    "fields": [
+     "physicist",
+     "theoretical physicist",
+     "mathematician",
+     "cosmologist"
+    ]
+   },
+   {
+    "name": "Irena Klepfisz",
+    "known_for": "Polish-American author, activist",
+    "status": "current",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Irena_Klepfisz",
+    "fields": [
+     "linguist",
+     "essayist",
+     "translator",
+     "activist"
+    ]
+   },
+   {
+    "name": "Julián Orbón",
+    "known_for": "Spanish composer (1925–1991)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Julián_Orbón",
+    "fields": [
+     "composer",
+     "musicologist",
+     "music educator",
+     "pianist"
+    ]
+   },
+   {
+    "name": "Molly Haskell",
+    "known_for": "American film critic",
+    "status": "current",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Molly_Haskell",
+    "fields": [
+     "writer"
+    ]
+   },
+   {
+    "name": "Alice Amsden",
+    "known_for": "American political economist (1943–2012)",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Alice_Amsden",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Jennifer Finney Boylan",
+    "known_for": "American author",
+    "status": "current",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jennifer_Finney_Boylan",
+    "fields": [
+     "writer",
+     "LGBTQ rights activist",
+     "activist"
+    ]
+   },
+   {
+    "name": "Julia Leigh",
+    "known_for": "Australian writer, film director and screen writer",
+    "status": "current",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Julia_Leigh",
+    "fields": [
+     "film director",
+     "novelist",
+     "screenwriter",
+     "lawyer"
+    ]
+   },
+   {
+    "name": "Benjamin Buchloh",
+    "known_for": "Andrew W. Mellon Professor of Modern Art, Harvard University",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Benjamin_Buchloh",
+    "fields": [
+     "art historian",
+     "exhibition curator",
+     "art critic",
+     "art theorist"
+    ]
+   },
+   {
+    "name": "Virginia Gildersleeve",
+    "known_for": "American academic (1877-1965)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Virginia_Gildersleeve",
+    "fields": [
+     "college head",
+     "philologist",
+     "scholar of English"
+    ]
+   },
+   {
+    "name": "Edmund Ware Sinnott",
+    "known_for": "American botanist (1888-1968)",
+    "status": "historical",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Edmund_Ware_Sinnott",
+    "fields": [
+     "botanist"
+    ]
+   },
+   {
+    "name": "Harolyn Blackwell",
+    "known_for": "singer",
+    "status": "current",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Harolyn_Blackwell",
+    "fields": [
+     "opera singer",
+     "music educator"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "baylor-university": {
+  "school_id": "baylor-university",
+  "school_name": "Baylor University",
+  "notable_faculty": [
+   {
+    "name": "Ken Starr",
+    "known_for": "American judge and educational administrator (1946–2022)",
+    "status": "historical",
+    "prominence": 29,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ken_Starr",
+    "fields": [
+     "lawyer",
+     "judge",
+     "prosecutor",
+     "politician"
+    ]
+   },
+   {
+    "name": "Rodney Stark",
+    "known_for": "American sociologist of religion (1934–2022)",
+    "status": "historical",
+    "prominence": 18,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Rodney_Stark",
+    "fields": [
+     "writer",
+     "sociologist",
+     "historian of religion",
+     "religious studies scholar"
+    ]
+   },
+   {
+    "name": "Allene Jeanes",
+    "known_for": "American chemical researcher (1906–1995)",
+    "status": "historical",
+    "prominence": 17,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Allene_Jeanes",
+    "fields": [
+     "chemist"
+    ]
+   },
+   {
+    "name": "F. Gordon A. Stone",
+    "known_for": "American chemist (1925-2011)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/F._Gordon_A._Stone",
+    "fields": [
+     "chemist"
+    ]
+   },
+   {
+    "name": "Philip Jenkins",
+    "known_for": "British historian",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Philip_Jenkins",
+    "fields": [
+     "historian",
+     "jurist"
+    ]
+   },
+   {
+    "name": "Roger E. Olson",
+    "known_for": "American theologian",
+    "status": "current",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Roger_E._Olson",
+    "fields": [
+     "theologian",
+     "docent"
+    ]
+   },
+   {
+    "name": "Stanley Grenz",
+    "known_for": "American theologian (1950–2005)",
+    "status": "historical",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Stanley_Grenz",
+    "fields": [
+     "writer",
+     "Christian theologian",
+     "pastor",
+     "ethicist"
+    ]
+   },
+   {
+    "name": "David N. Livingstone",
+    "known_for": "British academic",
+    "status": "current",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/David_N._Livingstone",
+    "fields": [
+     "geographer",
+     "historian"
+    ]
+   },
+   {
+    "name": "Maria Elena Bottazzi",
+    "known_for": "researcher",
+    "status": "current",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Maria_Elena_Bottazzi",
+    "fields": [
+     "microbiologist"
+    ]
+   },
+   {
+    "name": "Millard Erickson",
+    "known_for": "American theologian",
+    "status": "current",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Millard_Erickson",
+    "fields": [
+     "theologian"
+    ]
+   },
+   {
+    "name": "R. E. B. Baylor",
+    "known_for": "American politician",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/R._E._B._Baylor",
+    "fields": [
+     "politician",
+     "lawyer",
+     "judge"
+    ]
+   },
+   {
+    "name": "William Henry Long",
+    "known_for": "American mycologist (1867-1947)",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_Henry_Long",
+    "fields": [
+     "botanist",
+     "mycologist"
+    ]
+   },
+   {
+    "name": "William R. Poage",
+    "known_for": "Texas politician (1899-1987)",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_R._Poage",
+    "fields": [
+     "politician",
+     "lawyer",
+     "farmer",
+     "jurist"
+    ]
+   },
+   {
+    "name": "Alexandre Yokochi",
+    "known_for": "Portuguese swimmer",
+    "status": "current",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Alexandre_Yokochi",
+    "fields": [
+     "engineer",
+     "swimmer"
+    ]
+   },
+   {
+    "name": "C. Stephen Evans",
+    "known_for": "American philosopher",
+    "status": "current",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/C._Stephen_Evans",
+    "fields": [
+     "writer",
+     "theologian"
+    ]
+   },
+   {
+    "name": "Albert L. Reeves Jr.",
+    "known_for": "American politician (1906-1987)",
+    "status": "historical",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Albert_L._Reeves_Jr.",
+    "fields": [
+     "politician",
+     "lawyer"
+    ]
+   },
+   {
+    "name": "Alexander Pruss",
+    "known_for": "American philosopher",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Alexander_Pruss",
+    "fields": [
+     "philosopher"
+    ]
+   },
+   {
+    "name": "Fritz Gesztesy",
+    "known_for": "Austrian mathematical physicist",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Fritz_Gesztesy",
+    "fields": [
+     "mathematician",
+     "physicist"
+    ]
+   },
+   {
+    "name": "Greg Garrett (writer)",
+    "known_for": "American writer and academic",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Greg_Garrett_(writer)",
+    "fields": [
+     "blogger",
+     "scholar of English",
+     "preacher",
+     "author"
+    ]
+   },
+   {
+    "name": "Marc H. Ellis",
+    "known_for": "American author and liberation theologian",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Marc_H._Ellis",
+    "fields": [
+     "peace activist",
+     "theologian",
+     "philosopher",
+     "religious studies scholar"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "belmont-university": {
+  "school_id": "belmont-university",
+  "school_name": "Belmont University",
+  "notable_faculty": [
+   {
+    "name": "Bill Pursell",
+    "known_for": "American musician",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Bill_Pursell",
+    "fields": [
+     "pianist"
+    ]
+   },
+   {
+    "name": "C. Pat Taylor",
+    "known_for": "American university president",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/C._Pat_Taylor",
+    "fields": [
+     "teacher"
+    ]
+   },
+   {
+    "name": "Charlotte Lachs",
+    "known_for": "American singer",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Charlotte_Lachs",
+    "fields": [
+     "singer"
+    ]
+   },
+   {
+    "name": "Ginny Owens",
+    "known_for": "American musician",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ginny_Owens",
+    "fields": [
+     "musician"
+    ]
+   },
+   {
+    "name": "Colin Cannonier",
+    "known_for": "association football player",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Colin_Cannonier",
+    "fields": [
+     "cricketer",
+     "economist",
+     "association football player"
+    ]
+   },
+   {
+    "name": "Eli J. Richardson",
+    "known_for": "United States federal judge for the Middle District of Tennessee",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Eli_J._Richardson",
+    "fields": [
+     "lawyer"
+    ]
+   },
+   {
+    "name": "Francis Perry Elliott",
+    "known_for": "writer",
+    "status": "historical",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Francis_Perry_Elliott",
+    "fields": [
+     "writer"
+    ]
+   },
+   {
+    "name": "Tracy Silverman",
+    "known_for": "American violinist, composer, and producer",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Tracy_Silverman",
+    "fields": [
+     "jazz musician"
+    ]
+   },
+   {
+    "name": "Hubie Smith",
+    "known_for": "English land agent for the National Trust (1899-1984)",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Hubie_Smith",
+    "fields": [
+     "basketball coach"
+    ]
+   },
+   {
+    "name": "Jon R. Thomas",
+    "known_for": "Recipient of the Purple Heart medal (1946-2017)",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jon_R._Thomas",
+    "fields": []
+   },
+   {
+    "name": "Tandy Clinton Rice Jr.",
+    "known_for": "American talent agent",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Tandy_Clinton_Rice_Jr.",
+    "fields": []
+   },
+   {
+    "name": "William E. Troutt",
+    "known_for": "President of Rhodes College",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_E._Troutt",
+    "fields": [
+     "writer"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "bentley-university": {
+  "school_id": "bentley-university",
+  "school_name": "Bentley University",
+  "notable_faculty": [
+   {
+    "name": "Amir Aczel",
+    "known_for": "lecturer (1950–2015)",
+    "status": "historical",
+    "prominence": 14,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Amir_Aczel",
+    "fields": [
+     "mathematician",
+     "historian"
+    ]
+   },
+   {
+    "name": "Selin Sayek Böke",
+    "known_for": "Turkish statesperson (born 1972)",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Selin_Sayek_Böke",
+    "fields": [
+     "economist",
+     "politician"
+    ]
+   },
+   {
+    "name": "Scott Sumner",
+    "known_for": "American economist",
+    "status": "current",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Scott_Sumner",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Barbara Stevens (basketball)",
+    "known_for": "American basketball coach",
+    "status": "current",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Barbara_Stevens_(basketball)",
+    "fields": [
+     "basketball coach"
+    ]
+   },
+   {
+    "name": "Joyce Lee Malcolm",
+    "known_for": "American historian born 1941",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Joyce_Lee_Malcolm",
+    "fields": [
+     "historian"
+    ]
+   },
+   {
+    "name": "Mohammad Javad Abdolmohammadi",
+    "known_for": "Professor of accounting",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mohammad_Javad_Abdolmohammadi",
+    "fields": [
+     "docent",
+     "professor",
+     "accountant",
+     "business manager"
+    ]
+   },
+   {
+    "name": "Charles Robert Hadlock",
+    "known_for": "American mathematics educator",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Charles_Robert_Hadlock",
+    "fields": [
+     "mathematics teacher"
+    ]
+   },
+   {
+    "name": "Dominique Haughton",
+    "known_for": "French statistician",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Dominique_Haughton",
+    "fields": [
+     "statistician"
+    ]
+   },
+   {
+    "name": "Kaveh L. Afrasiabi",
+    "known_for": "political scientist",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kaveh_L._Afrasiabi",
+    "fields": [
+     "political scientist"
+    ]
+   },
+   {
+    "name": "Anne Warfield Rawls",
+    "known_for": "American sociologist",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Anne_Warfield_Rawls",
+    "fields": [
+     "sociologist",
+     "philosopher"
+    ]
+   },
+   {
+    "name": "Bob Galliers",
+    "known_for": "American computer scientist",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Bob_Galliers",
+    "fields": []
+   },
+   {
+    "name": "Brian C. Mitchell",
+    "known_for": "American academic administrator",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Brian_C._Mitchell",
+    "fields": []
+   },
+   {
+    "name": "Jeffrey Moriarty",
+    "known_for": "American philosopher",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jeffrey_Moriarty",
+    "fields": []
+   },
+   {
+    "name": "Ruth E. Nemzoff",
+    "known_for": "American politician",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ruth_E._Nemzoff",
+    "fields": [
+     "politician"
+    ]
+   },
+   {
+    "name": "Stephen M. Coan",
+    "known_for": "American educator",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Stephen_M._Coan",
+    "fields": [
+     "environmentalist"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "berea-college": {
+  "school_id": "berea-college",
+  "school_name": "Berea College",
+  "notable_faculty": [
+   {
+    "name": "Bell hooks",
+    "known_for": "American author and activist (1952–2021)",
+    "status": "historical",
+    "prominence": 61,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Bell_hooks",
+    "fields": [
+     "philosopher",
+     "writer",
+     "non-fiction writer",
+     "literary scholar"
+    ]
+   },
+   {
+    "name": "Purushottama Lal",
+    "known_for": "Indian writer (1929–2010)",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Purushottama_Lal",
+    "fields": [
+     "linguist",
+     "translator",
+     "writer",
+     "literary critic"
+    ]
+   },
+   {
+    "name": "Silas House",
+    "known_for": "American writer",
+    "status": "current",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Silas_House",
+    "fields": [
+     "novelist",
+     "music critic",
+     "journalist",
+     "writer"
+    ]
+   },
+   {
+    "name": "Nikky Finney",
+    "known_for": "American poet from South Carolina (1957- )",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Nikky_Finney",
+    "fields": [
+     "poet",
+     "writer"
+    ]
+   },
+   {
+    "name": "Bobby Fong",
+    "known_for": "American academic",
+    "status": "historical",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Bobby_Fong",
+    "fields": []
+   },
+   {
+    "name": "Carl Mitcham",
+    "known_for": "American philosopher",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Carl_Mitcham",
+    "fields": [
+     "philosopher"
+    ]
+   },
+   {
+    "name": "Helen Dingman",
+    "known_for": "American academic and social worker",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Helen_Dingman",
+    "fields": [
+     "social worker"
+    ]
+   },
+   {
+    "name": "Larry Shinn",
+    "known_for": "American academic and administrator (born 1942)",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Larry_Shinn",
+    "fields": [
+     "Indologist",
+     "theologian"
+    ]
+   },
+   {
+    "name": "Mary Emily Sinclair",
+    "known_for": "American mathematician",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mary_Emily_Sinclair",
+    "fields": [
+     "mathematician"
+    ]
+   },
+   {
+    "name": "Sari Ibrahim Khoury",
+    "known_for": "Palestinian artist",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Sari_Ibrahim_Khoury",
+    "fields": [
+     "artist"
+    ]
+   },
+   {
+    "name": "Tom Thurman",
+    "known_for": "American filmmaker",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Tom_Thurman",
+    "fields": [
+     "film director"
+    ]
+   },
+   {
+    "name": "William Goodell Frost",
+    "known_for": "American scholar (1854–1938)",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_Goodell_Frost",
+    "fields": [
+     "classical scholar"
+    ]
+   },
+   {
+    "name": "Bill J. Leonard",
+    "known_for": "American biblical scholar",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Bill_J._Leonard",
+    "fields": [
+     "historian",
+     "biblical scholar",
+     "writer"
+    ]
+   },
+   {
+    "name": "Iván Ulchur",
+    "known_for": "Ecuadorian writer",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Iván_Ulchur",
+    "fields": [
+     "writer",
+     "journalist"
+    ]
+   },
+   {
+    "name": "Jack Russell Weinstein",
+    "known_for": "American philosopher",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jack_Russell_Weinstein",
+    "fields": [
+     "philosopher"
+    ]
+   },
+   {
+    "name": "James Shelton Hathaway",
+    "known_for": "American educator (1859–1930)",
+    "status": "historical",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/James_Shelton_Hathaway",
+    "fields": [
+     "academic administrator",
+     "head teacher",
+     "university president",
+     "newspaper editor"
+    ]
+   },
+   {
+    "name": "John Courter",
+    "known_for": "American musician and composer",
+    "status": "historical",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_Courter",
+    "fields": [
+     "composer"
+    ]
+   },
+   {
+    "name": "Julia Britton Hooks",
+    "known_for": "Kentucky artist and activist during the early years of the Civil Rights Era",
+    "status": "historical",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Julia_Britton_Hooks",
+    "fields": [
+     "activist"
+    ]
+   },
+   {
+    "name": "Charles Fairchild",
+    "known_for": "American academic",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Charles_Fairchild",
+    "fields": []
+   },
+   {
+    "name": "Henry Fairchild",
+    "known_for": "American academic (1815–1889)",
+    "status": "historical",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Henry_Fairchild",
+    "fields": []
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "berklee-college-of-music": {
+  "school_id": "berklee-college-of-music",
+  "school_name": "Berklee College of Music",
+  "notable_faculty": [
+   {
+    "name": "Jaco Pastorius",
+    "known_for": "American jazz bassist (1951–1987)",
+    "status": "historical",
+    "prominence": 43,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jaco_Pastorius",
+    "fields": [
+     "bassist",
+     "composer",
+     "jazz musician",
+     "bandleader"
+    ]
+   },
+   {
+    "name": "Pat Metheny",
+    "known_for": "American jazz musician",
+    "status": "current",
+    "prominence": 40,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Pat_Metheny",
+    "fields": [
+     "guitarist",
+     "jazz guitarist",
+     "songwriter",
+     "composer"
+    ]
+   },
+   {
+    "name": "Esperanza Spalding",
+    "known_for": "American jazz bassist and singer (born 1984)",
+    "status": "current",
+    "prominence": 36,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Esperanza_Spalding",
+    "fields": [
+     "music educator",
+     "jazz musician",
+     "singer",
+     "double-bassist"
+    ]
+   },
+   {
+    "name": "Mike Mangini",
+    "known_for": "American drummer",
+    "status": "current",
+    "prominence": 33,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mike_Mangini",
+    "fields": [
+     "drummer",
+     "music educator",
+     "composer",
+     "lyricist"
+    ]
+   },
+   {
+    "name": "Gary Burton",
+    "known_for": "American vibraphonist",
+    "status": "current",
+    "prominence": 27,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Gary_Burton",
+    "fields": [
+     "vibraphonist",
+     "music educator",
+     "composer",
+     "jazz musician"
+    ]
+   },
+   {
+    "name": "Kara DioGuardi",
+    "known_for": "American music producer, composer and pop singer",
+    "status": "current",
+    "prominence": 27,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kara_DioGuardi",
+    "fields": [
+     "singer",
+     "songwriter",
+     "record producer",
+     "manufacturer"
+    ]
+   },
+   {
+    "name": "Al Kooper",
+    "known_for": "American songwriter, record producer and musician",
+    "status": "current",
+    "prominence": 25,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Al_Kooper",
+    "fields": [
+     "record producer",
+     "music educator",
+     "pianist",
+     "guitarist"
+    ]
+   },
+   {
+    "name": "Joe Lovano",
+    "known_for": "American jazz flautist, saxophonist, clarinettist",
+    "status": "current",
+    "prominence": 21,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Joe_Lovano",
+    "fields": [
+     "clarinetist",
+     "saxophonist",
+     "music educator",
+     "jazz musician"
+    ]
+   },
+   {
+    "name": "Michel Camilo",
+    "known_for": "Dominican Grammy-award winning pianist and composer (born 1954)",
+    "status": "current",
+    "prominence": 18,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Michel_Camilo",
+    "fields": [
+     "pianist",
+     "composer",
+     "music educator",
+     "jazz musician"
+    ]
+   },
+   {
+    "name": "Rod Morgenstein",
+    "known_for": "American drummer",
+    "status": "current",
+    "prominence": 16,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Rod_Morgenstein",
+    "fields": [
+     "jazz musician",
+     "music educator",
+     "musician"
+    ]
+   },
+   {
+    "name": "Steve Swallow",
+    "known_for": "American jazz bassist and composer",
+    "status": "current",
+    "prominence": 16,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Steve_Swallow",
+    "fields": [
+     "composer",
+     "jazz musician"
+    ]
+   },
+   {
+    "name": "Danilo Pérez",
+    "known_for": "Panamanian pianist and composer",
+    "status": "current",
+    "prominence": 15,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Danilo_Pérez",
+    "fields": [
+     "composer",
+     "pianist",
+     "music educator",
+     "jazz musician"
+    ]
+   },
+   {
+    "name": "Fred Lipsius",
+    "known_for": "American musician and arranger",
+    "status": "current",
+    "prominence": 13,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Fred_Lipsius",
+    "fields": [
+     "musician",
+     "saxophonist",
+     "music educator",
+     "pianist"
+    ]
+   },
+   {
+    "name": "Pinar Toprak",
+    "known_for": "Turkish composer (born 1980)",
+    "status": "current",
+    "prominence": 13,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Pinar_Toprak",
+    "fields": [
+     "composer",
+     "film score composer"
+    ]
+   },
+   {
+    "name": "Kenny Werner",
+    "known_for": "American jazz pianist, composer, and author",
+    "status": "current",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kenny_Werner",
+    "fields": [
+     "jazz pianist",
+     "music educator",
+     "composer",
+     "pianist"
+    ]
+   },
+   {
+    "name": "Ledisi",
+    "known_for": "American R&B and jazz recording artist, songwriter and actress.",
+    "status": "current",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ledisi",
+    "fields": [
+     "singer-songwriter",
+     "composer",
+     "actor",
+     "record producer"
+    ]
+   },
+   {
+    "name": "Joanne Brackeen",
+    "known_for": "American jazz pianist and music educator",
+    "status": "current",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Joanne_Brackeen",
+    "fields": [
+     "pianist",
+     "music educator",
+     "jazz musician",
+     "recording artist"
+    ]
+   },
+   {
+    "name": "Kevin Mahogany",
+    "known_for": "American jazz singer (1958–2017)",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kevin_Mahogany",
+    "fields": [
+     "music educator",
+     "jazz musician",
+     "singer",
+     "musician"
+    ]
+   },
+   {
+    "name": "Joe Stump",
+    "known_for": "American guitarist",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Joe_Stump",
+    "fields": [
+     "composer",
+     "guitarist",
+     "music educator",
+     "musician"
+    ]
+   },
+   {
+    "name": "Linda May Han Oh",
+    "known_for": "Malaysian-Australian jazz bassist and composer",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Linda_May_Han_Oh",
+    "fields": [
+     "composer",
+     "jazz musician",
+     "double-bassist",
+     "jazz bassist"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "binghamton-university-suny": {
+  "school_id": "binghamton-university-suny",
+  "school_name": "Binghamton University (SUNY)",
+  "notable_faculty": [],
+  "retrieved_at": "2026-08-13"
+ },
+ "boise-state-university": {
+  "school_id": "boise-state-university",
+  "school_name": "Boise State University",
+  "notable_faculty": [
+   {
+    "name": "Barbara Morgan",
+    "known_for": "astronaut",
+    "status": "current",
+    "prominence": 37,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Barbara_Morgan",
+    "fields": [
+     "astronaut",
+     "teacher"
+    ]
+   },
+   {
+    "name": "Lauren McLean",
+    "known_for": "mayor of Boise, ID",
+    "status": "current",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Lauren_McLean",
+    "fields": [
+     "politician"
+    ]
+   },
+   {
+    "name": "LaNada War Jack",
+    "known_for": "Bannock activist and educator",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/LaNada_War_Jack",
+    "fields": [
+     "activist",
+     "rancher",
+     "politician"
+    ]
+   },
+   {
+    "name": "N. Randy Smith",
+    "known_for": "American judge",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/N._Randy_Smith",
+    "fields": [
+     "judge"
+    ]
+   },
+   {
+    "name": "Emily Ruskovich",
+    "known_for": "American writer",
+    "status": "current",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Emily_Ruskovich",
+    "fields": [
+     "writer",
+     "novelist"
+    ]
+   },
+   {
+    "name": "Stephen J. Yates",
+    "known_for": "American political advisor and government official",
+    "status": "current",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Stephen_J._Yates",
+    "fields": [
+     "politician"
+    ]
+   },
+   {
+    "name": "Benjamin Victor (sculptor)",
+    "known_for": "American sculptor",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Benjamin_Victor_(sculptor)",
+    "fields": [
+     "sculptor"
+    ]
+   },
+   {
+    "name": "Bernard Yurke",
+    "known_for": "American physicist",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Bernard_Yurke",
+    "fields": [
+     "physicist"
+    ]
+   },
+   {
+    "name": "Mat Erpelding",
+    "known_for": "American congressman in Idaho",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mat_Erpelding",
+    "fields": [
+     "politician",
+     "mountaineer"
+    ]
+   },
+   {
+    "name": "Melanie Yazzie",
+    "known_for": "Navajo artist and art practices professor (born 1966)",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Melanie_Yazzie",
+    "fields": [
+     "painter"
+    ]
+   },
+   {
+    "name": "Antoinette Rodez Schiesler",
+    "known_for": "American chemist (1934-1996)",
+    "status": "historical",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Antoinette_Rodez_Schiesler",
+    "fields": [
+     "chemist"
+    ]
+   },
+   {
+    "name": "Carrie Semmelroth",
+    "known_for": "American politician",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Carrie_Semmelroth",
+    "fields": [
+     "politician"
+    ]
+   },
+   {
+    "name": "John Nelson Chiasson",
+    "known_for": "American electrical engineer",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_Nelson_Chiasson",
+    "fields": []
+   },
+   {
+    "name": "Kerri Webster",
+    "known_for": "American poet",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kerri_Webster",
+    "fields": [
+     "poet",
+     "writer"
+    ]
+   },
+   {
+    "name": "Larry McNeil (photographer)",
+    "known_for": "American photographer",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Larry_McNeil_(photographer)",
+    "fields": [
+     "photographer"
+    ]
+   },
+   {
+    "name": "Scott Yenor",
+    "known_for": "professor at Boise State University",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Scott_Yenor",
+    "fields": [
+     "political scientist",
+     "writer"
+    ]
+   },
+   {
+    "name": "Tom Cade",
+    "known_for": "American ornithologist (1928-2019)",
+    "status": "historical",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Tom_Cade",
+    "fields": [
+     "ornithologist"
+    ]
+   },
+   {
+    "name": "Werner Hoeger",
+    "known_for": "Venezuelan academic",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Werner_Hoeger",
+    "fields": [
+     "physiologist",
+     "athlete",
+     "athletics competitor"
+    ]
+   },
+   {
+    "name": "Alan Heathcock",
+    "known_for": "American writer",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Alan_Heathcock",
+    "fields": [
+     "writer"
+    ]
+   },
+   {
+    "name": "Alma R. Gomez",
+    "known_for": "Painter and art professor",
+    "status": "current",
+    "prominence": 1,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Alma_R._Gomez",
+    "fields": []
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "boston-college": {
+  "school_id": "boston-college",
+  "school_name": "Boston College",
+  "notable_faculty": [
+   {
+    "name": "Mary Daly",
+    "known_for": "American feminist philosopher and theologian (1928–2010)",
+    "status": "historical",
+    "prominence": 41,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mary_Daly",
+    "fields": [
+     "theologian",
+     "writer",
+     "philosopher",
+     "women's rights activist"
+    ]
+   },
+   {
+    "name": "Martin O'Malley",
+    "known_for": "American politician (born 1963)",
+    "status": "current",
+    "prominence": 37,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Martin_O'Malley",
+    "fields": [
+     "lawyer",
+     "politician",
+     "singer",
+     "guitarist"
+    ]
+   },
+   {
+    "name": "Bernard Lonergan",
+    "known_for": "Canadian philosopher and theologian (1904–1984)",
+    "status": "historical",
+    "prominence": 21,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Bernard_Lonergan",
+    "fields": [
+     "theologian",
+     "philosopher"
+    ]
+   },
+   {
+    "name": "Peter Kreeft",
+    "known_for": "theologian, philosopher, penman, university teacher (1937-)",
+    "status": "current",
+    "prominence": 21,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Peter_Kreeft",
+    "fields": [
+     "theologian",
+     "philosopher",
+     "writer"
+    ]
+   },
+   {
+    "name": "Suzanne Berne",
+    "known_for": "novelist",
+    "status": "current",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Suzanne_Berne",
+    "fields": [
+     "novelist",
+     "writer"
+    ]
+   },
+   {
+    "name": "George V. Higgins",
+    "known_for": "American novelist, lawyer, journalist, professor",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/George_V._Higgins",
+    "fields": [
+     "lawyer",
+     "novelist",
+     "writer",
+     "poet lawyer"
+    ]
+   },
+   {
+    "name": "James Q. Wilson",
+    "known_for": "American political scientist and public policy expert",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/James_Q._Wilson",
+    "fields": [
+     "political scientist",
+     "criminologist",
+     "social scientist"
+    ]
+   },
+   {
+    "name": "Callista Roy",
+    "known_for": "American nurse and professor",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Callista_Roy",
+    "fields": [
+     "nurse"
+    ]
+   },
+   {
+    "name": "John T. Koch",
+    "known_for": "American Celticist",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_T._Koch",
+    "fields": [
+     "celticist",
+     "linguist",
+     "historian"
+    ]
+   },
+   {
+    "name": "John W. O'Malley",
+    "known_for": "American Jesuit priest and professor of theology (1927–2022)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_W._O'Malley",
+    "fields": [
+     "Catholic priest",
+     "church historian",
+     "theology teacher",
+     "theologian"
+    ]
+   },
+   {
+    "name": "Michael O'Connor (American bishop)",
+    "known_for": "Irish-born Jesuit and Catholic bishop (1810–1872)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Michael_O'Connor_(American_bishop)",
+    "fields": [
+     "Catholic priest",
+     "Catholic bishop"
+    ]
+   },
+   {
+    "name": "Pierre Manent",
+    "known_for": "Professor of political philosophy",
+    "status": "current",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Pierre_Manent",
+    "fields": [
+     "philosopher",
+     "political scientist"
+    ]
+   },
+   {
+    "name": "Alicia Munnell",
+    "known_for": "American economist",
+    "status": "current",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Alicia_Munnell",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Heather Cox Richardson",
+    "known_for": "American historian",
+    "status": "current",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Heather_Cox_Richardson",
+    "fields": [
+     "historian",
+     "writer",
+     "journalist",
+     "influencer"
+    ]
+   },
+   {
+    "name": "Marjory Gordon",
+    "known_for": "American nurse and theorist",
+    "status": "historical",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Marjory_Gordon",
+    "fields": [
+     "nurse",
+     "writer"
+    ]
+   },
+   {
+    "name": "William Bulger",
+    "known_for": "politician in Massachusetts, US",
+    "status": "current",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_Bulger",
+    "fields": [
+     "politician"
+    ]
+   },
+   {
+    "name": "Francis A. Sullivan",
+    "known_for": "American Catholic theologian (1922-2019)",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Francis_A._Sullivan",
+    "fields": [
+     "priest",
+     "Catholic theologian",
+     "theologian"
+    ]
+   },
+   {
+    "name": "Gabriela Shalev",
+    "known_for": "Israeli diplomat",
+    "status": "current",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Gabriela_Shalev",
+    "fields": [
+     "diplomat",
+     "pedagogue",
+     "legal scholar"
+    ]
+   },
+   {
+    "name": "Juliet Schor",
+    "known_for": "American sociologist",
+    "status": "current",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Juliet_Schor",
+    "fields": [
+     "sociologist",
+     "writer",
+     "non-fiction writer",
+     "economist"
+    ]
+   },
+   {
+    "name": "Leonard Feeney",
+    "known_for": "American priest",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Leonard_Feeney",
+    "fields": [
+     "poet",
+     "theologian",
+     "Catholic priest",
+     "lyricist"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "boston-university": {
+  "school_id": "boston-university",
+  "school_name": "Boston University",
+  "notable_faculty": [
+   {
+    "name": "Isaac Asimov",
+    "known_for": "American writer and biochemist (1920–1992)",
+    "status": "historical",
+    "prominence": 163,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Isaac_Asimov",
+    "fields": [
+     "biochemist",
+     "novelist",
+     "prose writer",
+     "autobiographer"
+    ]
+   },
+   {
+    "name": "William Howard Taft",
+    "known_for": "27th President of the United States from 1909 to 1913 (1857–1930)",
+    "status": "historical",
+    "prominence": 147,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_Howard_Taft",
+    "fields": [
+     "judge",
+     "lawyer",
+     "prosecutor",
+     "pedagogue"
+    ]
+   },
+   {
+    "name": "Elie Wiesel",
+    "known_for": "Romanian-born American writer, professor, political activist, Nobel laureate, and Holocaust survivor (1928-2016)",
+    "status": "historical",
+    "prominence": 106,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Elie_Wiesel",
+    "fields": [
+     "writer",
+     "political activist",
+     "Judaic scholar",
+     "novelist"
+    ]
+   },
+   {
+    "name": "Louise Glück",
+    "known_for": "U.S. poet and Nobel laureate (1943–2023)",
+    "status": "historical",
+    "prominence": 102,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Louise_Glück",
+    "fields": [
+     "writer",
+     "poet",
+     "essayist"
+    ]
+   },
+   {
+    "name": "Derek Walcott",
+    "known_for": "Saint Lucian–Trinidadian poet and playwright (1930–2017)",
+    "status": "historical",
+    "prominence": 96,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Derek_Walcott",
+    "fields": [
+     "poet",
+     "playwright",
+     "writer",
+     "prose writer"
+    ]
+   },
+   {
+    "name": "Sheldon Glashow",
+    "known_for": "American theoretical physicist",
+    "status": "current",
+    "prominence": 71,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Sheldon_Glashow",
+    "fields": [
+     "physicist",
+     "theoretical physicist"
+    ]
+   },
+   {
+    "name": "Jhumpa Lahiri",
+    "known_for": "American author of Indian origin (born 1967)",
+    "status": "current",
+    "prominence": 69,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jhumpa_Lahiri",
+    "fields": [
+     "novelist",
+     "writer",
+     "actor",
+     "screenwriter"
+    ]
+   },
+   {
+    "name": "Lynn Margulis",
+    "known_for": "American evolutionary biologist (1938–2011)",
+    "status": "historical",
+    "prominence": 58,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Lynn_Margulis",
+    "fields": [
+     "botanist",
+     "zoologist",
+     "ecologist",
+     "microbiologist"
+    ]
+   },
+   {
+    "name": "Roger Scruton",
+    "known_for": "English conservative philosopher and writer (1944–2020)",
+    "status": "historical",
+    "prominence": 58,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Roger_Scruton",
+    "fields": [
+     "philosopher",
+     "political scientist",
+     "composer",
+     "politician"
+    ]
+   },
+   {
+    "name": "Howard Zinn",
+    "known_for": "American historian, playwright, and socialist thinker (1922–2010)",
+    "status": "historical",
+    "prominence": 55,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Howard_Zinn",
+    "fields": [
+     "playwright",
+     "political scientist",
+     "historian",
+     "writer"
+    ]
+   },
+   {
+    "name": "Anne Sexton",
+    "known_for": "American poet (1928–1974)",
+    "status": "historical",
+    "prominence": 50,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Anne_Sexton",
+    "fields": [
+     "poet",
+     "writer",
+     "children's writer",
+     "librettist"
+    ]
+   },
+   {
+    "name": "John Cheever",
+    "known_for": "American novelist and short story writer (1912-1982)",
+    "status": "historical",
+    "prominence": 46,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_Cheever",
+    "fields": [
+     "writer",
+     "novelist",
+     "diarist",
+     "screenwriter"
+    ]
+   },
+   {
+    "name": "John Barth",
+    "known_for": "American writer (1930–2024)",
+    "status": "historical",
+    "prominence": 43,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_Barth",
+    "fields": [
+     "writer",
+     "novelist"
+    ]
+   },
+   {
+    "name": "Peter L. Berger",
+    "known_for": "American sociologist (1929–2017)",
+    "status": "historical",
+    "prominence": 39,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Peter_L._Berger",
+    "fields": [
+     "sociologist",
+     "theologian"
+    ]
+   },
+   {
+    "name": "David McClelland",
+    "known_for": "American psychologist (1917–1998)",
+    "status": "historical",
+    "prominence": 35,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/David_McClelland",
+    "fields": [
+     "psychologist",
+     "sociologist"
+    ]
+   },
+   {
+    "name": "Jaakko Hintikka",
+    "known_for": "Finnish philosopher and logician",
+    "status": "historical",
+    "prominence": 33,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jaakko_Hintikka",
+    "fields": [
+     "philosopher"
+    ]
+   },
+   {
+    "name": "Richard Yates (novelist)",
+    "known_for": "American novelist, short story writer (1926-1992)",
+    "status": "historical",
+    "prominence": 31,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Richard_Yates_(novelist)",
+    "fields": [
+     "writer",
+     "journalist",
+     "screenwriter",
+     "novelist"
+    ]
+   },
+   {
+    "name": "Fredrik Barth",
+    "known_for": "Norwegian social anthropologist (1928–2016)",
+    "status": "historical",
+    "prominence": 29,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Fredrik_Barth",
+    "fields": [
+     "anthropologist",
+     "ethnologist",
+     "social anthropologist"
+    ]
+   },
+   {
+    "name": "Ha Jin",
+    "known_for": "author and poet",
+    "status": "current",
+    "prominence": 25,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ha_Jin",
+    "fields": [
+     "poet",
+     "short story writer",
+     "novelist",
+     "writer"
+    ]
+   },
+   {
+    "name": "Seyla Benhabib",
+    "known_for": "Turkish-American philosopher and political scientist (born 1950)",
+    "status": "current",
+    "prominence": 24,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Seyla_Benhabib",
+    "fields": [
+     "philosopher",
+     "essayist",
+     "biographer",
+     "political scientist"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "bowdoin-college": {
+  "school_id": "bowdoin-college",
+  "school_name": "Bowdoin College",
+  "notable_faculty": [
+   {
+    "name": "Angus King",
+    "known_for": "American politician and lawyer (born 1944)",
+    "status": "current",
+    "prominence": 39,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Angus_King",
+    "fields": [
+     "politician",
+     "lawyer",
+     "businessperson",
+     "television presenter"
+    ]
+   },
+   {
+    "name": "Richard Ford",
+    "known_for": "American novelist and short story writer",
+    "status": "current",
+    "prominence": 36,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Richard_Ford",
+    "fields": [
+     "writer",
+     "novelist",
+     "author",
+     "screenwriter"
+    ]
+   },
+   {
+    "name": "Joshua Chamberlain",
+    "known_for": "American military officer, professor, and 32nd Governor of Maine (1828–1914)",
+    "status": "historical",
+    "prominence": 28,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Joshua_Chamberlain",
+    "fields": [
+     "army officer",
+     "politician",
+     "businessperson",
+     "editor"
+    ]
+   },
+   {
+    "name": "Rex Warner",
+    "known_for": "English classicist, writer, and translator (1905–1986)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Rex_Warner",
+    "fields": [
+     "poet",
+     "writer",
+     "science fiction writer",
+     "philologist"
+    ]
+   },
+   {
+    "name": "Marion Brown",
+    "known_for": "American saxophonist (1931–2010)",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Marion_Brown",
+    "fields": [
+     "musicologist",
+     "jazz musician",
+     "saxophonist",
+     "composer"
+    ]
+   },
+   {
+    "name": "Kristen Ghodsee",
+    "known_for": "American ethnographer and professor",
+    "status": "current",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kristen_Ghodsee",
+    "fields": [
+     "anthropologist",
+     "ethnographer",
+     "ethnologist",
+     "feminist"
+    ]
+   },
+   {
+    "name": "Charles Beitz",
+    "known_for": "American political theorist (born 1949)",
+    "status": "current",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Charles_Beitz",
+    "fields": [
+     "political scientist",
+     "philosopher"
+    ]
+   },
+   {
+    "name": "George Trumbull Ladd",
+    "known_for": "American psychologist, educator and philosopher (1842–1921)",
+    "status": "historical",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/George_Trumbull_Ladd",
+    "fields": [
+     "psychologist",
+     "philosopher",
+     "writer",
+     "translator"
+    ]
+   },
+   {
+    "name": "Amos Nourse",
+    "known_for": "American politician (1794-1877)",
+    "status": "historical",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Amos_Nourse",
+    "fields": [
+     "politician"
+    ]
+   },
+   {
+    "name": "Andrews Norton",
+    "known_for": "American theologian (1786-1853)",
+    "status": "historical",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Andrews_Norton",
+    "fields": [
+     "librarian",
+     "theologian"
+    ]
+   },
+   {
+    "name": "George Lincoln Goodale",
+    "known_for": "American botanist (1839–1923)",
+    "status": "historical",
+    "prominence": 8,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/George_Lincoln_Goodale",
+    "fields": [
+     "botanist",
+     "physician"
+    ]
+   },
+   {
+    "name": "Charles Howard McIlwain",
+    "known_for": "American constitutional historian (1871–1968)",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Charles_Howard_McIlwain",
+    "fields": [
+     "political scientist",
+     "historian"
+    ]
+   },
+   {
+    "name": "Matilda White Riley",
+    "known_for": "American gerontologist (1911–2004)",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Matilda_White_Riley",
+    "fields": [
+     "sociologist",
+     "gerontologist"
+    ]
+   },
+   {
+    "name": "Allen Johnson (historian)",
+    "known_for": "American historian (1870–1931)",
+    "status": "historical",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Allen_Johnson_(historian)",
+    "fields": [
+     "historian"
+    ]
+   },
+   {
+    "name": "Charles Abiathar White",
+    "known_for": "American paleontologist & Geologist (1826-1910)",
+    "status": "historical",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Charles_Abiathar_White",
+    "fields": [
+     "paleontologist",
+     "geologist"
+    ]
+   },
+   {
+    "name": "Elliott Schwartz",
+    "known_for": "American composer (1936–2016)",
+    "status": "historical",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Elliott_Schwartz",
+    "fields": [
+     "composer",
+     "musicologist",
+     "writer",
+     "music critic"
+    ]
+   },
+   {
+    "name": "Robert P. T. Coffin",
+    "known_for": "American writer (1892–1955)",
+    "status": "historical",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_P._T._Coffin",
+    "fields": [
+     "poet"
+    ]
+   },
+   {
+    "name": "Roswell Dwight Hitchcock",
+    "known_for": "United States Congregationalist clergyman (1817-1887)",
+    "status": "historical",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Roswell_Dwight_Hitchcock",
+    "fields": [
+     "historian",
+     "theologian",
+     "writer"
+    ]
+   },
+   {
+    "name": "Thomas Cogswell Upham",
+    "known_for": "American philosopher and psychologist (1799–1872)",
+    "status": "historical",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Thomas_Cogswell_Upham",
+    "fields": [
+     "philosopher",
+     "psychologist",
+     "writer"
+    ]
+   },
+   {
+    "name": "Adam Walsh (American football)",
+    "known_for": "American football player and coach (1901–1985)",
+    "status": "historical",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Adam_Walsh_(American_football)",
+    "fields": [
+     "politician",
+     "American football player",
+     "American football coach"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "brandeis-university": {
+  "school_id": "brandeis-university",
+  "school_name": "Brandeis University",
+  "notable_faculty": [
+   {
+    "name": "Eleanor Roosevelt",
+    "known_for": "American diplomat and activist, First Lady of the United States from 1933 to 1945 (1884–1962)",
+    "status": "historical",
+    "prominence": 147,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Eleanor_Roosevelt",
+    "fields": [
+     "diplomat",
+     "writer",
+     "autobiographer",
+     "politician"
+    ]
+   },
+   {
+    "name": "Abraham Maslow",
+    "known_for": "American psychologist (1908–1970)",
+    "status": "historical",
+    "prominence": 95,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Abraham_Maslow",
+    "fields": [
+     "psychologist"
+    ]
+   },
+   {
+    "name": "Herbert Marcuse",
+    "known_for": "German philosopher, sociologist, and political theorist (1898–1979)",
+    "status": "historical",
+    "prominence": 87,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Herbert_Marcuse",
+    "fields": [
+     "philosopher",
+     "sociologist",
+     "political theorist",
+     "political scientist"
+    ]
+   },
+   {
+    "name": "Leonard Bernstein",
+    "known_for": "American conductor and composer (1918–1990)",
+    "status": "historical",
+    "prominence": 81,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Leonard_Bernstein",
+    "fields": [
+     "conductor",
+     "pianist",
+     "composer",
+     "musicologist"
+    ]
+   },
+   {
+    "name": "Adrienne Rich",
+    "known_for": "American poet, essayist and feminist (1929–2012)",
+    "status": "historical",
+    "prominence": 55,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Adrienne_Rich",
+    "fields": [
+     "poet",
+     "essayist",
+     "writer",
+     "women's rights activist"
+    ]
+   },
+   {
+    "name": "Jeffrey C. Hall",
+    "known_for": "American geneticist and chronobiologist",
+    "status": "current",
+    "prominence": 53,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jeffrey_C._Hall",
+    "fields": [
+     "biologist",
+     "geneticist"
+    ]
+   },
+   {
+    "name": "Michael Rosbash",
+    "known_for": "American geneticist and chronobiologist",
+    "status": "current",
+    "prominence": 47,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Michael_Rosbash",
+    "fields": [
+     "geneticist",
+     "molecular biologist"
+    ]
+   },
+   {
+    "name": "Thomas Sowell",
+    "known_for": "American economist, social theorist, political philosopher and author",
+    "status": "current",
+    "prominence": 46,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Thomas_Sowell",
+    "fields": [
+     "economist",
+     "columnist",
+     "educator"
+    ]
+   },
+   {
+    "name": "Alasdair MacIntyre",
+    "known_for": "Scottish-American philosopher (1929–2025)",
+    "status": "historical",
+    "prominence": 45,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Alasdair_MacIntyre",
+    "fields": [
+     "philosopher"
+    ]
+   },
+   {
+    "name": "Kenneth Waltz",
+    "known_for": "American political scientist and international relations theoretician (1924-2013)",
+    "status": "historical",
+    "prominence": 36,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kenneth_Waltz",
+    "fields": [
+     "political scientist",
+     "philosopher",
+     "politician"
+    ]
+   },
+   {
+    "name": "Heisuke Hironaka",
+    "known_for": "Japanese mathematician",
+    "status": "historical",
+    "prominence": 35,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Heisuke_Hironaka",
+    "fields": [
+     "mathematician"
+    ]
+   },
+   {
+    "name": "Robert Reich",
+    "known_for": "American political economist (1946–)",
+    "status": "current",
+    "prominence": 34,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_Reich",
+    "fields": [
+     "economist",
+     "politician",
+     "political scientist"
+    ]
+   },
+   {
+    "name": "Yves Bonnefoy",
+    "known_for": "French poet, essayist, translator (1923–2016)",
+    "status": "historical",
+    "prominence": 34,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Yves_Bonnefoy",
+    "fields": [
+     "translator",
+     "writer",
+     "art critic",
+     "poet"
+    ]
+   },
+   {
+    "name": "Anita Hill",
+    "known_for": "American law professor; witness in Clarence Thomas controversy",
+    "status": "current",
+    "prominence": 28,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Anita_Hill",
+    "fields": [
+     "professor",
+     "lawyer",
+     "women's rights activist",
+     "human rights defender"
+    ]
+   },
+   {
+    "name": "John B. Anderson",
+    "known_for": "American politician (1922–2017)",
+    "status": "historical",
+    "prominence": 27,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/John_B._Anderson",
+    "fields": [
+     "politician"
+    ]
+   },
+   {
+    "name": "Robert Keohane",
+    "known_for": "political scientist from the United States",
+    "status": "current",
+    "prominence": 27,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_Keohane",
+    "fields": [
+     "internationalist",
+     "economist",
+     "writer",
+     "political scientist"
+    ]
+   },
+   {
+    "name": "Hubert Dreyfus",
+    "known_for": "American philosopher (1929–2017)",
+    "status": "historical",
+    "prominence": 24,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Hubert_Dreyfus",
+    "fields": [
+     "philosopher",
+     "writer"
+    ]
+   },
+   {
+    "name": "Pauli Murray",
+    "known_for": "American writer, activist, lawyer and Episcopal priest (1910-1985)",
+    "status": "historical",
+    "prominence": 23,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Pauli_Murray",
+    "fields": [
+     "lawyer",
+     "writer",
+     "poet",
+     "human rights defender"
+    ]
+   },
+   {
+    "name": "Walter Laqueur",
+    "known_for": "American historian and political commentator (1921-2018)",
+    "status": "historical",
+    "prominence": 23,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Walter_Laqueur",
+    "fields": [
+     "historian",
+     "political scientist",
+     "journalist",
+     "political analyst"
+    ]
+   },
+   {
+    "name": "Rebecca Goldstein",
+    "known_for": "American novelist, short story writer, biographer, philosopher (b. 1950)",
+    "status": "current",
+    "prominence": 20,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Rebecca_Goldstein",
+    "fields": [
+     "philosopher",
+     "writer",
+     "biographer",
+     "novelist"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "brown-university": {
+  "school_id": "brown-university",
+  "school_name": "Brown University",
+  "notable_faculty": [
+   {
+    "name": "Chinua Achebe",
+    "known_for": "Nigerian novelist, poet, professor, and critic (1930-2013)",
+    "status": "historical",
+    "prominence": 105,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Chinua_Achebe",
+    "fields": [
+     "novelist",
+     "poet",
+     "literary critic",
+     "essayist"
+    ]
+   },
+   {
+    "name": "Carlos Fuentes",
+    "known_for": "Mexican writer (1928–2012)",
+    "status": "historical",
+    "prominence": 80,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Carlos_Fuentes",
+    "fields": [
+     "writer",
+     "screenwriter",
+     "diplomat",
+     "novelist"
+    ]
+   },
+   {
+    "name": "Leon Cooper",
+    "known_for": "American physicist (1930–2024)",
+    "status": "historical",
+    "prominence": 75,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Leon_Cooper",
+    "fields": [
+     "physicist"
+    ]
+   },
+   {
+    "name": "Lars Onsager",
+    "known_for": "American physical chemist and theoretical physicist (1903-1976)",
+    "status": "historical",
+    "prominence": 70,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Lars_Onsager",
+    "fields": [
+     "physicist",
+     "engineer",
+     "chemist",
+     "theoretical physicist"
+    ]
+   },
+   {
+    "name": "J. Michael Kosterlitz",
+    "known_for": "British-American physicist",
+    "status": "current",
+    "prominence": 66,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/J._Michael_Kosterlitz",
+    "fields": [
+     "physicist"
+    ]
+   },
+   {
+    "name": "Fernando Henrique Cardoso",
+    "known_for": "President of Brazil from 1995 to 2003",
+    "status": "current",
+    "prominence": 63,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Fernando_Henrique_Cardoso",
+    "fields": [
+     "politician",
+     "diplomat",
+     "sociologist",
+     "writer"
+    ]
+   },
+   {
+    "name": "Talcott Parsons",
+    "known_for": "American sociologist (1902 – 1979)",
+    "status": "historical",
+    "prominence": 62,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Talcott_Parsons",
+    "fields": [
+     "sociologist",
+     "biologist"
+    ]
+   },
+   {
+    "name": "Ricardo Lagos",
+    "known_for": "Chilean politician, president of Chile from 2000 to 2006",
+    "status": "current",
+    "prominence": 51,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ricardo_Lagos",
+    "fields": [
+     "lawyer",
+     "economist",
+     "politician",
+     "professor"
+    ]
+   },
+   {
+    "name": "Vernon L. Smith",
+    "known_for": "American economist",
+    "status": "current",
+    "prominence": 51,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Vernon_L._Smith",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Martha Nussbaum",
+    "known_for": "American philosopher (born 1947)",
+    "status": "current",
+    "prominence": 48,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Martha_Nussbaum",
+    "fields": [
+     "philosopher",
+     "writer",
+     "classical scholar"
+    ]
+   },
+   {
+    "name": "George Davis Snell",
+    "known_for": "American geneticist",
+    "status": "historical",
+    "prominence": 46,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/George_Davis_Snell",
+    "fields": [
+     "immunologist",
+     "geneticist",
+     "physician",
+     "physiologist"
+    ]
+   },
+   {
+    "name": "Ama Ata Aidoo",
+    "known_for": "Ghanaian writer, politician, and academic (1942–2023)",
+    "status": "historical",
+    "prominence": 45,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ama_Ata_Aidoo",
+    "fields": [
+     "poet",
+     "novelist",
+     "playwright",
+     "politician"
+    ]
+   },
+   {
+    "name": "David Mumford",
+    "known_for": "British/American mathematician",
+    "status": "current",
+    "prominence": 40,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/David_Mumford",
+    "fields": [
+     "mathematician"
+    ]
+   },
+   {
+    "name": "Peter Howitt (economist)",
+    "known_for": "Canadian economist (born 1946)",
+    "status": "current",
+    "prominence": 38,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Peter_Howitt_(economist)",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Léon Brillouin",
+    "known_for": "French physicist (1889-1969)",
+    "status": "historical",
+    "prominence": 35,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Léon_Brillouin",
+    "fields": [
+     "physicist",
+     "professor"
+    ]
+   },
+   {
+    "name": "Lincoln Chafee",
+    "known_for": "American politician and former United States Senator from Rhode Island",
+    "status": "current",
+    "prominence": 32,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Lincoln_Chafee",
+    "fields": [
+     "politician"
+    ]
+   },
+   {
+    "name": "Solomon Lefschetz",
+    "known_for": "Jewish American mathematician (1884-1972)",
+    "status": "historical",
+    "prominence": 29,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Solomon_Lefschetz",
+    "fields": [
+     "mathematician",
+     "topologist"
+    ]
+   },
+   {
+    "name": "William Dalrymple",
+    "known_for": "author and historian (born 1965)",
+    "status": "current",
+    "prominence": 28,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_Dalrymple",
+    "fields": [
+     "historian",
+     "writer",
+     "television writer",
+     "travel writer"
+    ]
+   },
+   {
+    "name": "Hilda Geiringer",
+    "known_for": "Austrian mathematician (1893–1973)",
+    "status": "historical",
+    "prominence": 27,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Hilda_Geiringer",
+    "fields": [
+     "mathematician",
+     "statistician"
+    ]
+   },
+   {
+    "name": "Joan Wallach Scott",
+    "known_for": "American academic and historian",
+    "status": "current",
+    "prominence": 27,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Joan_Wallach_Scott",
+    "fields": [
+     "historian",
+     "labor historian",
+     "writer"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "bryn-mawr-college": {
+  "school_id": "bryn-mawr-college",
+  "school_name": "Bryn Mawr College",
+  "notable_faculty": [
+   {
+    "name": "Woodrow Wilson",
+    "known_for": "president of the United States from 1913 to 1921 (1856–1924)",
+    "status": "historical",
+    "prominence": 190,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Woodrow_Wilson",
+    "fields": [
+     "politician",
+     "lawyer",
+     "statesperson",
+     "political scientist"
+    ]
+   },
+   {
+    "name": "Emmy Noether",
+    "known_for": "German Jewish mathematician (1882–1935)",
+    "status": "historical",
+    "prominence": 95,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Emmy_Noether",
+    "fields": [
+     "mathematician",
+     "physicist"
+    ]
+   },
+   {
+    "name": "Kate Millett",
+    "known_for": "American writer, educator, artist, and activist (1934–2017)",
+    "status": "historical",
+    "prominence": 50,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kate_Millett",
+    "fields": [
+     "writer",
+     "film director",
+     "sculptor",
+     "feminist"
+    ]
+   },
+   {
+    "name": "Florence Bascom",
+    "known_for": "American geologist (1862–1945)",
+    "status": "historical",
+    "prominence": 28,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Florence_Bascom",
+    "fields": [
+     "geologist",
+     "author",
+     "editor",
+     "educator"
+    ]
+   },
+   {
+    "name": "Nathan Jacobson",
+    "known_for": "American mathematician (1910–1999)",
+    "status": "historical",
+    "prominence": 21,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Nathan_Jacobson",
+    "fields": [
+     "mathematician"
+    ]
+   },
+   {
+    "name": "Charlotte Scott",
+    "known_for": "English mathematician (1858–1931)",
+    "status": "historical",
+    "prominence": 19,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Charlotte_Scott",
+    "fields": [
+     "mathematician"
+    ]
+   },
+   {
+    "name": "Anna Johnson Pell Wheeler",
+    "known_for": "American mathematician (1883–1966)",
+    "status": "historical",
+    "prominence": 17,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Anna_Johnson_Pell_Wheeler",
+    "fields": [
+     "mathematician"
+    ]
+   },
+   {
+    "name": "Frederica de Laguna",
+    "known_for": "American ethnologist, anthropologist, and archaeologist (1906–2004)",
+    "status": "historical",
+    "prominence": 14,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Frederica_de_Laguna",
+    "fields": [
+     "military officer",
+     "anthropologist",
+     "archaeologist"
+    ]
+   },
+   {
+    "name": "Edgar Buckingham",
+    "known_for": "American physicist (1867–1940)",
+    "status": "historical",
+    "prominence": 13,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Edgar_Buckingham",
+    "fields": [
+     "physicist",
+     "mathematician",
+     "chemist"
+    ]
+   },
+   {
+    "name": "Harry Bateman",
+    "known_for": "Anglo-American mathematician",
+    "status": "historical",
+    "prominence": 13,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Harry_Bateman",
+    "fields": [
+     "mathematician",
+     "non-fiction writer",
+     "physicist"
+    ]
+   },
+   {
+    "name": "Gisela Richter",
+    "known_for": "British-American art historian and archaeologist (1882–1972)",
+    "status": "historical",
+    "prominence": 12,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Gisela_Richter",
+    "fields": [
+     "classical archaeologist",
+     "curator",
+     "art historian",
+     "archaeologist"
+    ]
+   },
+   {
+    "name": "Arthur C. Cope",
+    "known_for": "American chemist (1909–1966)",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Arthur_C._Cope",
+    "fields": [
+     "chemist"
+    ]
+   },
+   {
+    "name": "Isabel Maddison",
+    "known_for": "British mathematician (1869–1950)",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Isabel_Maddison",
+    "fields": [
+     "mathematician"
+    ]
+   },
+   {
+    "name": "Isabelle Stone",
+    "known_for": "American physicist",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Isabelle_Stone",
+    "fields": [
+     "physicist"
+    ]
+   },
+   {
+    "name": "Nancy Dorian",
+    "known_for": "American linguist",
+    "status": "historical",
+    "prominence": 11,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Nancy_Dorian",
+    "fields": [
+     "linguist",
+     "anthropologist"
+    ]
+   },
+   {
+    "name": "Agathe Lasch",
+    "known_for": "German university teacher (1879-1942)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Agathe_Lasch",
+    "fields": []
+   },
+   {
+    "name": "Caroline Ransom Williams",
+    "known_for": "American egyptologist and classical archaeologist",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Caroline_Ransom_Williams",
+    "fields": [
+     "Egyptologist",
+     "classical archaeologist"
+    ]
+   },
+   {
+    "name": "José Ferrater Mora",
+    "known_for": "Spanish philosopher, professor and writer (1912-1991)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/José_Ferrater_Mora",
+    "fields": [
+     "philosopher",
+     "writer"
+    ]
+   },
+   {
+    "name": "Agi Jambor",
+    "known_for": "Hungarian born American classical pianist (1909--1997)",
+    "status": "historical",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Agi_Jambor",
+    "fields": [
+     "composer",
+     "music educator",
+     "classical pianist"
+    ]
+   },
+   {
+    "name": "Georgiana Goddard King",
+    "known_for": "art historian",
+    "status": "historical",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Georgiana_Goddard_King",
+    "fields": [
+     "photographer",
+     "art historian"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "bucknell-university": {
+  "school_id": "bucknell-university",
+  "school_name": "Bucknell University",
+  "notable_faculty": [
+   {
+    "name": "Mary Oliver",
+    "known_for": "American poet (1935–2019)",
+    "status": "historical",
+    "prominence": 40,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Mary_Oliver",
+    "fields": [
+     "poet",
+     "writer",
+     "novelist",
+     "climate activist"
+    ]
+   },
+   {
+    "name": "Linda Thomas-Greenfield",
+    "known_for": "American diplomat (born 1952)",
+    "status": "current",
+    "prominence": 39,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Linda_Thomas-Greenfield",
+    "fields": [
+     "diplomat"
+    ]
+   },
+   {
+    "name": "Dean Baker",
+    "known_for": "American economist",
+    "status": "current",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Dean_Baker",
+    "fields": [
+     "economist"
+    ]
+   },
+   {
+    "name": "Robert Lowry (hymn writer)",
+    "known_for": "American professor of literature, composer of gospel hymns (1826–1899)",
+    "status": "historical",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_Lowry_(hymn_writer)",
+    "fields": [
+     "composer",
+     "theologian",
+     "hymnwriter",
+     "writer"
+    ]
+   },
+   {
+    "name": "Tess Gallagher",
+    "known_for": "American writer (b. 1943)",
+    "status": "current",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Tess_Gallagher",
+    "fields": [
+     "poet",
+     "essayist",
+     "short story writer",
+     "writer"
+    ]
+   },
+   {
+    "name": "Caryn Navy",
+    "known_for": "American mathematician and computer scientist",
+    "status": "current",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Caryn_Navy",
+    "fields": [
+     "mathematician",
+     "computer scientist",
+     "topologist"
+    ]
+   },
+   {
+    "name": "Gary Steiner",
+    "known_for": "American philosopher",
+    "status": "current",
+    "prominence": 6,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Gary_Steiner",
+    "fields": [
+     "philosopher",
+     "translator"
+    ]
+   },
+   {
+    "name": "Berhanu Nega",
+    "known_for": "Ethiopian politician",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Berhanu_Nega",
+    "fields": [
+     "politician"
+    ]
+   },
+   {
+    "name": "Pamela Gorkin",
+    "known_for": "American mathematician specializing in complex analysis and operator theory",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Pamela_Gorkin",
+    "fields": [
+     "mathematician"
+    ]
+   },
+   {
+    "name": "Daniel Little",
+    "known_for": "American philosopher b. 1949",
+    "status": "current",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Daniel_Little",
+    "fields": [
+     "philosopher",
+     "sociologist"
+    ]
+   },
+   {
+    "name": "Frances D. Fergusson",
+    "known_for": "American art historian, university teacher, and politician (born 1944)",
+    "status": "current",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Frances_D._Fergusson",
+    "fields": [
+     "historian",
+     "art historian",
+     "politician",
+     "academic administrator"
+    ]
+   },
+   {
+    "name": "Neely Bruce",
+    "known_for": "American musician",
+    "status": "current",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Neely_Bruce",
+    "fields": [
+     "composer",
+     "pianist",
+     "conductor",
+     "musician"
+    ]
+   },
+   {
+    "name": "William Duckworth (composer)",
+    "known_for": "American composer (1943-2012)",
+    "status": "historical",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_Duckworth_(composer)",
+    "fields": [
+     "composer",
+     "music educator"
+    ]
+   },
+   {
+    "name": "DeeAnn M. Reeder",
+    "known_for": "zoologist and mammalogist",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/DeeAnn_M._Reeder",
+    "fields": [
+     "zoologist",
+     "mammalogist",
+     "ecophysiologist",
+     "taxonomist"
+    ]
+   },
+   {
+    "name": "Elizabeth Adkins-Regan",
+    "known_for": "American neuroendocrinologist",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Elizabeth_Adkins-Regan",
+    "fields": [
+     "neuroendocrinologist",
+     "neuroscientist",
+     "ornithologist"
+    ]
+   },
+   {
+    "name": "Eugene M. Luks",
+    "known_for": "American mathematician and computer scientist",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Eugene_M._Luks",
+    "fields": [
+     "mathematician",
+     "computer scientist"
+    ]
+   },
+   {
+    "name": "G. Dennis O'Brien",
+    "known_for": "American academic",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/G._Dennis_O'Brien",
+    "fields": []
+   },
+   {
+    "name": "George L. Hersey",
+    "known_for": "American art historian and architectural historian (1927-2007)",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/George_L._Hersey",
+    "fields": [
+     "art historian",
+     "architectural historian"
+    ]
+   },
+   {
+    "name": "Larry Shinn",
+    "known_for": "American academic and administrator (born 1942)",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Larry_Shinn",
+    "fields": [
+     "Indologist",
+     "theologian"
+    ]
+   },
+   {
+    "name": "Lewis Edwin Theiss",
+    "known_for": "American writer",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Lewis_Edwin_Theiss",
+    "fields": [
+     "writer",
+     "professor"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "butler-university": {
+  "school_id": "butler-university",
+  "school_name": "Butler University",
+  "notable_faculty": [
+   {
+    "name": "János Horváth (politician)",
+    "known_for": "Hungarian politician (1921-2019)",
+    "status": "historical",
+    "prominence": 10,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/János_Horváth_(politician)",
+    "fields": [
+     "economist",
+     "politician",
+     "sculptor"
+    ]
+   },
+   {
+    "name": "Willard Nelson Clute",
+    "known_for": "U.S. botanist (1869–1950)",
+    "status": "historical",
+    "prominence": 9,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Willard_Nelson_Clute",
+    "fields": [
+     "botanist",
+     "pteridologist",
+     "botanical collector",
+     "scientific collector"
+    ]
+   },
+   {
+    "name": "Gordon Clark",
+    "known_for": "American philosopher & theologian (1902-1985)",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Gordon_Clark",
+    "fields": [
+     "theologian",
+     "philosopher"
+    ]
+   },
+   {
+    "name": "Susan Bayh",
+    "known_for": "American politician",
+    "status": "historical",
+    "prominence": 7,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Susan_Bayh",
+    "fields": [
+     "lawyer"
+    ]
+   },
+   {
+    "name": "Catharine Merrill",
+    "known_for": "American Civil War nurse and professor",
+    "status": "historical",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Catharine_Merrill",
+    "fields": [
+     "nurse",
+     "writer"
+    ]
+   },
+   {
+    "name": "Hanif Abdurraqib",
+    "known_for": "American poet and essayist",
+    "status": "current",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Hanif_Abdurraqib",
+    "fields": [
+     "music critic",
+     "journalist",
+     "poet",
+     "essayist"
+    ]
+   },
+   {
+    "name": "Jeremiah Farrell",
+    "known_for": "American mathematician (1937–2022)",
+    "status": "historical",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Jeremiah_Farrell",
+    "fields": [
+     "mathematician",
+     "crossword creator"
+    ]
+   },
+   {
+    "name": "Joseph G. Fucilla",
+    "known_for": "American Romance philologist (1897-1981)",
+    "status": "historical",
+    "prominence": 5,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Joseph_G._Fucilla",
+    "fields": [
+     "romanist",
+     "hispanist",
+     "lexicographer",
+     "translator"
+    ]
+   },
+   {
+    "name": "James F. McGrath",
+    "known_for": "British New Testament scholar (1972-)",
+    "status": "current",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/James_F._McGrath",
+    "fields": [
+     "New Testament scholar",
+     "religious studies scholar"
+    ]
+   },
+   {
+    "name": "Ovid Butler",
+    "known_for": "American politician and newspaper publisher (1801–1881)",
+    "status": "historical",
+    "prominence": 4,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ovid_Butler",
+    "fields": [
+     "lawyer",
+     "politician",
+     "founder",
+     "academic administrator"
+    ]
+   },
+   {
+    "name": "Allen Sharp",
+    "known_for": "United States federal judge (1932-2009)",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Allen_Sharp",
+    "fields": [
+     "military officer",
+     "lawyer",
+     "judge"
+    ]
+   },
+   {
+    "name": "David S. Mason",
+    "known_for": "American political scientist",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/David_S._Mason",
+    "fields": [
+     "political scientist"
+    ]
+   },
+   {
+    "name": "Flora Bridges",
+    "known_for": "language instructor",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Flora_Bridges",
+    "fields": []
+   },
+   {
+    "name": "Katharine Merrill Graydon",
+    "known_for": "American classical scholar (1858-1934)",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Katharine_Merrill_Graydon",
+    "fields": [
+     "writer"
+    ]
+   },
+   {
+    "name": "Marietta Kies",
+    "known_for": "American philosopher (1853–1899)",
+    "status": "historical",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Marietta_Kies",
+    "fields": [
+     "philosopher"
+    ]
+   },
+   {
+    "name": "Michael J. Colburn",
+    "known_for": "American conductor",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Michael_J._Colburn",
+    "fields": [
+     "military officer",
+     "musician"
+    ]
+   },
+   {
+    "name": "Susan Neville",
+    "known_for": "American academic",
+    "status": "current",
+    "prominence": 3,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Susan_Neville",
+    "fields": [
+     "writer"
+    ]
+   },
+   {
+    "name": "Chris Forhan",
+    "known_for": "American poet and academic",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Chris_Forhan",
+    "fields": [
+     "poet",
+     "docent"
+    ]
+   },
+   {
+    "name": "Marvin Scott",
+    "known_for": "American politician",
+    "status": "current",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Marvin_Scott",
+    "fields": [
+     "politician"
+    ]
+   },
+   {
+    "name": "Ozan Marsh",
+    "known_for": "American concert pianist and professor of music (1920-1992)",
+    "status": "historical",
+    "prominence": 2,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ozan_Marsh",
+    "fields": [
+     "music educator",
+     "pianist",
+     "musician"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ },
+ "california-institute-of-technology": {
+  "school_id": "california-institute-of-technology",
+  "school_name": "California Institute of Technology",
+  "notable_faculty": [
+   {
+    "name": "Richard Feynman",
+    "known_for": "American theoretical physicist (1918–1988)",
+    "status": "historical",
+    "prominence": 157,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Richard_Feynman",
+    "fields": [
+     "physicist",
+     "quantum physicist",
+     "inventor",
+     "writer"
+    ]
+   },
+   {
+    "name": "J. Robert Oppenheimer",
+    "known_for": "American theoretical physicist (1904–1967)",
+    "status": "historical",
+    "prominence": 129,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/J._Robert_Oppenheimer",
+    "fields": [
+     "theoretical physicist",
+     "engineer",
+     "nuclear physicist",
+     "art collector"
+    ]
+   },
+   {
+    "name": "Linus Pauling",
+    "known_for": "American scientist (1901–1994)",
+    "status": "historical",
+    "prominence": 112,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Linus_Pauling",
+    "fields": [
+     "chemist",
+     "physicist",
+     "Esperantist",
+     "biochemist"
+    ]
+   },
+   {
+    "name": "Robert Millikan",
+    "known_for": "American physicist (1868–1953)",
+    "status": "historical",
+    "prominence": 105,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_Millikan",
+    "fields": [
+     "physicist"
+    ]
+   },
+   {
+    "name": "Donald Knuth",
+    "known_for": "American computer scientist and mathematician (born 1938)",
+    "status": "current",
+    "prominence": 94,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Donald_Knuth",
+    "fields": [
+     "mathematician",
+     "computer scientist",
+     "historian of mathematics",
+     "writer"
+    ]
+   },
+   {
+    "name": "Murray Gell-Mann",
+    "known_for": "American physicist (1929–2019)",
+    "status": "historical",
+    "prominence": 92,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Murray_Gell-Mann",
+    "fields": [
+     "non-fiction writer",
+     "theoretical physicist",
+     "physicist"
+    ]
+   },
+   {
+    "name": "Carl David Anderson",
+    "known_for": "American physicist",
+    "status": "historical",
+    "prominence": 85,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Carl_David_Anderson",
+    "fields": [
+     "physicist"
+    ]
+   },
+   {
+    "name": "Thomas Hunt Morgan",
+    "known_for": "American biologist (1866–1945)",
+    "status": "historical",
+    "prominence": 79,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Thomas_Hunt_Morgan",
+    "fields": [
+     "evolutionary biologist",
+     "geneticist",
+     "zoologist",
+     "physician"
+    ]
+   },
+   {
+    "name": "Frances Arnold",
+    "known_for": "Nobel prize winning US scientist and engineer (born 1956)",
+    "status": "current",
+    "prominence": 77,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Frances_Arnold",
+    "fields": [
+     "biochemist",
+     "inventor",
+     "engineer"
+    ]
+   },
+   {
+    "name": "Ahmed Zewail",
+    "known_for": "Egyptian chemist",
+    "status": "historical",
+    "prominence": 75,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Ahmed_Zewail",
+    "fields": [
+     "chemist",
+     "inventor",
+     "physicist"
+    ]
+   },
+   {
+    "name": "Rudolf Mössbauer",
+    "known_for": "German nuclear physicist and Noble Prize in Physics",
+    "status": "historical",
+    "prominence": 75,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Rudolf_Mössbauer",
+    "fields": [
+     "physicist",
+     "nuclear physicist"
+    ]
+   },
+   {
+    "name": "William Alfred Fowler",
+    "known_for": "American nuclear physicist (1911-1995)",
+    "status": "historical",
+    "prominence": 75,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/William_Alfred_Fowler",
+    "fields": [
+     "astronomer",
+     "physicist",
+     "nuclear physicist",
+     "astrophysicist"
+    ]
+   },
+   {
+    "name": "Kip Thorne",
+    "known_for": "American physicist (born 1940)",
+    "status": "current",
+    "prominence": 68,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Kip_Thorne",
+    "fields": [
+     "physicist",
+     "astronomer",
+     "writer",
+     "astrophysicist"
+    ]
+   },
+   {
+    "name": "Charles Richter",
+    "known_for": "American seismologist",
+    "status": "historical",
+    "prominence": 66,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Charles_Richter",
+    "fields": [
+     "seismologist",
+     "geologist",
+     "mathematician",
+     "geophysicist"
+    ]
+   },
+   {
+    "name": "David Baltimore",
+    "known_for": "American biologist and Nobel laureate (1938–2025)",
+    "status": "historical",
+    "prominence": 65,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/David_Baltimore",
+    "fields": [
+     "virologist",
+     "microbiologist",
+     "biochemist",
+     "geneticist"
+    ]
+   },
+   {
+    "name": "Hugh David Politzer",
+    "known_for": "American physicist",
+    "status": "current",
+    "prominence": 65,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Hugh_David_Politzer",
+    "fields": [
+     "physicist",
+     "nuclear physicist",
+     "theoretical physicist"
+    ]
+   },
+   {
+    "name": "Max Delbrück",
+    "known_for": "biophysicist (1906–1981)",
+    "status": "historical",
+    "prominence": 63,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Max_Delbrück",
+    "fields": [
+     "geneticist",
+     "physicist",
+     "virologist",
+     "biophysicist"
+    ]
+   },
+   {
+    "name": "Robert H. Grubbs",
+    "known_for": "Nobel prize winning American chemist (1942-2021)",
+    "status": "historical",
+    "prominence": 61,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Robert_H._Grubbs",
+    "fields": [
+     "chemist",
+     "autobiographer"
+    ]
+   },
+   {
+    "name": "Barry Barish",
+    "known_for": "American physicist",
+    "status": "current",
+    "prominence": 60,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Barry_Barish",
+    "fields": [
+     "experimental physicist",
+     "physicist",
+     "astrophysicist"
+    ]
+   },
+   {
+    "name": "George Beadle",
+    "known_for": "American geneticist (1903-1989)",
+    "status": "historical",
+    "prominence": 60,
+    "source": "wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/George_Beadle",
+    "fields": [
+     "geneticist",
+     "biologist"
+    ]
+   }
+  ],
+  "retrieved_at": "2026-08-13"
+ }
+}

@@ -1,5 +1,5 @@
 /**
- * Mirrors docs/contracts/{profile,recommendation}.schema.json v8.0.0.
+ * Mirrors docs/contracts/{profile,recommendation}.schema.json v9.0.0.
  *
  * The gateway is the validating authority; these types keep the client honest
  * at compile time. Two fields are deliberately absent: `mbti`, removed in
@@ -30,6 +30,11 @@
  * out-of-state applicant is quoted a resident's price unless they say where
  * they live. `state` is structured for exactly this reason — `location`
  * ("Ann Arbor, MI") is display-only and must never be parsed.
+ *
+ * v9.0.0 adds `University.notable_faculty` — named professors from Wikipedia
+ * category membership plus Wikidata. No model produced them, so a name there
+ * belongs to someone who exists; and the shape carries no email or phone,
+ * which is why it can be published when the faculty CSVs cannot.
  */
 
 export const CULTURE_AXES = [
@@ -129,6 +134,19 @@ export interface Program {
   share: number;
 }
 
+export interface NotableProfessor {
+  name: string;
+  /** One line on who they are, e.g. "American theoretical physicist". */
+  known_for?: string | null;
+  fields?: string[];
+  /** "historical" = a recorded date of death, so never rendered as teaching now. */
+  status: "current" | "historical";
+  /** Language editions carrying an article — a measured proxy for renown. */
+  prominence?: number;
+  source: "wikipedia" | "directory";
+  source_url: string;
+}
+
 export interface UniversitySummary {
   country: string;
   location: string;
@@ -147,6 +165,8 @@ export interface UniversitySummary {
   tuition_in_state?: number | null;
   /** null = unmeasured; [] = measured and awards none of these families. */
   programs?: Program[] | null;
+  /** null = nobody searched; [] = searched and found nobody. */
+  notable_faculty?: NotableProfessor[] | null;
   enrollment?: number | null;
   size: "small" | "medium" | "large";
   majors: string[];

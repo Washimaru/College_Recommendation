@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "8.0.0";
+export const CONTRACT_VERSION = "9.0.0";
 
 export const RegionSchema = z.enum([
   "Northeast",
@@ -160,6 +160,24 @@ export const ProgramSchema = z
   })
   .strict();
 
+/**
+ * A named professor. Carries who they are and where to check it — never an
+ * email or a phone number, which is the line that keeps the faculty CSVs
+ * gitignored while this field is publishable.
+ */
+export const NotableProfessorSchema = z
+  .object({
+    name: z.string().min(1),
+    known_for: z.string().nullable().optional(),
+    fields: z.array(z.string()).default([]),
+    /** "historical" = a recorded date of death; its absence is not proof of tenure. */
+    status: z.enum(["current", "historical"]),
+    prominence: z.number().int().min(0).default(0),
+    source: z.enum(["wikipedia", "directory"]),
+    source_url: z.string().min(1),
+  })
+  .strict();
+
 export const UniversitySummarySchema = z
   .object({
     country: z.string(),
@@ -183,6 +201,8 @@ export const UniversitySummarySchema = z
     tuition_in_state: z.number().min(0).nullable().optional(),
     /** null = unmeasured; [] = measured and awards none of these families. */
     programs: z.array(ProgramSchema).nullable().optional(),
+    /** null = nobody searched; [] = searched, found nobody. */
+    notable_faculty: z.array(NotableProfessorSchema).nullable().optional(),
     enrollment: z.number().int().min(0).nullable().optional(),
     size: z.enum(["small", "medium", "large"]),
     majors: z.array(z.string()).default([]),
@@ -255,6 +275,8 @@ export const UniversitySchema = z
     sticker_tuition: z.number().min(0).nullable().optional(),
     tuition_in_state: z.number().min(0).nullable().optional(),
     programs: z.array(ProgramSchema).nullable().optional(),
+    /** null = nobody searched; [] = searched, found nobody. */
+    notable_faculty: z.array(NotableProfessorSchema).nullable().optional(),
     enrollment: z.number().int().nullable().optional(),
     size: z.enum(["small", "medium", "large"]),
     majors: z.array(z.string()).default([]),

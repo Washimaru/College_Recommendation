@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/score.schema.json",
   "title": "RankRequest",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["profile", "universities"],
@@ -53,6 +53,24 @@
         "net_price": { "type": ["number", "null"], "minimum": 0, "description": "Average annual cost after aid. Renamed from `tuition` in v2.0.0, which conflated net cost with sticker price." },
         "sticker_tuition": { "type": ["number", "null"], "minimum": 0, "description": "Out-of-state tuition and fees, which is simply the price at a private school. See tuition_in_state." },
         "tuition_in_state": { "type": ["number", "null"], "minimum": 0, "description": "In-state tuition and fees. US only - null and provenance not_applicable elsewhere. Identical to sticker_tuition at a private school, and less than half of it at most publics." },
+        "notable_faculty": {
+          "type": ["array", "null"],
+          "description": "Named professors, most widely known first. Null means nobody searched (every non-US school); [] means searched and none found, which is a real answer for a small college. Carries who someone is and where to verify it - never an email or a phone number. Sourced from Wikipedia category membership plus Wikidata, so no model is involved and a professor cannot be invented.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "status", "source", "source_url"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "known_for": { "type": ["string", "null"], "description": "One line on who they are, e.g. 'American theoretical physicist'." },
+              "fields": { "type": "array", "items": { "type": "string" }, "description": "Occupations, e.g. ['physicist', 'author']. Generic academic occupations are dropped as uninformative." },
+              "status": { "type": "string", "enum": ["current", "historical"], "description": "historical means a recorded date of death - the person belongs in the school's story but is not teaching. Absence of a death date is not proof of tenure, which is why the values are not 'alive'/'dead'." },
+              "prominence": { "type": "integer", "minimum": 0, "description": "How many language Wikipedias carry an article. A measured proxy for renown, not a judgement." },
+              "source": { "type": "string", "enum": ["wikipedia", "directory"] },
+              "source_url": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
         "programs": {
           "type": ["array", "null"],
           "description": "Share of degrees the school actually awards, by 2-digit CIP family, largest first. Zero shares are omitted. Null means unmeasured; an empty array means measured and awarding nothing in these families - the difference is what makes 'this school does not offer X' sayable. Never derived from the editorial `majors` list, which names strengths rather than the full catalogue.",

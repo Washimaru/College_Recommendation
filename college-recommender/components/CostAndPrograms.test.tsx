@@ -163,3 +163,62 @@ describe("out-of-state warning", () => {
     expect(screen.queryByText(/in-state students/i)).toBeNull();
   });
 });
+
+describe("professors", () => {
+  const CHOMSKY = {
+    name: "Noam Chomsky",
+    known_for: "American linguist and cognitive scientist",
+    fields: ["linguist", "philosopher"],
+    status: "current" as const,
+    prominence: 178,
+    source: "wikipedia" as const,
+    source_url: "https://en.wikipedia.org/wiki/Noam_Chomsky",
+  };
+  const ADAMS = {
+    name: "Ansel Adams",
+    known_for: "American photographer",
+    fields: ["photographer"],
+    status: "historical" as const,
+    prominence: 84,
+    source: "wikipedia" as const,
+    source_url: "https://en.wikipedia.org/wiki/Ansel_Adams",
+  };
+
+  it("names the professors and what they are known for", () => {
+    show({ notable_faculty: [CHOMSKY] });
+
+    expect(screen.getByText("Noam Chomsky")).toBeTruthy();
+    expect(screen.getByText(/American linguist and cognitive scientist/)).toBeTruthy();
+  });
+
+  it("links each one to the source, so a reader can check", () => {
+    show({ notable_faculty: [CHOMSKY] });
+
+    const link = screen.getByRole("link", { name: /Noam Chomsky/ });
+    expect(link.getAttribute("href")).toBe("https://en.wikipedia.org/wiki/Noam_Chomsky");
+  });
+
+  it("never implies a historical professor still teaches", () => {
+    show({ notable_faculty: [ADAMS] });
+
+    expect(screen.getByText(/no longer teaching|formerly|historical/i)).toBeTruthy();
+  });
+
+  it("says nothing at all when nobody searched", () => {
+    show({ notable_faculty: null });
+
+    expect(screen.queryByText(/professors/i)).toBeNull();
+  });
+
+  it("says so plainly when the search found nobody", () => {
+    show({ notable_faculty: [] });
+
+    expect(screen.getByText(/didn.t find|none/i)).toBeTruthy();
+  });
+
+  it("credits the source rather than presenting it as our own research", () => {
+    show({ notable_faculty: [CHOMSKY] });
+
+    expect(screen.getByText(/Wikipedia/i)).toBeTruthy();
+  });
+});

@@ -41,13 +41,13 @@ def load_universities(rows: list[dict], url: str) -> int:
                     INSERT INTO universities (
                         id, unitid, name, country, location, state, region, setting,
                         type, avg_gpa, avg_sat, acceptance_rate, net_price,
-                        sticker_tuition, tuition_in_state, programs,
+                        sticker_tuition, tuition_in_state, programs, notable_faculty,
                         enrollment, size, majors, culture,
                         population, url, net_price_calculator_url, details,
                         provenance
                     )
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (id) DO UPDATE SET
                         unitid = EXCLUDED.unitid,
                         name = EXCLUDED.name,
@@ -64,6 +64,7 @@ def load_universities(rows: list[dict], url: str) -> int:
                         sticker_tuition = EXCLUDED.sticker_tuition,
                         tuition_in_state = EXCLUDED.tuition_in_state,
                         programs = EXCLUDED.programs,
+                        notable_faculty = EXCLUDED.notable_faculty,
                         enrollment = EXCLUDED.enrollment,
                         size = EXCLUDED.size,
                         majors = EXCLUDED.majors,
@@ -83,6 +84,7 @@ def load_universities(rows: list[dict], url: str) -> int:
                      # None keeps "unmeasured" distinct from the empty list a
                      # measured school with no matching families gets.
                      Json(r["programs"]) if r.get("programs") is not None else None,
+                     Json(r["notable_faculty"]) if r.get("notable_faculty") is not None else None,
                      r.get("enrollment"),
                      r["size"], Json(r["majors"]), Json(r["culture"]),
                      Json(r["population"]) if r.get("population") else None,

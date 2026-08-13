@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/recommendation.schema.json",
   "title": "RecommendationResponse",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["results", "confidence", "stop_reason", "trace"],
@@ -75,6 +75,24 @@
         "acceptance_rate": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
         "net_price": { "type": ["number", "null"], "minimum": 0 },
         "tuition_in_state": { "type": ["number", "null"], "minimum": 0, "description": "In-state tuition and fees. US only; null and provenance not_applicable elsewhere." },
+        "notable_faculty": {
+          "type": ["array", "null"],
+          "description": "Named professors, most widely known first. Null means nobody searched (every non-US school); [] means searched and none found, which is a real answer for a small college. Carries who someone is and where to verify it - never an email or a phone number. Sourced from Wikipedia category membership plus Wikidata, so no model is involved and a professor cannot be invented.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "status", "source", "source_url"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "known_for": { "type": ["string", "null"], "description": "One line on who they are, e.g. 'American theoretical physicist'." },
+              "fields": { "type": "array", "items": { "type": "string" }, "description": "Occupations, e.g. ['physicist', 'author']. Generic academic occupations are dropped as uninformative." },
+              "status": { "type": "string", "enum": ["current", "historical"], "description": "historical means a recorded date of death - the person belongs in the school's story but is not teaching. Absence of a death date is not proof of tenure, which is why the values are not 'alive'/'dead'." },
+              "prominence": { "type": "integer", "minimum": 0, "description": "How many language Wikipedias carry an article. A measured proxy for renown, not a judgement." },
+              "source": { "type": "string", "enum": ["wikipedia", "directory"] },
+              "source_url": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
         "programs": {
           "type": ["array", "null"],
           "description": "Share of degrees actually awarded by 2-digit CIP family, largest first. Null means unmeasured; [] means measured and awarding none of these.",

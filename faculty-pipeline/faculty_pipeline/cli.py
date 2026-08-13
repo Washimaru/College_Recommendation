@@ -29,11 +29,13 @@ from .services.llm import AnthropicLLM
 from .services.logging_setup import configure_logging
 from .services.robots import RobotsChecker
 from .services.search import build_search_provider
+from .services.wikimedia import ApiRobots, MediaWikiApi
 from .stages import crawl as crawl_stage
 from .stages import discover as discover_stage
 from .stages import export as export_stage
 from .stages import extract as extract_stage
 from .stages import load_filter
+from .stages import notable as notable_stage
 
 CHECKPOINTED_STAGES = ("discover", "crawl", "extract")
 
@@ -590,3 +592,61 @@ def clean(ctx: click.Context, yes: bool) -> None:
 
 if __name__ == "__main__":
     main()
+
+
+@main.command()
+@click.option("--limit", type=int, default=None, help="Process at most N schools")
+@click.option("--school", "school_id", default=None, help="Run a single school")
+@click.option("--per-school", type=int, default=notable_stage.DEFAULT_LIMIT,
+              help="Cap professors kept per school (default 20)")
+@click.option("--tier-out", default="../data-pipeline/sources/notable_faculty.json",
+              help="Where to fold the results for the catalog build")
+@click.option("--write-tier/--no-write-tier", default=True,
+              help="Write the committed tier file after the run")
+@click.pass_context
+def notable(
+    ctx: click.Context,
+    limit: int | None,
+    school_id: str | None,
+    per_school: int,
+    tier_out: str,
+    write_tier: bool,
+) -> None:
+    """Notable faculty: named professors per school, from Wikipedia + Wikidata."""
+    config: Config = ctx.obj["config"]
+    logger = ctx.obj["logger"]
+    dry_run: bool = ctx.obj["dry_run"]
+
+    checkpoint = CheckpointStore(Path(config.checkpoint_dir) / f"{notable_stage.STAGE_NAME}.json")
+
+    transport = httpx.Client(follow_redirects=True)
+    try:
+        # ApiRobots exempts exactly the two API endpoints and delegates every
+        # other URL to the real checker - see services/wikimedia.py for why the
+        # API is not what robots.txt's `Disallow: /w/` is aimed at. Everything
+        # else (rate limit, cache, backoff) is the ordinary client.
+        robots = ApiRobots(RobotsChecker(transport))
+        http_client = HttpClient(config, robots, transport)
+        api = MediaWikiApi(http_client, logger)
+        try:
+            summary = notable_stage.run(
+                config, checkpoint, logger, api,
+                limit=limit, school_id=school_id, per_school=per_school, dry_run=dry_run,
+            )
+        except notable_stage.NotableError as exc:
+            click.echo(f"notable failed: {exc}", err=True)
+            sys.exit(1)
+    finally:
+        transport.close()
+
+    prefix = "[dry-run] " if dry_run else ""
+    click.echo(
+        f"{prefix}notable: {summary.processed} school(s) resolved, "
+        f"{summary.skipped} skipped, {summary.failed} failed"
+    )
+    for note in summary.notes:
+        click.echo(f"  note: {note}")
+
+    if write_tier and not dry_run:
+        written = notable_stage.write_tier_file(config.data_dir, tier_out)
+        click.echo(f"  wrote {written} school(s) with faculty to {tier_out}")

@@ -192,7 +192,7 @@ these runtime conditions live solely in code.
 ## Contracts are law
 
 `docs/contracts/{profile,score,recommendation}.schema.json` (all `version`
-**`8.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
+**`9.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
 **Four** mirrors must move with them, in the same change:
 
 - `services/scoring-service/app/schemas.py`
@@ -205,6 +205,16 @@ Changing a shape without a version bump and all four mirrors is contract drift
 (H3) — stop and surface it.
 
 What the recent versions changed:
+
+**v9.0.0** added `University.notable_faculty` — named professors per US school,
+from Wikipedia category membership plus Wikidata (`faculty-pipeline`'s
+`notable` stage). Three properties make it publishable where the faculty CSVs
+are not: **no LLM is involved**, so a name there belongs to someone who exists;
+the shape carries **no email or phone** (an allowlist in `build_catalog.py`,
+not a blocklist); and `status` labels historical faculty, so a professor who
+died in 1984 never reads as teaching now. `null` means nobody searched — every
+non-US school — and `[]` means searched and found nobody, which is a real
+answer for a small college.
 
 **v8.0.0** added `University.state` and `Preferences.home_state`. `net_price`
 is the federal average and, at a public university, that measure covers

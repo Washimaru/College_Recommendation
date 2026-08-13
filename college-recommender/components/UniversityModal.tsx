@@ -162,6 +162,47 @@ export function UniversityModal({
           </p>
         )}
 
+        {uni.notable_faculty !== null && uni.notable_faculty !== undefined && (
+          <>
+            <h3 style={{ marginTop: 24, fontSize: 14, letterSpacing: 0.3 }}>Professors</h3>
+            <p className="muted" style={{ fontSize: 12.5, margin: "0 0 12px" }}>
+              People who have taught here and have a public record, most widely known
+              first, from Wikipedia and Wikidata. Names only — we don&rsquo;t publish
+              anyone&rsquo;s contact details. Follow a name to check it.
+            </p>
+            {uni.notable_faculty.length === 0 ? (
+              <p style={{ fontSize: 13.5, margin: 0 }}>
+                We searched and didn&rsquo;t find any professors with a public record at
+                this school. That is not a judgement of the faculty — smaller schools
+                are simply written about less.
+              </p>
+            ) : (
+              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                {uni.notable_faculty.map((person) => (
+                  <li key={person.source_url} style={{ marginBottom: 10 }}>
+                    <a
+                      href={person.source_url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      style={{ fontWeight: 650, fontSize: 14 }}
+                    >
+                      {person.name}
+                    </a>
+                    {person.status === "historical" && (
+                      <span className="note" style={{ marginLeft: 8 }}>
+                        no longer teaching
+                      </span>
+                    )}
+                    {person.known_for && (
+                      <div className="muted" style={{ fontSize: 13 }}>{person.known_for}</div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
+        )}
+
         {uni.programs !== null && uni.programs !== undefined && (
           <>
             <h3 style={{ marginTop: 24, fontSize: 14, letterSpacing: 0.3 }}>

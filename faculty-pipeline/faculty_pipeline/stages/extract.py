@@ -401,6 +401,7 @@ def _deterministic_hints(html: str, parse_hint: dict[str, str | None]) -> dict[s
     tel = _first_tel(html)
     text_email = _email_from_text(text)
     meta_name = _meta_name(html)
+    meta_author = _meta_author(html)
 
     email = jsonld.get("email") or mailto or text_email
     phone = jsonld.get("phone") or tel or _phone_from_text(text)
@@ -409,6 +410,7 @@ def _deterministic_hints(html: str, parse_hint: dict[str, str | None]) -> dict[s
         "title_hint": parse_hint.get("name"),
         "title_hint_title": parse_hint.get("title"),
         "meta_name": meta_name,
+        "meta_author": meta_author,
         "jsonld_name": jsonld.get("name"),
         "jsonld_title": jsonld.get("title"),
         "jsonld_department": jsonld.get("department"),
@@ -418,10 +420,19 @@ def _deterministic_hints(html: str, parse_hint: dict[str, str | None]) -> dict[s
 
 
 def _best_deterministic_name(hints: dict[str, str | None], school_name: str) -> str | None:
-    """Priority for `--no-llm` mode: JSON-LD > meta og:title/author >
-    the `<title>`/`<h1>`-derived hint — all boilerplate-stripped, since the
-    last of those is exactly the "Name | School" case this build targets."""
-    for key in ("jsonld_name", "meta_name", "title_hint"):
+    """Priority for `--no-llm` mode: JSON-LD `Person.name`, then
+    `<meta name="author">`. Nothing else.
+
+    The `<title>`/`<h1>` hint used to be third in this list, and on a real run
+    that produced "Faculty Directory" 100 times, "Bard College" 39 times and
+    "OneLogin" 20 times — page furniture and a login screen, filed as
+    professors. A page title is not a claim about a person; JSON-LD `@type:
+    Person` and a meta author tag are. Without an LLM to read the page, those
+    two are the only evidence that names someone, so a page carrying neither
+    yields no row at all. The hint still goes to the LLM, which can weigh it
+    against the page text.
+    """
+    for key in ("jsonld_name", "meta_author"):
         value = hints.get(key)
         if value:
             stripped = _strip_boilerplate(value, school_name)
@@ -431,6 +442,9 @@ def _best_deterministic_name(hints: dict[str, str | None], school_name: str) -> 
 
 
 def _meta_name(html: str) -> str | None:
+    """Any page-level name-ish meta tag. A hint for the LLM only - `og:title`
+    and `twitter:title` are titles of the *page*, so they can name a directory
+    or a news article as easily as a person."""
     tree = HTMLParser(html)
     selectors = ('meta[property="og:title"]', 'meta[name="author"]', 'meta[name="twitter:title"]')
     for selector in selectors:
@@ -440,6 +454,15 @@ def _meta_name(html: str) -> str | None:
             if content and content.strip():
                 return content.strip()
     return None
+
+
+def _meta_author(html: str) -> str | None:
+    """`<meta name="author">` only - the one meta tag that claims a person."""
+    node = HTMLParser(html).css_first('meta[name="author"]')
+    if node is None:
+        return None
+    content = node.attributes.get("content")
+    return content.strip() if content and content.strip() else None
 
 
 def _first_mailto(html: str) -> str | None:

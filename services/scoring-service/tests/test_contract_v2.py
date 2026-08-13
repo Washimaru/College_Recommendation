@@ -12,7 +12,7 @@ from pydantic import ValidationError
 from app.schemas import CONTRACT_VERSION, CulturePrefs, Profile, University
 
 
-def test_contract_version_is_8():
+def test_contract_version_is_9():
     """v3.0.0 added activities and personality; v3.1.0 added country scope;
     v4.0.0 adds place and population fields and removes preferences.locations;
     v5.0.0 adds Profile.gpa_weighted and the extreme_reach admit tier;
@@ -20,8 +20,10 @@ def test_contract_version_is_8():
     weight_feedback clamp here rather than trusting the caller;
     v7.0.0 adds University.tuition_in_state and University.programs;
     v8.0.0 adds University.state and Preferences.home_state, so an
-    out-of-state applicant stops being quoted a resident's net price."""
-    assert CONTRACT_VERSION == "8.0.0"
+    out-of-state applicant stops being quoted a resident's net price;
+    v9.0.0 adds University.notable_faculty — named professors, with no
+    contact details and no model in the chain that produced them."""
+    assert CONTRACT_VERSION == "9.0.0"
 
 
 def test_profile_needs_no_mbti():
@@ -173,3 +175,49 @@ class TestContractV7:
     def test_a_program_needs_a_name(self):
         with pytest.raises(ValidationError):
             self._uni(programs=[{"share": 0.5}])
+
+
+class TestNotableFacultyContract:
+    """v9.0.0. The field publishes who a professor is, never how to reach them."""
+
+    def _uni(self, **overrides):
+        base = dict(
+            id="mit", name="MIT", country="USA", location="Cambridge, MA", state="MA",
+            region="Northeast", setting="urban", type="Private", avg_gpa=3.95,
+            size="small", majors=["Engineering"],
+            culture={"collab": 0.5, "quirky": 0.5, "idealist": 0.5,
+                     "research": 0.5, "spirit": 0.5, "seminar": 0.5},
+        )
+        return University(**{**base, **overrides})
+
+    def _person(self, **overrides):
+        return {"name": "Noam Chomsky", "known_for": "American linguist",
+                "fields": ["linguist"], "status": "current", "prominence": 178,
+                "source": "wikipedia",
+                "source_url": "https://en.wikipedia.org/wiki/Noam_Chomsky", **overrides}
+
+    def test_a_professor_is_carried_with_their_source(self):
+        uni = self._uni(notable_faculty=[self._person()])
+
+        assert uni.notable_faculty[0].name == "Noam Chomsky"
+        assert uni.notable_faculty[0].source_url.startswith("https://en.wikipedia.org/")
+
+    def test_unsearched_and_searched_empty_are_different(self):
+        assert self._uni().notable_faculty is None
+        assert self._uni(notable_faculty=[]).notable_faculty == []
+
+    def test_a_contact_detail_is_rejected_outright(self):
+        """extra='forbid' is the guard: an email cannot reach this field by
+        being added upstream and nobody noticing."""
+        with pytest.raises(ValidationError):
+            self._uni(notable_faculty=[self._person(email="noam@mit.edu")])
+
+    def test_status_is_only_current_or_historical(self):
+        with pytest.raises(ValidationError):
+            self._uni(notable_faculty=[self._person(status="dead")])
+
+    def test_a_professor_needs_a_source_to_check(self):
+        person = self._person()
+        del person["source_url"]
+        with pytest.raises(ValidationError):
+            self._uni(notable_faculty=[person])

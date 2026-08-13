@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import { AdmitTierSchema, CONTRACT_VERSION, ProfileSchema } from "../src/types.js";
 
-describe("contract v8.0.0", () => {
-  it("reports version 8.0.0", () => {
-    expect(CONTRACT_VERSION).toBe("8.0.0");
+describe("contract v9.0.0", () => {
+  it("reports version 9.0.0", () => {
+    expect(CONTRACT_VERSION).toBe("9.0.0");
   });
 
   it("accepts a profile with no gpa_weighted", () => {

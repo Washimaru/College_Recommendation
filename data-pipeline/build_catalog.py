@@ -332,6 +332,43 @@ _DETAIL_PROVENANCE = {
 }
 
 
+# Exactly the fields the catalog publishes for a professor. An allowlist, not a
+# blocklist: the source could gain a column tomorrow, and a field that reaches a
+# public catalog because nobody thought to exclude it is how contact details
+# leak. Name, what they are known for, field, whether they are current, how
+# widely known, and where to check it.
+NOTABLE_FACULTY_FIELDS = (
+    "name", "known_for", "fields", "status", "prominence", "source", "source_url",
+)
+
+
+def attach_notable_faculty(record: dict, tier: dict) -> dict:
+    """Attach the notable-faculty list for this school, if it was looked up.
+
+    Three states, kept apart deliberately:
+      list  - searched, and these are the professors found
+      []    - searched, and nobody was found (a real finding for a small school)
+      None  - never searched, or a non-US school the source does not cover
+    """
+    is_us = record["country"] == "USA"
+    entry = tier.get(record["id"]) if is_us else None
+
+    if entry is None:
+        record["notable_faculty"] = None
+        record["provenance"]["notable_faculty"] = "absent" if is_us else "not_applicable"
+        return record
+
+    people = []
+    for person in entry.get("notable_faculty", []):
+        people.append({k: person.get(k) for k in NOTABLE_FACULTY_FIELDS if k in person})
+    record["notable_faculty"] = people
+    # web_verified, not observed: a Wikipedia category is a published claim
+    # about a person, checked by editors rather than measured by a federal
+    # survey, and the provenance vocabulary already has a word for that.
+    record["provenance"]["notable_faculty"] = "web_verified"
+    return record
+
+
 def attach_details(record: dict, details_by_id: dict[str, dict]) -> dict:
     """Attach a per-school profile (scholarships, research, outcomes, grad and
     professional schools) when one exists."""
@@ -361,6 +398,7 @@ def build(
     scorecard: dict[str, dict],
     aliases: dict[str, str] | None = None,
     details: dict[str, dict] | None = None,
+    notable: dict[str, dict] | None = None,
 ) -> tuple[list[dict], list[str]]:
     """Return (catalog, unmatched_us_names). Unmatched names are surfaced so
     the coverage gap is visible rather than silent."""
@@ -372,7 +410,8 @@ def build(
             row = scorecard.get(resolve_key(record, aliases))
             if row is None:
                 unmatched.append(record["name"])
-        catalog.append(attach_details(enrich(record, row), details or {}))
+        enriched = attach_details(enrich(record, row), details or {})
+        catalog.append(attach_notable_faculty(enriched, notable or {}))
     return catalog, unmatched
 
 
@@ -418,6 +457,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--cache", default="sources/scorecard_cache.json")
     parser.add_argument("--aliases", default="sources/aliases.json")
     parser.add_argument("--details", default="sources/school_details.json")
+    parser.add_argument(
+        "--notable-faculty",
+        default="sources/notable_faculty.json",
+        help="Tier file written by `faculty-pipeline notable`. Absent is fine: "
+             "every school's notable_faculty then reads null (never searched).",
+    )
     parser.add_argument("--out", default="out/universities.json")
     parser.add_argument(
         "--stats-out",
@@ -452,7 +497,17 @@ def main(argv: list[str] | None = None) -> int:
     details_path = Path(args.details)
     details = json.loads(details_path.read_text(encoding="utf-8")) if details_path.exists() else {}
 
-    catalog, unmatched = build(tier1, scorecard, aliases, details)
+    notable_path = Path(args.notable_faculty)
+    notable = (
+        json.loads(notable_path.read_text(encoding="utf-8")) if notable_path.exists() else {}
+    )
+    if not notable:
+        sys.stderr.write(
+            f"note: no notable faculty at {notable_path}; notable_faculty will be null "
+            "for every school (run `faculty-pipeline notable`)\n"
+        )
+
+    catalog, unmatched = build(tier1, scorecard, aliases, details, notable)
 
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)

@@ -190,23 +190,46 @@ def test_bare_at_dot_does_not_false_positive_on_ordinary_prose() -> None:
     assert extract._email_from_text(text) is None
 
 
-def test_title_hint_boilerplate_is_stripped_for_deterministic_name() -> None:
+def test_the_title_hint_no_longer_names_anyone_deterministically() -> None:
+    """Reversed deliberately, on evidence from a live run.
+
+    This used to assert that `--no-llm` derived "Thalita Abrahao" from
+    "Thalita Abrahao | Agnes Scott College", and for that page it did. Run
+    across five real schools, the same rule also produced "Faculty Directory"
+    100 times, "Bard College" 39 times and "OneLogin" 20 times: a page title
+    describes the page, and only sometimes happens to be a person. The
+    stripper itself is unchanged and still guards LLM-returned names — see
+    `test_boilerplate_stripping_still_guards_llm_names` below.
+    """
     hints = {
         "title_hint": "Thalita Abrahao | Agnes Scott College",
         "meta_name": None,
+        "meta_author": None,
         "jsonld_name": None,
     }
-    name = extract._best_deterministic_name(hints, "Agnes Scott College")
-    assert name == "Thalita Abrahao"
+    assert extract._best_deterministic_name(hints, "Agnes Scott College") is None
 
 
-def test_meta_og_title_preferred_over_boilerplate_title_hint() -> None:
-    hints = {
-        "title_hint": "Thalita Abrahao | Agnes Scott College",
-        "meta_name": "Thalita Abrahao",
-        "jsonld_name": None,
+def test_boilerplate_stripping_still_guards_llm_names() -> None:
+    assert extract._strip_boilerplate(
+        "Thalita Abrahao | Agnes Scott College", "Agnes Scott College"
+    ) == "Thalita Abrahao"
+
+
+def test_a_meta_author_names_someone_but_og_title_does_not() -> None:
+    """`og:title` is the page's title, so it names directories and news
+    articles as readily as people. `<meta name="author">` claims a person."""
+    page_title_only = {
+        "title_hint": "Faculty Directory", "meta_name": "Faculty Directory",
+        "meta_author": None, "jsonld_name": None,
     }
-    assert extract._best_deterministic_name(hints, "Agnes Scott College") == "Thalita Abrahao"
+    authored = {
+        "title_hint": "Faculty Directory", "meta_name": "Faculty Directory",
+        "meta_author": "Thalita Abrahao", "jsonld_name": None,
+    }
+
+    assert extract._best_deterministic_name(page_title_only, "Agnes Scott College") is None
+    assert extract._best_deterministic_name(authored, "Agnes Scott College") == "Thalita Abrahao"
 
 
 def test_strip_boilerplate_leaves_unrelated_names_alone() -> None:
@@ -534,3 +557,63 @@ def test_generic_llm_error_marks_failed_for_retry(tmp_path: Path) -> None:
     assert not checkpoint.is_done(raw.profile_url)
     entry = checkpoint.entry(raw.profile_url)
     assert entry is not None and entry.status == "failed"
+
+
+class TestDeterministicNamesNeedPersonEvidence:
+    """`--no-llm` used to accept the `<title>`/`<h1>` hint as a name, and on a
+    real run that produced "Faculty Directory" 100 times, "Bard College" 39
+    times and "OneLogin" 20 times — page furniture and a login screen, filed
+    as professors. A page title is not a claim about a person. JSON-LD
+    `Person.name` and `<meta name="author">` are, so those are the only
+    sources the credit-free path may name someone from.
+    """
+
+    def test_a_page_title_alone_is_not_a_person(self, tmp_path: Path):
+        html = "<html><head><title>Faculty Directory</title></head><body>staff</body></html>"
+        assert _no_llm_name(tmp_path, html, parse_hint={"name": "Faculty Directory"}) is None
+
+    def test_the_school_name_as_a_title_is_not_a_person(self, tmp_path: Path):
+        html = "<html><head><title>Bard College</title></head><body>x</body></html>"
+        assert _no_llm_name(tmp_path, html, parse_hint={"name": "Bard College"}) is None
+
+    def test_json_ld_person_is_trusted(self, tmp_path: Path):
+        html = """<html><head><script type="application/ld+json">
+        {"@type":"Person","name":"Jane Doe","jobTitle":"Professor of Physics"}
+        </script></head><body>x</body></html>"""
+        assert _no_llm_name(tmp_path, html, parse_hint={"name": "Faculty Directory"}) == "Jane Doe"
+
+    def test_meta_author_is_trusted(self, tmp_path: Path):
+        html = '<html><head><meta name="author" content="Jane Doe"></head><body>x</body></html>'
+        assert _no_llm_name(tmp_path, html, parse_hint={}) == "Jane Doe"
+
+
+def _no_llm_name(tmp_path: Path, html: str, parse_hint: dict) -> str | None:
+    """Run the deterministic path over one page and return the name it emitted,
+    or None when it declined to name anyone."""
+    import json as _json
+
+    config = _config(tmp_path)
+    page = tmp_path / "page.html"
+    page.write_text(html, encoding="utf-8")
+    raw = {
+        "school_id": "bard-college", "profile_url": "https://www.bard.edu/faculty/x",
+        "directory_url": "https://www.bard.edu/faculty/", "http_status": 200,
+        "html_cache_path": str(page), "fetched_at": "2026-08-13T00:00:00+00:00",
+        "parse_hint": parse_hint,
+    }
+    raw_path = Path(config.data_dir) / "profiles_raw.jsonl"
+    raw_path.parent.mkdir(parents=True, exist_ok=True)
+    raw_path.write_text(_json.dumps(raw) + "\n", encoding="utf-8")
+    schools_path = Path(config.data_dir) / "schools.jsonl"
+    schools_path.write_text(_json.dumps({
+        "school_id": "bard-college", "name": "Bard College", "slug": "bard-college",
+        "country": "US", "homepage": "https://www.bard.edu", "source_fields": {},
+    }) + "\n", encoding="utf-8")
+
+    checkpoint = CheckpointStore(Path(config.checkpoint_dir) / "extract.json")
+    extract.run(config, checkpoint, logger, no_llm=True)
+    out = Path(config.data_dir) / "profiles_clean.jsonl"
+    if not out.exists():
+        return None
+    rows = [_json.loads(line) for line in out.read_text().splitlines() if line.strip()]
+    return rows[0]["professor_name"] if rows else None

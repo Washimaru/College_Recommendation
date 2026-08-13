@@ -1,7 +1,7 @@
 # Data Model
 
 Contracts in `docs/contracts/*.json` are the wire source of truth, currently at
-**v8.0.0**. This file describes the domain entities behind them.
+**v9.0.0**. This file describes the domain entities behind them.
 
 The governing rule, everywhere below: **a missing value is `null`.** It is never
 derived, inferred, estimated, or defaulted to zero. `provenance` records where
@@ -76,6 +76,17 @@ Notes that matter:
   Absence from this list does **not** mean a school lacks the subject — deriving
   "what a school doesn't offer" from it would wrongly claim MIT has no
   Philosophy department (it awards 1.6% of its degrees there).
+- `notable_faculty[]` names professors: `{name, known_for, fields, status,
+  prominence, source, source_url}`. Sourced from Wikipedia category membership
+  and Wikidata by `faculty-pipeline`'s `notable` stage, which uses no model —
+  so a name here is a person who exists, not a plausible-sounding string.
+  `status` is `current` or `historical`; the latter means a recorded date of
+  death, and its absence is not proof of tenure, which is why the values are
+  not `alive`/`dead`. `prominence` counts language Wikipedias carrying an
+  article — measured, not judged. **No contact details**: `build_catalog.py`
+  copies an allowlist of fields, so a column added upstream cannot leak into a
+  public catalog. `null` = nobody searched (all non-US schools); `[]` =
+  searched and found nobody.
 - `programs[]` is that honest route, added in v7.0.0: `{name, share}` per
   2-digit CIP family from Scorecard's `PCIP*` columns, largest share first,
   zero shares omitted. `null` means unmeasured (every non-US school, where

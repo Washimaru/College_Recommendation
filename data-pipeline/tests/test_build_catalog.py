@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from build_catalog import (
     attach_details,
+    attach_notable_faculty,
     coalesce_net_price,
     enrich,
     normalize_name,
@@ -428,3 +429,75 @@ class TestState:
 
         assert record["state"] is None
         assert record["provenance"]["state"] == "absent"
+
+
+class TestNotableFaculty:
+    """Named professors per school, from faculty-pipeline's notable stage.
+
+    The tier file records what was looked up; this only attaches it. The
+    distinction that matters is the same one `programs` draws: a school that
+    was searched and yielded nobody is not a school nobody searched.
+    """
+
+    TIER = {
+        "test-tech": {
+            "school_id": "test-tech",
+            "school_name": "Test Tech",
+            "notable_faculty": [
+                {"name": "Jane Doe", "known_for": "American physicist", "fields": ["physicist"],
+                 "status": "current", "prominence": 12, "source": "wikipedia",
+                 "source_url": "https://en.wikipedia.org/wiki/Jane_Doe"},
+            ],
+        },
+        "searched-empty": {
+            "school_id": "searched-empty", "school_name": "Empty College",
+            "notable_faculty": [],
+        },
+    }
+
+    def test_a_school_with_faculty_carries_the_list(self):
+        record = attach_notable_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "test-tech"}, self.TIER
+        )
+
+        assert record["notable_faculty"][0]["name"] == "Jane Doe"
+        assert record["provenance"]["notable_faculty"] == "web_verified"
+
+    def test_a_searched_school_with_nobody_gets_an_empty_list(self):
+        record = attach_notable_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "searched-empty"}, self.TIER
+        )
+
+        assert record["notable_faculty"] == []
+        assert record["provenance"]["notable_faculty"] == "web_verified"
+
+    def test_an_unsearched_school_is_null_not_empty(self):
+        record = attach_notable_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "never-looked"}, self.TIER
+        )
+
+        assert record["notable_faculty"] is None
+        assert record["provenance"]["notable_faculty"] == "absent"
+
+    def test_a_non_us_school_is_not_applicable(self):
+        record = attach_notable_faculty(enrich(NON_US, None), self.TIER)
+
+        assert record["notable_faculty"] is None
+        assert record["provenance"]["notable_faculty"] == "not_applicable"
+
+    def test_no_contact_details_are_ever_attached(self):
+        """The published field carries who someone is, never how to reach
+        them — that line is what keeps the faculty CSVs gitignored."""
+        tier = {"test-tech": {"notable_faculty": [
+            {"name": "Jane Doe", "email": "jane@test.edu", "phone": "555-1234",
+             "known_for": "physicist", "fields": [], "status": "current",
+             "prominence": 3, "source": "wikipedia", "source_url": "https://x"},
+        ]}}
+
+        record = attach_notable_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "test-tech"}, tier
+        )
+
+        person = record["notable_faculty"][0]
+        assert "email" not in person and "phone" not in person
+        assert person["name"] == "Jane Doe"

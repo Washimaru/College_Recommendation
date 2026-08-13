@@ -26,6 +26,9 @@ CREATE TABLE IF NOT EXISTS universities (
     -- unmeasured; '[]' means measured and awarding none of them, which is the
     -- only basis on which "this school does not offer X" can be said.
     programs        JSONB,
+    -- Named professors. NULL means nobody searched; '[]' means searched and
+    -- found nobody. Contact details are deliberately not in this shape.
+    notable_faculty JSONB,
     enrollment      INTEGER     CHECK (enrollment >= 0),   -- undergraduate only
     size            TEXT        NOT NULL CHECK (size IN ('small','medium','large')),
     majors          JSONB       NOT NULL DEFAULT '[]'::jsonb,

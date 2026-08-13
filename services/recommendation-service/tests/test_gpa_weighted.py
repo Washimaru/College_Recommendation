@@ -13,8 +13,8 @@ from pydantic import ValidationError
 from app.schemas import CONTRACT_VERSION, Profile
 
 
-def test_contract_version_is_8():
-    assert CONTRACT_VERSION == "8.0.0"
+def test_contract_version_is_9():
+    assert CONTRACT_VERSION == "9.0.0"
 
 
 def test_profile_gpa_weighted_is_optional():

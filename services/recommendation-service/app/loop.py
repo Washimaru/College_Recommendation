@@ -133,6 +133,7 @@ def _summarize(uni: University) -> UniversitySummary:
         sticker_tuition=uni.sticker_tuition,
         tuition_in_state=uni.tuition_in_state,
         programs=uni.programs,
+        notable_faculty=uni.notable_faculty,
         enrollment=uni.enrollment,
         size=uni.size,
         majors=uni.majors,

@@ -10,7 +10,7 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "8.0.0"
+CONTRACT_VERSION = "9.0.0"
 
 # One multiplicative adjustment to a weight. The recommendation loop clamps
 # these to [0.5, 1.5] before sending them; the same range is enforced here
@@ -25,6 +25,29 @@ Provenance = Literal["observed", "web_verified", "editorial", "not_applicable", 
 Region = Literal["Northeast", "South", "West", "Midwest", "International"]
 Setting = Literal["urban", "suburban", "rural"]
 InstitutionType = Literal["Public", "Private"]
+
+
+class NotableProfessor(BaseModel):
+    """A named professor, from Wikipedia category membership plus Wikidata.
+
+    Carries who someone is and where to check it — never an email or a phone
+    number. That line is what keeps the faculty CSVs gitignored while this
+    field is publishable: a professor's employer is not private, their inbox
+    is. No model is involved in producing these, so a name here belongs to
+    someone who exists.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(min_length=1)
+    known_for: str | None = None
+    fields: list[str] = Field(default_factory=list)
+    # "historical" means a recorded date of death. Its absence is not proof of
+    # tenure, which is why these are not "alive" and "dead".
+    status: Literal["current", "historical"]
+    prominence: int = Field(default=0, ge=0)
+    source: Literal["wikipedia", "directory"]
+    source_url: str = Field(min_length=1)
 
 
 class Program(BaseModel):
@@ -189,6 +212,9 @@ class University(BaseModel):
     tuition_in_state: float | None = Field(default=None, ge=0)
     # None = unmeasured, [] = measured and awards none of these families.
     programs: list[Program] | None = None
+    # None = nobody searched; [] = searched and found nobody, which is a real
+    # answer for a small college.
+    notable_faculty: list[NotableProfessor] | None = None
     enrollment: int | None = Field(default=None, ge=0)
     size: Size
     majors: list[str] = Field(default_factory=list)
