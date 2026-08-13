@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 
 import { UniversityModal } from "@/components/UniversityModal";
+import { useProfileStore } from "./profileStore";
 import type { AdmitTier, UniversitySummary } from "./contract";
 
 interface Opened {
@@ -41,6 +42,7 @@ export function useSchoolModal(): {
   modal: ReactNode;
 } {
   const [opened, setOpened] = useState<Opened | null>(null);
+  const { form } = useProfileStore();
 
   const open = (school: Openable) =>
     setOpened(
@@ -62,6 +64,10 @@ export function useSchoolModal(): {
         university={opened.university}
         rationale={opened.rationale}
         admitTier={opened.admitTier}
+        // Read here rather than passed by each caller: every route that can
+        // open a school modal already has the store, and a caller that forgot
+        // would silently drop the out-of-state warning.
+        homeState={form.homeState || null}
         onClose={() => setOpened(null)}
       />
     ) : null,

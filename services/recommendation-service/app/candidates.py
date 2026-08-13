@@ -73,7 +73,7 @@ def _load_from_db(url: str) -> list[University]:  # pragma: no cover - needs Pos
 
     with psycopg.connect(url, row_factory=dict_row) as conn:
         rows = conn.execute(
-            "SELECT id, unitid, name, country, location, region, setting, type, "
+            "SELECT id, unitid, name, country, location, state, region, setting, type, "
             "avg_gpa, avg_sat, acceptance_rate, net_price, sticker_tuition, "
             "tuition_in_state, programs, "
             "enrollment, size, majors, culture, population, url, "

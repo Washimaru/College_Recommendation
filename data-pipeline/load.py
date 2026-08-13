@@ -39,7 +39,7 @@ def load_universities(rows: list[dict], url: str) -> int:
                 cur.execute(
                     """
                     INSERT INTO universities (
-                        id, unitid, name, country, location, region, setting,
+                        id, unitid, name, country, location, state, region, setting,
                         type, avg_gpa, avg_sat, acceptance_rate, net_price,
                         sticker_tuition, tuition_in_state, programs,
                         enrollment, size, majors, culture,
@@ -47,12 +47,13 @@ def load_universities(rows: list[dict], url: str) -> int:
                         provenance
                     )
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                            %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (id) DO UPDATE SET
                         unitid = EXCLUDED.unitid,
                         name = EXCLUDED.name,
                         country = EXCLUDED.country,
                         location = EXCLUDED.location,
+                        state = EXCLUDED.state,
                         region = EXCLUDED.region,
                         setting = EXCLUDED.setting,
                         type = EXCLUDED.type,
@@ -74,7 +75,7 @@ def load_universities(rows: list[dict], url: str) -> int:
                         provenance = EXCLUDED.provenance
                     """,
                     (r["id"], r.get("unitid"), r["name"], r["country"], r["location"],
-                     r["region"], r["setting"], r["type"],
+                     r.get("state"), r["region"], r["setting"], r["type"],
                      r["avg_gpa"], r.get("avg_sat"), r.get("acceptance_rate"),
                      r.get("net_price"), r.get("sticker_tuition"),
                      r.get("tuition_in_state"),

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/recommendation.schema.json",
   "title": "RecommendationResponse",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["results", "confidence", "stop_reason", "trace"],
@@ -54,6 +54,7 @@
       "properties": {
         "country": { "type": "string" },
         "location": { "type": "string" },
+        "state": { "type": ["string", "null"], "minLength": 2, "maxLength": 2, "description": "Two-letter US state code, from Scorecard STABBR. US only; null and provenance not_applicable elsewhere. Structured on purpose: `location` is display-only, so residency must never be decided by parsing it." },
         "region": { "type": "string", "enum": ["Northeast", "South", "West", "Midwest", "International"] },
         "setting": { "type": "string", "enum": ["urban", "suburban", "rural"] },
         "type": { "type": "string", "enum": ["Public", "Private"] },

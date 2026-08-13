@@ -22,6 +22,7 @@ Legend: `DONE` · `TODO` · `BLOCKED`
 | Improvement plan Phase 2 Accessibility and trust | DONE |
 | Improvement plan Phase 3 Finish the faculty pipeline | DONE |
 | Improvement plan Phase 4 Product features (specs B, C) | DONE |
+| Phase 4 follow-through (contract v8.0.0) | DONE |
 
 ## Changelog
 
@@ -157,6 +158,51 @@ Six correctness items from `~/.claude/plans/ignore-the-press-of-wild-reef.md`.
 All three gaps recorded here — `region` having no SQL `CHECK`, a delisted school
 rendering from its snapshot unmarked, and corrupt `localStorage` recovering
 silently — were closed in Phase 2 below.
+
+## Verification (2026-08-13) — Phase 4 follow-through, contract v8.0.0
+
+v7.0.0 landed both new fields but left them inert: nothing scored on in-state
+cost, and the Major Finder — the one screen where a student asks who teaches a
+subject — still read only the editorial strengths list.
+
+- **T2** `VERIFY: GREEN`. **T4** `SMOKE OK: R1_converged 5 results` against a
+  volume recreated from the amended schema. Lint clean in all five projects.
+- **T3** scoring 100.00% (118 tests), recommendation 96.10% (65),
+  data-pipeline 90, gateway 33, `college-recommender` 211.
+
+### In-state cost now moves the ranking
+
+`net_price` is the federal average, and at a public university that measure
+covers **in-state** students — so every out-of-state applicant was quoted a
+resident's price in a dimension worth 18% of the score.
+`scoring._out_of_state_premium` adds the published tuition gap when a student
+volunteers a home state. It is a stated adjustment: it moves the score, is
+never written into the catalog, and never appears as an observed figure.
+Unstated home state changes nothing, which is pinned by test.
+
+Live, against the loaded catalog — same profile, `institution_type=Public`,
+`max_tuition=20000`:
+
+| home_state | top result |
+|---|---|
+| *(unstated)* | five California publics tied at 0.820 |
+| `MI` | University of Michigan, 0.819 |
+| `TX` | University of Texas at Austin, 0.813 |
+
+`University.state` comes from Scorecard's `STABBR` rather than being parsed out
+of `location`, which stays display-only by rule. The modal now also tells an
+out-of-state student whose price they are looking at, and by how much it is
+likely wrong.
+
+### The Major Finder can now say a school teaches something
+
+`lib/cipFamilies.ts` maps each Major Finder field to the CIP family that
+measures it — a mapping between two taxonomies, with tests that fail if either
+side drifts. Each suggestion reports how many schools award degrees in the
+area, how many award **none**, and how many were never measured (every non-US
+school), counted separately so an unmeasured school can never be rendered as a
+refusal. Schools that teach a field without advertising it as a strength —
+invisible to a six-entry editorial list — are surfaced alongside.
 
 ## Verification (2026-08-12) — improvement plan Phase 4, contract v7.0.0
 

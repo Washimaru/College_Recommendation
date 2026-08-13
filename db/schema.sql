@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS universities (
     unitid          TEXT,                    -- federal IPEDS id where matched; US only
     name            TEXT        NOT NULL,
     country         TEXT        NOT NULL,
-    location        TEXT        NOT NULL,
+    location        TEXT        NOT NULL,          -- display only; never parsed
+    state           TEXT        CHECK (state IS NULL OR length(state) = 2),  -- US only
     region          TEXT        NOT NULL CHECK (region IN ('Northeast','South','West','Midwest','International')),
     setting         TEXT        NOT NULL CHECK (setting IN ('urban','suburban','rural')),
     type            TEXT        NOT NULL CHECK (type IN ('Public','Private')),

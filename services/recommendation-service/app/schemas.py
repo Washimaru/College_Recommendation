@@ -10,7 +10,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "7.0.0"
+CONTRACT_VERSION = "8.0.0"
 
 Size = Literal["small", "medium", "large"]
 Scope = Literal["usa", "international", "both"]
@@ -94,6 +94,11 @@ class Personality(BaseModel):
 class Preferences(BaseModel):
     model_config = ConfigDict(extra="forbid")
     max_tuition: float | None = Field(default=None, ge=0)
+    # Two-letter US state, if the student volunteers it. Used for one thing:
+    # net_price at a public university is the federal average for in-state
+    # students, so an out-of-state applicant owes the tuition gap on top of it
+    # (scoring._cost_fit). Unstated changes nothing.
+    home_state: str | None = Field(default=None, min_length=2, max_length=2)
     preferred_size: Size | None = None
     scope: Scope = "both"
     # Soft: fold into the `fit` dimension. An empty list means no preference.
@@ -139,6 +144,9 @@ class University(BaseModel):
     name: str = Field(min_length=1)
     country: str = Field(min_length=1)
     location: str
+    # Two-letter US state code. Structured on purpose: `location` is
+    # display-only, so residency must never be decided by parsing it.
+    state: str | None = Field(default=None, min_length=2, max_length=2)
     region: Region
     setting: Setting
     type: InstitutionType
@@ -185,6 +193,7 @@ class UniversitySummary(BaseModel):
     model_config = ConfigDict(extra="forbid")
     country: str
     location: str
+    state: str | None = None
     region: Region
     setting: Setting
     type: InstitutionType

@@ -12,14 +12,16 @@ from pydantic import ValidationError
 from app.schemas import CONTRACT_VERSION, CulturePrefs, Profile, University
 
 
-def test_contract_version_is_7():
+def test_contract_version_is_8():
     """v3.0.0 added activities and personality; v3.1.0 added country scope;
     v4.0.0 adds place and population fields and removes preferences.locations;
     v5.0.0 adds Profile.gpa_weighted and the extreme_reach admit tier;
     v6.0.0 caps each profile.weights override at 1.0 and enforces the
     weight_feedback clamp here rather than trusting the caller;
-    v7.0.0 adds University.tuition_in_state and University.programs."""
-    assert CONTRACT_VERSION == "7.0.0"
+    v7.0.0 adds University.tuition_in_state and University.programs;
+    v8.0.0 adds University.state and Preferences.home_state, so an
+    out-of-state applicant stops being quoted a resident's net price."""
+    assert CONTRACT_VERSION == "8.0.0"
 
 
 def test_profile_needs_no_mbti():

@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "7.0.0";
+export const CONTRACT_VERSION = "8.0.0";
 
 export const RegionSchema = z.enum([
   "Northeast",
@@ -73,6 +73,10 @@ export const PersonalitySchema = z
 export const PreferencesSchema = z
   .object({
     max_tuition: z.number().min(0).nullable().optional(),
+    /** Two-letter US state. Only use: net_price at a public university is the
+     *  federal average for in-state students, so an out-of-state applicant owes
+     *  the tuition gap on top of it. Unstated changes nothing. */
+    home_state: z.string().length(2).nullable().optional(),
     preferred_size: z.enum(["small", "medium", "large"]).nullable().optional(),
     /** Hard filter on which schools are considered, not a ranking signal. */
     scope: z.enum(["usa", "international", "both"]).optional(),
@@ -160,6 +164,9 @@ export const UniversitySummarySchema = z
   .object({
     country: z.string(),
     location: z.string(),
+    /** Two-letter US state code. Structured because `location` is display-only
+     *  and must never be parsed to decide residency. */
+    state: z.string().length(2).nullable().optional(),
     region: RegionSchema,
     setting: SettingSchema,
     type: InstitutionTypeSchema,
@@ -232,6 +239,9 @@ export const UniversitySchema = z
     name: z.string(),
     country: z.string(),
     location: z.string(),
+    /** Two-letter US state code. Structured because `location` is display-only
+     *  and must never be parsed to decide residency. */
+    state: z.string().length(2).nullable().optional(),
     region: RegionSchema,
     setting: SettingSchema,
     type: InstitutionTypeSchema,

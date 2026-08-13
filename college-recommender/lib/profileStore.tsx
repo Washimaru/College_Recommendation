@@ -43,6 +43,8 @@ export interface FormState {
   sat: string;
   major: string;
   maxNetPrice: string;
+  /** Two-letter US state, or "" for unanswered. Only affects cost scoring. */
+  homeState: string;
   scope: Scope;
   regions: Region[];
   settings: Setting[];
@@ -55,6 +57,7 @@ const EMPTY_FORM: FormState = {
   sat: "",
   major: "Computer Science",
   maxNetPrice: "",
+  homeState: "",
   scope: "both",
   regions: [],
   settings: [],

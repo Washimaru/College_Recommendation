@@ -402,3 +402,29 @@ class TestProgramsAwarded:
 
         assert record["programs"] is None
         assert record["provenance"]["programs"] == "not_applicable"
+
+
+class TestState:
+    """The school's state, structured.
+
+    `location` ("Ann Arbor, MI") is display-only by rule — never a filter,
+    never a scoring input — so residency cannot be decided by parsing it.
+    STABBR is already in the cached columns and is the honest source.
+    """
+
+    def test_a_us_school_carries_its_state(self):
+        record = enrich({**NON_US, "country": "USA"}, {**US_ROW, "STABBR": "MI"})
+
+        assert record["state"] == "MI"
+
+    def test_a_non_us_school_has_no_state(self):
+        record = enrich(NON_US, None)
+
+        assert record["state"] is None
+        assert record["provenance"]["state"] == "not_applicable"
+
+    def test_a_us_school_with_no_scorecard_row_is_absent_not_guessed(self):
+        record = enrich({**NON_US, "country": "USA"}, None)
+
+        assert record["state"] is None
+        assert record["provenance"]["state"] == "absent"

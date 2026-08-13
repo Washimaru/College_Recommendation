@@ -100,3 +100,66 @@ describe("programs", () => {
     expect(screen.getByText(/federal/i)).toBeTruthy();
   });
 });
+
+describe("out-of-state warning", () => {
+  const PUBLIC_MI = {
+    ...BASE,
+    state: "MI",
+    net_price: 13138,
+    tuition_in_state: 17736,
+    sticker_tuition: 60946,
+    provenance: { net_price: "observed" as const },
+  };
+
+  it("warns a student from another state that the net price is not theirs", () => {
+    render(
+      <UniversityModal
+        name="Michigan"
+        university={PUBLIC_MI}
+        homeState="TX"
+        onClose={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByText(/in-state students/i)).toBeTruthy();
+  });
+
+  it("says nothing to a resident", () => {
+    render(
+      <UniversityModal
+        name="Michigan"
+        university={PUBLIC_MI}
+        homeState="MI"
+        onClose={vi.fn()}
+      />,
+    );
+
+    expect(screen.queryByText(/in-state students/i)).toBeNull();
+  });
+
+  it("says nothing when the student did not give a state", () => {
+    render(<UniversityModal name="Michigan" university={PUBLIC_MI} onClose={vi.fn()} />);
+
+    expect(screen.queryByText(/in-state students/i)).toBeNull();
+  });
+
+  it("says nothing at a private school, where the two prices are the same", () => {
+    render(
+      <UniversityModal
+        name="MIT"
+        university={{
+          ...BASE,
+          type: "Private",
+          state: "MA",
+          net_price: 20111,
+          tuition_in_state: 62396,
+          sticker_tuition: 62396,
+        }}
+        homeState="TX"
+        onClose={vi.fn()}
+      />,
+    );
+
+    expect(screen.queryByText(/in-state students/i)).toBeNull();
+  });
+});

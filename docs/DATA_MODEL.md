@@ -1,7 +1,7 @@
 # Data Model
 
 Contracts in `docs/contracts/*.json` are the wire source of truth, currently at
-**v7.0.0**. This file describes the domain entities behind them.
+**v8.0.0**. This file describes the domain entities behind them.
 
 The governing rule, everywhere below: **a missing value is `null`.** It is never
 derived, inferred, estimated, or defaulted to zero. `provenance` records where
@@ -27,6 +27,11 @@ an em dash (we don't have it) — never as `0`.
   - `scope` — `usa` | `international` | `both`. **Hard filter.**
   - `institution_type` — `Public` | `Private` | null. **Hard filter**, applied
     before ranking so a requested `top_k` still comes back full.
+  - `home_state` — optional two-letter US state. Not a filter: it corrects the
+    cost dimension. `net_price` is the federal average for **in-state**
+    students at a public university, so an out-of-state applicant owes the
+    published tuition gap on top of it — for most publics that is more than the
+    net price itself. Unstated changes nothing.
   - `regions[]`, `settings[]` — **soft**. They fold into the `fit` dimension at
     0.25 each; an empty list scores 1.0, identical to a full match. Schools
     outside a stated region still appear, ranked lower. Only 28 of 358 schools
@@ -50,6 +55,9 @@ Persisted in the `universities` table (`db/schema.sql`).
 Notes that matter:
 
 - `location` is **display-only** — never a filter, never a scoring input.
+- `state` is the two-letter code from Scorecard's `STABBR`, US only. It exists
+  so residency has a structured field of its own: comparing a student's
+  `home_state` against a parsed `"Ann Arbor, MI"` would breach the rule above.
 - `region` ∈ {Northeast, South, West, Midwest, International}; `setting` ∈
   {urban, suburban, rural}; `type` ∈ {Public, Private}. All three are editorial
   and present for all 358 schools.
@@ -87,6 +95,12 @@ ascending `university_id`.
 
 Six weighted dimensions: `academic` .28, `cost` .18, `fit` .18, `culture` .18,
 `activities` .10, `personality` .08.
+
+`cost` scores `net_price` plus the out-of-state premium
+(`sticker_tuition - tuition_in_state`) when the student stated a `home_state`
+that differs from the school's `state` and the school publishes both figures.
+A **stated adjustment**, like the admit-tier thresholds: it moves the score,
+never the catalog, and never appears as an observed number.
 
 ## Recommendation (`recommendation.schema.json`)
 

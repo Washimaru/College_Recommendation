@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
+import { ProfileProvider } from "./profileStore";
 import { useSchoolModal, type Openable } from "./useSchoolModal";
 import type { Result, University, UniversitySummary } from "./contract";
 
@@ -40,9 +41,16 @@ function Probe({ school }: { school: Openable }) {
   );
 }
 
-/** Renders the probe and opens the modal, so assertions run against real output. */
+/** Renders the probe and opens the modal, so assertions run against real output.
+ *  The hook now reads the profile store — it needs the student's home state to
+ *  say whose price a public university's net price actually is — so every
+ *  render needs a ProfileProvider ancestor, exactly as ResultCard does. */
 function openWith(school: Openable) {
-  render(<Probe school={school} />);
+  render(
+    <ProfileProvider>
+      <Probe school={school} />
+    </ProfileProvider>,
+  );
   fireEvent.click(screen.getByRole("button", { name: "open" }));
 }
 

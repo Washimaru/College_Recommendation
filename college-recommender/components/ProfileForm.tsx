@@ -12,6 +12,7 @@ import type { InstitutionType, RecommendationResponse, Region, Scope, Setting } 
 import { useProfileStore } from "@/lib/profileStore";
 import { foldAnswers } from "@/lib/questionnaire";
 import { MAJORS } from "@/lib/majors";
+import { US_STATES } from "@/lib/states";
 
 type Status =
   | { kind: "idle" }
@@ -80,6 +81,9 @@ export function ProfileForm() {
           settings: form.settings,
           institution_type: form.institutionType,
           ...(form.maxNetPrice ? { max_tuition: Number(form.maxNetPrice) } : {}),
+          // Omitted entirely when unanswered: an empty string is not a state,
+          // and the services should never have to decide what one means.
+          ...(form.homeState ? { home_state: form.homeState } : {}),
         },
       },
       top_k: 50,
@@ -159,6 +163,29 @@ export function ProfileForm() {
               value={form.maxNetPrice}
               onChange={(e) => setForm({ ...form, maxNetPrice: e.target.value })}
             />
+          </div>
+        </div>
+
+        <div className="grid2" style={{ marginTop: 18 }}>
+          <div>
+            <label className="fld" htmlFor="home-state">
+              Home state <span style={{ color: "var(--faint)" }}>(optional)</span>
+            </label>
+            <select
+              id="home-state" value={form.homeState}
+              onChange={(e) => setForm({ ...form, homeState: e.target.value })}
+            >
+              <option value="">Prefer not to say</option>
+              {US_STATES.map(([code, name]) => (
+                <option key={code} value={code}>{name}</option>
+              ))}
+            </select>
+            <p className="muted" style={{ fontSize: 12.5, margin: "6px 0 0" }}>
+              The net price we show for a public university is the federal average for
+              <b> in-state</b> students. Tell us where you live and we&rsquo;ll charge the
+              out-of-state difference against schools outside it — at most public schools
+              that is more than the net price itself. Leave it blank and nothing changes.
+            </p>
           </div>
         </div>
 

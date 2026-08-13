@@ -122,6 +122,7 @@ def _summarize(uni: University) -> UniversitySummary:
     return UniversitySummary(
         country=uni.country,
         location=uni.location,
+        state=uni.state,
         region=uni.region,
         setting=uni.setting,
         type=uni.type,

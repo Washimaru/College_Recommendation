@@ -119,6 +119,14 @@ def enrich(record: dict, row: dict | None) -> dict:
     else:
         provenance["tuition_in_state"] = "absent" if is_us else "not_applicable"
 
+    # The school's state, structured. `location` is display-only by rule, so
+    # residency can never be decided by parsing it; STABBR is the honest
+    # source and is already cached.
+    state = _text_or_none(row, "STABBR")
+    provenance["state"] = (
+        "observed" if state is not None else ("absent" if is_us else "not_applicable")
+    )
+
     programs = awarded_programs(row)
     if programs is not None:
         provenance["programs"] = "observed"
@@ -140,6 +148,7 @@ def enrich(record: dict, row: dict | None) -> dict:
         "name": record["name"],
         "country": record["country"],
         "location": record["location"],
+        "state": state,
         "region": record["region"],
         "setting": record["setting"],
         "type": record["type"],

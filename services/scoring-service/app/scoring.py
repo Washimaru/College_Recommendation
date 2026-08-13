@@ -127,18 +127,43 @@ def _academic_fit(profile: Profile, uni: University) -> float:
     return round(gpa_score, 6)
 
 
+def _out_of_state_premium(profile: Profile, uni: University) -> float:
+    """What this student pays on top of `net_price`, in dollars.
+
+    `net_price` is the federal average net price, and at a public institution
+    that measure covers students paying **in-state** tuition. So a Texan
+    reading Michigan's $13,138 was seeing a Michigander's price: the real gap
+    is the difference between the two published tuition figures, which for
+    most publics here is larger than the net price itself.
+
+    A **stated adjustment**, in the same spirit as the admit-tier thresholds:
+    it moves the score, is never written into the catalog, and is never shown
+    as an observed figure. It requires the student to have volunteered a home
+    state and the school to publish both tuition figures - no premium is ever
+    inferred from one of them. At a private school the two are equal, so this
+    is zero and the branch costs nothing.
+    """
+    home = profile.preferences.home_state
+    if home is None or uni.state is None or home.upper() == uni.state.upper():
+        return 0.0
+    if uni.tuition_in_state is None or uni.sticker_tuition is None:
+        return 0.0
+    return max(0.0, uni.sticker_tuition - uni.tuition_in_state)
+
+
 def _cost_fit(profile: Profile, uni: University) -> float:
     # Unknown price scores neutral, never free: an absent value must not make a
     # school look affordable.
     if uni.net_price is None:
         return 0.5
+    price = uni.net_price + _out_of_state_premium(profile, uni)
     cap = profile.preferences.max_tuition
     if cap is None:
         # No stated cap: mild preference for lower net price (60k reference).
-        return round(_clamp01(1.0 - uni.net_price / 60000.0), 6)
-    if uni.net_price <= cap:
+        return round(_clamp01(1.0 - price / 60000.0), 6)
+    if price <= cap:
         return 1.0
-    over = (uni.net_price - cap) / max(cap, 1.0)
+    over = (price - cap) / max(cap, 1.0)
     return round(_clamp01(1.0 - over), 6)
 
 

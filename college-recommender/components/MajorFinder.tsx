@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Sparkles } from "lucide-react";
 
+import { awardsDegreesIn, familyCoverage, MAJOR_TO_CIP_FAMILY } from "@/lib/cipFamilies";
 import type { University } from "@/lib/contract";
 import { recommendMajors, WORK_AXES, type WorkAxes } from "@/lib/majorFinder";
 import { COURSE_TAGS } from "@/lib/majorsData";
@@ -14,6 +15,62 @@ const CENTRED: WorkAxes = { people: 0.5, applied: 0.5, creative: 0.5 };
  * how you like to work. Each suggestion links back to the catalog, so a major
  * is never a dead end - you can see which schools are strong in it.
  */
+/** Share of degrees a school awards in `family`, 0 when it awards none. */
+function shareOf(school: University, family: string): number {
+  return school.programs?.find((program) => program.name === family)?.share ?? 0;
+}
+
+/**
+ * What the federal data says about this field across the whole catalog.
+ *
+ * Three counts, never two: "awards none" is a real finding, while "not
+ * measured" covers every school outside the US, and folding those together
+ * would manufacture exactly the false negative this data exists to prevent.
+ */
+function FederalCoverage({
+  catalog,
+  majorName,
+  alreadyShown,
+  onOpen,
+}: {
+  catalog: University[];
+  majorName: string;
+  alreadyShown: University[];
+  onOpen: (uni: University) => void;
+}) {
+  const family = MAJOR_TO_CIP_FAMILY[majorName];
+  const coverage = familyCoverage(catalog, family);
+  const shown = new Set(alreadyShown.map((uni) => uni.id));
+  const also = catalog
+    .filter((uni) => !shown.has(uni.id) && awardsDegreesIn(uni, family) === true)
+    .sort((a, b) => shareOf(b, family) - shareOf(a, family))
+    .slice(0, 6);
+
+  return (
+    <>
+      <p className="muted" style={{ fontSize: 12.5, marginTop: 16, marginBottom: 0 }}>
+        Federal degree data ({family}): <b>{coverage.awarding} schools award degrees</b> in this
+        area, {coverage.none} {coverage.none === 1 ? "awards" : "award"} none
+        {coverage.unmeasured > 0 && <> · {coverage.unmeasured} not measured</>}.
+      </p>
+      {also.length > 0 && (
+        <>
+          <p className="fld" style={{ marginTop: 12, marginBottom: 6 }}>
+            Also award degrees in this, without listing it as a strength
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {also.map((uni) => (
+              <button key={uni.id} type="button" className="chip" onClick={() => onOpen(uni)}>
+                {uni.name}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
 export function MajorFinder({
   catalog,
   error,
@@ -41,7 +98,7 @@ export function MajorFinder({
       return next;
     });
 
-  /** Schools in the catalog that list this major, best-known first. */
+  /** Schools in the catalog that list this major among their strengths. */
   const schoolsFor = (majorName: string): University[] => {
     if (!catalog) return [];
     const needle = majorName.split(" / ")[0].toLowerCase();
@@ -169,6 +226,11 @@ export function MajorFinder({
                 <p className="muted" style={{ fontSize: 12.5, marginTop: 6 }}>
                   {major.out.note}
                 </p>
+
+                {!error && catalog && MAJOR_TO_CIP_FAMILY[major.name] && (
+                  <FederalCoverage catalog={catalog} majorName={major.name} onOpen={onOpen}
+                                   alreadyShown={schools} />
+                )}
 
                 {error ? (
                   <p className="muted" style={{ fontSize: 12.5, marginTop: 16 }}>

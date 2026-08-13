@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import { AdmitTierSchema, CONTRACT_VERSION, ProfileSchema } from "../src/types.js";
 
-describe("contract v7.0.0", () => {
-  it("reports version 7.0.0", () => {
-    expect(CONTRACT_VERSION).toBe("7.0.0");
+describe("contract v8.0.0", () => {
+  it("reports version 8.0.0", () => {
+    expect(CONTRACT_VERSION).toBe("8.0.0");
   });
 
   it("accepts a profile with no gpa_weighted", () => {
@@ -69,5 +69,29 @@ describe("contract v7.0.0", () => {
       const result = ProfileSchema.safeParse({ ...profile, weights: { cost: -0.1 } });
       expect(result.success).toBe(false);
     });
+  });
+});
+
+describe("home_state", () => {
+  const profile = { gpa: 3.8, intended_major: "Computer Science" };
+
+  it("accepts a two-letter state", () => {
+    const result = ProfileSchema.safeParse({
+      ...profile,
+      preferences: { home_state: "MI" },
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("stays optional — the whole feature is opt-in", () => {
+    expect(ProfileSchema.safeParse({ ...profile, preferences: {} }).success).toBe(true);
+  });
+
+  it("rejects a full state name, which would silently never match", () => {
+    const result = ProfileSchema.safeParse({
+      ...profile,
+      preferences: { home_state: "Michigan" },
+    });
+    expect(result.success).toBe(false);
   });
 });

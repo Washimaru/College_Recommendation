@@ -1,5 +1,5 @@
 /**
- * Mirrors docs/contracts/{profile,recommendation}.schema.json v7.0.0.
+ * Mirrors docs/contracts/{profile,recommendation}.schema.json v8.0.0.
  *
  * The gateway is the validating authority; these types keep the client honest
  * at compile time. Two fields are deliberately absent: `mbti`, removed in
@@ -24,6 +24,12 @@
  * offer X". `majors` cannot: it names strengths, so absence from it means
  * nothing. `null` programs is "unmeasured"; `[]` is "measured, awards none of
  * these".
+ *
+ * v8.0.0 adds `University.state` and `preferences.home_state`. `net_price` at
+ * a public university is the federal average for *in-state* students, so an
+ * out-of-state applicant is quoted a resident's price unless they say where
+ * they live. `state` is structured for exactly this reason — `location`
+ * ("Ann Arbor, MI") is display-only and must never be parsed.
  */
 
 export const CULTURE_AXES = [
@@ -109,6 +115,8 @@ export interface Profile {
   preferences?: {
     scope?: Scope;
     max_tuition?: number | null;
+    /** Two-letter US state, if the student says. Only affects cost scoring. */
+    home_state?: string | null;
     preferred_size?: "small" | "medium" | "large" | null;
     regions?: Region[];
     settings?: Setting[];
@@ -124,6 +132,8 @@ export interface Program {
 export interface UniversitySummary {
   country: string;
   location: string;
+  /** Two-letter US state code; null outside the US. */
+  state?: string | null;
   region: Region;
   setting: Setting;
   type: InstitutionType;

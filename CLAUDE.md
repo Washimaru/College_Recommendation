@@ -192,7 +192,7 @@ these runtime conditions live solely in code.
 ## Contracts are law
 
 `docs/contracts/{profile,score,recommendation}.schema.json` (all `version`
-**`7.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
+**`8.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
 **Four** mirrors must move with them, in the same change:
 
 - `services/scoring-service/app/schemas.py`
@@ -205,6 +205,16 @@ Changing a shape without a version bump and all four mirrors is contract drift
 (H3) — stop and surface it.
 
 What the recent versions changed:
+
+**v8.0.0** added `University.state` and `Preferences.home_state`. `net_price`
+is the federal average and, at a public university, that measure covers
+**in-state** students — so every out-of-state applicant was being quoted a
+resident's price, in a dimension worth 18% of the score.
+`scoring._out_of_state_premium` adds the published tuition gap for a student
+who says where they live; it is a **stated adjustment**, never written into the
+catalog and never shown as an observed figure. Unstated home state changes
+nothing. `state` comes from Scorecard's STABBR and exists precisely so
+residency is never decided by parsing `location`, which stays display-only.
 
 **v7.0.0** added `University.tuition_in_state` and `University.programs`.
 `sticker_tuition` is the *out-of-state* price (and simply the price at a

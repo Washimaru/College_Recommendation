@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/profile.schema.json",
   "title": "StudentProfile",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["gpa", "intended_major"],
@@ -55,7 +55,8 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "max_tuition": { "type": ["number", "null"], "minimum": 0 },
+        "home_state": { "type": ["string", "null"], "minLength": 2, "maxLength": 2, "description": "The student's two-letter US state of residence, if they choose to say. Used for one thing: net_price at a public university is the federal average for in-state students, so an out-of-state applicant is charged the tuition gap on top of it. Unstated changes nothing." },
+    "max_tuition": { "type": ["number", "null"], "minimum": 0 },
         "preferred_size": { "type": ["string", "null"], "enum": ["small", "medium", "large", null] },
         "scope": { "type": "string", "enum": ["usa", "international", "both"], "default": "both", "description": "Country scope. A hard filter applied at candidate selection, not a ranking signal, so a requested top_k is still filled." },
         "regions": { "type": "array", "items": { "type": "string", "enum": ["Northeast", "South", "West", "Midwest", "International"] }, "default": [], "description": "Soft preference folded into the fit dimension. Empty means no preference." },

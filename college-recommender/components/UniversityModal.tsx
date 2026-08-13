@@ -38,6 +38,7 @@ export function UniversityModal({
   university,
   rationale,
   admitTier,
+  homeState,
   onClose,
 }: {
   name: string;
@@ -45,6 +46,9 @@ export function UniversityModal({
   /** Present when opened from a match; absent when opened from browse. */
   rationale?: string;
   admitTier?: AdmitTier | null;
+  /** The student's own state, when they gave one. Only used to say whose
+   *  price the net price actually is. */
+  homeState?: string | null;
   onClose: () => void;
 }) {
   // Owns Escape as well as the trap, so both modals close identically.
@@ -52,6 +56,14 @@ export function UniversityModal({
 
   const uni = university;
   const tier = tierLabel(admitTier);
+  // The net price in this catalog is the federal average, and at a public
+  // university that measure covers in-state students. Saying so is the whole
+  // point: the figure is right, it is just not this student's figure.
+  const outOfStatePremium =
+    homeState && uni.state && homeState.toUpperCase() !== uni.state.toUpperCase() &&
+    uni.tuition_in_state != null && uni.sticker_tuition != null
+      ? uni.sticker_tuition - uni.tuition_in_state
+      : 0;
   const sameTuition =
     uni.tuition_in_state != null &&
     uni.sticker_tuition != null &&
@@ -140,6 +152,15 @@ export function UniversityModal({
             </>
           )}
         </dl>
+
+        {outOfStatePremium > 0 && (
+          <p className="notice" style={{ marginTop: 14, fontSize: 13 }}>
+            The net price above is the federal average for <b>in-state students</b>, and you
+            told us you live in {homeState}. Out-of-state students here pay about{" "}
+            <b>${Math.round(outOfStatePremium).toLocaleString("en-US")}</b> more in tuition, so
+            treat that figure as a floor and run the school&rsquo;s own net price calculator.
+          </p>
+        )}
 
         {uni.programs !== null && uni.programs !== undefined && (
           <>
