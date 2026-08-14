@@ -338,7 +338,8 @@ _DETAIL_PROVENANCE = {
 # leak. Name, what they are known for, field, whether they are current, how
 # widely known, and where to check it.
 NOTABLE_FACULTY_FIELDS = (
-    "name", "known_for", "fields", "status", "prominence", "source", "source_url",
+    "name", "known_for", "fields", "status", "prominence", "awards",
+    "source", "source_url",
 )
 
 
@@ -373,7 +374,11 @@ def attach_notable_faculty(record: dict, tier: dict) -> dict:
 # NOTABLE_FACULTY_FIELDS: a source that gains a column tomorrow cannot leak it
 # into a public catalog because nobody thought to exclude it.
 ACTIVE_FACULTY_FIELDS = (
-    "name", "research", "fields", "recent_works", "last_active", "source", "source_url",
+    "name", "research", "fields", "recent_works", "last_active",
+    # Why this person leads the list: what they are recognised for, and how
+    # much of their work others build on.
+    "h_index", "awards",
+    "source", "source_url",
 )
 
 

@@ -569,3 +569,56 @@ class TestActiveFaculty:
 
         person = record["active_faculty"][0]
         assert "email" not in person and "orcid" not in person
+
+
+class TestTheAllowlistLetsThroughWhatWasAdded:
+    """The allowlist blocks fields nobody declared, which is the point — but
+    it also silently drops ones that were added deliberately. Awards and
+    h-index reached the tier files and stopped at this boundary, which would
+    have shown up as a UI that renders nothing for data that exists.
+    """
+
+    def test_notable_awards_survive(self):
+        tier = {"test-tech": {"notable_faculty": [
+            {"name": "Eric Lander", "known_for": "American geneticist", "fields": [],
+             "status": "current", "prominence": 40,
+             "awards": ["Grace Murray Hopper Award", "National Medal of Technology"],
+             "source": "wikipedia", "source_url": "https://en.wikipedia.org/wiki/Eric_Lander"},
+        ]}}
+
+        record = attach_notable_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "test-tech"}, tier
+        )
+
+        assert record["notable_faculty"][0]["awards"] == [
+            "Grace Murray Hopper Award", "National Medal of Technology",
+        ]
+
+    def test_active_h_index_and_awards_survive(self):
+        tier = {"test-tech": {"active_faculty": [
+            {"name": "Laureate Lee", "research": ["Quantum Optics"], "fields": ["Physics"],
+             "recent_works": 3, "last_active": 2026, "h_index": 62,
+             "awards": ["Nobel Prize in Physics"],
+             "source": "openalex", "source_url": "https://openalex.org/A1"},
+        ]}}
+
+        record = attach_active_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "test-tech"}, tier
+        )
+
+        person = record["active_faculty"][0]
+        assert person["h_index"] == 62
+        assert person["awards"] == ["Nobel Prize in Physics"]
+
+    def test_a_contact_detail_is_still_blocked(self):
+        """Widening the allowlist must not widen it to everything."""
+        tier = {"test-tech": {"active_faculty": [
+            {"name": "Laureate Lee", "h_index": 62, "awards": [], "email": "lee@test.edu",
+             "source": "openalex", "source_url": "https://openalex.org/A1"},
+        ]}}
+
+        record = attach_active_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "test-tech"}, tier
+        )
+
+        assert "email" not in record["active_faculty"][0]
