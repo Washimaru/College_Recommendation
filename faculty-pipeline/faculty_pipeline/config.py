@@ -97,6 +97,12 @@ class Config:
     # and the hop only runs when the cheap pass has already failed.
     max_departments_per_school: int = 8
 
+    # Contact address sent to OpenAlex (stages/active_faculty.py). Their polite
+    # pool allows 100,000 requests a day against 1,000 for anonymous callers,
+    # and identifying yourself is the price. Set FACULTY_PIPELINE_OPENALEX_MAILTO in .env; empty
+    # still works, just slowly and rudely.
+    openalex_mailto: str = ""
+
     # Stage 2 (discover.py) sitemap candidate source, services/sitemap.py:
     # some university sitemaps are enormous (sitemap indexes recursing into
     # many leaf sitemaps, leaf sitemaps with tens of thousands of URLs) —

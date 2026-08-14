@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 
 from faculty_pipeline.config import Config
+from faculty_pipeline.services import http_client
 from faculty_pipeline.services.http_client import HttpClient
 from faculty_pipeline.services.robots import RobotsDisallowedError
 
@@ -195,3 +196,41 @@ def test_rate_limiter_honors_larger_crawl_delay(tmp_path: Path) -> None:
 
     # honors the site's own Crawl-delay (10s) over the configured 2s floor
     assert sleep.calls == [pytest.approx(9.0)]
+
+
+
+def test_an_absurd_retry_after_does_not_stall_the_run(tmp_path: Path) -> None:
+    """OpenAlex answers a rate-limit 429 with `Retry-After: 78777` — 21.9
+    hours. Honouring that literally is exactly what it looks like: the process
+    sat in `time.sleep` mid-run with no CPU and no output, and the only symptom
+    was silence. A wait past the cap is treated as a refusal, so the item
+    fails, the run carries on, and the checkpoint resumes it later.
+    """
+    config = make_config(tmp_path)
+    sleeper = NoSleep()
+    transport = FakeTransport([
+        FakeResponse(429, "slow down", headers={"Retry-After": "78777"}) for _ in range(4)
+    ])
+    client = HttpClient(config, AllowAllRobots(), transport, sleep_fn=sleeper)
+
+    with pytest.raises(http_client.RetryAfterTooLongError, match="78777"):
+        client.fetch("https://api.example.com/x")
+
+    assert all(s <= http_client.MAX_RETRY_AFTER_SECONDS for s in sleeper.calls), (
+        f"slept {sleeper.calls}s, which would stall the whole run"
+    )
+
+
+def test_a_reasonable_retry_after_is_still_honoured(tmp_path: Path) -> None:
+    config = make_config(tmp_path)
+    sleeper = NoSleep()
+    transport = FakeTransport([
+        FakeResponse(429, "slow down", headers={"Retry-After": "5"}),
+        FakeResponse(200, "ok", url="https://api.example.com/x"),
+    ])
+    client = HttpClient(config, AllowAllRobots(), transport, sleep_fn=sleeper)
+
+    result = client.fetch("https://api.example.com/x")
+
+    assert result.body == "ok"
+    assert any(s >= 5 for s in sleeper.calls), "a server asking for 5s should get 5s"

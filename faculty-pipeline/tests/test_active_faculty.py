@@ -281,3 +281,47 @@ class TestRunMechanics:
 
         with pytest.raises(active_faculty.ActiveFacultyError, match="Run `active-faculty` first"):
             active_faculty.write_tier_file(config.data_dir, tmp_path / "tier.json")
+
+
+class TestThePolitePool:
+    """OpenAlex gives 100,000 requests a day to callers who identify
+    themselves and 1,000 to those who don't. The first full run stopped after
+    63 schools on a quota 429 because the pipeline's stock User-Agent carries
+    no address OpenAlex recognises. `mailto` is how you ask for the polite
+    pool, and it is a courtesy as much as a quota.
+    """
+
+    @dataclass
+    class RecordingHttp:
+        urls: list[str] = field(default_factory=list)
+
+        def fetch(self, url: str, *, method: str = "GET"):
+            self.urls.append(url)
+
+            @dataclass
+            class R:
+                body: str = '{"results": []}'
+
+            return R()
+
+    def test_every_request_identifies_the_caller(self):
+        from faculty_pipeline.services.openalex import OpenAlexApi
+
+        http = self.RecordingHttp()
+        api = OpenAlexApi(http, mailto="someone@example.edu")
+
+        api.get("institutions", search="Acme")
+        api.get("authors", filter="openalex_id:A1")
+
+        assert http.urls, "no request was made"
+        assert all("mailto=someone%40example.edu" in u for u in http.urls), http.urls
+
+    def test_without_an_address_it_still_works(self):
+        """A missing address costs quota, not correctness — the stage must not
+        refuse to run because nobody set one."""
+        from faculty_pipeline.services.openalex import OpenAlexApi
+
+        http = self.RecordingHttp()
+        OpenAlexApi(http).get("institutions", search="Acme")
+
+        assert http.urls and "mailto" not in http.urls[0]

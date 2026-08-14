@@ -700,7 +700,7 @@ def active_faculty(
     try:
         robots = ApiRobots(RobotsChecker(transport))
         http_client = HttpClient(config, robots, transport)
-        api = OpenAlexApi(http_client, logger)
+        api = OpenAlexApi(http_client, logger, mailto=config.openalex_mailto)
         try:
             summary = active_stage.run(
                 config, checkpoint, logger, api,

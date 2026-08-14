@@ -588,6 +588,46 @@ in milestones; commit after each. Suggested prompts to Claude Code, in order:
 
 ---
 
+## 12b. Two faculty stages, two questions
+
+Stages 1-5 chase a school's complete directory. Two later stages answer
+narrower questions the catalog actually shows a student, and neither needs an
+LLM — which is why they run while the extract stage is credit-blocked.
+
+| stage | question | source | shape |
+|---|---|---|---|
+| `notable` | who is famous here | Wikipedia categories + Wikidata | name, what they are known for, current/historical |
+| `active-faculty` | who researches here now, on what | OpenAlex | name, research topics, recent output, last active year |
+
+`notable` includes people long dead — Chinua Achebe is much of why Bard is
+Bard — so the UI leads with `active-faculty` and keeps the historical names
+behind a second tab.
+
+**Neither publishes contact details.** `build_catalog.py` copies an allowlist
+of fields for each, so a column added upstream cannot reach a public catalog
+because nobody thought to exclude it. That is the line the gitignored
+`master.csv` sits on the other side of.
+
+**`active-faculty` claims no teaching appointment.** OpenAlex knows who
+publishes, not who holds a post: the list includes some research staff and
+misses studio, performance and clinical faculty. Titles need the school's own
+directory (stages 1-5), and `source` per entry leaves room for those to merge
+in later.
+
+### Quotas, and the failure that taught us about them
+
+OpenAlex allows 1,000 requests a day to anonymous callers and 100,000 to those
+who identify themselves with `mailto`. The first full run used the pipeline's
+stock User-Agent, hit the anonymous ceiling after 63 schools, and received a
+429 with `Retry-After: 78777` — 21.9 hours. `http_client` honoured it
+literally and the run sat in `time.sleep` overnight: no CPU, no output, no
+error, just silence.
+
+Two fixes, both in: `FACULTY_PIPELINE_OPENALEX_MAILTO` (see `.env.example`)
+buys the larger quota, and `MAX_RETRY_AFTER_SECONDS` caps how long any host
+can park a run — beyond it the request fails, the stage records it, and the
+checkpoint resumes it next time.
+
 ## 13. Open Decisions
 
 - **Directory granularity:** campus-wide vs. per-department directories.

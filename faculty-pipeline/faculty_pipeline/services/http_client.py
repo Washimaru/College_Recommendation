@@ -37,6 +37,14 @@ BACKOFF_BASE_SECONDS = 1.0
 BACKOFF_CAP_SECONDS = 30.0
 BACKOFF_JITTER_FRACTION = 0.25
 
+# The longest `Retry-After` worth waiting out inside a run. OpenAlex answers a
+# daily-quota 429 with `Retry-After: 78777` — 21.9 hours — and honouring that
+# literally parked a 268-school run in `time.sleep` overnight: no CPU, no
+# output, no error. Past this, the wait is a refusal rather than a delay, so
+# the request fails, the stage records it, and the checkpoint resumes it on a
+# later run when the quota has reset.
+MAX_RETRY_AFTER_SECONDS = 120.0
+
 
 @dataclass(frozen=True)
 class FetchResult:
@@ -75,6 +83,10 @@ class RobotsCheckerLike(Protocol):
     def is_allowed(self, url: str, user_agent: str) -> bool: ...
 
     def crawl_delay(self, url: str) -> float | None: ...
+
+
+class RetryAfterTooLongError(RuntimeError):
+    """The server asked us to wait longer than a run should ever pause."""
 
 
 class HttpClient:
@@ -159,6 +171,12 @@ class HttpClient:
 
             if attempt < self._config.max_retries:
                 retry_after = _parse_retry_after(response) if response is not None else None
+                if retry_after is not None and retry_after > MAX_RETRY_AFTER_SECONDS:
+                    raise RetryAfterTooLongError(
+                        f"{url} asked for {retry_after:.0f}s before retrying "
+                        f"(cap {MAX_RETRY_AFTER_SECONDS:.0f}s) - treating as unavailable "
+                        "rather than sleeping through the run"
+                    )
                 self._sleep(self._backoff_delay(attempt, floor=retry_after))
 
         if response is not None:

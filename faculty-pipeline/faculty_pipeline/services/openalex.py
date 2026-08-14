@@ -56,12 +56,35 @@ def normalize_homepage(url: str | None) -> str | None:
 
 
 class OpenAlexApi:
-    def __init__(self, http: HttpFetcher, logger: logging.Logger | None = None) -> None:
+    """`mailto` puts requests in OpenAlex's polite pool.
+
+    Not a nicety: without it the daily allowance is 1,000 requests and with it
+    100,000. The first full run stopped after 63 schools on a quota 429 whose
+    `Retry-After` was 21.9 hours, because the pipeline's stock User-Agent has
+    no address OpenAlex recognises. Missing address costs quota, never
+    correctness — the API works either way.
+    """
+
+    def __init__(
+        self,
+        http: HttpFetcher,
+        logger: logging.Logger | None = None,
+        mailto: str | None = None,
+    ) -> None:
         self._http = http
         self._logger = logger or logging.getLogger(__name__)
+        self._mailto = mailto or None
+        if not self._mailto:
+            self._logger.warning(
+                "openalex: no contact address set, so requests use the anonymous pool "
+                "(1,000/day instead of 100,000). Set FACULTY_PIPELINE_OPENALEX_MAILTO "
+                "to identify yourself."
+            )
 
     def get(self, path: str, **params: str) -> dict[str, Any]:
         url = f"{API_ROOT}/{path.lstrip('/')}"
+        if self._mailto:
+            params["mailto"] = self._mailto
         if params:
             url += "?" + urlencode(params)
         result = self._http.fetch(url)

@@ -24,6 +24,7 @@ Legend: `DONE` · `TODO` · `BLOCKED`
 | Improvement plan Phase 4 Product features (specs B, C) | DONE |
 | Phase 4 follow-through (contract v8.0.0) | DONE |
 | Notable faculty (contract v9.0.0) | DONE |
+| Active faculty (contract v10.0.0) | PARTIAL — 63 of 268 schools; OpenAlex daily quota |
 
 ## Changelog
 
@@ -159,6 +160,55 @@ Six correctness items from `~/.claude/plans/ignore-the-press-of-wild-reef.md`.
 All three gaps recorded here — `region` having no SQL `CHECK`, a delisted school
 rendering from its snapshot unmarked, and corrupt `localStorage` recovering
 silently — were closed in Phase 2 below.
+
+## Verification (2026-08-14) — active faculty, contract v10.0.0
+
+Who researches at a school *now* and on what — the question `notable_faculty`
+cannot answer, since its `status` only records whether a date of death is
+known, and Wikidata says "biologist" where a student wants "single-cell
+transcriptomics".
+
+- **T2** `VERIFY: GREEN`. faculty-pipeline 360 tests, frontend 233, lint clean.
+- **63 of 268 schools** carry active faculty (1,101 researchers, mean 16.9).
+  The rest are blocked on OpenAlex's daily quota until it resets; the stage is
+  checkpointed, so resuming is one command.
+
+### The three guards, each from an observed failure
+
+| what happened | guard |
+|---|---|
+| ArtCenter's top "authors" were epigenetics researchers at Chinese universities — `last_known_institutions` collides on "Art Center" | only authors of works *written from* the institution |
+| Sorting MIT by citations surfaced Yoshua Bengio, a postdoc there in 1991 | only work from the last three years |
+| With the correct id, OpenAlex files 80 JWST papers under Berklee College of Music | reject anyone whose *primary* research field matches no family the school awards degrees in |
+| A name search for "Berklee" returns Google (Canada) | resolve institutions by homepage, verified |
+
+Live: Agnes Scott gives Jim Wiseman (*Mathematical Dynamics and Fractals*) and
+Bella Tobin (*Analytic Number Theory*) — who appears independently in the
+directory crawl as "Assistant Professor of Mathematics". Berklee drops 52 and
+keeps Victor Wallis and Robert Lagueux, both real Berklee faculty.
+
+The primary-field rule has a stated cost: a music college's political-economy
+lecturer is dropped too, because PCIP records degrees awarded rather than
+subjects taught. Showing astronomers to a Berklee applicant is the worse error.
+
+### Two bugs found while running it
+
+1. **A server could park a run for a day.** OpenAlex answers a quota 429 with
+   `Retry-After: 78777`, and `http_client` honoured it literally — the process
+   sat in `time.sleep` with no CPU, no output and no error. Capped at
+   `MAX_RETRY_AFTER_SECONDS`; past that the request fails and the checkpoint
+   resumes it later.
+2. **The pipeline was in OpenAlex's anonymous pool** (1,000 requests/day
+   against 100,000), because its stock User-Agent carries no address OpenAlex
+   recognises. `FACULTY_PIPELINE_OPENALEX_MAILTO` fixes it; the quota already
+   spent still has to reset.
+
+### UI
+
+"Researching here now" leads the school profile, with the field filter on it —
+a student picking a major wants someone whose class they could take. The
+historical names moved behind a second tab rather than being mixed in with a
+"no longer teaching" label doing all the work.
 
 ## Verification (2026-08-13) — notable faculty, contract v9.0.0
 
