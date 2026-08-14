@@ -92,6 +92,17 @@ class FakeApi:
     def labels(self, qids: list[str]) -> dict[str, str]:
         return {q: self.label_map[q] for q in qids if q in self.label_map}
 
+    # The resolution fallbacks. A plain fake school resolves on its first try,
+    # so these answer "nothing found" unless a test says otherwise.
+    def canonical_title(self, name: str) -> str | None:
+        return None
+
+    def search_article(self, name: str) -> str | None:
+        return None
+
+    def search_faculty_category(self, name: str) -> str | None:
+        return None
+
 
 def _run(config: Config, api: FakeApi, **kwargs):
     return notable.run(config, _checkpoint(config), logger, api, **kwargs)
@@ -416,3 +427,104 @@ class TestApiWrapper:
 
         with pytest.raises(Exception, match="maxlag"):
             MediaWikiApi(http).category_members("Category:X faculty")
+
+
+class TestCategoryResolution:
+    """The catalog's name for a school is often not Wikipedia's. Measured on
+    the 20 schools that first came back empty: "Georgia Institute of
+    Technology" is filed under "Georgia Tech", "University of Maryland" under
+    "University of Maryland, College Park", and Hamilton College's category is
+    "Hamilton College (New York) faculty". Each is a real professor list that
+    the plain name missed."""
+
+    @dataclass
+    class ResolvingApi(FakeApi):
+        canonical: dict[str, str] = field(default_factory=dict)
+        articles: dict[str, str] = field(default_factory=dict)
+        searched: dict[str, str] = field(default_factory=dict)
+        lookups: list[str] = field(default_factory=list)
+
+        def canonical_title(self, name: str) -> str | None:
+            self.lookups.append(f"canonical:{name}")
+            return self.canonical.get(name)
+
+        def search_article(self, name: str) -> str | None:
+            self.lookups.append(f"article:{name}")
+            return self.articles.get(name)
+
+        def search_faculty_category(self, name: str) -> str | None:
+            self.lookups.append(f"search:{name}")
+            return self.searched.get(name)
+
+    def _run_one(self, tmp_path: Path, api, name="Georgia Institute of Technology"):
+        config = _config(tmp_path)
+        _write_schools(config, [_school("gt", name)])
+        _run(config, api)
+        return _records(config)[0]
+
+    def test_the_plain_name_is_tried_first_and_costs_no_extra_lookup(self, tmp_path: Path):
+        api = self.ResolvingApi(
+            members={"Category:Georgia Institute of Technology faculty": ["Jane Doe"]},
+            qids={"Jane Doe": "Q1"}, ents={"Q1": _person("Q1", 5)},
+        )
+
+        record = self._run_one(tmp_path, api)
+
+        assert [p["name"] for p in record["notable_faculty"]] == ["Jane Doe"]
+        assert api.lookups == [], "a school that resolves directly needs no fallback"
+
+    def test_a_redirect_finds_the_real_category(self, tmp_path: Path):
+        api = self.ResolvingApi(
+            members={"Category:Georgia Tech faculty": ["Jane Doe"]},
+            qids={"Jane Doe": "Q1"}, ents={"Q1": _person("Q1", 5)},
+            canonical={"Georgia Institute of Technology": "Georgia Tech"},
+        )
+
+        record = self._run_one(tmp_path, api)
+
+        assert [p["name"] for p in record["notable_faculty"]] == ["Jane Doe"]
+
+    def test_an_irregular_category_name_is_searched_for(self, tmp_path: Path):
+        api = self.ResolvingApi(
+            members={"Category:Hamilton College (New York) faculty": ["Jane Doe"]},
+            qids={"Jane Doe": "Q1"}, ents={"Q1": _person("Q1", 5)},
+            canonical={"Hamilton College": "Hamilton College"},
+            searched={"Hamilton College": "Category:Hamilton College (New York) faculty"},
+        )
+
+        record = self._run_one(tmp_path, api, name="Hamilton College")
+
+        assert [p["name"] for p in record["notable_faculty"]] == ["Jane Doe"]
+
+    def test_a_parenthetical_the_catalog_added_is_searched_past(self, tmp_path: Path):
+        """"Binghamton University (SUNY)" is neither a Wikipedia title nor a
+        redirect — the parenthetical is this catalog's, not Wikipedia's."""
+        api = self.ResolvingApi(
+            members={"Category:Binghamton University faculty": ["Jane Doe"]},
+            qids={"Jane Doe": "Q1"}, ents={"Q1": _person("Q1", 5)},
+            articles={"Binghamton University (SUNY)": "Binghamton University"},
+        )
+
+        record = self._run_one(tmp_path, api, name="Binghamton University (SUNY)")
+
+        assert [p["name"] for p in record["notable_faculty"]] == ["Jane Doe"]
+
+    def test_a_school_with_no_category_anywhere_is_still_honestly_empty(self, tmp_path: Path):
+        api = self.ResolvingApi(canonical={}, searched={})
+
+        record = self._run_one(tmp_path, api, name="American Academy of Dramatic Arts")
+
+        assert record["notable_faculty"] == []
+
+    def test_the_category_actually_used_is_recorded(self, tmp_path: Path):
+        """So a thin result can be checked against the right category rather
+        than guessed at."""
+        api = self.ResolvingApi(
+            members={"Category:Georgia Tech faculty": ["Jane Doe"]},
+            qids={"Jane Doe": "Q1"}, ents={"Q1": _person("Q1", 5)},
+            canonical={"Georgia Institute of Technology": "Georgia Tech"},
+        )
+
+        record = self._run_one(tmp_path, api)
+
+        assert record["category"] == "Category:Georgia Tech faculty"

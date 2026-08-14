@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { UniversitySummary } from "@/lib/contract";
@@ -220,5 +220,70 @@ describe("professors", () => {
     show({ notable_faculty: [CHOMSKY] });
 
     expect(screen.getByText(/Wikipedia/i)).toBeTruthy();
+  });
+});
+
+describe("choosing a field of study", () => {
+  const FACULTY = [
+    { name: "Nora Physicist", known_for: "American physicist", fields: ["physicist"],
+      status: "current" as const, prominence: 40, source: "wikipedia" as const,
+      source_url: "https://en.wikipedia.org/wiki/Nora" },
+    { name: "Eve Economist", known_for: "American economist", fields: ["economist"],
+      status: "current" as const, prominence: 30, source: "wikipedia" as const,
+      source_url: "https://en.wikipedia.org/wiki/Eve" },
+  ];
+  const PROGRAMS = [
+    { name: "Physical Sciences", share: 0.2 },
+    { name: "Social Sciences", share: 0.15 },
+    { name: "Agriculture", share: 0.05 },
+  ];
+
+  function withFaculty() {
+    show({ notable_faculty: FACULTY, programs: PROGRAMS });
+  }
+
+  it("offers the fields this school teaches and has professors for", () => {
+    withFaculty();
+
+    expect(screen.getByRole("button", { name: /Physical Sciences/ })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Social Sciences/ })).toBeTruthy();
+  });
+
+  it("does not offer a field with no professors behind it", () => {
+    withFaculty();
+
+    expect(screen.queryByRole("button", { name: /^Agriculture/ })).toBeNull();
+  });
+
+  it("shows everyone until a field is chosen", () => {
+    withFaculty();
+
+    expect(screen.getByText("Nora Physicist")).toBeTruthy();
+    expect(screen.getByText("Eve Economist")).toBeTruthy();
+  });
+
+  it("narrows to that field's professors when one is chosen", () => {
+    withFaculty();
+
+    fireEvent.click(screen.getByRole("button", { name: /Physical Sciences/ }));
+
+    expect(screen.getByText("Nora Physicist")).toBeTruthy();
+    expect(screen.queryByText("Eve Economist")).toBeNull();
+  });
+
+  it("can be cleared back to everyone", () => {
+    withFaculty();
+
+    fireEvent.click(screen.getByRole("button", { name: /Physical Sciences/ }));
+    fireEvent.click(screen.getByRole("button", { name: /All fields/ }));
+
+    expect(screen.getByText("Eve Economist")).toBeTruthy();
+  });
+
+  it("offers no chooser when the school has no degree data to choose from", () => {
+    show({ notable_faculty: FACULTY, programs: null });
+
+    expect(screen.queryByRole("button", { name: /All fields/ })).toBeNull();
+    expect(screen.getByText("Nora Physicist")).toBeTruthy();
   });
 });

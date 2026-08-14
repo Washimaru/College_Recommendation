@@ -23,6 +23,7 @@ Legend: `DONE` · `TODO` · `BLOCKED`
 | Improvement plan Phase 3 Finish the faculty pipeline | DONE |
 | Improvement plan Phase 4 Product features (specs B, C) | DONE |
 | Phase 4 follow-through (contract v8.0.0) | DONE |
+| Notable faculty (contract v9.0.0) | DONE |
 
 ## Changelog
 
@@ -158,6 +159,60 @@ Six correctness items from `~/.claude/plans/ignore-the-press-of-wild-reef.md`.
 All three gaps recorded here — `region` having no SQL `CHECK`, a delisted school
 rendering from its snapshot unmarked, and corrupt `localStorage` recovering
 silently — were closed in Phase 2 below.
+
+## Verification (2026-08-13) — notable faculty, contract v9.0.0
+
+`details.faculty` reached 81 of 268 US schools as one prose sentence. Now
+every US school has a real list.
+
+- **5,173 professors across all 268 US schools.** 249 schools carry the full
+  20, 12 have 10–19, 2 have fewer, and **5 have none** — those five genuinely
+  have no faculty category on English Wikipedia, checked by hand against the
+  correctly resolved article title.
+- **T2** `VERIFY: GREEN`. faculty-pipeline 337 tests, ruff clean; frontend 231
+  tests, eslint clean.
+
+### Why this source
+
+Extracting professors from directory prose needs an LLM, and the credits are
+still exhausted (checked again). Wikipedia category membership plus Wikidata is
+structured enough to need no model at all — which also means **it cannot
+invent a professor**, the one failure this feature could not tolerate. Every
+row carries a Wikidata-backed description and a link a reader can follow.
+
+Measured before building: the categories are populated at every tier (MIT
+500+, Bard 204, Spelman 65, ArtCenter 28, Agnes Scott 13), and 12 of 12 sampled
+schools resolved from the plain catalog name.
+
+### Resolving the other 20
+
+The first full run left 20 schools empty. They were **name mismatches, not
+schools without faculty**: Wikipedia files Georgia Tech under "Georgia Tech",
+Maryland under "University of Maryland, College Park", and Hamilton College's
+category is "Hamilton College (New York) faculty". A three-step fallback —
+redirect, then article search, then a category-namespace search — recovered 15
+of the 20, including Binghamton (144 candidates) and West Point (338), whose
+"(SUNY)" and "(West Point)" suffixes are this catalog's disambiguation rather
+than Wikipedia's.
+
+### Choosing a field of study
+
+The school profile now filters its professors by degree family: pick
+"Computer & Information Sciences" at MIT and the list becomes Berners-Lee,
+McCarthy, Minsky, Hamilton, Kay, Papert. `lib/facultyByField.ts` maps Wikidata
+occupations onto federal CIP families as an **allowlist** — an occupation the
+map does not know is never claimed for a field, it simply stays under "All
+fields". Only families the school both awards degrees in *and* has a professor
+for are offered, so a student is never sent to an empty list.
+
+### A bug the research exposed
+
+Testing the alternative source — the credit-free directory path — produced
+"Faculty Directory" 100 times, "Bard College" 39 times and "OneLogin" 20 times
+as professor names: `extract --no-llm` was accepting the page `<title>`. It now
+names someone only from JSON-LD `Person.name` or `<meta name="author">`, the
+two sources that claim a person. The 397 poisoned rows were removed and their
+checkpoints cleared for a proper re-run.
 
 ## Verification (2026-08-13) — Phase 4 follow-through, contract v8.0.0
 

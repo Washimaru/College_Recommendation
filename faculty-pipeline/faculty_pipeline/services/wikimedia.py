@@ -148,6 +148,53 @@ class MediaWikiApi:
                     found[page["title"]] = qid
         return found
 
+    def canonical_title(self, name: str) -> str | None:
+        """The article title `name` resolves to, following redirects.
+
+        Wikipedia's title is often not the catalog's: "Georgia Institute of
+        Technology" redirects to "Georgia Tech", "University of Maryland" to
+        "University of Maryland, College Park". Returns None when no article
+        exists at all.
+        """
+        body = self.query(WIKIPEDIA_HOST, action="query", titles=name, redirects="1")
+        pages = body.get("query", {}).get("pages", {})
+        for page in pages.values():
+            if "missing" not in page and page.get("title"):
+                return page["title"]
+        return None
+
+    def search_article(self, name: str) -> str | None:
+        """The article Wikipedia thinks `name` means.
+
+        Needed when the catalog's name is not a title *or* a redirect:
+        "Binghamton University (SUNY)" and "United States Military Academy
+        (West Point)" are neither, because the parenthetical is the catalog's
+        own disambiguation rather than Wikipedia's. Searching finds
+        "Binghamton University" and "United States Military Academy", whose
+        faculty categories hold 144 and 338 people.
+        """
+        body = self.query(
+            WIKIPEDIA_HOST, action="query", list="search", srsearch=name,
+            srnamespace="0", srlimit="1",
+        )
+        hits = body.get("query", {}).get("search", [])
+        return hits[0]["title"] if hits else None
+
+    def search_faculty_category(self, name: str) -> str | None:
+        """Find a school's faculty category when its name is irregular.
+
+        Last resort, and it earns its place: Hamilton College's category is
+        "Hamilton College (New York) faculty", and Cal State Fullerton's has a
+        stray comma before "faculty". Searching the category namespace finds
+        what the category is actually called instead of guessing.
+        """
+        body = self.query(
+            WIKIPEDIA_HOST, action="query", list="search",
+            srsearch=f'intitle:"{name}" intitle:faculty', srnamespace="14", srlimit="1",
+        )
+        hits = body.get("query", {}).get("search", [])
+        return hits[0]["title"] if hits else None
+
     # -- Wikidata --------------------------------------------------------
 
     def entities(self, qids: list[str]) -> dict[str, dict[str, Any]]:

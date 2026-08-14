@@ -104,7 +104,7 @@ def run(
     with out_path.open("a", encoding="utf-8") as out:
         for school in pending:
             try:
-                people = _notable_for(api, school, per_school, logger)
+                category, people = _notable_for(api, school, per_school, logger)
             except Exception as exc:  # noqa: BLE001 - one school is not the run
                 failed += 1
                 checkpoint.mark_failed(school.school_id, str(exc))
@@ -118,6 +118,9 @@ def run(
                 "school_id": school.school_id,
                 "school_name": school.name,
                 "notable_faculty": people,
+                # Recorded so a thin result can be checked against the category
+                # it actually came from rather than the one someone assumes.
+                "category": category,
                 "retrieved_at": datetime.now(UTC).date().isoformat(),
             }, ensure_ascii=False))
             out.write("\n")
@@ -151,19 +154,87 @@ def run(
     )
 
 
-def _notable_for(
-    api: MediaWikiApi, school: School, per_school: int, logger: logging.Logger
-) -> list[dict]:
-    titles = [
-        t for t in api.category_members(category_for(school))
+def resolve_category(
+    api: MediaWikiApi, school: School, logger: logging.Logger
+) -> tuple[str, list[str]]:
+    """The faculty category that actually holds this school's professors.
+
+    Three steps, cheapest first, because 248 of 268 schools resolve on the
+    first one and should not pay for the others:
+
+    1. the catalog name — `Category:<name> faculty`;
+    2. the name Wikipedia redirects to, since "Georgia Institute of
+       Technology" is filed under "Georgia Tech" and "University of Maryland"
+       under "University of Maryland, College Park";
+    3. the article a search finds, for names that are neither a title nor a
+       redirect - "Binghamton University (SUNY)" carries the catalog's own
+       disambiguation, not Wikipedia's, and search resolves it to
+       "Binghamton University" and its 144 professors;
+    4. a search of the category namespace, for the genuinely irregular:
+       "Hamilton College (New York) faculty", and Cal State Fullerton's, which
+       carries a stray comma before the word "faculty".
+
+    Returns the category tried last and whatever it held. An empty list after
+    all three is a real answer - two schools in this catalog have no faculty
+    category on Wikipedia at all.
+    """
+    category = category_for(school)
+    titles = _people_pages(api, category)
+    if titles:
+        return category, titles
+
+    canonical = api.canonical_title(school.name)
+    if canonical and canonical != school.name:
+        redirected = f"Category:{canonical} faculty"
+        titles = _people_pages(api, redirected)
+        if titles:
+            logger.info(
+                "notable: %s resolved via redirect to %r", school.school_id, canonical,
+                extra={"stage": STAGE_NAME, "school_id": school.school_id},
+            )
+            return redirected, titles
+
+    found = api.search_article(school.name)
+    if found and found not in (school.name, canonical):
+        by_search = f"Category:{found} faculty"
+        titles = _people_pages(api, by_search)
+        if titles:
+            logger.info(
+                "notable: %s resolved by article search to %r", school.school_id, found,
+                extra={"stage": STAGE_NAME, "school_id": school.school_id},
+            )
+            return by_search, titles
+
+    searched = api.search_faculty_category(school.name)
+    if searched:
+        titles = _people_pages(api, searched)
+        if titles:
+            logger.info(
+                "notable: %s resolved by category search to %r", school.school_id, searched,
+                extra={"stage": STAGE_NAME, "school_id": school.school_id},
+            )
+            return searched, titles
+
+    return category, []
+
+
+def _people_pages(api: MediaWikiApi, category: str) -> list[str]:
+    return [
+        t for t in api.category_members(category)
         if not t.startswith(_NON_PERSON_PREFIXES)
     ]
+
+
+def _notable_for(
+    api: MediaWikiApi, school: School, per_school: int, logger: logging.Logger
+) -> tuple[str, list[dict]]:
+    category, titles = resolve_category(api, school, logger)
     if not titles:
-        return []
+        return category, []
 
     qids = api.wikidata_ids(titles)
     if not qids:
-        return []
+        return category, []
     entities = api.entities(list(qids.values()))
 
     people: list[dict] = []
@@ -196,7 +267,7 @@ def _notable_for(
     # Most widely known first, then alphabetically so the order is stable
     # between runs rather than dependent on category paging.
     people.sort(key=lambda p: (-p["prominence"], p["name"]))
-    return people[:per_school]
+    return category, people[:per_school]
 
 
 def write_tier_file(data_dir: str | Path, tier_path: str | Path) -> int:

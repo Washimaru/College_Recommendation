@@ -1,6 +1,16 @@
 "use client";
 
-import { AXIS_LABELS, CULTURE_AXES, type AdmitTier, type UniversitySummary } from "@/lib/contract";
+import { useState } from "react";
+
+import {
+  AXIS_LABELS,
+  CULTURE_AXES,
+  type AdmitTier,
+  type NotableProfessor,
+  type Program,
+  type UniversitySummary,
+} from "@/lib/contract";
+import { familiesWithProfessors, professorsIn } from "@/lib/facultyByField";
 import { formatStat, tierLabel, type StatKind } from "@/lib/format";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { SchoolDetailSections } from "./SchoolDetails";
@@ -33,6 +43,89 @@ function Stat({
  * figure is either observed, an editorial estimate, or explicitly absent -
  * there is no filler.
  */
+/**
+ * The professors, with an optional field-of-study filter.
+ *
+ * The filter only offers families this school both awards degrees in and has
+ * a professor for — offering one with nobody behind it would send a student
+ * to an empty list and imply the school has no faculty in it, when all it
+ * means is that none of them has a Wikipedia article.
+ */
+function Professors({
+  faculty,
+  programs,
+}: {
+  faculty: NotableProfessor[];
+  programs?: Program[] | null;
+}) {
+  const [field, setField] = useState<string | null>(null);
+  const families = familiesWithProfessors(faculty, programs);
+  const shown = field ? professorsIn(faculty, field) : faculty;
+
+  return (
+    <>
+      <h3 style={{ marginTop: 24, fontSize: 14, letterSpacing: 0.3 }}>Professors</h3>
+      <p className="muted" style={{ fontSize: 12.5, margin: "0 0 12px" }}>
+        People who have taught here and have a public record, most widely known first,
+        from Wikipedia and Wikidata. Names only — we don&rsquo;t publish anyone&rsquo;s
+        contact details. Follow a name to check it.
+      </p>
+
+      {families.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 14 }}>
+          <button
+            type="button"
+            className={`chip ${field === null ? "on" : ""}`}
+            onClick={() => setField(null)}
+          >
+            All fields
+          </button>
+          {families.map((family) => (
+            <button
+              key={family}
+              type="button"
+              className={`chip ${field === family ? "on" : ""}`}
+              onClick={() => setField(family)}
+            >
+              {family}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {faculty.length === 0 ? (
+        <p style={{ fontSize: 13.5, margin: 0 }}>
+          We searched and didn&rsquo;t find any professors with a public record at this
+          school. That is not a judgement of the faculty — smaller schools are simply
+          written about less.
+        </p>
+      ) : (
+        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+          {shown.map((person) => (
+            <li key={person.source_url} style={{ marginBottom: 10 }}>
+              <a
+                href={person.source_url}
+                target="_blank"
+                rel="noreferrer noopener"
+                style={{ fontWeight: 650, fontSize: 14 }}
+              >
+                {person.name}
+              </a>
+              {person.status === "historical" && (
+                <span className="note" style={{ marginLeft: 8 }}>no longer teaching</span>
+              )}
+              {person.known_for && (
+                <div className="muted" style={{ fontSize: 13 }}>{person.known_for}</div>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
+  );
+}
+
+
 export function UniversityModal({
   name,
   university,
@@ -163,44 +256,7 @@ export function UniversityModal({
         )}
 
         {uni.notable_faculty !== null && uni.notable_faculty !== undefined && (
-          <>
-            <h3 style={{ marginTop: 24, fontSize: 14, letterSpacing: 0.3 }}>Professors</h3>
-            <p className="muted" style={{ fontSize: 12.5, margin: "0 0 12px" }}>
-              People who have taught here and have a public record, most widely known
-              first, from Wikipedia and Wikidata. Names only — we don&rsquo;t publish
-              anyone&rsquo;s contact details. Follow a name to check it.
-            </p>
-            {uni.notable_faculty.length === 0 ? (
-              <p style={{ fontSize: 13.5, margin: 0 }}>
-                We searched and didn&rsquo;t find any professors with a public record at
-                this school. That is not a judgement of the faculty — smaller schools
-                are simply written about less.
-              </p>
-            ) : (
-              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                {uni.notable_faculty.map((person) => (
-                  <li key={person.source_url} style={{ marginBottom: 10 }}>
-                    <a
-                      href={person.source_url}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      style={{ fontWeight: 650, fontSize: 14 }}
-                    >
-                      {person.name}
-                    </a>
-                    {person.status === "historical" && (
-                      <span className="note" style={{ marginLeft: 8 }}>
-                        no longer teaching
-                      </span>
-                    )}
-                    {person.known_for && (
-                      <div className="muted" style={{ fontSize: 13 }}>{person.known_for}</div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </>
+          <Professors faculty={uni.notable_faculty} programs={uni.programs} />
         )}
 
         {uni.programs !== null && uni.programs !== undefined && (
