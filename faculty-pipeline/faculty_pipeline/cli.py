@@ -12,6 +12,7 @@ rather than the raw counts dict it printed before.
 from __future__ import annotations
 
 import csv
+import json
 import shutil
 import sys
 from contextlib import ExitStack
@@ -27,9 +28,11 @@ from .services.dynamic import PlaywrightRenderer, RendererUnavailableError
 from .services.http_client import HttpClient
 from .services.llm import AnthropicLLM
 from .services.logging_setup import configure_logging
+from .services.openalex import OpenAlexApi
 from .services.robots import RobotsChecker
 from .services.search import build_search_provider
 from .services.wikimedia import ApiRobots, MediaWikiApi
+from .stages import active_faculty as active_stage
 from .stages import crawl as crawl_stage
 from .stages import discover as discover_stage
 from .stages import export as export_stage
@@ -650,3 +653,74 @@ def notable(
     if write_tier and not dry_run:
         written = notable_stage.write_tier_file(config.data_dir, tier_out)
         click.echo(f"  wrote {written} school(s) with faculty to {tier_out}")
+
+
+@main.command("active-faculty")
+@click.option("--limit", type=int, default=None, help="Process at most N schools")
+@click.option("--school", "school_id", default=None, help="Run a single school")
+@click.option("--per-school", type=int, default=active_stage.DEFAULT_LIMIT,
+              help="Cap researchers kept per school (default 20)")
+@click.option("--catalog", default="../data-pipeline/out/universities.json",
+              help="Catalog to read each school's degree families from, for the "
+                   "plausibility check that keeps astronomers off a music college")
+@click.option("--tier-out", default="../data-pipeline/sources/active_faculty.json")
+@click.option("--write-tier/--no-write-tier", default=True)
+@click.pass_context
+def active_faculty(
+    ctx: click.Context,
+    limit: int | None,
+    school_id: str | None,
+    per_school: int,
+    catalog: str,
+    tier_out: str,
+    write_tier: bool,
+) -> None:
+    """Active faculty: who researches here now, and on what (OpenAlex)."""
+    config: Config = ctx.obj["config"]
+    logger = ctx.obj["logger"]
+    dry_run: bool = ctx.obj["dry_run"]
+
+    checkpoint = CheckpointStore(Path(config.checkpoint_dir) / f"{active_stage.STAGE_NAME}.json")
+
+    # The degree families each school actually awards. Without them nothing is
+    # rejected, which is the safe direction: a missing catalog fact is not
+    # evidence against a person.
+    programs: dict[str, set[str]] = {}
+    catalog_path = Path(catalog)
+    if catalog_path.exists():
+        for record in json.loads(catalog_path.read_text(encoding="utf-8")):
+            families = {p["name"] for p in (record.get("programs") or [])}
+            if families:
+                programs[record["id"]] = families
+        click.echo(f"  degree families loaded for {len(programs)} school(s)")
+    else:
+        click.echo(f"  note: no catalog at {catalog_path}; nothing will be rejected as implausible")
+
+    transport = httpx.Client(follow_redirects=True)
+    try:
+        robots = ApiRobots(RobotsChecker(transport))
+        http_client = HttpClient(config, robots, transport)
+        api = OpenAlexApi(http_client, logger)
+        try:
+            summary = active_stage.run(
+                config, checkpoint, logger, api,
+                programs_by_school=programs, limit=limit, school_id=school_id,
+                per_school=per_school, dry_run=dry_run,
+            )
+        except active_stage.ActiveFacultyError as exc:
+            click.echo(f"active-faculty failed: {exc}", err=True)
+            sys.exit(1)
+    finally:
+        transport.close()
+
+    prefix = "[dry-run] " if dry_run else ""
+    click.echo(
+        f"{prefix}active-faculty: {summary.processed} school(s) resolved, "
+        f"{summary.skipped} skipped, {summary.failed} failed"
+    )
+    for note in summary.notes:
+        click.echo(f"  note: {note}")
+
+    if write_tier and not dry_run:
+        written = active_stage.write_tier_file(config.data_dir, tier_out)
+        click.echo(f"  wrote {written} school(s) to {tier_out}")

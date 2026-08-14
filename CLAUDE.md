@@ -192,7 +192,7 @@ these runtime conditions live solely in code.
 ## Contracts are law
 
 `docs/contracts/{profile,score,recommendation}.schema.json` (all `version`
-**`9.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
+**`10.0.0`**, draft-07, `additionalProperties: false`) are the source of truth.
 **Four** mirrors must move with them, in the same change:
 
 - `services/scoring-service/app/schemas.py`
@@ -205,6 +205,17 @@ Changing a shape without a version bump and all four mirrors is contract drift
 (H3) — stop and surface it.
 
 What the recent versions changed:
+
+**v10.0.0** added `University.active_faculty` — who researches at a school
+*now* and on what, from OpenAlex publication records
+(`faculty-pipeline`'s `active-faculty` stage). It exists because
+`notable_faculty` answers a different question: its `status` field records only
+whether a date of death is known, so it lists people who left decades ago, and
+Wikidata gives "biologist" where a student wants "single-cell transcriptomics".
+The two are separate fields and separate views in the UI. This one is counted
+from publications, so it claims **no teaching appointment** — it misses faculty
+who do not publish and includes some research staff; only the school's own
+directory can say "Associate Professor of English".
 
 **v9.0.0** added `University.notable_faculty` — named professors per US school,
 from Wikipedia category membership plus Wikidata (`faculty-pipeline`'s

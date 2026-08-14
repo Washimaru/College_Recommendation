@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/score.schema.json",
   "title": "RankRequest",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["profile", "universities"],
@@ -53,6 +53,24 @@
         "net_price": { "type": ["number", "null"], "minimum": 0, "description": "Average annual cost after aid. Renamed from `tuition` in v2.0.0, which conflated net cost with sticker price." },
         "sticker_tuition": { "type": ["number", "null"], "minimum": 0, "description": "Out-of-state tuition and fees, which is simply the price at a private school. See tuition_in_state." },
         "tuition_in_state": { "type": ["number", "null"], "minimum": 0, "description": "In-state tuition and fees. US only - null and provenance not_applicable elsewhere. Identical to sticker_tuition at a private school, and less than half of it at most publics." },
+        "active_faculty": {
+          "type": ["array", "null"],
+          "description": "Researchers publishing from this school in the last three years, with what they work on. Distinct from notable_faculty, which answers who is famous here and includes people long dead. Null means nobody searched; [] means searched and found nobody. Counted from publication records, so it does not claim anyone holds a teaching appointment - it misses faculty who do not publish, and includes some research staff.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "source", "source_url"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "research": { "type": "array", "items": { "type": "string" }, "description": "Specific research topics, e.g. 'Mathematical Dynamics and Fractals'." },
+              "fields": { "type": "array", "items": { "type": "string" }, "description": "Coarse research fields, e.g. 'Mathematics'. Used to match a professor to a major." },
+              "recent_works": { "type": ["integer", "null"], "minimum": 0, "description": "Papers written from this school since the cutoff." },
+              "last_active": { "type": ["integer", "null"], "description": "Year of their most recent publication." },
+              "source": { "type": "string", "enum": ["openalex", "directory"] },
+              "source_url": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
         "notable_faculty": {
           "type": ["array", "null"],
           "description": "Named professors, most widely known first. Null means nobody searched (every non-US school); [] means searched and none found, which is a real answer for a small college. Carries who someone is and where to verify it - never an email or a phone number. Sourced from Wikipedia category membership plus Wikidata, so no model is involved and a professor cannot be invented.",

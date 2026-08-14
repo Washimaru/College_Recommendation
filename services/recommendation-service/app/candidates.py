@@ -75,7 +75,7 @@ def _load_from_db(url: str) -> list[University]:  # pragma: no cover - needs Pos
         rows = conn.execute(
             "SELECT id, unitid, name, country, location, state, region, setting, type, "
             "avg_gpa, avg_sat, acceptance_rate, net_price, sticker_tuition, "
-            "tuition_in_state, programs, notable_faculty, "
+            "tuition_in_state, programs, notable_faculty, active_faculty, "
             "enrollment, size, majors, culture, population, url, "
             "net_price_calculator_url, details, provenance FROM universities"
         ).fetchall()

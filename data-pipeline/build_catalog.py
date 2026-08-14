@@ -369,6 +369,37 @@ def attach_notable_faculty(record: dict, tier: dict) -> dict:
     return record
 
 
+# The published shape for a researcher. Same allowlist discipline as
+# NOTABLE_FACULTY_FIELDS: a source that gains a column tomorrow cannot leak it
+# into a public catalog because nobody thought to exclude it.
+ACTIVE_FACULTY_FIELDS = (
+    "name", "research", "fields", "recent_works", "last_active", "source", "source_url",
+)
+
+
+def attach_active_faculty(record: dict, tier: dict) -> dict:
+    """Attach the researchers publishing from this school now.
+
+    `observed` rather than `web_verified`: unlike a Wikipedia category, this is
+    counted from publication records — someone either authored papers from this
+    address in the last three years or did not.
+    """
+    is_us = record["country"] == "USA"
+    entry = tier.get(record["id"]) if is_us else None
+
+    if entry is None:
+        record["active_faculty"] = None
+        record["provenance"]["active_faculty"] = "absent" if is_us else "not_applicable"
+        return record
+
+    record["active_faculty"] = [
+        {k: person.get(k) for k in ACTIVE_FACULTY_FIELDS if k in person}
+        for person in entry.get("active_faculty", [])
+    ]
+    record["provenance"]["active_faculty"] = "observed"
+    return record
+
+
 def attach_details(record: dict, details_by_id: dict[str, dict]) -> dict:
     """Attach a per-school profile (scholarships, research, outcomes, grad and
     professional schools) when one exists."""
@@ -399,6 +430,7 @@ def build(
     aliases: dict[str, str] | None = None,
     details: dict[str, dict] | None = None,
     notable: dict[str, dict] | None = None,
+    active: dict[str, dict] | None = None,
 ) -> tuple[list[dict], list[str]]:
     """Return (catalog, unmatched_us_names). Unmatched names are surfaced so
     the coverage gap is visible rather than silent."""
@@ -411,7 +443,8 @@ def build(
             if row is None:
                 unmatched.append(record["name"])
         enriched = attach_details(enrich(record, row), details or {})
-        catalog.append(attach_notable_faculty(enriched, notable or {}))
+        enriched = attach_notable_faculty(enriched, notable or {})
+        catalog.append(attach_active_faculty(enriched, active or {}))
     return catalog, unmatched
 
 
@@ -458,6 +491,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--aliases", default="sources/aliases.json")
     parser.add_argument("--details", default="sources/school_details.json")
     parser.add_argument(
+        "--active-faculty",
+        default="sources/active_faculty.json",
+        help="Tier file written by `faculty-pipeline active-faculty`. Absent is fine: "
+             "every school's active_faculty then reads null (never searched).",
+    )
+    parser.add_argument(
         "--notable-faculty",
         default="sources/notable_faculty.json",
         help="Tier file written by `faculty-pipeline notable`. Absent is fine: "
@@ -501,13 +540,23 @@ def main(argv: list[str] | None = None) -> int:
     notable = (
         json.loads(notable_path.read_text(encoding="utf-8")) if notable_path.exists() else {}
     )
+    active_path = Path(args.active_faculty)
+    active = (
+        json.loads(active_path.read_text(encoding="utf-8")) if active_path.exists() else {}
+    )
+    if not active:
+        sys.stderr.write(
+            f"note: no active faculty at {active_path}; active_faculty will be null "
+            "for every school (run `faculty-pipeline active-faculty`)\n"
+        )
+
     if not notable:
         sys.stderr.write(
             f"note: no notable faculty at {notable_path}; notable_faculty will be null "
             "for every school (run `faculty-pipeline notable`)\n"
         )
 
-    catalog, unmatched = build(tier1, scorecard, aliases, details, notable)
+    catalog, unmatched = build(tier1, scorecard, aliases, details, notable, active)
 
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)

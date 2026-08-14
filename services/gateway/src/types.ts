@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "9.0.0";
+export const CONTRACT_VERSION = "10.0.0";
 
 export const RegionSchema = z.enum([
   "Northeast",
@@ -165,6 +165,23 @@ export const ProgramSchema = z
  * email or a phone number, which is the line that keeps the faculty CSVs
  * gitignored while this field is publishable.
  */
+/**
+ * Someone publishing from this school now, and what they work on. Counted from
+ * publication records, so it claims no teaching appointment — it misses faculty
+ * who do not publish and includes some research staff.
+ */
+export const ActiveResearcherSchema = z
+  .object({
+    name: z.string().min(1),
+    research: z.array(z.string()).default([]),
+    fields: z.array(z.string()).default([]),
+    recent_works: z.number().int().min(0).nullable().optional(),
+    last_active: z.number().int().nullable().optional(),
+    source: z.enum(["openalex", "directory"]),
+    source_url: z.string().min(1),
+  })
+  .strict();
+
 export const NotableProfessorSchema = z
   .object({
     name: z.string().min(1),
@@ -203,6 +220,7 @@ export const UniversitySummarySchema = z
     programs: z.array(ProgramSchema).nullable().optional(),
     /** null = nobody searched; [] = searched, found nobody. */
     notable_faculty: z.array(NotableProfessorSchema).nullable().optional(),
+    active_faculty: z.array(ActiveResearcherSchema).nullable().optional(),
     enrollment: z.number().int().min(0).nullable().optional(),
     size: z.enum(["small", "medium", "large"]),
     majors: z.array(z.string()).default([]),
@@ -277,6 +295,7 @@ export const UniversitySchema = z
     programs: z.array(ProgramSchema).nullable().optional(),
     /** null = nobody searched; [] = searched, found nobody. */
     notable_faculty: z.array(NotableProfessorSchema).nullable().optional(),
+    active_faculty: z.array(ActiveResearcherSchema).nullable().optional(),
     enrollment: z.number().int().nullable().optional(),
     size: z.enum(["small", "medium", "large"]),
     majors: z.array(z.string()).default([]),

@@ -10,7 +10,7 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "9.0.0"
+CONTRACT_VERSION = "10.0.0"
 
 # One multiplicative adjustment to a weight. The recommendation loop clamps
 # these to [0.5, 1.5] before sending them; the same range is enforced here
@@ -25,6 +25,25 @@ Provenance = Literal["observed", "web_verified", "editorial", "not_applicable", 
 Region = Literal["Northeast", "South", "West", "Midwest", "International"]
 Setting = Literal["urban", "suburban", "rural"]
 InstitutionType = Literal["Public", "Private"]
+
+
+class ActiveResearcher(BaseModel):
+    """Someone publishing from this school now, and what they work on.
+
+    Counted from publication records, so it says nothing about a teaching
+    appointment: it misses faculty who do not publish, and includes some
+    research staff. That is why the field is not called `professors`.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(min_length=1)
+    research: list[str] = Field(default_factory=list)
+    fields: list[str] = Field(default_factory=list)
+    recent_works: int | None = Field(default=None, ge=0)
+    last_active: int | None = None
+    source: Literal["openalex", "directory"]
+    source_url: str = Field(min_length=1)
 
 
 class NotableProfessor(BaseModel):
@@ -215,6 +234,7 @@ class University(BaseModel):
     # None = nobody searched; [] = searched and found nobody, which is a real
     # answer for a small college.
     notable_faculty: list[NotableProfessor] | None = None
+    active_faculty: list[ActiveResearcher] | None = None
     enrollment: int | None = Field(default=None, ge=0)
     size: Size
     majors: list[str] = Field(default_factory=list)

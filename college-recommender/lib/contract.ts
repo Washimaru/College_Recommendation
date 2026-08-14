@@ -1,5 +1,5 @@
 /**
- * Mirrors docs/contracts/{profile,recommendation}.schema.json v9.0.0.
+ * Mirrors docs/contracts/{profile,recommendation}.schema.json v10.0.0.
  *
  * The gateway is the validating authority; these types keep the client honest
  * at compile time. Two fields are deliberately absent: `mbti`, removed in
@@ -35,6 +35,11 @@
  * category membership plus Wikidata. No model produced them, so a name there
  * belongs to someone who exists; and the shape carries no email or phone,
  * which is why it can be published when the faculty CSVs cannot.
+ *
+ * v10.0.0 adds `University.active_faculty` — who is researching there *now*
+ * and on what, from publication records. `notable_faculty` answers a different
+ * question ("who is famous here") and includes people long dead, which is why
+ * the two are separate fields and separate views.
  */
 
 export const CULTURE_AXES = [
@@ -134,6 +139,19 @@ export interface Program {
   share: number;
 }
 
+export interface ActiveResearcher {
+  name: string;
+  /** Specific topics, e.g. "Mathematical Dynamics and Fractals". */
+  research?: string[];
+  /** Coarse fields, e.g. "Mathematics" — what the major filter matches on. */
+  fields?: string[];
+  /** Papers written from this school since the cutoff. */
+  recent_works?: number | null;
+  last_active?: number | null;
+  source: "openalex" | "directory";
+  source_url: string;
+}
+
 export interface NotableProfessor {
   name: string;
   /** One line on who they are, e.g. "American theoretical physicist". */
@@ -167,6 +185,8 @@ export interface UniversitySummary {
   programs?: Program[] | null;
   /** null = nobody searched; [] = searched and found nobody. */
   notable_faculty?: NotableProfessor[] | null;
+  /** Researching here now. Same null/[] rule. */
+  active_faculty?: ActiveResearcher[] | null;
   enrollment?: number | null;
   size: "small" | "medium" | "large";
   majors: string[];

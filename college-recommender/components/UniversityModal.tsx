@@ -6,11 +6,12 @@ import {
   AXIS_LABELS,
   CULTURE_AXES,
   type AdmitTier,
+  type ActiveResearcher,
   type NotableProfessor,
   type Program,
   type UniversitySummary,
 } from "@/lib/contract";
-import { familiesWithProfessors, professorsIn } from "@/lib/facultyByField";
+import { researchersIn, researchFamilies } from "@/lib/facultyByField";
 import { formatStat, tierLabel, type StatKind } from "@/lib/format";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { SchoolDetailSections } from "./SchoolDetails";
@@ -44,87 +45,166 @@ function Stat({
  * there is no filler.
  */
 /**
- * The professors, with an optional field-of-study filter.
+ * Who teaches here — split by the question a student is actually asking.
  *
- * The filter only offers families this school both awards degrees in and has
- * a professor for — offering one with nobody behind it would send a student
- * to an empty list and imply the school has no faculty in it, when all it
- * means is that none of them has a Wikipedia article.
+ * "Researching here now" leads, because someone who died in 1984 is not
+ * someone whose class you can take. The famous names are still worth having,
+ * so they sit behind a second tab rather than mixed into the first, where a
+ * "no longer teaching" label was doing all the work.
+ *
+ * The two lists come from different sources answering different questions:
+ * publication records for who is here now, Wikipedia for who is remembered.
  */
 function Professors({
-  faculty,
+  active,
+  notable,
   programs,
 }: {
-  faculty: NotableProfessor[];
+  active?: ActiveResearcher[] | null;
+  notable?: NotableProfessor[] | null;
   programs?: Program[] | null;
 }) {
+  const hasActive = active !== null && active !== undefined && active.length > 0;
+  const hasNotable = notable !== null && notable !== undefined && notable.length > 0;
+  const [tab, setTab] = useState<"now" | "history">(hasActive ? "now" : "history");
   const [field, setField] = useState<string | null>(null);
-  const families = familiesWithProfessors(faculty, programs);
-  const shown = field ? professorsIn(faculty, field) : faculty;
+
+  const searched =
+    (active !== null && active !== undefined) || (notable !== null && notable !== undefined);
+
+  if (!searched) {
+    // Nobody looked. Saying anything here would be filler.
+    return null;
+  }
+
+  if (!hasActive && !hasNotable) {
+    // Both searched, both empty — a real finding for a small school, and
+    // worth saying plainly rather than leaving a blank.
+    return (
+      <>
+        <h3 style={{ marginTop: 24, fontSize: 14, letterSpacing: 0.3 }}>Professors</h3>
+        <p style={{ fontSize: 13.5, margin: 0 }}>
+          We searched and didn&rsquo;t find professors with a public research or
+          encyclopedic record at this school. That is not a judgement of the faculty —
+          smaller schools, and teaching-focused ones, are simply written about less.
+        </p>
+      </>
+    );
+  }
+
+  const families = hasActive ? researchFamilies(active, programs) : [];
+  const shown = field ? researchersIn(active ?? [], field) : (active ?? []);
 
   return (
     <>
       <h3 style={{ marginTop: 24, fontSize: 14, letterSpacing: 0.3 }}>Professors</h3>
-      <p className="muted" style={{ fontSize: 12.5, margin: "0 0 12px" }}>
-        People who have taught here and have a public record, most widely known first,
-        from Wikipedia and Wikidata. Names only — we don&rsquo;t publish anyone&rsquo;s
-        contact details. Follow a name to check it.
-      </p>
 
-      {families.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 14 }}>
+      {hasActive && hasNotable && (
+        <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
           <button
             type="button"
-            className={`chip ${field === null ? "on" : ""}`}
-            onClick={() => setField(null)}
+            className={`chip ${tab === "now" ? "on" : ""}`}
+            onClick={() => setTab("now")}
           >
-            All fields
+            Researching here now
           </button>
-          {families.map((family) => (
-            <button
-              key={family}
-              type="button"
-              className={`chip ${field === family ? "on" : ""}`}
-              onClick={() => setField(family)}
-            >
-              {family}
-            </button>
-          ))}
+          <button
+            type="button"
+            className={`chip ${tab === "history" ? "on" : ""}`}
+            onClick={() => setTab("history")}
+          >
+            Notable in its history
+          </button>
         </div>
       )}
 
-      {faculty.length === 0 ? (
-        <p style={{ fontSize: 13.5, margin: 0 }}>
-          We searched and didn&rsquo;t find any professors with a public record at this
-          school. That is not a judgement of the faculty — smaller schools are simply
-          written about less.
-        </p>
-      ) : (
-        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-          {shown.map((person) => (
-            <li key={person.source_url} style={{ marginBottom: 10 }}>
-              <a
-                href={person.source_url}
-                target="_blank"
-                rel="noreferrer noopener"
-                style={{ fontWeight: 650, fontSize: 14 }}
+      {tab === "now" && hasActive ? (
+        <>
+          <p className="muted" style={{ fontSize: 12.5, margin: "0 0 12px" }}>
+            People who have published from this school in the last three years, and what
+            they work on. Counted from publication records, so it misses faculty who
+            don&rsquo;t publish — studio, performance and clinical teaching especially.
+          </p>
+
+          {families.length > 0 && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 14 }}>
+              <button
+                type="button"
+                className={`chip ${field === null ? "on" : ""}`}
+                onClick={() => setField(null)}
               >
-                {person.name}
-              </a>
-              {person.status === "historical" && (
-                <span className="note" style={{ marginLeft: 8 }}>no longer teaching</span>
-              )}
-              {person.known_for && (
-                <div className="muted" style={{ fontSize: 13 }}>{person.known_for}</div>
-              )}
-            </li>
-          ))}
-        </ul>
+                All fields
+              </button>
+              {families.map((family) => (
+                <button
+                  key={family}
+                  type="button"
+                  className={`chip ${field === family ? "on" : ""}`}
+                  onClick={() => setField(family)}
+                >
+                  {family}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            {shown.map((person) => (
+              <li key={person.source_url} style={{ marginBottom: 10 }}>
+                <a
+                  href={person.source_url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  style={{ fontWeight: 650, fontSize: 14 }}
+                >
+                  {person.name}
+                </a>
+                {person.last_active && (
+                  <span className="note" style={{ marginLeft: 8 }}>
+                    published {person.last_active}
+                  </span>
+                )}
+                {person.research && person.research.length > 0 && (
+                  <div className="muted" style={{ fontSize: 13 }}>
+                    {person.research.slice(0, 3).join(" · ")}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <>
+          <p className="muted" style={{ fontSize: 12.5, margin: "0 0 12px" }}>
+            People with a public record who have taught here, most widely known first,
+            from Wikipedia and Wikidata. Many are historical — this is the school&rsquo;s
+            story rather than its current staff. Names only; follow one to check it.
+          </p>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            {(notable ?? []).map((person) => (
+              <li key={person.source_url} style={{ marginBottom: 10 }}>
+                <a
+                  href={person.source_url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  style={{ fontWeight: 650, fontSize: 14 }}
+                >
+                  {person.name}
+                </a>
+                {person.status === "historical" && (
+                  <span className="note" style={{ marginLeft: 8 }}>no longer teaching</span>
+                )}
+                {person.known_for && (
+                  <div className="muted" style={{ fontSize: 13 }}>{person.known_for}</div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </>
   );
 }
-
 
 export function UniversityModal({
   name,
@@ -255,9 +335,11 @@ export function UniversityModal({
           </p>
         )}
 
-        {uni.notable_faculty !== null && uni.notable_faculty !== undefined && (
-          <Professors faculty={uni.notable_faculty} programs={uni.programs} />
-        )}
+        <Professors
+          active={uni.active_faculty}
+          notable={uni.notable_faculty}
+          programs={uni.programs}
+        />
 
         {uni.programs !== null && uni.programs !== undefined && (
           <>

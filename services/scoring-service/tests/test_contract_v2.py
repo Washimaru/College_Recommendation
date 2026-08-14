@@ -12,7 +12,7 @@ from pydantic import ValidationError
 from app.schemas import CONTRACT_VERSION, CulturePrefs, Profile, University
 
 
-def test_contract_version_is_9():
+def test_contract_version_is_10():
     """v3.0.0 added activities and personality; v3.1.0 added country scope;
     v4.0.0 adds place and population fields and removes preferences.locations;
     v5.0.0 adds Profile.gpa_weighted and the extreme_reach admit tier;
@@ -22,8 +22,10 @@ def test_contract_version_is_9():
     v8.0.0 adds University.state and Preferences.home_state, so an
     out-of-state applicant stops being quoted a resident's net price;
     v9.0.0 adds University.notable_faculty — named professors, with no
-    contact details and no model in the chain that produced them."""
-    assert CONTRACT_VERSION == "9.0.0"
+    contact details and no model in the chain that produced them;
+    v10.0.0 adds University.active_faculty, who is researching there *now*
+    and on what, which notable_faculty cannot answer."""
+    assert CONTRACT_VERSION == "10.0.0"
 
 
 def test_profile_needs_no_mbti():
@@ -221,3 +223,41 @@ class TestNotableFacultyContract:
         del person["source_url"]
         with pytest.raises(ValidationError):
             self._uni(notable_faculty=[person])
+
+
+class TestActiveFacultyContract:
+    """v10.0.0. What a student actually wants: who is here now, and on what."""
+
+    def _uni(self, **overrides):
+        base = dict(
+            id="asc", name="Agnes Scott", country="USA", location="Decatur, GA", state="GA",
+            region="South", setting="suburban", type="Private", avg_gpa=3.6,
+            size="small", majors=["Mathematics"],
+            culture={"collab": 0.5, "quirky": 0.5, "idealist": 0.5,
+                     "research": 0.5, "spirit": 0.5, "seminar": 0.5},
+        )
+        return University(**{**base, **overrides})
+
+    def _person(self, **overrides):
+        return {"name": "Jim Wiseman",
+                "research": ["Mathematical Dynamics and Fractals"],
+                "fields": ["Mathematics"], "recent_works": 8, "last_active": 2026,
+                "source": "openalex", "source_url": "https://openalex.org/A1", **overrides}
+
+    def test_a_researcher_carries_their_topics(self):
+        uni = self._uni(active_faculty=[self._person()])
+
+        assert uni.active_faculty[0].research == ["Mathematical Dynamics and Fractals"]
+        assert uni.active_faculty[0].last_active == 2026
+
+    def test_unsearched_and_searched_empty_stay_distinct(self):
+        assert self._uni().active_faculty is None
+        assert self._uni(active_faculty=[]).active_faculty == []
+
+    def test_a_contact_detail_is_rejected(self):
+        with pytest.raises(ValidationError):
+            self._uni(active_faculty=[self._person(email="jim@agnesscott.edu")])
+
+    def test_the_source_must_be_one_we_can_name(self):
+        with pytest.raises(ValidationError):
+            self._uni(active_faculty=[self._person(source="a hunch")])

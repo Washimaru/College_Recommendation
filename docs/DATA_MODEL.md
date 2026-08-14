@@ -1,7 +1,7 @@
 # Data Model
 
 Contracts in `docs/contracts/*.json` are the wire source of truth, currently at
-**v9.0.0**. This file describes the domain entities behind them.
+**v10.0.0**. This file describes the domain entities behind them.
 
 The governing rule, everywhere below: **a missing value is `null`.** It is never
 derived, inferred, estimated, or defaulted to zero. `provenance` records where
@@ -87,6 +87,17 @@ Notes that matter:
   copies an allowlist of fields, so a column added upstream cannot leak into a
   public catalog. `null` = nobody searched (all non-US schools); `[]` =
   searched and found nobody.
+- `active_faculty[]` is who publishes from the school now:
+  `{name, research, fields, recent_works, last_active, source, source_url}`,
+  from OpenAlex. `research` holds specific topics ("Analytic Number Theory
+  Research"); `fields` holds the coarse ones ("Mathematics") that the major
+  filter matches on. Three guards, each from an observed failure: only authors
+  of works *written from* the institution (`last_known_institutions` put
+  epigenetics researchers on an art school), only the last three years (an
+  ever-affiliated filter surfaced a 1991 postdoc as MIT faculty), and only
+  people whose primary research field matches a family the school awards
+  degrees in (OpenAlex files 80 JWST papers under a music college). It does not
+  claim anyone holds a teaching appointment.
 - `programs[]` is that honest route, added in v7.0.0: `{name, share}` per
   2-digit CIP family from Scorecard's `PCIP*` columns, largest share first,
   zero shares omitted. `null` means unmeasured (every non-US school, where

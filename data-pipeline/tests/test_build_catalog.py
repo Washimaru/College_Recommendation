@@ -6,6 +6,7 @@ See docs/superpowers/specs/2026-07-27-real-university-catalog-design.md
 from __future__ import annotations
 
 from build_catalog import (
+    attach_active_faculty,
     attach_details,
     attach_notable_faculty,
     coalesce_net_price,
@@ -501,3 +502,70 @@ class TestNotableFaculty:
         person = record["notable_faculty"][0]
         assert "email" not in person and "phone" not in person
         assert person["name"] == "Jane Doe"
+
+
+class TestActiveFaculty:
+    """Researchers publishing from the school now, with what they work on.
+
+    Distinct from notable_faculty, which answers "who is famous here" and
+    includes people who died decades ago. Same three states as every other
+    measured field: a list, [] for searched-and-found-nobody, null for
+    unsearched.
+    """
+
+    TIER = {
+        "test-tech": {
+            "school_id": "test-tech",
+            "active_faculty": [
+                {"name": "Jim Wiseman",
+                 "research": ["Mathematical Dynamics and Fractals"],
+                 "fields": ["Mathematics"], "recent_works": 8, "last_active": 2026,
+                 "source": "openalex", "source_url": "https://openalex.org/A1"},
+            ],
+        },
+        "searched-empty": {"school_id": "searched-empty", "active_faculty": []},
+    }
+
+    def test_a_school_with_researchers_carries_them(self):
+        record = attach_active_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "test-tech"}, self.TIER
+        )
+
+        person = record["active_faculty"][0]
+        assert person["name"] == "Jim Wiseman"
+        assert person["research"] == ["Mathematical Dynamics and Fractals"]
+        assert record["provenance"]["active_faculty"] == "observed"
+
+    def test_searched_and_empty_differs_from_unsearched(self):
+        searched = attach_active_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "searched-empty"}, self.TIER
+        )
+        unsearched = attach_active_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "nobody-looked"}, self.TIER
+        )
+
+        assert searched["active_faculty"] == []
+        assert unsearched["active_faculty"] is None
+        assert unsearched["provenance"]["active_faculty"] == "absent"
+
+    def test_a_non_us_school_is_not_applicable(self):
+        record = attach_active_faculty(enrich(NON_US, None), self.TIER)
+
+        assert record["active_faculty"] is None
+        assert record["provenance"]["active_faculty"] == "not_applicable"
+
+    def test_only_the_published_fields_survive(self):
+        """An allowlist, so a field added upstream cannot leak into a public
+        catalog by nobody noticing — the same guard notable_faculty has."""
+        tier = {"test-tech": {"active_faculty": [
+            {"name": "Jim Wiseman", "research": [], "fields": [], "recent_works": 3,
+             "last_active": 2026, "source": "openalex", "source_url": "https://openalex.org/A1",
+             "orcid": "0000-0001", "email": "jim@test.edu"},
+        ]}}
+
+        record = attach_active_faculty(
+            {**enrich({**NON_US, "country": "USA"}, US_ROW), "id": "test-tech"}, tier
+        )
+
+        person = record["active_faculty"][0]
+        assert "email" not in person and "orcid" not in person

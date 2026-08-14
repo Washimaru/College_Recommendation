@@ -29,6 +29,9 @@ CREATE TABLE IF NOT EXISTS universities (
     -- Named professors. NULL means nobody searched; '[]' means searched and
     -- found nobody. Contact details are deliberately not in this shape.
     notable_faculty JSONB,
+    -- Researchers publishing from here in the last three years. NULL = nobody
+    -- searched; '[]' = searched and found nobody.
+    active_faculty  JSONB,
     enrollment      INTEGER     CHECK (enrollment >= 0),   -- undergraduate only
     size            TEXT        NOT NULL CHECK (size IN ('small','medium','large')),
     majors          JSONB       NOT NULL DEFAULT '[]'::jsonb,

@@ -199,9 +199,12 @@ describe("professors", () => {
   });
 
   it("never implies a historical professor still teaches", () => {
+    // With no current researchers the historical view is what renders, and the
+    // label still has to be there — it is the whole reason the two are split.
     show({ notable_faculty: [ADAMS] });
 
-    expect(screen.getByText(/no longer teaching|formerly|historical/i)).toBeTruthy();
+    // The label beside the name, not the section's explanatory prose.
+    expect(screen.getAllByText("no longer teaching").length).toBeGreaterThan(0);
   });
 
   it("says nothing at all when nobody searched", () => {
@@ -211,7 +214,7 @@ describe("professors", () => {
   });
 
   it("says so plainly when the search found nobody", () => {
-    show({ notable_faculty: [] });
+    show({ notable_faculty: [], active_faculty: [] });
 
     expect(screen.getByText(/didn.t find|none/i)).toBeTruthy();
   });
@@ -224,14 +227,6 @@ describe("professors", () => {
 });
 
 describe("choosing a field of study", () => {
-  const FACULTY = [
-    { name: "Nora Physicist", known_for: "American physicist", fields: ["physicist"],
-      status: "current" as const, prominence: 40, source: "wikipedia" as const,
-      source_url: "https://en.wikipedia.org/wiki/Nora" },
-    { name: "Eve Economist", known_for: "American economist", fields: ["economist"],
-      status: "current" as const, prominence: 30, source: "wikipedia" as const,
-      source_url: "https://en.wikipedia.org/wiki/Eve" },
-  ];
   const PROGRAMS = [
     { name: "Physical Sciences", share: 0.2 },
     { name: "Social Sciences", share: 0.15 },
@@ -239,8 +234,17 @@ describe("choosing a field of study", () => {
   ];
 
   function withFaculty() {
-    show({ notable_faculty: FACULTY, programs: PROGRAMS });
+    show({ active_faculty: ACTIVE_FOR_FILTER, programs: PROGRAMS });
   }
+
+  const ACTIVE_FOR_FILTER = [
+    { name: "Nora Physicist", research: ["Quantum Optics"], fields: ["Physics and Astronomy"],
+      recent_works: 6, last_active: 2026, source: "openalex" as const,
+      source_url: "https://openalex.org/A1" },
+    { name: "Eve Economist", research: ["Labour Markets"],
+      fields: ["Economics, Econometrics and Finance"], recent_works: 5, last_active: 2026,
+      source: "openalex" as const, source_url: "https://openalex.org/A2" },
+  ];
 
   it("offers the fields this school teaches and has professors for", () => {
     withFaculty();
@@ -281,9 +285,67 @@ describe("choosing a field of study", () => {
   });
 
   it("offers no chooser when the school has no degree data to choose from", () => {
-    show({ notable_faculty: FACULTY, programs: null });
+    show({ active_faculty: ACTIVE_FOR_FILTER, programs: null });
 
     expect(screen.queryByRole("button", { name: /All fields/ })).toBeNull();
     expect(screen.getByText("Nora Physicist")).toBeTruthy();
+  });
+});
+
+describe("professors: here now vs no longer teaching", () => {
+  const ACTIVE = [
+    { name: "Jim Wiseman", research: ["Mathematical Dynamics and Fractals"],
+      fields: ["Mathematics"], recent_works: 8, last_active: 2026,
+      source: "openalex" as const, source_url: "https://openalex.org/A1" },
+    { name: "Ruth Uwaifo Oyelere", research: ["Poverty, Education, and Child Welfare"],
+      fields: ["Economics, Econometrics and Finance"], recent_works: 7, last_active: 2026,
+      source: "openalex" as const, source_url: "https://openalex.org/A2" },
+  ];
+  const HISTORICAL = [
+    { name: "Ansel Adams", known_for: "American photographer", fields: ["photographer"],
+      status: "historical" as const, prominence: 84, source: "wikipedia" as const,
+      source_url: "https://en.wikipedia.org/wiki/Ansel_Adams" },
+  ];
+
+  it("leads with the people researching there now", () => {
+    show({ active_faculty: ACTIVE, notable_faculty: HISTORICAL });
+
+    expect(screen.getByText("Jim Wiseman")).toBeTruthy();
+    expect(screen.getByText(/Mathematical Dynamics and Fractals/)).toBeTruthy();
+  });
+
+  it("does not mix someone who died into that list", () => {
+    show({ active_faculty: ACTIVE, notable_faculty: HISTORICAL });
+
+    expect(screen.queryByText("Ansel Adams")).toBeNull();
+  });
+
+  it("keeps the historical names one click away", () => {
+    show({ active_faculty: ACTIVE, notable_faculty: HISTORICAL });
+
+    fireEvent.click(screen.getByRole("button", { name: /Notable in its history/i }));
+
+    expect(screen.getByText("Ansel Adams")).toBeTruthy();
+  });
+
+  it("says what the research list is and is not", () => {
+    show({ active_faculty: ACTIVE, notable_faculty: null });
+
+    expect(
+      screen.getByText(/misses faculty who don.t publish/i),
+      "the caveat has to be stated, not implied",
+    ).toBeTruthy();
+  });
+
+  it("falls back to the historical list when nobody is researching there now", () => {
+    show({ active_faculty: [], notable_faculty: HISTORICAL });
+
+    expect(screen.getByText("Ansel Adams")).toBeTruthy();
+  });
+
+  it("shows nothing at all when neither was searched", () => {
+    show({ active_faculty: null, notable_faculty: null });
+
+    expect(screen.queryByText(/Professors/)).toBeNull();
   });
 });
