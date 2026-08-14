@@ -191,7 +191,8 @@ class TestWhatEachRecordSays:
         person = self._one(tmp_path, _author("A1", "Jim Wiseman", [("X", "Mathematics")]))
 
         assert set(person) == {
-            "name", "research", "fields", "recent_works", "last_active", "source", "source_url",
+            "name", "research", "fields", "recent_works", "last_active",
+            "h_index", "awards", "source", "source_url",
         }
 
 
@@ -325,3 +326,64 @@ class TestThePolitePool:
         OpenAlexApi(http).get("institutions", search="Acme")
 
         assert http.urls and "mailto" not in http.urls[0]
+
+
+class TestPriority:
+    """Who leads the list.
+
+    The rule, in order: someone recognised for their research, then someone
+    whose work is widely built on, then someone simply publishing a lot from
+    here. Awards come from Wikidata via the notable list — ORCID records them
+    in principle and not in practice (0 of 12 highly-cited MIT researchers had
+    one). h-index is OpenAlex's, and arrives in the request the stage already
+    makes.
+    """
+
+    def _api(self, people: list[tuple[str, str, int, int]]) -> FakeApi:
+        counts = [(f"A{i}", name, works) for i, (name, _, works, _) in enumerate(people)]
+        records = {}
+        for i, (name, _, _, h) in enumerate(people):
+            author = _author(f"A{i}", name, [("Topic", "Mathematics")])
+            author["summary_stats"] = {"h_index": h}
+            records[f"A{i}"] = author
+        return FakeApi(institution=INSTITUTION, counts=counts, author_records=records)
+
+    def _run_with(self, tmp_path: Path, api: FakeApi, honours=None) -> list[dict]:
+        config = _config(tmp_path)
+        _write_schools(config, [_school()])
+        _run(config, api, honours_by_school={"acme-college": honours or {}})
+        return _records(config)[0]["active_faculty"]
+
+    def test_an_award_winner_leads_a_more_prolific_colleague(self, tmp_path: Path):
+        api = self._api([("Prolific Pat", "", 20, 10), ("Laureate Lee", "", 3, 8)])
+
+        people = self._run_with(tmp_path, api, {"Laureate Lee": ["Fields Medal"]})
+
+        assert [p["name"] for p in people] == ["Laureate Lee", "Prolific Pat"]
+        assert people[0]["awards"] == ["Fields Medal"]
+
+    def test_impact_breaks_the_tie_when_nobody_has_an_award(self, tmp_path: Path):
+        api = self._api([("Low Impact", "", 20, 4), ("High Impact", "", 5, 40)])
+
+        people = self._run_with(tmp_path, api)
+
+        assert [p["name"] for p in people] == ["High Impact", "Low Impact"]
+
+    def test_output_breaks_the_tie_when_impact_matches(self, tmp_path: Path):
+        api = self._api([("Fewer Papers", "", 2, 10), ("More Papers", "", 9, 10)])
+
+        people = self._run_with(tmp_path, api)
+
+        assert [p["name"] for p in people] == ["More Papers", "Fewer Papers"]
+
+    def test_the_h_index_is_carried_so_the_ranking_can_be_explained(self, tmp_path: Path):
+        api = self._api([("Someone", "", 5, 27)])
+
+        people = self._run_with(tmp_path, api)
+
+        assert people[0]["h_index"] == 27
+
+    def test_no_awards_means_an_empty_list_not_a_missing_key(self, tmp_path: Path):
+        api = self._api([("Someone", "", 5, 3)])
+
+        assert self._run_with(tmp_path, api)[0]["awards"] == []

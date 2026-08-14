@@ -10,7 +10,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-CONTRACT_VERSION = "10.0.0"
+CONTRACT_VERSION = "11.0.0"
 
 Size = Literal["small", "medium", "large"]
 Scope = Literal["usa", "international", "both"]
@@ -37,6 +37,10 @@ class ActiveResearcher(BaseModel):
     fields: list[str] = Field(default_factory=list)
     recent_works: int | None = Field(default=None, ge=0)
     last_active: int | None = None
+    # How much of their work others build on, and what they have been
+    # recognised for. Together these decide who leads the list.
+    h_index: int | None = Field(default=None, ge=0)
+    awards: list[str] = Field(default_factory=list)
     source: Literal["openalex", "directory"]
     source_url: str = Field(min_length=1)
 
@@ -60,6 +64,8 @@ class NotableProfessor(BaseModel):
     # tenure, which is why these are not "alive" and "dead".
     status: Literal["current", "historical"]
     prominence: int = Field(default=0, ge=0)
+    # Named honours from Wikidata (P166).
+    awards: list[str] = Field(default_factory=list)
     source: Literal["wikipedia", "directory"]
     source_url: str = Field(min_length=1)
 

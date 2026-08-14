@@ -1,5 +1,5 @@
 /**
- * Mirrors docs/contracts/{profile,recommendation}.schema.json v10.0.0.
+ * Mirrors docs/contracts/{profile,recommendation}.schema.json v11.0.0.
  *
  * The gateway is the validating authority; these types keep the client honest
  * at compile time. Two fields are deliberately absent: `mbti`, removed in
@@ -148,6 +148,10 @@ export interface ActiveResearcher {
   /** Papers written from this school since the cutoff. */
   recent_works?: number | null;
   last_active?: number | null;
+  /** How much of their work others build on. */
+  h_index?: number | null;
+  /** Named honours. Priority is awards first, then h-index, then output. */
+  awards?: string[];
   source: "openalex" | "directory";
   source_url: string;
 }
@@ -161,6 +165,7 @@ export interface NotableProfessor {
   status: "current" | "historical";
   /** Language editions carrying an article — a measured proxy for renown. */
   prominence?: number;
+  awards?: string[];
   source: "wikipedia" | "directory";
   source_url: string;
 }

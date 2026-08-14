@@ -164,9 +164,26 @@ function Professors({
                     published {person.last_active}
                   </span>
                 )}
+                {/* Why this person leads: the honour first, then the impact
+                    measure. Both are shown rather than folded into a score,
+                    so a reader can disagree with the ordering. */}
+                {person.awards && person.awards.length > 0 && (
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 4 }}>
+                    {person.awards.slice(0, 3).map((award) => (
+                      <span key={award} className="chip on" style={{ fontSize: 11.5 }}>
+                        {award}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 {person.research && person.research.length > 0 && (
                   <div className="muted" style={{ fontSize: 13 }}>
                     {person.research.slice(0, 3).join(" · ")}
+                  </div>
+                )}
+                {typeof person.h_index === "number" && (
+                  <div className="muted" style={{ fontSize: 12 }}>
+                    h-index {person.h_index}
                   </div>
                 )}
               </li>

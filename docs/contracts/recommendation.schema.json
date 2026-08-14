@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unimatch.dev/contracts/recommendation.schema.json",
   "title": "RecommendationResponse",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "type": "object",
   "additionalProperties": false,
   "required": ["results", "confidence", "stop_reason", "trace"],
@@ -88,6 +88,8 @@
               "fields": { "type": "array", "items": { "type": "string" }, "description": "Coarse research fields, e.g. 'Mathematics'. Used to match a professor to a major." },
               "recent_works": { "type": ["integer", "null"], "minimum": 0, "description": "Papers written from this school since the cutoff." },
               "last_active": { "type": ["integer", "null"], "description": "Year of their most recent publication." },
+              "h_index": { "type": ["integer", "null"], "minimum": 0, "description": "OpenAlex h-index - how much of their work others build on." },
+              "awards": { "type": "array", "items": { "type": "string" }, "description": "Named honours, matched from the notable list. Priority is awards first, then h-index, then recent output." },
               "source": { "type": "string", "enum": ["openalex", "directory"] },
               "source_url": { "type": "string", "minLength": 1 }
             }
@@ -106,6 +108,7 @@
               "fields": { "type": "array", "items": { "type": "string" }, "description": "Occupations, e.g. ['physicist', 'author']. Generic academic occupations are dropped as uninformative." },
               "status": { "type": "string", "enum": ["current", "historical"], "description": "historical means a recorded date of death - the person belongs in the school's story but is not teaching. Absence of a death date is not proof of tenure, which is why the values are not 'alive'/'dead'." },
               "prominence": { "type": "integer", "minimum": 0, "description": "How many language Wikipedias carry an article. A measured proxy for renown, not a judgement." },
+              "awards": { "type": "array", "items": { "type": "string" }, "description": "Named honours from Wikidata (P166), deduped. The strongest available signal that someone is recognised for their research; ORCID would be the natural home and is empty in practice." },
               "source": { "type": "string", "enum": ["wikipedia", "directory"] },
               "source_url": { "type": "string", "minLength": 1 }
             }

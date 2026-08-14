@@ -349,3 +349,40 @@ describe("professors: here now vs no longer teaching", () => {
     expect(screen.queryByText(/Professors/)).toBeNull();
   });
 });
+
+describe("why a researcher leads the list", () => {
+  const LAUREATE = {
+    name: "Laureate Lee", research: ["Quantum Optics"], fields: ["Physics and Astronomy"],
+    recent_works: 3, last_active: 2026, h_index: 62, awards: ["Nobel Prize in Physics"],
+    source: "openalex" as const, source_url: "https://openalex.org/A1",
+  };
+  const PROLIFIC = {
+    name: "Prolific Pat", research: ["Optics"], fields: ["Physics and Astronomy"],
+    recent_works: 20, last_active: 2026, h_index: 11, awards: [],
+    source: "openalex" as const, source_url: "https://openalex.org/A2",
+  };
+
+  it("names the award beside the person who holds it", () => {
+    show({ active_faculty: [LAUREATE, PROLIFIC] });
+
+    expect(screen.getByText(/Nobel Prize in Physics/)).toBeTruthy();
+  });
+
+  it("shows the impact measure so the ordering is legible", () => {
+    show({ active_faculty: [LAUREATE, PROLIFIC] });
+
+    expect(screen.getByText(/h-index 62/i)).toBeTruthy();
+  });
+
+  it("says nothing about awards for someone who has none", () => {
+    show({ active_faculty: [PROLIFIC] });
+
+    expect(screen.queryByText(/award|prize/i)).toBeNull();
+  });
+
+  it("omits the impact measure when it is unknown rather than showing zero", () => {
+    show({ active_faculty: [{ ...PROLIFIC, h_index: null }] });
+
+    expect(screen.queryByText(/h-index/i)).toBeNull();
+  });
+});

@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 
-export const CONTRACT_VERSION = "10.0.0";
+export const CONTRACT_VERSION = "11.0.0";
 
 export const RegionSchema = z.enum([
   "Northeast",
@@ -177,6 +177,8 @@ export const ActiveResearcherSchema = z
     fields: z.array(z.string()).default([]),
     recent_works: z.number().int().min(0).nullable().optional(),
     last_active: z.number().int().nullable().optional(),
+    h_index: z.number().int().min(0).nullable().optional(),
+    awards: z.array(z.string()).default([]),
     source: z.enum(["openalex", "directory"]),
     source_url: z.string().min(1),
   })
@@ -190,6 +192,7 @@ export const NotableProfessorSchema = z
     /** "historical" = a recorded date of death; its absence is not proof of tenure. */
     status: z.enum(["current", "historical"]),
     prominence: z.number().int().min(0).default(0),
+    awards: z.array(z.string()).default([]),
     source: z.enum(["wikipedia", "directory"]),
     source_url: z.string().min(1),
   })

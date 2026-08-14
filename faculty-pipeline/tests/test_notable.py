@@ -528,3 +528,61 @@ class TestCategoryResolution:
         record = self._run_one(tmp_path, api)
 
         assert record["category"] == "Category:Georgia Tech faculty"
+
+
+class TestAwards:
+    """"Received an award from their research" is the strongest priority
+    signal available, and Wikidata records it as P166. ORCID would be the
+    natural home for it and is empty in practice — 0 of 12 highly-cited MIT
+    researchers had a single distinction recorded — so this is the source."""
+
+    def _person_with_awards(self, qid: str, award_ids: list[str]) -> dict:
+        person = _person(qid, 20)
+        person["claims"]["P166"] = [
+            {"mainsnak": {"datavalue": {"value": {"id": a}}}} for a in award_ids
+        ]
+        return person
+
+    def _run_one(self, tmp_path: Path, entity: dict, labels: dict[str, str]) -> dict:
+        config = _config(tmp_path)
+        _write_schools(config, [_school()])
+        api = FakeApi(
+            members={"Category:Acme College faculty": ["Jane Doe"]},
+            qids={"Jane Doe": entity["id"]},
+            ents={entity["id"]: entity},
+            label_map=labels,
+        )
+        _run(config, api)
+        return _records(config)[0]["notable_faculty"][0]
+
+    def test_awards_are_named_not_counted(self, tmp_path: Path):
+        person = self._run_one(
+            tmp_path,
+            self._person_with_awards("Q1", ["Q38104", "Q207323"]),
+            {"Q38104": "Guggenheim Fellowship", "Q207323": "Grace Murray Hopper Award"},
+        )
+
+        assert person["awards"] == ["Guggenheim Fellowship", "Grace Murray Hopper Award"]
+
+    def test_the_same_award_twice_is_listed_once(self, tmp_path: Path):
+        """Robert Frost won the Pulitzer for Poetry four times, and Wikidata
+        records four statements. A list reading "Pulitzer Prize for Poetry,
+        Pulitzer Prize for Poetry, Pulitzer Prize for Poetry" is noise."""
+        person = self._run_one(
+            tmp_path,
+            self._person_with_awards("Q1", ["Q189439", "Q189439", "Q38104"]),
+            {"Q189439": "Pulitzer Prize for Poetry", "Q38104": "Guggenheim Fellowship"},
+        )
+
+        assert person["awards"] == ["Pulitzer Prize for Poetry", "Guggenheim Fellowship"]
+
+    def test_someone_with_no_awards_carries_an_empty_list(self, tmp_path: Path):
+        person = self._run_one(tmp_path, _person("Q1", 12), {})
+
+        assert person["awards"] == []
+
+    def test_an_award_whose_label_is_missing_is_dropped_not_shown_as_an_id(self, tmp_path: Path):
+        """"Q38104" on a school page would be worse than saying nothing."""
+        person = self._run_one(tmp_path, self._person_with_awards("Q1", ["Q38104"]), {})
+
+        assert person["awards"] == []

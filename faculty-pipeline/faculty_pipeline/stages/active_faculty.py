@@ -33,6 +33,7 @@ from ..models import School, StageSummary
 from ..services.checkpoint import CheckpointStore
 from ..services.openalex import (
     OpenAlexApi,
+    h_index,
     last_active_year,
     research_fields,
     research_topics,
@@ -126,6 +127,7 @@ def run(
     api: OpenAlexApi,
     *,
     programs_by_school: dict[str, set[str]] | None = None,
+    honours_by_school: dict[str, dict[str, list[str]]] | None = None,
     limit: int | None = None,
     school_id: str | None = None,
     per_school: int = DEFAULT_LIMIT,
@@ -162,7 +164,9 @@ def run(
             try:
                 people, institution, rejected = _active_for(
                     api, school, since, per_school,
-                    (programs_by_school or {}).get(school.school_id, set()), logger,
+                    (programs_by_school or {}).get(school.school_id, set()),
+                    (honours_by_school or {}).get(school.school_id, {}),
+                    logger,
                 )
             except Exception as exc:  # noqa: BLE001 - one school is not the run
                 failed += 1
@@ -225,6 +229,7 @@ def _active_for(
     since: int,
     per_school: int,
     families: set[str],
+    honours: dict[str, list[str]],
     logger: logging.Logger,
 ) -> tuple[list[dict], str | None, int]:
     institution = api.institution_for(school.name, school.homepage)
@@ -248,19 +253,34 @@ def _active_for(
         if not plausible_here(fields, families):
             rejected += 1
             continue
+        name = author.get("display_name") or display_name
         people.append({
-            "name": author.get("display_name") or display_name,
+            "name": name,
             "research": research_topics(author),
             "fields": fields[:3],
             "recent_works": works,
             "last_active": last_active_year(author),
+            "h_index": h_index(author),
+            # Awards come from the notable list, which carries Wikidata's P166
+            # for anyone with a Wikipedia article. Matched on name within one
+            # school, which is narrow enough to be safe.
+            "awards": honours.get(name, []),
             "source": "openalex",
             "source_url": author["id"],
         })
-        if len(people) >= per_school:
-            break
 
-    return people, institution_id, rejected
+    # Priority, in the order a student would care about it: someone recognised
+    # for their research, then someone whose work is widely built on, then
+    # someone simply publishing a lot from here.
+    people.sort(
+        key=lambda p: (
+            bool(p["awards"]),
+            p["h_index"] or 0,
+            p["recent_works"] or 0,
+        ),
+        reverse=True,
+    )
+    return people[:per_school], institution_id, rejected
 
 
 def write_tier_file(data_dir: str | Path, tier_path: str | Path) -> int:

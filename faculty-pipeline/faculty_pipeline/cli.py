@@ -663,6 +663,8 @@ def notable(
 @click.option("--catalog", default="../data-pipeline/out/universities.json",
               help="Catalog to read each school's degree families from, for the "
                    "plausibility check that keeps astronomers off a music college")
+@click.option("--notable-faculty", default="../data-pipeline/sources/notable_faculty.json",
+              help="Notable-faculty tier file, read for award records that set priority")
 @click.option("--tier-out", default="../data-pipeline/sources/active_faculty.json")
 @click.option("--write-tier/--no-write-tier", default=True)
 @click.pass_context
@@ -672,6 +674,7 @@ def active_faculty(
     school_id: str | None,
     per_school: int,
     catalog: str,
+    notable_faculty: str,
     tier_out: str,
     write_tier: bool,
 ) -> None:
@@ -696,6 +699,26 @@ def active_faculty(
     else:
         click.echo(f"  note: no catalog at {catalog_path}; nothing will be rejected as implausible")
 
+    # Awards ride in from the notable stage's tier file, which carries
+    # Wikidata's P166 for anyone with a Wikipedia article. No extra requests,
+    # and it is the only award data that exists at scale — ORCID's
+    # distinctions section is empty in practice.
+    honours: dict[str, dict[str, list[str]]] = {}
+    notable_path = Path(notable_faculty)
+    if notable_path.exists():
+        for school, record in json.loads(notable_path.read_text(encoding="utf-8")).items():
+            by_name = {
+                person["name"]: person["awards"]
+                for person in record.get("notable_faculty", [])
+                if person.get("awards")
+            }
+            if by_name:
+                honours[school] = by_name
+        click.echo(f"  award records loaded for {len(honours)} school(s)")
+    else:
+        click.echo(f"  note: no notable faculty at {notable_path}; nothing will be prioritised "
+                   "by award")
+
     transport = httpx.Client(follow_redirects=True)
     try:
         robots = ApiRobots(RobotsChecker(transport))
@@ -704,7 +727,8 @@ def active_faculty(
         try:
             summary = active_stage.run(
                 config, checkpoint, logger, api,
-                programs_by_school=programs, limit=limit, school_id=school_id,
+                programs_by_school=programs, honours_by_school=honours,
+                limit=limit, school_id=school_id,
                 per_school=per_school, dry_run=dry_run,
             )
         except active_stage.ActiveFacultyError as exc:

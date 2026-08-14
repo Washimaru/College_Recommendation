@@ -239,6 +239,7 @@ def _notable_for(
 
     people: list[dict] = []
     occupation_ids: set[str] = set()
+    award_ids: set[str] = set()
     for title, qid in qids.items():
         entity = entities.get(qid)
         # A page in the category that is not a human is a list, a building or
@@ -247,6 +248,11 @@ def _notable_for(
             continue
         occupations = claim_ids(entity, "P106")
         occupation_ids.update(occupations)
+        # P166, award received. The strongest priority signal there is for
+        # "recognised for their research", and the only one available at
+        # scale — ORCID's distinctions section is empty in practice.
+        awards = claim_ids(entity, "P166")
+        award_ids.update(awards)
         people.append({
             "name": title,
             "known_for": english_description(entity),
@@ -255,14 +261,26 @@ def _notable_for(
             "prominence": sitelink_count(entity),
             "source": "wikipedia",
             "source_url": f"https://en.wikipedia.org/wiki/{title.replace(' ', '_')}",
+            "_award_ids": awards,
         })
 
-    labels = api.labels(sorted(occupation_ids)) if occupation_ids else {}
+    wanted = sorted(occupation_ids | award_ids)
+    labels = api.labels(wanted) if wanted else {}
     for person in people:
         fields = [labels[q] for q in person.pop("_occupation_ids") if q in labels]
         person["fields"] = [
             f for f in fields if f.lower() not in _UNINFORMATIVE_OCCUPATIONS
         ][:4]
+        # An award with no English label is dropped: "Q38104" on a school page
+        # would be worse than saying nothing. Deduped by name, because winning
+        # the same prize twice is one line of interest, not two - Robert Frost
+        # has four Pulitzer statements.
+        named: list[str] = []
+        for qid in person.pop("_award_ids"):
+            label = labels.get(qid)
+            if label and label not in named:
+                named.append(label)
+        person["awards"] = named[:6]
 
     # Most widely known first, then alphabetically so the order is stable
     # between runs rather than dependent on category paging.

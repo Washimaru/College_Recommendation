@@ -189,6 +189,17 @@ def research_fields(author: dict[str, Any]) -> list[str]:
     return fields
 
 
+def h_index(author: dict[str, Any]) -> int | None:
+    """OpenAlex's h-index for this author.
+
+    The measured half of "notable": how much of their work others have built
+    on. Arrives in the same author request the stage already makes, so it
+    costs nothing extra.
+    """
+    value = (author.get("summary_stats") or {}).get("h_index")
+    return int(value) if isinstance(value, (int, float)) else None
+
+
 def last_active_year(author: dict[str, Any]) -> int | None:
     years = [c["year"] for c in author.get("counts_by_year", []) if c.get("works_count")]
     return max(years) if years else None

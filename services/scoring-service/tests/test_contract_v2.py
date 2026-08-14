@@ -12,7 +12,7 @@ from pydantic import ValidationError
 from app.schemas import CONTRACT_VERSION, CulturePrefs, Profile, University
 
 
-def test_contract_version_is_10():
+def test_contract_version_is_11():
     """v3.0.0 added activities and personality; v3.1.0 added country scope;
     v4.0.0 adds place and population fields and removes preferences.locations;
     v5.0.0 adds Profile.gpa_weighted and the extreme_reach admit tier;
@@ -24,8 +24,10 @@ def test_contract_version_is_10():
     v9.0.0 adds University.notable_faculty — named professors, with no
     contact details and no model in the chain that produced them;
     v10.0.0 adds University.active_faculty, who is researching there *now*
-    and on what, which notable_faculty cannot answer."""
-    assert CONTRACT_VERSION == "10.0.0"
+    and on what, which notable_faculty cannot answer;
+    v11.0.0 adds the priority signals — awards (Wikidata P166) and h-index —
+    so a recognised researcher leads a merely prolific one."""
+    assert CONTRACT_VERSION == "11.0.0"
 
 
 def test_profile_needs_no_mbti():
