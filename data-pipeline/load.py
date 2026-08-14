@@ -41,7 +41,8 @@ def load_universities(rows: list[dict], url: str) -> int:
                     INSERT INTO universities (
                         id, unitid, name, country, location, state, region, setting,
                         type, avg_gpa, avg_sat, acceptance_rate, net_price,
-                        sticker_tuition, tuition_in_state, programs, notable_faculty, active_faculty,
+                        sticker_tuition, tuition_in_state, programs,
+                        notable_faculty, active_faculty,
                         enrollment, size, majors, culture,
                         population, url, net_price_calculator_url, details,
                         provenance
