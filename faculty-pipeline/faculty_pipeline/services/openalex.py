@@ -38,6 +38,18 @@ class OpenAlexError(RuntimeError):
     """The API answered with an error or an unparseable body."""
 
 
+def polite_user_agent(user_agent: str, mailto: str | None) -> str:
+    """Fold a contact address into the User-Agent, OpenAlex's documented form.
+
+    The address could equally go in the query string, and that is where it
+    started. But the HTTP cache is keyed on the URL, so a `mailto` parameter
+    changes every key and abandons every response already on disk — a full
+    re-fetch of work that was already paid for, against the same daily quota
+    the address exists to raise. In the header it costs nothing.
+    """
+    return f"{user_agent} mailto:{mailto}" if mailto else user_agent
+
+
 def normalize_homepage(url: str | None) -> str | None:
     """Reduce a homepage to `host/path` for comparison.
 
@@ -63,6 +75,10 @@ class OpenAlexApi:
     `Retry-After` was 21.9 hours, because the pipeline's stock User-Agent has
     no address OpenAlex recognises. Missing address costs quota, never
     correctness — the API works either way.
+
+    The address rides in the User-Agent, which the caller is expected to have
+    built with `polite_user_agent`. It must not reach the query string: see
+    that function for why.
     """
 
     def __init__(
@@ -83,8 +99,6 @@ class OpenAlexApi:
 
     def get(self, path: str, **params: str) -> dict[str, Any]:
         url = f"{API_ROOT}/{path.lstrip('/')}"
-        if self._mailto:
-            params["mailto"] = self._mailto
         if params:
             url += "?" + urlencode(params)
         result = self._http.fetch(url)

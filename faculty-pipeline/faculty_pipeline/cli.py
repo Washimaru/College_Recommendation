@@ -28,7 +28,7 @@ from .services.dynamic import PlaywrightRenderer, RendererUnavailableError
 from .services.http_client import HttpClient
 from .services.llm import AnthropicLLM
 from .services.logging_setup import configure_logging
-from .services.openalex import OpenAlexApi
+from .services.openalex import OpenAlexApi, polite_user_agent
 from .services.robots import RobotsChecker
 from .services.search import build_search_provider
 from .services.wikimedia import ApiRobots, MediaWikiApi
@@ -722,7 +722,12 @@ def active_faculty(
     transport = httpx.Client(follow_redirects=True)
     try:
         robots = ApiRobots(RobotsChecker(transport))
-        http_client = HttpClient(config, robots, transport)
+        # The contact address rides in the User-Agent, not the query string,
+        # so cached responses stay addressable. See `polite_user_agent`.
+        polite = config.model_copy(update={
+            "user_agent": polite_user_agent(config.user_agent, config.openalex_mailto),
+        })
+        http_client = HttpClient(polite, robots, transport)
         api = OpenAlexApi(http_client, logger, mailto=config.openalex_mailto)
         try:
             summary = active_stage.run(

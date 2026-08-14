@@ -305,7 +305,16 @@ class TestThePolitePool:
 
             return R()
 
-    def test_every_request_identifies_the_caller(self):
+    def test_the_address_stays_out_of_the_url(self):
+        """Rewritten: this case used to assert `mailto=` was *in* every URL.
+
+        That was the original design and it was wrong. The HTTP cache is keyed
+        on the URL, so putting the address there changed every key and threw
+        away 63 schools' worth of already-fetched responses — spending quota to
+        re-buy what was on disk, in the name of raising the quota. The address
+        now travels in the User-Agent (OpenAlex documents both), and what this
+        case guards is that it never comes back to the URL.
+        """
         from faculty_pipeline.services.openalex import OpenAlexApi
 
         http = self.RecordingHttp()
@@ -315,7 +324,17 @@ class TestThePolitePool:
         api.get("authors", filter="openalex_id:A1")
 
         assert http.urls, "no request was made"
-        assert all("mailto=someone%40example.edu" in u for u in http.urls), http.urls
+        assert not any("mailto" in u for u in http.urls), http.urls
+
+    def test_the_url_is_the_same_with_or_without_an_address(self):
+        """The cache-key property stated directly."""
+        from faculty_pipeline.services.openalex import OpenAlexApi
+
+        with_addr, without = self.RecordingHttp(), self.RecordingHttp()
+        OpenAlexApi(with_addr, mailto="someone@example.edu").get("authors", search="x")
+        OpenAlexApi(without, mailto=None).get("authors", search="x")
+
+        assert with_addr.urls == without.urls
 
     def test_without_an_address_it_still_works(self):
         """A missing address costs quota, not correctness — the stage must not
