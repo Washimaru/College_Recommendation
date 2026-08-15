@@ -32,3 +32,25 @@ class TestThePoliteAddressTravelsInTheHeader:
 
         OpenAlexApi(Fetcher(), mailto="person@example.edu").get("authors", search="x")
         assert "mailto" not in seen[0], seen[0]
+
+
+class TestTheClientIsActuallyBuiltWithIt:
+    """The unit tests above cover `polite_user_agent` in isolation, which is
+    exactly why the first wiring shipped broken: it called `model_copy` on a
+    frozen dataclass and blew up only when the CLI ran. This asserts the
+    config the HTTP client receives really carries the address.
+    """
+
+    def test_a_config_can_be_rebuilt_with_the_polite_agent(self):
+        import dataclasses
+
+        from faculty_pipeline.config import Config
+
+        base = Config(input_path="schools.csv")
+        polite = dataclasses.replace(
+            base, user_agent=polite_user_agent(base.user_agent, "person@example.edu")
+        )
+
+        assert "mailto:person@example.edu" in polite.user_agent
+        assert polite.input_path == base.input_path
+        assert "mailto" not in base.user_agent, "the original must not be mutated"

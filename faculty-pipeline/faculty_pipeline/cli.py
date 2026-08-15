@@ -12,6 +12,7 @@ rather than the raw counts dict it printed before.
 from __future__ import annotations
 
 import csv
+import dataclasses
 import json
 import shutil
 import sys
@@ -724,9 +725,10 @@ def active_faculty(
         robots = ApiRobots(RobotsChecker(transport))
         # The contact address rides in the User-Agent, not the query string,
         # so cached responses stay addressable. See `polite_user_agent`.
-        polite = config.model_copy(update={
-            "user_agent": polite_user_agent(config.user_agent, config.openalex_mailto),
-        })
+        polite = dataclasses.replace(
+            config,
+            user_agent=polite_user_agent(config.user_agent, config.openalex_mailto),
+        )
         http_client = HttpClient(polite, robots, transport)
         api = OpenAlexApi(http_client, logger, mailto=config.openalex_mailto)
         try:
