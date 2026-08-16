@@ -234,3 +234,30 @@ def test_a_reasonable_retry_after_is_still_honoured(tmp_path: Path) -> None:
 
     assert result.body == "ok"
     assert any(s >= 5 for s in sleeper.calls), "a server asking for 5s should get 5s"
+
+
+class TestTheCapSeparatesABurstLimitFromADailyOne:
+    """OpenAlex uses `Retry-After` for two different things, and the cap has
+    to tell them apart.
+
+    A burst limit asks for ~16 minutes; that is a delay, and waiting it out
+    is the correct behaviour. A daily-quota lockout asks for 21.9 hours; that
+    is a refusal, and sleeping through it parks the run overnight.
+
+    Measured: a 268-school run lost 106 schools to a 973s backoff because the
+    cap sat at 120s and rejected the burst limit as if it were the daily one.
+    """
+
+    def test_a_burst_backoff_is_waited_out(self):
+        from faculty_pipeline.services.http_client import MAX_RETRY_AFTER_SECONDS
+
+        assert 973.0 <= MAX_RETRY_AFTER_SECONDS, (
+            "a 16-minute burst backoff is a delay, not a refusal"
+        )
+
+    def test_a_daily_lockout_is_still_refused(self):
+        from faculty_pipeline.services.http_client import MAX_RETRY_AFTER_SECONDS
+
+        assert MAX_RETRY_AFTER_SECONDS < 78777.0, (
+            "21.9 hours must never be slept through inside a run"
+        )

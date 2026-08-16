@@ -37,13 +37,20 @@ BACKOFF_BASE_SECONDS = 1.0
 BACKOFF_CAP_SECONDS = 30.0
 BACKOFF_JITTER_FRACTION = 0.25
 
-# The longest `Retry-After` worth waiting out inside a run. OpenAlex answers a
-# daily-quota 429 with `Retry-After: 78777` — 21.9 hours — and honouring that
-# literally parked a 268-school run in `time.sleep` overnight: no CPU, no
-# output, no error. Past this, the wait is a refusal rather than a delay, so
-# the request fails, the stage records it, and the checkpoint resumes it on a
-# later run when the quota has reset.
-MAX_RETRY_AFTER_SECONDS = 120.0
+# The longest `Retry-After` worth waiting out inside a run.
+#
+# OpenAlex uses the header for two different things and the cap has to sit
+# between them. A *burst* limit asks for around 16 minutes (973s observed) —
+# that is a delay, and waiting is right. A *daily quota* lockout asks for 21.9
+# hours (78777s observed); honouring that parked a 268-school run in
+# `time.sleep` overnight with no CPU, no output and no error.
+#
+# This first shipped at 120s, which was below both. The next run lost 106 of
+# 268 schools to burst backoffs it should simply have waited through. Half an
+# hour clears the burst case with margin and still refuses the daily one; past
+# it the request fails, the stage records it, and the checkpoint resumes on a
+# later run.
+MAX_RETRY_AFTER_SECONDS = 1800.0
 
 
 @dataclass(frozen=True)
