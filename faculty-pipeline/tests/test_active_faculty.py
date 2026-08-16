@@ -488,3 +488,39 @@ class TestHyperauthorshipDoesNotPutStrangersOnAPage:
         from faculty_pipeline.stages.active_faculty import affiliated_recently
 
         assert affiliated_recently({"affiliations": []}, "I63966007", 2023)
+
+
+class TestTheRejectionNoteSaysWhichGuardFired:
+    """Two guards drop authors for unrelated reasons, and both fed one
+    counter — so MIT reported "191 authors dropped: their research fields
+    match nothing the school awards degrees in", of a school that awards
+    physics degrees to physicists. Nearly all of those were people who never
+    claimed MIT. A diagnostic that misattributes its own cause is worse than
+    no diagnostic: it sends the reader to fix the wrong guard.
+    """
+
+    def test_the_two_reasons_are_counted_separately(self, tmp_path: Path):
+        from faculty_pipeline.stages.active_faculty import _active_for
+
+        api = FakeApi(
+            institution=INSTITUTION,
+            counts=[("A1", "Stranger Sam", 9), ("A2", "Wrong Field Wu", 8)],
+            author_records={
+                # claims a different school entirely
+                "A1": {**_author("A1", "Stranger Sam", [("T", "Mathematics")]),
+                       "affiliations": [{"institution": {"id": "https://openalex.org/I111"},
+                                         "years": [2025]}]},
+                # claims this school, but researches something it does not teach
+                "A2": {**_author("A2", "Wrong Field Wu", [("T", "Physics and Astronomy")]),
+                       "affiliations": [{"institution": {"id": INSTITUTION["id"]},
+                                         "years": [2025]}]},
+            },
+        )
+
+        people, _, rejected = _active_for(
+            api, _school(), 2023, 20, 60, {"Mathematics & Statistics"}, {},
+            logging.getLogger("test"),
+        )
+
+        assert people == []
+        assert rejected == {"elsewhere": 1, "field": 1}, rejected

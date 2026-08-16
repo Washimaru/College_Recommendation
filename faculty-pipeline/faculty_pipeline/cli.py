@@ -661,6 +661,10 @@ def notable(
 @click.option("--school", "school_id", default=None, help="Run a single school")
 @click.option("--per-school", type=int, default=active_stage.DEFAULT_LIMIT,
               help="Cap researchers kept per school (default 20)")
+@click.option("--pool", "pool_size", type=int, default=active_stage.DEFAULT_POOL,
+              help="Candidate authors considered before filtering. Raise it for "
+                   "research universities, where collaboration authors fill the top "
+                   "of the ranking and are then dropped for not claiming the school")
 @click.option("--catalog", default="../data-pipeline/out/universities.json",
               help="Catalog to read each school's degree families from, for the "
                    "plausibility check that keeps astronomers off a music college")
@@ -674,6 +678,7 @@ def active_faculty(
     limit: int | None,
     school_id: str | None,
     per_school: int,
+    pool_size: int,
     catalog: str,
     notable_faculty: str,
     tier_out: str,
@@ -738,7 +743,7 @@ def active_faculty(
                 config, checkpoint, logger, api,
                 programs_by_school=programs, honours_by_school=honours,
                 limit=limit, school_id=school_id,
-                per_school=per_school, dry_run=dry_run,
+                per_school=per_school, pool_size=pool_size, dry_run=dry_run,
             )
         except active_stage.ActiveFacultyError as exc:
             click.echo(f"active-faculty failed: {exc}", err=True)

@@ -45,6 +45,13 @@ STAGE_NAME = "active-faculty"
 
 DEFAULT_LIMIT = 20
 
+# How many candidate authors to consider before filtering. The pool is ranked
+# by publication count, and at a research university the top of that ranking is
+# collaboration authors on thousand-author physics papers — who are then
+# dropped for not claiming the school. Too small a pool spends itself entirely
+# on people who will be rejected: at 60, MIT yielded 6 researchers out of 20.
+DEFAULT_POOL = 60
+
 # How far back still counts as "here now". Three years covers a normal
 # publication gap without reaching back to people who have since moved on.
 RECENT_YEARS = 3
@@ -172,6 +179,7 @@ def run(
     limit: int | None = None,
     school_id: str | None = None,
     per_school: int = DEFAULT_LIMIT,
+    pool_size: int = DEFAULT_POOL,
     dry_run: bool = False,
 ) -> StageSummary:
     """Resumable per school. `programs_by_school` supplies the degree families
@@ -198,13 +206,13 @@ def run(
     processed = failed = 0
     unresolved: list[str] = []
     empty: list[str] = []
-    rejected_total = 0
+    rejected_total = {"elsewhere": 0, "field": 0}
 
     with out_path.open("a", encoding="utf-8") as out:
         for school in pending:
             try:
                 people, institution, rejected = _active_for(
-                    api, school, since, per_school,
+                    api, school, since, per_school, pool_size,
                     (programs_by_school or {}).get(school.school_id, set()),
                     (honours_by_school or {}).get(school.school_id, {}),
                     logger,
@@ -218,7 +226,8 @@ def run(
                 )
                 continue
 
-            rejected_total += rejected
+            for reason, n in rejected.items():
+                rejected_total[reason] += n
             out.write(json.dumps({
                 "school_id": school.school_id,
                 "school_name": school.name,
@@ -237,15 +246,21 @@ def run(
             logger.info(
                 "active-faculty: %s -> %d researcher(s)%s",
                 school.school_id, len(people),
-                f" ({rejected} rejected as implausible)" if rejected else "",
+                _rejection_phrase(rejected),
                 extra={"stage": STAGE_NAME, "school_id": school.school_id},
             )
 
     notes = [f"{processed} school(s) resolved, {failed} failed, {already} already done"]
-    if rejected_total:
+    if rejected_total["elsewhere"]:
         notes.append(
-            f"{rejected_total} author(s) dropped: their research fields match nothing the "
-            "school awards degrees in (OpenAlex mis-attributes whole bodies of work)"
+            f"{rejected_total['elsewhere']} author(s) dropped: published from the school but "
+            "their own affiliation record names somewhere else (thousand-author papers credit "
+            "every participating institution)"
+        )
+    if rejected_total["field"]:
+        notes.append(
+            f"{rejected_total['field']} author(s) dropped: their research fields match nothing "
+            "the school awards degrees in (OpenAlex mis-attributes whole bodies of work)"
         )
     if unresolved:
         notes.append(
@@ -269,33 +284,37 @@ def _active_for(
     school: School,
     since: int,
     per_school: int,
+    pool_size: int,
     families: set[str],
     honours: dict[str, list[str]],
     logger: logging.Logger,
 ) -> tuple[list[dict], str | None, int]:
     institution = api.institution_for(school.name, school.homepage)
     if institution is None:
-        return [], None, 0
+        return [], None, {"elsewhere": 0, "field": 0}
     institution_id = institution["id"].rsplit("/", 1)[-1]
 
-    counts = api.recent_author_counts(institution_id, since, limit=max(per_school * 3, 40))
+    counts = api.recent_author_counts(institution_id, since, limit=max(pool_size, per_school))
     if not counts:
-        return [], institution_id, 0
+        return [], institution_id, {"elsewhere": 0, "field": 0}
 
     authors = api.authors([author_id for author_id, _, _ in counts])
 
     people: list[dict] = []
-    rejected = 0
+    # Counted apart, because they mean different things and the note names
+    # them: `elsewhere` is someone who never claimed this school, `field` is
+    # someone whose research it does not teach.
+    rejected = {"elsewhere": 0, "field": 0}
     for author_id, display_name, works in counts:
         author = authors.get(author_id)
         if author is None:
             continue
         if not affiliated_recently(author, institution_id, since):
-            rejected += 1
+            rejected["elsewhere"] += 1
             continue
         fields = research_fields(author)
         if not plausible_here(fields, families):
-            rejected += 1
+            rejected["field"] += 1
             continue
         name = author.get("display_name") or display_name
         people.append({
@@ -344,6 +363,15 @@ def write_tier_file(data_dir: str | Path, tier_path: str | Path) -> int:
         encoding="utf-8",
     )
     return len(by_school)
+
+
+def _rejection_phrase(rejected: dict[str, int]) -> str:
+    parts = []
+    if rejected["elsewhere"]:
+        parts.append(f"{rejected['elsewhere']} affiliated elsewhere")
+    if rejected["field"]:
+        parts.append(f"{rejected['field']} outside its fields")
+    return f" ({', '.join(parts)})" if parts else ""
 
 
 def _load_schools(data_dir: str | Path) -> list[School]:
