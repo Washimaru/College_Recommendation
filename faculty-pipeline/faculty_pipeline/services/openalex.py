@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from typing import Any, Protocol
 from urllib.parse import urlencode, urlsplit
 
@@ -32,6 +33,54 @@ HOST = "api.openalex.org"
 
 class HttpFetcher(Protocol):
     def fetch(self, url: str, *, method: str = "GET") -> Any: ...
+
+
+# Suffixes under which the registrable name is the *third* label from the end.
+# "ox.ac.uk" must not reduce to "ac.uk", which every UK university shares.
+_COMPOUND_SUFFIXES = frozenset({
+    "ac.uk", "ac.jp", "ac.nz", "ac.za", "ac.kr", "ac.in", "edu.au", "edu.cn",
+    "edu.sg", "edu.hk", "edu.mx", "edu.br", "co.uk", "com.au",
+})
+
+
+def registrable_domain(url: str | None) -> str | None:
+    """The domain a school actually owns, ignoring subdomain and path.
+
+    Exact host matching rejected 19 real schools whose OpenAlex homepage
+    differs only by subdomain — Dartmouth publishes `dartmouth.edu` while
+    OpenAlex records `home.dartmouth.edu`, and Howard has `www` against
+    OpenAlex's `www2`. All were the correct top hit.
+
+    Looser than exact matching, deliberately, and still tight enough for the
+    case this exists to catch: a name search for "Berklee" returning Google.
+    The cost is that campuses of one system share a domain, so
+    `newbrunswick.rutgers.edu` matches the system-wide Rutgers institution
+    rather than the campus — which is the closest thing OpenAlex has.
+    """
+    host = normalize_homepage(url)
+    if not host:
+        return None
+    host = host.split("/", 1)[0]
+    labels = host.split(".")
+    if len(labels) < 2:
+        return host
+    if ".".join(labels[-2:]) in _COMPOUND_SUFFIXES and len(labels) >= 3:
+        return ".".join(labels[-3:])
+    return ".".join(labels[-2:])
+
+
+def _same_name(a: str | None, b: str | None) -> bool:
+    """Institution names equal once case and punctuation are set aside.
+
+    Exact-after-normalising, deliberately: "University of Miami" and "Miami
+    University" are different schools in different states, and any similarity
+    score loose enough to join stale domains would also join those.
+    """
+    if not a or not b:
+        return False
+    def key(v: str) -> str:
+        return " ".join(re.sub(r"[^a-z0-9 ]", " ", v.lower()).split())
+    return key(a) == key(b)
 
 
 class OpenAlexError(RuntimeError):
@@ -121,11 +170,26 @@ class OpenAlexApi:
         (Canada), and a wrong institution produces a page of confidently wrong
         professors.
         """
-        wanted = normalize_homepage(homepage)
+        wanted = registrable_domain(homepage)
         if wanted:
             body = self.get("institutions", search=name, per_page="10")
             for candidate in body.get("results", []):
-                if normalize_homepage(candidate.get("homepage_url")) == wanted:
+                if registrable_domain(candidate.get("homepage_url")) == wanted:
+                    return candidate
+
+            # Domains go stale: Indiana Bloomington is `indiana.edu` in this
+            # pipeline and `iu.edu` at OpenAlex, and UNC Charlotte rebranded
+            # off `uncc.edu`. An exactly-matching name is confident enough to
+            # accept when the domain disagrees — and still rejects a search
+            # for "Berklee" that answers "Google".
+            for candidate in body.get("results", []):
+                if _same_name(candidate.get("display_name"), name):
+                    self._logger.info(
+                        "openalex: accepted %r for %r on an exact name match "
+                        "(homepage %r != %r)",
+                        candidate.get("display_name"), name,
+                        candidate.get("homepage_url"), homepage,
+                    )
                     return candidate
 
         body = self.get("institutions", search=name, per_page="1")
@@ -133,7 +197,7 @@ class OpenAlexApi:
         if not results:
             return None
         candidate = results[0]
-        if wanted and normalize_homepage(candidate.get("homepage_url")) != wanted:
+        if wanted and registrable_domain(candidate.get("homepage_url")) != wanted:
             self._logger.info(
                 "openalex: rejected %r for %r (homepage %r != %r)",
                 candidate.get("display_name"), name,

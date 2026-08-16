@@ -25,6 +25,8 @@ from __future__ import annotations
 
 import json
 import logging
+import re
+import unicodedata
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -88,6 +90,23 @@ FIELD_TO_FAMILIES: dict[str, tuple[str, ...]] = {
                             "Communication & Journalism", "Architecture",
                             "Theology & Religious Vocations"),
 }
+
+
+def match_name(name: str) -> str:
+    """A name reduced to what the two lists can agree on.
+
+    Wikipedia writes "Mary McCarthy (American writer)" and keeps the accent in
+    "Rosemary Lévy Zumwalt"; OpenAlex does neither. Exact matching missed both.
+
+    This recovers a handful of people, not hundreds — only 10 names are shared
+    between the 2,366 award-holders and the 3,165 active researchers, because
+    Wikipedia's faculty categories and OpenAlex's recent publishers are largely
+    different populations. The h-index carries the ranking; an award is a bonus
+    on top of it.
+    """
+    folded = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode()
+    folded = re.sub(r"\s*\(.*?\)", "", folded)
+    return " ".join(re.sub(r"[^A-Za-z ]", " ", folded).lower().split())
 
 
 class ActiveFacultyError(RuntimeError):
@@ -264,7 +283,7 @@ def _active_for(
             # Awards come from the notable list, which carries Wikidata's P166
             # for anyone with a Wikipedia article. Matched on name within one
             # school, which is narrow enough to be safe.
-            "awards": honours.get(name, []),
+            "awards": honours.get(match_name(name), []),
             "source": "openalex",
             "source_url": author["id"],
         })

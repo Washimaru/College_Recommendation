@@ -17,7 +17,7 @@ from faculty_pipeline.models import School
 from faculty_pipeline.services.checkpoint import CheckpointStore
 from faculty_pipeline.services.openalex import normalize_homepage
 from faculty_pipeline.stages import active_faculty
-from faculty_pipeline.stages.active_faculty import plausible_here
+from faculty_pipeline.stages.active_faculty import match_name, plausible_here
 
 logger = logging.getLogger("test")
 
@@ -368,9 +368,13 @@ class TestPriority:
         return FakeApi(institution=INSTITUTION, counts=counts, author_records=records)
 
     def _run_with(self, tmp_path: Path, api: FakeApi, honours=None) -> list[dict]:
+        """Honours are keyed through `match_name`, exactly as the CLI keys them
+        when it loads the notable tier file. Keying by raw name here would let
+        a lookup-key mismatch pass the tests and fail on real data."""
         config = _config(tmp_path)
         _write_schools(config, [_school()])
-        _run(config, api, honours_by_school={"acme-college": honours or {}})
+        keyed = {match_name(name): awards for name, awards in (honours or {}).items()}
+        _run(config, api, honours_by_school={"acme-college": keyed})
         return _records(config)[0]["active_faculty"]
 
     def test_an_award_winner_leads_a_more_prolific_colleague(self, tmp_path: Path):
@@ -406,3 +410,31 @@ class TestPriority:
         api = self._api([("Someone", "", 5, 3)])
 
         assert self._run_with(tmp_path, api)[0]["awards"] == []
+
+
+class TestAwardMatchingToleratesNameSpelling:
+    """The two lists spell people differently: Wikipedia disambiguates with
+    "(American writer)" and keeps diacritics, OpenAlex does neither. Exact
+    matching is why "Mary McCarthy" and "Rosemary Lévy Zumwalt" missed.
+
+    Worth stating plainly: this recovers a handful of people, not hundreds.
+    Only 10 names are shared between the 2,366 award-holders and the 3,165
+    active researchers, because Wikipedia's faculty categories and OpenAlex's
+    recent publishers are largely different populations. The ranking rests on
+    the h-index, which 99.7% of these researchers have.
+    """
+
+    def test_a_disambiguator_does_not_block_the_match(self):
+        from faculty_pipeline.stages.active_faculty import match_name
+
+        assert match_name("Mary McCarthy (American writer)") == match_name("Mary McCarthy")
+
+    def test_diacritics_do_not_block_the_match(self):
+        from faculty_pipeline.stages.active_faculty import match_name
+
+        assert match_name("Rosemary Lévy Zumwalt") == match_name("Rosemary Levy Zumwalt")
+
+    def test_two_different_people_still_differ(self):
+        from faculty_pipeline.stages.active_faculty import match_name
+
+        assert match_name("John Smith") != match_name("Jane Smith")

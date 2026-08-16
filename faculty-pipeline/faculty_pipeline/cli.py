@@ -708,8 +708,10 @@ def active_faculty(
     notable_path = Path(notable_faculty)
     if notable_path.exists():
         for school, record in json.loads(notable_path.read_text(encoding="utf-8")).items():
+            # Keyed through match_name so the lookup in the stage, which
+            # normalises the OpenAlex spelling, can actually find these.
             by_name = {
-                person["name"]: person["awards"]
+                active_stage.match_name(person["name"]): person["awards"]
                 for person in record.get("notable_faculty", [])
                 if person.get("awards")
             }
