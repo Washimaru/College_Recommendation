@@ -438,3 +438,53 @@ class TestAwardMatchingToleratesNameSpelling:
         from faculty_pipeline.stages.active_faculty import match_name
 
         assert match_name("John Smith") != match_name("Jane Smith")
+
+
+class TestHyperauthorshipDoesNotPutStrangersOnAPage:
+    """A CMS/ATLAS paper carries thousands of authors and lists every
+    participating institution, so "wrote a paper from MIT" made MIT's top
+    three M. Tytgat (Ghent), R. Klanner (DESY) and Y. Yang — particle
+    physicists with h-indexes near 150 who mostly do not work there.
+
+    The author's own affiliation record settles it, and arrives in the
+    request the stage already makes. Measured on MIT: of 50 candidates, 6
+    claim MIT recently and 44 do not.
+
+    The cost is shorter lists, and that is the right trade. A student reading
+    a school's page should not be shown someone who works somewhere else.
+    """
+
+    def test_someone_who_never_claims_the_school_is_dropped(self):
+        from faculty_pipeline.stages.active_faculty import affiliated_recently
+
+        author = {"affiliations": [
+            {"institution": {"id": "https://openalex.org/I999"}, "years": [2025, 2024]},
+        ]}
+
+        assert not affiliated_recently(author, "I63966007", 2023)
+
+    def test_a_current_affiliation_is_kept(self):
+        from faculty_pipeline.stages.active_faculty import affiliated_recently
+
+        author = {"affiliations": [
+            {"institution": {"id": "https://openalex.org/I63966007"}, "years": [2025, 2024]},
+        ]}
+
+        assert affiliated_recently(author, "I63966007", 2023)
+
+    def test_an_old_affiliation_is_not_enough(self):
+        """Yoshua Bengio was an MIT postdoc in 1991. That is not faculty now."""
+        from faculty_pipeline.stages.active_faculty import affiliated_recently
+
+        author = {"affiliations": [
+            {"institution": {"id": "https://openalex.org/I63966007"}, "years": [1991, 1992]},
+        ]}
+
+        assert not affiliated_recently(author, "I63966007", 2023)
+
+    def test_no_affiliation_data_is_not_evidence_against(self):
+        """An author record with no affiliations at all is unmeasured, not a
+        denial — the same honest-null rule the catalog uses everywhere."""
+        from faculty_pipeline.stages.active_faculty import affiliated_recently
+
+        assert affiliated_recently({"affiliations": []}, "I63966007", 2023)

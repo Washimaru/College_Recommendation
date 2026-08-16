@@ -92,6 +92,28 @@ FIELD_TO_FAMILIES: dict[str, tuple[str, ...]] = {
 }
 
 
+def affiliated_recently(author: dict, institution_id: str, since_year: int) -> bool:
+    """Does this author's own record claim the school in recent years?
+
+    "Wrote a paper from here" is not "works here". A CMS/ATLAS paper carries
+    thousands of authors and credits every participating institution, which
+    made MIT's top three M. Tytgat (Ghent), R. Klanner (DESY) and Y. Yang.
+    Their own affiliation records name Lyon, Riverside, Rome, Caltech — not
+    MIT. Measured: of 50 MIT candidates, 6 claim MIT recently.
+
+    An empty affiliation list means unmeasured, not absent, and is kept — the
+    same rule the catalog applies to every other missing fact.
+    """
+    affiliations = author.get("affiliations") or []
+    if not affiliations:
+        return True
+    for entry in affiliations:
+        ident = ((entry.get("institution") or {}).get("id") or "").rsplit("/", 1)[-1]
+        if ident == institution_id and any(y >= since_year for y in entry.get("years") or []):
+            return True
+    return False
+
+
 def match_name(name: str) -> str:
     """A name reduced to what the two lists can agree on.
 
@@ -267,6 +289,9 @@ def _active_for(
     for author_id, display_name, works in counts:
         author = authors.get(author_id)
         if author is None:
+            continue
+        if not affiliated_recently(author, institution_id, since):
+            rejected += 1
             continue
         fields = research_fields(author)
         if not plausible_here(fields, families):
